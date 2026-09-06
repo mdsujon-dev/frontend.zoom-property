@@ -31,7 +31,6 @@
     "eyebrow": "Curated portfolio",
     "title": "Verified residences and commercial floors",
     "description": "Every listing has been physically inspected by our survey team this month, with title deeds verified before it went online.",
-    "action": "Browse all properties",
     "pageTitle": "Properties for sale and rent",
     "pageDescription": "{count} listings, each physically inspected by our survey team and title-checked before upload. Filter by purpose, type and area below.",
     "metaTitle": "Properties for sale and rent",
@@ -41,7 +40,6 @@
     "eyebrow": "Micro-market intelligence",
     "title": "Explore by prime enclave",
     "description": "Average price per square foot, gross rental yield and security tier across Dhaka and Chattogram's most requested addresses.",
-    "action": "All neighbourhoods",
     "pageTitle": "Neighbourhoods, with the numbers",
     "pageDescription": "Most people pick an area before a price. Each tile carries what is listed there, the median, and what the middle of that market costs per square foot.",
     "metaTitle": "Neighbourhoods in Dhaka and Chattogram",
@@ -51,7 +49,6 @@
     "eyebrow": "Under construction",
     "title": "Milestone progress you can audit",
     "description": "You pay in instalments for years before you get keys, so every project shows its audited structural stage and RAJUK permit — not a marketing render.",
-    "action": "All projects",
     "pageTitle": "Projects under construction",
     "pageDescription": "You pay in instalments for years before you get keys. Every project here shows its audited structural stage and permit number, updated monthly.",
     "metaTitle": "Projects under construction",
@@ -245,6 +242,38 @@
         "title": "Interiors & handover",
         "description": "Snag lists cleared, fit-out drawings and furnishing for buyers who want the keys and nothing else to do."
       }
+    ],
+    "rooms": [
+      {
+        "name": "Living room",
+        "lead": "The room the whole plan is arranged around.",
+        "description": "Double-height glazing on the lake side, so the light lasts until late afternoon. Wide enough for two seating groups without either feeling like an afterthought."
+      },
+      {
+        "name": "Dining room",
+        "lead": "Built for a table that stays extended.",
+        "description": "A servery connects it to the kitchen, so serving does not cross the living room. Seats ten without borrowing chairs from anywhere else."
+      },
+      {
+        "name": "Master bedroom",
+        "lead": "A bedroom, not a corridor with a bed in it.",
+        "description": "Ensuite and walk-in wardrobe both open off a short vestibule, which keeps the bed away from the door and the noise of the rest of the flat."
+      },
+      {
+        "name": "Kitchen",
+        "lead": "Laid out for cooking, not for photographs.",
+        "description": "An island with the hob on it so you face the room, and a utility balcony behind for the machines, the bins and the drying."
+      },
+      {
+        "name": "Bathroom",
+        "lead": "The room people forget to check.",
+        "description": "Freestanding tub, separate shower, heated floor, and a window — which is rarer in Dhaka apartments than it should be."
+      },
+      {
+        "name": "Terrace",
+        "lead": "The floor everyone ends up on.",
+        "description": "Pool, shaded lounge and a planted edge, facing the skyline rather than the neighbouring block. Shared, and maintained by the building."
+      }
     ]
   },
   "pages": {
@@ -429,7 +458,21 @@
         "title": "Build and handover",
         "body": "Monthly progress you can audit, and your units handed over with the occupancy certificate."
       }
-    ]
+    ],
+    "story": {
+      "quoteLabel": "Landowners speak for us",
+      "quote": "After counting my peers, I found that they had a record of handing over on time. That is what convinced me to give them my land.",
+      "quoteName": "Air Vice Marshal A. O. Mahmud (Retd.)",
+      "quoteRole": "Joint venture landowner, Banani",
+      "whyTitle": "Why choose us as a partner for your land?",
+      "whyBody": "Dealing with a developer in Dhaka is hard to judge from the outside — the joint venture process is bureaucratic, and the promises all sound alike. We put the terms in the deed instead of the brochure: the owner share, the signing advance held in bank escrow, and a handover date you can enforce. Read what our landowners say, then look at what we finished.",
+      "differentTitle": "How we are different",
+      "differentBody": "We took the legal work in-house rather than subcontracting it, so the title search that decides whether a joint venture is safe is done by people who answer to you. Our engineers inspect every active site each month, and the completion figure you see is the one they signed off. If a timeline is slipping we tell you before you hear it from a neighbour.",
+      "videoCaption": "A landowner walks through a finished joint venture",
+      "moreTitle": "Want to know more?",
+      "moreBody": "Send us the plot address and the deed. Within two weeks you get a feasibility report — what can legally be built there, how many units, and the share we can offer, in writing. No obligation, and the papers stay yours.",
+      "moreCta": "Talk to the land team"
+    }
   },
   "blog": {
     "eyebrow": "Market notes",
@@ -437,7 +480,6 @@
     "description": "Short, specific pieces on the legal, financial and market questions that come up before a purchase. No listicles.",
     "metaTitle": "Market notes and guides",
     "metaDescription": "Legal checklists, market reads and non-resident buying guides for Dhaka and Chattogram property, written by the Zoom Property team.",
-    "readTime": "min read",
     "all": "All",
     "categories": {
       "Market": "Market",
@@ -446,5 +488,12 @@
       "NRB": "NRB"
     },
     "readMore": "Read more"
+  },
+  "rooms": {
+    "pill": "Room details",
+    "title": "Rooms designed for comfort and style",
+    "description": "A walkthrough of a representative three-bedroom home in Gulshan — what each room actually measures, and what comes with it.",
+    "readMore": "Read more",
+    "expand": "Show details for"
   }
 }

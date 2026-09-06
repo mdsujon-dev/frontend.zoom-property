@@ -4,6 +4,7 @@ import { AreasSection } from "@/components/sections/areas-section";
 import { HeroSection } from "@/components/sections/hero-section";
 import { ListingsSection } from "@/components/sections/listings-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
+import { RoomsSection } from "@/components/sections/rooms-section";
 import { ServicesShowcase } from "@/components/sections/services-showcase";
 import { TestimonialsBento } from "@/components/sections/testimonials-bento";
 import {
@@ -41,6 +42,7 @@ export default async function Home() {
         dict={dict.showcase}
       />
 
+      <RoomsSection />
       <AreasSection />
       <ProjectsSection />
       <ServicesShowcase />

@@ -28,7 +28,7 @@ export default async function ProjectsPage() {
         image={pageBanners.projects}
       />
 
-      <ProjectsSection showAction={false} />
+      <ProjectsSection />
 
       <ConstructionStagesSection />
     </>

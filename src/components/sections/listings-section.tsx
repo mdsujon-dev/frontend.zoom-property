@@ -1,15 +1,11 @@
-import Link from "next/link";
 
-import { Icon } from "@/components/common/icon";
 import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { InteractiveListings } from "@/components/property/interactive-listings";
 import { PropertyCard } from "@/components/property/property-card";
-import { Button } from "@/components/ui/button";
 import { properties } from "@/data/properties";
-import { getDictionary, getLocale } from "@/i18n/dictionaries";
-import { localeHref } from "@/i18n/href";
+import { getDictionary } from "@/i18n/dictionaries";
 
 /**
  * `variant="preview"` is the home page cut — a fixed number of cards and a link
@@ -31,7 +27,7 @@ export async function ListingsSection({
     );
   }
 
-  const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
+  const dict = await getDictionary();
 
   return (
     <Section id="listings" className="bg-background">
@@ -39,14 +35,6 @@ export async function ListingsSection({
         eyebrow={dict.listings.eyebrow}
         title={dict.listings.title}
         description={dict.listings.description}
-        action={
-          <Button variant="outline" size="lg" asChild>
-            <Link href={localeHref(locale, "/properties")}>
-              {dict.listings.action}
-              <Icon name="arrowRight" size="xs" />
-            </Link>
-          </Button>
-        }
       />
 
       <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

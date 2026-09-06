@@ -8,25 +8,23 @@ import { cn } from "@/lib/utils";
 /**
  * Article card.
  *
- * The category and date sit in a frosted pill inset on the photograph rather
- * than in a meta row under it: it fills otherwise dead space at the foot of the
- * image, and it keeps the block below the picture to title → excerpt → link,
- * which is the order the eye wants.
+ * Category and date sit in a frosted bar inset on the photograph rather than in
+ * a meta row beneath it: it uses space that is otherwise dead, and it leaves the
+ * block below the image as title → excerpt → link, which is the order the eye
+ * wants.
  *
- * The pill is `black/45 + backdrop-blur` because it lands on whatever the photo
- * happens to be — a token background would be unreadable over a bright image.
+ * The bar is `black/40 + backdrop-blur` because it lands on whatever the photo
+ * happens to be — a token background would be unreadable over a bright image,
+ * and a solid one would hide the part of the picture it covers.
  */
 export function InsightCard({
   insight,
-  readTime,
   readMore,
   category,
   date,
   className,
 }: {
   insight: Insight;
-  /** "min read" */
-  readTime: string;
   readMore: string;
   /** Localised category label. */
   category: string;
@@ -35,47 +33,44 @@ export function InsightCard({
   className?: string;
 }) {
   return (
-    <article className={cn("group flex h-full flex-col gap-5", className)}>
+    <article className={cn("group flex h-full flex-col gap-6", className)}>
       <ImageFrame
         src={insight.image}
         alt=""
-        ratio="4/3"
-        rounded="xl"
+        ratio="3/2"
+        rounded="2xl"
         hover="zoom"
         sizes="third"
       >
-        <div className="pointer-events-none absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 rounded-lg bg-black/45 px-4 py-2.5 text-sm text-white backdrop-blur-md">
-          <span className="truncate font-medium">{category}</span>
-          <span aria-hidden className="size-1 shrink-0 rounded-full bg-brand" />
-          <span className="shrink-0 whitespace-nowrap text-white/85">{date}</span>
+        <div className="pointer-events-none absolute inset-x-4 bottom-4 flex items-center justify-between gap-4 rounded-xl bg-black/40 px-5 py-3 text-[15px] text-white backdrop-blur-md">
+          <span className="truncate">{category}</span>
+          <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-white/45" />
+          <span className="shrink-0 whitespace-nowrap">{date}</span>
         </div>
       </ImageFrame>
 
-      <div className="flex flex-1 flex-col gap-3">
+      <div className="flex flex-1 flex-col gap-4">
         <Heading
           as="h3"
-          size="h5"
-          className="text-balance transition-colors duration-300 group-hover:text-primary"
+          size="h4"
+          weight="bold"
+          className="line-clamp-2 text-balance transition-colors duration-300 group-hover:text-primary"
         >
           {insight.title}
         </Heading>
 
-        <Text size="sm" className="line-clamp-3 flex-1 text-muted-foreground">
+        <Text size="base" className="line-clamp-2 flex-1 leading-relaxed text-muted-foreground">
           {insight.excerpt}
         </Text>
 
-        <span className="flex items-center gap-2 pt-1 text-sm font-semibold text-foreground">
+        <span className="flex items-center gap-2.5 text-[15px] font-bold text-foreground">
           {readMore}
           <Icon
             name="arrowRight"
-            size="xs"
+            size="sm"
             className="transition-transform duration-300 group-hover:translate-x-1"
           />
         </span>
-
-        <Text as="span" size="xs" className="text-muted-foreground">
-          {insight.readMinutes} {readTime}
-        </Text>
       </div>
     </article>
   );

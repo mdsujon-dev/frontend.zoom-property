@@ -48,7 +48,6 @@ export default async function BlogPage() {
                 insight={post}
                 category={t.categories[post.category]}
                 date={formatDate.format(new Date(post.date))}
-                readTime={t.readTime}
                 readMore={t.readMore}
               />
             </StaggerItem>

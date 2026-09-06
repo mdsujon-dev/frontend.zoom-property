@@ -63,3 +63,27 @@ export const landmarkJVProjects: LandmarkJVProject[] = [
     image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80",
   },
 ];
+
+/**
+ * Media for the alternating story rows on `/landowners`.
+ *
+ * A landowner's own words, a walkthrough of a finished joint venture, and the
+ * handover photograph — the three things a landowner actually wants to see
+ * before handing over a deed. Copy lives in the dictionaries; only the assets
+ * are here.
+ */
+export const landownerStory = {
+  testimonial: {
+    image:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=900&q=80",
+    portrait:
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+  },
+  video: {
+    url: "https://www.youtube.com/watch?v=ScMzIvxBSi4",
+    poster:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=80",
+  },
+  handover:
+    "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80",
+} as const;

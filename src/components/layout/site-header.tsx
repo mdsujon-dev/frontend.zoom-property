@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useLenis } from "lenis/react";
 
 import { Container } from "@/components/common/container";
@@ -41,9 +41,16 @@ type NavDict = Record<string, string>;
  */
 export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) {
   const [open, setOpen] = useState(false);
-  const { direction, atTop } = useScrollDirection();
+  const { direction, atTop, scrolledPast } = useScrollDirection();
+  const prefersReducedMotion = useReducedMotion();
   const pathname = usePathname();
   const lenis = useLenis();
+
+  /**
+   * Hidden only while scrolling down *and* past the pin distance, so a small
+   * flick near the top never pulls the navigation away.
+   */
+  const hidden = direction === "down" && scrolledPast;
 
   /**
    * Pause smooth scrolling while the mobile sheet is open.
@@ -68,8 +75,15 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) 
   return (
     <motion.header
       initial={false}
-      animate={{ y: direction === "down" && !atTop ? "-100%" : "0%" }}
-      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      animate={{ y: hidden ? "-100%" : "0%" }}
+      transition={
+        prefersReducedMotion
+          ? { duration: 0 }
+          : // Symmetric ease-in-out: expo eased out of the gate, which made the
+            // header appear to snap down before settling. This leaves and
+            // returns at the same speed, which is what reads as smooth.
+            { duration: 0.42, ease: [0.32, 0.72, 0, 1] }
+      }
       className={cn(
         "fixed inset-x-0 top-0 z-40 transition-colors duration-300",
         overHero

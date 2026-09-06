@@ -6,6 +6,7 @@ import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Text } from "@/components/common/text";
 import { PageHeader } from "@/components/layout/page-header";
+import { LandownerStory } from "@/components/sections/landowner-story";
 import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { ImageFrame } from "@/components/media/image-frame";
@@ -36,8 +37,10 @@ export default async function LandownersPage() {
         image={pageBanners.landowners}
       />
 
+      <LandownerStory />
+
       {/* The four contract terms, as cards. */}
-      <Section className="bg-background">
+      <Section className="border-t border-border bg-muted/30">
         <SectionHeading
           eyebrow={t.eyebrow}
           title={t.benefitsTitle}
@@ -65,7 +68,7 @@ export default async function LandownersPage() {
       </Section>
 
       {/* How the process runs — a numbered rail, same language as /properties. */}
-      <Section className="border-t border-border bg-muted/30">
+      <Section className="border-t border-border bg-background">
         <SectionHeading eyebrow={t.eyebrow} title={t.stepsTitle} />
 
         <Stagger className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">

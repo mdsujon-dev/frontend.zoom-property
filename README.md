@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Zoom Property
 
-## Getting Started
-
-First, run the development server:
+Next.js 16 (App Router, Turbopack) + React 19 + Tailwind CSS v4 + shadcn/ui.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm dev      # http://localhost:3000
+pnpm build
+pnpm lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+  app/                 routes, root layout, globals.css (design tokens)
+  components/
+    ui/                shadcn/ui primitives — vendored, keep close to the registry
+    common/            Heading, Text, Eyebrow, Container, Section, SectionHeading, Icon
+    motion/            Reveal, Stagger, Parallax, Marquee, Counter, AnimatedText, ScrollProgress, ScrollToTop
+    media/             ImageFrame, Gallery, MediaCarousel, VideoPlayer, VideoEmbed
+    layout/            SiteHeader, SiteFooter, ThemeToggle
+    property/          PropertyCard (domain component — copy this pattern)
+    providers/         theme + Lenis smooth scroll + tooltip + toaster
+  hooks/               useMediaQuery, useSmoothScroll, useScrollDirection
+  lib/                 cn, motion tokens, image + video helpers, formatters
+  data/                site config, nav, demo content
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## The rules that keep it consistent
 
-## Learn More
+**1. One type scale.** Sizes live in `src/app/globals.css` as `--text-display`
+… `--text-h6`, `--text-eyebrow`, `--text-lead`. Never write `text-4xl` on a
+title:
 
-To learn more about Next.js, take a look at the following resources:
+```tsx
+<Heading as="h1" size="display">…</Heading>   // semantics and size are separate
+<Heading as="h3" size="h5">…</Heading>        // h3 in the outline, h5 on screen
+<Text size="lead">…</Text>
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Changing a heading size anywhere in the app = editing one token.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> Custom sizes must also be listed in `src/lib/utils.ts`, otherwise
+> tailwind-merge mistakes `text-h2` for a colour and drops it.
 
-## Deploy on Vercel
+**2. One section shell.** `Section` owns vertical rhythm and background tone,
+`Container` owns max-width and gutters, `SectionHeading` owns the
+eyebrow → title → description block:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```tsx
+<Section id="listings" tone="muted" spacing="lg">
+  <SectionHeading eyebrow="Featured" title="…" description="…" action={<Button …/>} />
+</Section>
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**3. One icon surface.** `src/components/common/icon.tsx` registers UI icons
+from `lucide-react` and brand icons from `react-icons/fa6`, with a locked size
+scale (`xs → xl`). Add an icon to the registry, then `<Icon name="bed" />`.
+
+**4. One motion vocabulary.** Durations and easings live in `src/lib/motion.ts`;
+components never hard-code them.
+
+```tsx
+<Reveal delay={0.1}>…</Reveal>                      // scroll-triggered entrance
+<Stagger><StaggerItem>…</StaggerItem></Stagger>     // lists and grids
+<Parallax speed={0.2} zoom>…</Parallax>             // scroll-linked layers
+<Counter to={12500} compact suffix="+" />
+<Marquee speed={40}>…</Marquee>
+```
+
+Everything degrades to a static render under `prefers-reduced-motion`, and
+Lenis smooth scrolling turns itself off for those users too.
+
+**5. Media always goes through a component.** `ImageFrame` wraps `next/image`
+with an aspect-ratio scale, `sizes` presets and a shimmer blur placeholder;
+`Gallery` adds the lightbox; `VideoEmbed` keeps YouTube/Vimeo off the page until
+someone presses play; `VideoPlayer` handles self-hosted files.
+
+Remote image hosts must be allowed in `next.config.ts` → `images.remotePatterns`.
+
+## Stack
+
+| Concern | Package |
+| --- | --- |
+| UI primitives | `shadcn/ui` (radix-nova style, Radix UI) |
+| Smooth scroll | `lenis` |
+| Animation | `motion` (Framer Motion) |
+| Icons | `lucide-react`, `react-icons/fa6` |
+| Lightbox | `yet-another-react-lightbox` |
+| Carousel | `embla-carousel-react` |
+| Theming | `next-themes` |
+| Toasts | `sonner` |
+
+Add more primitives with `pnpm dlx shadcn@latest add <component>`.

@@ -1,0 +1,24 @@
+import type { ReactNode } from "react";
+
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+
+import { SmoothScrollProvider } from "./smooth-scroll-provider";
+import { ThemeProvider } from "./theme-provider";
+
+/** Single mount point for every app-wide provider. Used by the root layout. */
+export function Providers({ children }: { children: ReactNode }) {
+  return (
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <TooltipProvider delayDuration={200}>
+        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <Toaster position="top-center" richColors />
+      </TooltipProvider>
+    </ThemeProvider>
+  );
+}

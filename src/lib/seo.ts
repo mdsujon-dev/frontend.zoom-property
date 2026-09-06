@@ -1,4 +1,6 @@
-import { faqs, listings, siteConfig, socialLinks } from "@/data/site";
+import { properties } from "@/data/properties";
+import { siteConfig, socialLinks } from "@/data/site";
+import { getDictionary } from "@/i18n/dictionaries";
 
 /**
  * Structured data builders. Keep every schema in here rather than inline in a
@@ -42,11 +44,12 @@ export function websiteSchema() {
 }
 
 /** Built from the `faqs` rendered in the FAQ accordion — keep the two in sync. */
-export function faqSchema() {
+export async function faqSchema() {
+  const dict = await getDictionary();
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
+    mainEntity: dict.content.faqs.map((faq) => ({
       "@type": "Question",
       name: faq.question,
       acceptedAnswer: { "@type": "Answer", text: faq.answer },
@@ -64,23 +67,25 @@ export function listingsSchema() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "Featured listings",
-    itemListElement: listings.map((listing, index) => ({
+    itemListElement: properties.map((property, index) => ({
       "@type": "ListItem",
       position: index + 1,
       item: {
         "@type": "Residence",
-        name: listing.title,
+        name: property.title,
         url: absoluteUrl("/#listings"),
-        image: listing.image,
+        image: property.images[0],
         address: {
           "@type": "PostalAddress",
-          addressLocality: listing.location,
+          addressLocality: property.area,
+          addressRegion: property.city,
+          addressCountry: "BD",
         },
-        numberOfBedrooms: listing.beds,
-        numberOfBathroomsTotal: listing.baths,
+        ...(property.beds > 0 ? { numberOfBedrooms: property.beds } : {}),
+        numberOfBathroomsTotal: property.baths,
         floorSize: {
           "@type": "QuantitativeValue",
-          value: listing.area,
+          value: property.size,
           unitCode: "FTK", // UN/CEFACT code for square foot
         },
       },

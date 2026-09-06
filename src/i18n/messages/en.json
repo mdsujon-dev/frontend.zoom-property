@@ -1,0 +1,450 @@
+{
+  "meta": {
+    "tagline": "Every property vetted before you step inside",
+    "description": "Buy, rent and invest in Dhaka and Chattogram property. Every listing RAJUK-checked, every price the real one, every agent answers in minutes."
+  },
+  "nav": {
+    "properties": "Properties",
+    "projects": "Projects",
+    "areas": "Areas",
+    "contact": "Contact",
+    "agents": "Advisors",
+    "about": "About us",
+    "bookViewing": "Book a viewing",
+    "openMenu": "Open menu",
+    "language": "Language",
+    "landowners": "Landowners",
+    "blog": "Market notes"
+  },
+  "hero": {
+    "badge": "RAJUK plan & title deed cleared",
+    "title": "Every property vetted before you step inside",
+    "lead": "Dhaka and Chattogram property, with the papers checked first. Live construction milestones, verified records and no hidden markup.",
+    "trust": {
+      "rajuk": "RAJUK plan verified",
+      "reply": "Advisors reply in ~11 min",
+      "photos": "Photos dated this month",
+      "fees": "Stamp duty itemised"
+    }
+  },
+  "listings": {
+    "eyebrow": "Curated portfolio",
+    "title": "Verified residences and commercial floors",
+    "description": "Every listing has been physically inspected by our survey team this month, with title deeds verified before it went online.",
+    "action": "Browse all properties",
+    "pageTitle": "Properties for sale and rent",
+    "pageDescription": "{count} listings, each physically inspected by our survey team and title-checked before upload. Filter by purpose, type and area below.",
+    "metaTitle": "Properties for sale and rent",
+    "metaDescription": "Verified apartments, duplexes, houses and commercial floors across Dhaka and Chattogram. Every listing inspected and title-checked before it goes live."
+  },
+  "areas": {
+    "eyebrow": "Micro-market intelligence",
+    "title": "Explore by prime enclave",
+    "description": "Average price per square foot, gross rental yield and security tier across Dhaka and Chattogram's most requested addresses.",
+    "action": "All neighbourhoods",
+    "pageTitle": "Neighbourhoods, with the numbers",
+    "pageDescription": "Most people pick an area before a price. Each tile carries what is listed there, the median, and what the middle of that market costs per square foot.",
+    "metaTitle": "Neighbourhoods in Dhaka and Chattogram",
+    "metaDescription": "Price per square foot, rental yield and security tier for Gulshan, Banani, Dhanmondi, Bashundhara, Uttara and Khulshi."
+  },
+  "projects": {
+    "eyebrow": "Under construction",
+    "title": "Milestone progress you can audit",
+    "description": "You pay in instalments for years before you get keys, so every project shows its audited structural stage and RAJUK permit — not a marketing render.",
+    "action": "All projects",
+    "pageTitle": "Projects under construction",
+    "pageDescription": "You pay in instalments for years before you get keys. Every project here shows its audited structural stage and permit number, updated monthly.",
+    "metaTitle": "Projects under construction",
+    "metaDescription": "Live construction progress on every Zoom Property development — audited structural stage, RAJUK permit and handover date, updated monthly from site photos."
+  },
+  "features": {
+    "eyebrow": "Institutional integrity",
+    "title": "The quality and legal safeguard",
+    "description": "The vetting that separates us from an unmoderated classifieds portal. None of it is clever — it is the work most portals skip because nobody checks."
+  },
+  "reviews": {
+    "eyebrow": "Client testimonials",
+    "title": "Real stories from people who bought here",
+    "description": "Every review names the property it came from, so you can check the claim against the listing.",
+    "pill": "Client testimonials",
+    "ratingNote": "Average across verified buyers and tenants in the last twelve months.",
+    "outOf": "out of 5",
+    "statLabel": "Buyers who came back or referred us",
+    "reviewCount": "verified reviews"
+  },
+  "agentsSection": {
+    "eyebrow": "Certified advisors",
+    "title": "Neighbourhood specialists, not a call centre",
+    "description": "Each advisor covers a handful of enclaves and nothing else. The reply time on every card is measured, not promised.",
+    "pageTitle": "Advisors, not a call centre",
+    "pageDescription": "Each one covers a handful of enclaves and nothing else. The reply time on every card is measured from real first responses, not promised.",
+    "metaTitle": "Our advisors",
+    "metaDescription": "Four neighbourhood specialists covering Gulshan, Banani, Dhanmondi, Uttara, Bashundhara and Chattogram. Measured reply times on every profile."
+  },
+  "gallery": {
+    "eyebrow": "Architectural photography",
+    "title": "Our photographs, not CGI renders",
+    "description": "Click any photograph for the full-screen pinch-and-zoom viewer."
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Legal, financial and handover questions",
+    "description": "Something specific about deed mutation or consular power of attorney? Call the desk — someone picks up."
+  },
+  "landowner": {
+    "eyebrow": "Landowner joint ventures",
+    "title": "Put your land into a development",
+    "description": "Guaranteed owner share, bank-secured signing advance, BNBC 2020 seismic compliance and a delivery pledge in the contract."
+  },
+  "about": {
+    "eyebrow": "Who we are",
+    "title": "Fewer listings, checked properly",
+    "description": "We publish less than the big portals because a listing does not go live until someone from our team has stood in it and read the paperwork.",
+    "metaTitle": "About us",
+    "metaDescription": "How Zoom Property vets a listing: physical inspection, RAJUK approval, title deed and mutation checked before anything goes online."
+  },
+  "contact": {
+    "eyebrow": "Get in touch",
+    "title": "Talk to an advisor",
+    "description": "Tell us the area, the budget and when you need to move. We come back with a shortlist, the papers and every cost on one page.",
+    "metaTitle": "Contact",
+    "metaDescription": "Talk to a Zoom Property advisor. Phone, WhatsApp and email for Dhaka and Chattogram, plus a dedicated desk for non-resident buyers.",
+    "channels": {
+      "call": "Call the desk",
+      "callNote": "Sat–Thu, 9am – 8pm BST",
+      "whatsapp": "WhatsApp",
+      "whatsappNote": "Best for photos and documents",
+      "email": "Email",
+      "emailNote": "Replies within one business hour"
+    },
+    "offices": "Offices",
+    "dhaka": "Dhaka",
+    "chattogram": "Chattogram",
+    "formTitle": "Send an enquiry",
+    "formLead": "One form, no account needed. An advisor picks it up, not an autoresponder.",
+    "form": {
+      "name": "Full name",
+      "namePlaceholder": "Your name",
+      "phone": "Phone",
+      "email": "Email",
+      "enquiry": "What is this about?",
+      "message": "Anything we should know?",
+      "messagePlaceholder": "Area, budget, how many bedrooms, when you need to move…",
+      "submit": "Send enquiry",
+      "submitting": "Sending…",
+      "privacy": "We reply within one business hour. Your details are not shared with developers or third parties.",
+      "successTitle": "Enquiry received",
+      "successBody": "An advisor will reply within one business hour.",
+      "options": {
+        "buy": "I want to buy",
+        "rent": "I want to rent",
+        "sell": "I want to list my property",
+        "landowner": "Landowner joint venture",
+        "nrb": "Buying from abroad (NRB)"
+      }
+    }
+  },
+  "search": {
+    "buy": "Buy",
+    "rent": "Rent",
+    "projects": "Under construction",
+    "commercial": "Commercial",
+    "location": "Location",
+    "anyLocation": "Any area",
+    "type": "Property type",
+    "anyType": "Any type",
+    "budget": "Budget",
+    "anyBudget": "Any budget",
+    "submit": "Search"
+  },
+  "cta": {
+    "eyebrow": "Uncompromising transparency",
+    "title": "Ready to see the shortlist?",
+    "description": "Send us your criteria. We compile the title deed records, schedule the visits and put every statutory cost on one page before you decide.",
+    "contact": "Contact the team"
+  },
+  "footer": {
+    "explore": "Explore",
+    "services": "Services",
+    "rights": "Limited · REHAB member",
+    "demo": "Demo data — not a live listing service."
+  },
+  "content": {
+    "stats": [
+      "Portfolio value vetted",
+      "RAJUK-cleared listings",
+      "On-time handover rate",
+      "Median days to close"
+    ],
+    "features": [
+      {
+        "title": "Seven-point deed and paper check",
+        "description": "RAJUK approval, CS/SA/RS/BS porcha, mutation and the non-encumbrance certificate, checked by a lawyer before the listing goes up."
+      },
+      {
+        "title": "Photographed this month",
+        "description": "Our own photography and 4K walkthroughs, dated. No stock renders, no recycled lobby shot from five years ago."
+      },
+      {
+        "title": "Live construction meter",
+        "description": "A real completion percentage on every under-construction development, from monthly site photos and a CCTV audit."
+      },
+      {
+        "title": "Median eleven-minute reply",
+        "description": "Advisors with measured response times shown on their card. WhatsApp and phone booking, no ticket queue."
+      },
+      {
+        "title": "Non-resident desk",
+        "description": "Timezone-matched private video tours, consular power of attorney processing, and dual-currency repatriation support."
+      },
+      {
+        "title": "No hidden markup",
+        "description": "Registration duty, stamp duty, local tax and legal fees itemised from the first call. The final number matches the first one."
+      }
+    ],
+    "faqs": [
+      {
+        "question": "What does “verified” actually mean on a listing?",
+        "answer": "A surveyor and a lawyer from our team visit in person, take timestamped photography, and check the RAJUK approved plan, mutation porcha, khatiyan and non-encumbrance certificate. If any link in the chain is doubtful, the listing is rejected."
+      },
+      {
+        "question": "Is the listed price the real price?",
+        "answer": "Yes. It reflects the agreement with the verified owner, and it is the number you negotiate down from. We hand you an exact closing-cost statement upfront — stamp duty, registration tax, gain tax and our fee — with nothing added later."
+      },
+      {
+        "question": "I live abroad. Can I buy without flying back?",
+        "answer": "Yes. We run live walkthroughs in your timezone, prepare the consular power of attorney for your nearest mission, and complete registration at the sub-registry office. Most purchases close in six to ten weeks without the buyer landing."
+      },
+      {
+        "question": "How do you track construction progress?",
+        "answer": "Our engineers inspect active sites every thirty days. The progress meter reflects audited milestones — piling, frame, MEP, interior — backed by dated site photography, not a developer brochure."
+      },
+      {
+        "question": "Can landowners partner on a joint venture?",
+        "answer": "Yes. Send the land details and we come back with a feasibility report, the owner share, bank-backed signing security and a delivery date written into the contract."
+      },
+      {
+        "question": "Do you arrange home loans?",
+        "answer": "We take your file to the banks currently offering the best rate for your profile and push pre-approval through in about seventy-two hours. We take nothing from the bank for it, so the recommendation is not bought."
+      }
+    ],
+    "services": [
+      {
+        "title": "Legal & title vetting",
+        "description": "Bar Council lawyers on staff who read every deed, porcha and encumbrance certificate before a listing goes live."
+      },
+      {
+        "title": "Construction audit",
+        "description": "Engineers who walk each active site every thirty days and sign off the completion figure you see on a project card."
+      },
+      {
+        "title": "Property management",
+        "description": "Security, service charge, tenant handover and maintenance for owners who are not in the country."
+      },
+      {
+        "title": "Interiors & handover",
+        "description": "Snag lists cleared, fit-out drawings and furnishing for buyers who want the keys and nothing else to do."
+      }
+    ]
+  },
+  "pages": {
+    "buying": {
+      "eyebrow": "How it works",
+      "title": "Five steps from shortlist to keys",
+      "description": "No stage starts before the previous one is signed off in writing. You always know what happens next and what it costs.",
+      "steps": [
+        {
+          "title": "Tell us the brief",
+          "body": "Area, budget, bedrooms, move-in date. Ten minutes on the phone, no account, no form-filling marathon."
+        },
+        {
+          "title": "Shortlist and visit",
+          "body": "Three to five that actually match, with the paperwork attached. We drive; you look."
+        },
+        {
+          "title": "Legal check",
+          "body": "Our lawyer reads the deed, the mutation and the non-encumbrance certificate before you pay anything."
+        },
+        {
+          "title": "Offer and finance",
+          "body": "We negotiate, and take your file to the banks with the best rate for your profile."
+        },
+        {
+          "title": "Registration and keys",
+          "body": "Sub-registry, stamp duty, mutation in your name. You leave with a folder holding every document."
+        }
+      ]
+    },
+    "construction": {
+      "eyebrow": "How we verify",
+      "title": "What a completion percentage actually means",
+      "description": "Every project passes the same five audited stages. The number only moves after our engineer has signed that stage off on site.",
+      "stages": [
+        {
+          "title": "Piling",
+          "body": "Soil test, pile load test, and the RAJUK permit posted on the boundary wall."
+        },
+        {
+          "title": "Structure",
+          "body": "Column and slab casting, with cube tests filed for every pour."
+        },
+        {
+          "title": "MEP",
+          "body": "Electrical, plumbing and lift shafts, checked before plaster closes the walls."
+        },
+        {
+          "title": "Finishing",
+          "body": "Flooring, joinery, sanitary and paint. The stage where timelines usually slip."
+        },
+        {
+          "title": "Handover",
+          "body": "Occupancy certificate, utility connections, snag list cleared with you present."
+        }
+      ]
+    },
+    "comparison": {
+      "eyebrow": "Side by side",
+      "title": "Compare every area on one screen",
+      "description": "The numbers people usually have to phone three agents to assemble.",
+      "columns": {
+        "area": "Area",
+        "listings": "Listings",
+        "median": "Median price",
+        "perSqft": "Per sq ft",
+        "yield": "Rental yield",
+        "security": "Security"
+      },
+      "note": "Medians come from listings closed in the last 90 days. Yield is gross, before service charge and tax."
+    },
+    "match": {
+      "eyebrow": "Getting matched",
+      "title": "You get one advisor, not a queue",
+      "description": "Your enquiry goes to the person who works that area, and they stay with you through to handover.",
+      "steps": [
+        {
+          "title": "By area, not by rota",
+          "body": "It routes to whoever covers that enclave, so the first answer already knows the building."
+        },
+        {
+          "title": "One name, start to finish",
+          "body": "The same advisor handles the visit, the negotiation and the registration day."
+        },
+        {
+          "title": "Response time on the record",
+          "body": "Every card shows a measured median. It is visible because it is measurable."
+        }
+      ]
+    },
+    "vetting": {
+      "eyebrow": "Our standard",
+      "title": "What a listing has to pass",
+      "description": "Seven checks. If one fails, the listing does not go online — which is why you find fewer results here than on the big portals.",
+      "checks": [
+        "RAJUK approved plan, matched against what is actually built",
+        "Title deed traced through the CS, SA, RS and BS records",
+        "Mutation in the current owner name",
+        "Non-encumbrance certificate from the sub-registry",
+        "Physical inspection by our surveyor, dated",
+        "Our own photography, taken the same month",
+        "Asking price confirmed by the owner in writing"
+      ]
+    },
+    "milestones": {
+      "eyebrow": "Our story",
+      "title": "How we got here",
+      "items": [
+        {
+          "year": "2018",
+          "title": "Started as two agents",
+          "body": "A Gulshan desk and one promise: no listing without the deed."
+        },
+        {
+          "year": "2020",
+          "title": "First legal team",
+          "body": "Brought a Bar Council lawyer in-house rather than outsourcing verification."
+        },
+        {
+          "year": "2022",
+          "title": "Construction audits",
+          "body": "Began monthly site inspections so progress figures came from us, not from developers."
+        },
+        {
+          "year": "2024",
+          "title": "Non-resident desk",
+          "body": "Consular power of attorney handling for buyers who could not fly back."
+        },
+        {
+          "year": "2026",
+          "title": "Chattogram office",
+          "body": "Khulshi and CDA Avenue, run exactly the way Dhaka is."
+        }
+      ]
+    }
+  },
+  "services": {
+    "eyebrow": "In-house units",
+    "title": "The teams behind a sale",
+    "description": "Four units we run ourselves rather than subcontract, because every one of them is a place a purchase usually goes wrong.",
+    "cta": "Learn more"
+  },
+  "showcase": {
+    "eyebrow": "Film",
+    "title": "A rooftop in Gulshan, at dusk",
+    "description": "Three minutes on one building — the pool deck, the sky lounge and the view that sells it. Shot by our team, not the developer.",
+    "play": "Play the film",
+    "duration": "3 min"
+  },
+  "landowners": {
+    "eyebrow": "Landowners",
+    "title": "Put your land into a development",
+    "description": "You keep the land in your name until the deed is signed, the owner share is fixed in writing, and the delivery date is a contract term rather than a promise.",
+    "metaTitle": "Landowner joint ventures",
+    "metaDescription": "Joint-venture development for landowners in Dhaka and Chattogram. Fixed owner share, bank-secured signing advance, BNBC 2020 seismic compliance and a contractual delivery date.",
+    "benefitsTitle": "What the agreement gives you",
+    "benefitsLead": "The four terms landowners ask about first, answered before you send us the deed.",
+    "builtTitle": "Built with landowners",
+    "builtLead": "Completed joint ventures, with the share the owner actually received.",
+    "columns": {
+      "project": "Project",
+      "land": "Land",
+      "floors": "Floors",
+      "share": "Owner share",
+      "completed": "Completed"
+    },
+    "stepsTitle": "How a joint venture runs",
+    "steps": [
+      {
+        "title": "Send the papers",
+        "body": "Deed, mutation and the plot address. We check the title before anyone talks about ratios."
+      },
+      {
+        "title": "Feasibility report",
+        "body": "What can legally be built on that plot, how many units, and the share we can offer. In writing, within two weeks."
+      },
+      {
+        "title": "Agreement and advance",
+        "body": "Owner share, signing advance held in bank escrow, and the handover date all fixed in the deed of agreement."
+      },
+      {
+        "title": "Build and handover",
+        "body": "Monthly progress you can audit, and your units handed over with the occupancy certificate."
+      }
+    ]
+  },
+  "blog": {
+    "eyebrow": "Market notes",
+    "title": "Written for the question you already have",
+    "description": "Short, specific pieces on the legal, financial and market questions that come up before a purchase. No listicles.",
+    "metaTitle": "Market notes and guides",
+    "metaDescription": "Legal checklists, market reads and non-resident buying guides for Dhaka and Chattogram property, written by the Zoom Property team.",
+    "readTime": "min read",
+    "all": "All",
+    "categories": {
+      "Market": "Market",
+      "Legal": "Legal",
+      "Guide": "Guide",
+      "NRB": "NRB"
+    },
+    "readMore": "Read more"
+  }
+}

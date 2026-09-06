@@ -1,94 +1,116 @@
-import { Container } from "@/components/common/container";
-import { Heading } from "@/components/common/heading";
-import { Icon } from "@/components/common/icon";
-import { Text } from "@/components/common/text";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import { mainNav, siteConfig, socialLinks } from "@/data/site";
+import Link from "next/link";
 
-export function SiteFooter() {
+import { Icon } from "@/components/common/icon";
+import { Container } from "@/components/common/container";
+import { Logo } from "@/components/layout/logo";
+import { Text } from "@/components/common/text";
+import { footerNav, siteConfig, socialLinks } from "@/data/site";
+import { getDictionary, getLocale } from "@/i18n/dictionaries";
+import { localeHref } from "@/i18n/href";
+import { mailHref, telHref } from "@/lib/contact";
+
+/**
+ * Footer.
+ *
+ * Sits on `--footer`, a deeper cut of the brand navy than `--primary` so the
+ * page closes off rather than just repeating the button colour. Nothing here
+ * uses the foreground / muted-foreground tokens — those resolve to near-black
+ * in the light palette and would be unreadable — so text is
+ * `footer-foreground` at varying opacity, and the logo uses the white lockup.
+ *
+ * Three columns rather than four, and no newsletter form — it was asking for an
+ * email before the visitor had a reason to give one, and it squeezed the
+ * contact details into a cramped column.
+ */
+export async function SiteFooter() {
+  const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
+  const labels: Record<string, string> = { ...dict.nav, ...dict.footer };
+
   return (
-    <footer className="border-t border-border bg-muted/30">
-      <Container className="py-16">
-        <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr_1fr]">
+    <footer className="bg-footer text-footer-foreground">
+      <Container className="py-14">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
           <div className="flex flex-col gap-4">
-            <span className="flex items-center gap-2 font-heading text-h6 font-semibold">
-              <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <Icon name="building" size="sm" />
-              </span>
-              {siteConfig.name}
-            </span>
-            <Text size="sm" className="max-w-sm">
-              {siteConfig.description}
+            <Link href={localeHref(locale, "/")} aria-label={siteConfig.name}>
+              {/* White lockup — the navy one would vanish into the background. */}
+              <Logo variant="onDark" className="h-9 w-auto" />
+            </Link>
+
+            <Text
+              size="sm"
+              className="max-w-sm leading-relaxed text-footer-foreground/70"
+            >
+              {dict.meta.description}
             </Text>
+
+            <div className="flex flex-col gap-1.5 pt-1">
+              <a
+                href={telHref(siteConfig.phone)}
+                className="flex w-fit items-center gap-2 whitespace-nowrap text-sm font-semibold text-footer-foreground transition-opacity hover:opacity-75"
+              >
+                <Icon name="phone" size="xs" />
+                {siteConfig.phone}
+              </a>
+              <a
+                href={mailHref(siteConfig.email)}
+                className="flex w-fit items-center gap-2 text-sm text-footer-foreground/70 transition-colors hover:text-footer-foreground"
+              >
+                <Icon name="mail" size="xs" />
+                {siteConfig.email}
+              </a>
+              <span className="flex items-start gap-2 text-sm text-footer-foreground/70">
+                <Icon name="location" size="xs" className="mt-1 shrink-0" />
+                {siteConfig.address}
+              </span>
+            </div>
+
             <div className="flex flex-wrap gap-2 pt-2">
               {socialLinks.map((social) => (
-                <Button
+                <a
                   key={social.label}
-                  asChild
-                  variant="ghost"
-                  size="icon-lg"
-                  className="rounded-full"
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={social.label}
+                  className="flex size-9 items-center justify-center rounded-lg border border-footer-foreground/25 text-footer-foreground/80 transition-colors hover:border-footer-foreground/60 hover:bg-footer-foreground/10 hover:text-footer-foreground"
                 >
-                  <a
-                    href={social.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={social.label}
-                  >
-                    <Icon name={social.icon} size="sm" />
-                  </a>
-                </Button>
+                  <Icon name={social.icon} size="xs" />
+                </a>
               ))}
             </div>
           </div>
 
-          <nav className="flex flex-col gap-3">
-            <Heading as="h3" size="h6">
-              Explore
-            </Heading>
-            {mainNav.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          <div className="flex flex-col gap-3">
-            <Heading as="h3" size="h6">
-              New listings, weekly
-            </Heading>
-            <Text size="sm">
-              One email, every Thursday. The homes worth a second look.
-            </Text>
-            <form className="flex gap-2 pt-1">
-              <Input
-                type="email"
-                required
-                placeholder="you@example.com"
-                aria-label="Email address"
-              />
-              <Button type="submit" size="lg">
-                Subscribe
-              </Button>
-            </form>
-          </div>
-        </div>
-
-        <Separator className="my-10" />
-
-        <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-          <Text size="xs">
-            © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
-          </Text>
-          <Text size="xs">Built with Next.js, Tailwind CSS and shadcn/ui.</Text>
+          {footerNav.map((group) => (
+            <nav key={group.key} className="flex flex-col gap-3">
+              <h3 className="font-heading text-h6 text-footer-foreground">
+                {labels[group.key]}
+              </h3>
+              {group.links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={localeHref(locale, link.href)}
+                  className="text-sm text-footer-foreground/70 transition-colors hover:text-footer-foreground"
+                >
+                  {labels[link.key]}
+                </Link>
+              ))}
+            </nav>
+          ))}
         </div>
       </Container>
+
+      {/* Slim bottom bar: one line of small print, so it gets a hairline rule
+          and just enough padding to clear the text — not another section. */}
+      <div className="border-t border-footer-foreground/15">
+        <Container className="flex flex-col items-center justify-between gap-1 py-3 text-footer-foreground/60 sm:flex-row">
+          <Text size="xs" tone="inverse" className="text-footer-foreground/60">
+            © {new Date().getFullYear()} {siteConfig.name} {dict.footer.rights}
+          </Text>
+          <Text size="xs" tone="inverse" className="text-footer-foreground/60">
+            {dict.footer.demo}
+          </Text>
+        </Container>
+      </div>
     </footer>
   );
 }

@@ -1,102 +1,139 @@
-import { Icon, type IconName } from "@/components/common/icon";
 import { Heading } from "@/components/common/heading";
+import { Icon, type IconName } from "@/components/common/icon";
 import { Text } from "@/components/common/text";
 import { ImageFrame } from "@/components/media/image-frame";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { formatCurrency, formatNumber } from "@/lib/format";
+import type { Property } from "@/data/properties";
+import { formatArea, formatBdt, formatKatha, formatRent } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 export interface PropertyCardProps {
-  title: string;
-  location: string;
-  price: number;
-  beds: number;
-  baths: number;
-  /** Floor area in sq ft. */
-  area: number;
-  image: string;
-  tag?: string;
+  property: Property;
   className?: string;
+  featured?: boolean;
 }
 
-const specIcon: Record<"beds" | "baths" | "area", IconName> = {
-  beds: "bed",
-  baths: "bath",
-  area: "area",
-};
-
 export function PropertyCard({
-  title,
-  location,
-  price,
-  beds,
-  baths,
-  area,
-  image,
-  tag,
+  property,
   className,
+  featured = false,
 }: PropertyCardProps) {
-  const specs = [
-    { key: "beds" as const, value: `${beds} beds` },
-    { key: "baths" as const, value: `${baths} baths` },
-    { key: "area" as const, value: `${formatNumber(area)} sq ft` },
+  const {
+    title,
+    area,
+    city,
+    price,
+    purpose,
+    beds,
+    baths,
+    size,
+    katha,
+    images,
+    badge,
+    rajukApproved,
+    hasVirtualTour,
+    furnishing,
+    handover,
+  } = property;
+
+  const specs: { icon: IconName; label: string }[] = [
+    ...(beds > 0 ? [{ icon: "bed" as const, label: `${beds} Beds` }] : []),
+    { icon: "bath", label: `${baths} Baths` },
+    { icon: "area", label: formatArea(size) },
+    ...(katha ? [{ icon: "location" as const, label: formatKatha(katha) }] : []),
   ];
 
   return (
     <Card
       className={cn(
-        "group h-full overflow-hidden p-0 transition-shadow duration-500 ease-out-expo hover:shadow-xl",
+        "group h-full overflow-hidden p-0 border border-border bg-card transition-all duration-500 ease-out-expo hover:border-primary/60 hover:shadow-xl hover:-translate-y-1",
         className,
       )}
     >
       <ImageFrame
-        src={image}
-        alt={`${title} in ${location}`}
-        ratio="4/3"
+        src={images[0]}
+        alt={`${title}, ${area}`}
+        ratio={featured ? "3/2" : "4/3"}
         rounded="none"
         hover="zoom"
         sizes="card"
       >
-        {tag ? (
-          <Badge className="absolute left-4 top-4 shadow-sm">{tag}</Badge>
-        ) : null}
+        <div className="absolute left-3 top-3 flex flex-wrap gap-1.5 z-10">
+          {badge ? (
+            <Badge
+              className="bg-primary text-primary-foreground font-semibold px-2.5 py-1 text-xs shadow-md border-0"
+            >
+              {badge}
+            </Badge>
+          ) : null}
+
+          {hasVirtualTour ? (
+            <span className="flex items-center gap-1 rounded-full bg-black/70 px-2.5 py-1 text-[11px] font-medium text-white border border-white/20 backdrop-blur-md">
+              <span className="size-1.5 rounded-full bg-primary animate-pulse" />
+              360° Tour
+            </span>
+          ) : null}
+        </div>
+
+        <span className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-black/70 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-md border border-white/15">
+          <Icon name="gallery" size="xs" />
+          {images.length}
+        </span>
       </ImageFrame>
 
-      <CardContent className="flex flex-col gap-3 px-5">
-        <div className="flex items-start justify-between gap-3">
-          <Heading as="h3" size="h5">
-            {title}
-          </Heading>
-          <span className="shrink-0 font-heading text-h5 text-primary">
-            {formatCurrency(price)}
+      <CardContent className="flex flex-col gap-3 px-5 pt-5 pb-2">
+        <div className="flex items-baseline justify-between gap-3">
+          <span className="font-heading text-h4 font-bold text-primary tracking-tight">
+            {purpose === "rent" ? formatRent(price) : formatBdt(price)}
+          </span>
+          <span className="rounded-md bg-primary/15 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-primary border border-primary/25">
+            For {purpose}
           </span>
         </div>
 
-        <Text size="sm" className="flex items-center gap-1.5">
-          <Icon name="location" size="xs" />
-          {location}
-        </Text>
+        <div className="flex flex-col gap-1">
+          <Heading as="h3" size="h6" weight="medium" className="text-foreground group-hover:text-primary transition-colors">
+            {title}
+          </Heading>
+          <Text size="sm" className="flex items-center gap-1.5 text-muted-foreground">
+            <Icon name="location" size="xs" className="text-primary/70" />
+            {area}, {city}
+          </Text>
+        </div>
 
-        <ul className="flex flex-wrap gap-x-5 gap-y-2 pt-1">
+        <ul className="flex flex-wrap gap-x-4 gap-y-2 pt-2 border-t border-primary/10">
           {specs.map((spec) => (
             <li
-              key={spec.key}
-              className="flex items-center gap-1.5 text-sm text-muted-foreground"
+              key={spec.label}
+              className="flex items-center gap-1.5 text-xs text-foreground/80 font-medium"
             >
-              <Icon name={specIcon[spec.key]} size="xs" />
-              {spec.value}
+              <Icon name={spec.icon} size="xs" className="text-primary" />
+              {spec.label}
             </li>
           ))}
         </ul>
       </CardContent>
 
-      <CardFooter className="px-5 pb-5">
-        <Button variant="outline" size="lg" className="w-full">
-          View details
-          <Icon name="arrowUpRight" size="xs" />
-        </Button>
+      <CardFooter className="mt-auto flex flex-wrap items-center justify-between gap-2 border-t border-border px-5 py-3.5 bg-muted/40">
+        {rajukApproved ? (
+          <span className="flex items-center gap-1.5 text-xs font-semibold text-primary">
+            <Icon name="approved" size="xs" />
+            RAJUK Approved
+          </span>
+        ) : (
+          <span className="text-xs text-muted-foreground">Title in review</span>
+        )}
+        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <span className="flex items-center gap-1">
+            <Icon name="furnishing" size="xs" />
+            {furnishing}
+          </span>
+          <span className="flex items-center gap-1">
+            <Icon name="handover" size="xs" />
+            {handover}
+          </span>
+        </div>
       </CardFooter>
     </Card>
   );

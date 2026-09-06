@@ -1,25 +1,54 @@
 import type { MetadataRoute } from "next";
 
-import { galleryImages, listings, siteConfig } from "@/data/site";
+import { properties } from "@/data/properties";
+import { galleryImages, siteConfig } from "@/data/site";
+import { DEFAULT_LOCALE, LOCALES, LOCALE_TAGS } from "@/i18n/config";
 
 /**
- * One route exists today: `/`. The entries in `mainNav` (`#listings`,
- * `#gallery`, `#tour`, `#faq`) are anchors on that page, not URLs — never list
- * them here. Add real entries as `/listings/[slug]` and friends land.
+ * Every route in every locale, each carrying the full hreflang alternate set —
+ * that is what tells Google the two language versions are the same page rather
+ * than duplicates.
  *
- * The images are declared so the home page's media is eligible for Google
- * Images; `changeFrequency` and `priority` are omitted because Google ignores
- * them.
+ * `changeFrequency` and `priority` are omitted because Google ignores both.
  */
+const ROUTES = [
+  "",
+  "/properties",
+  "/projects",
+  "/areas",
+  "/agents",
+  "/landowners",
+  "/blog",
+  "/about",
+  "/contact",
+] as const;
+
+const url = (locale: string, route: string) =>
+  `${siteConfig.url}/${locale}${route}`;
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: siteConfig.url,
-      lastModified: new Date(),
-      images: [
-        ...listings.map((listing) => listing.image),
-        ...galleryImages.map((image) => image.src),
-      ],
-    },
-  ];
+  const lastModified = new Date();
+
+  return LOCALES.flatMap((locale) =>
+    ROUTES.map((route) => ({
+      url: url(locale, route),
+      lastModified,
+      alternates: {
+        languages: {
+          ...Object.fromEntries(
+            LOCALES.map((l) => [LOCALE_TAGS[l], url(l, route)]),
+          ),
+          "x-default": url(DEFAULT_LOCALE, route),
+        },
+      },
+      ...(route === ""
+        ? {
+            images: [
+              ...properties.map((property) => property.images[0]),
+              ...galleryImages.map((image) => image.src),
+            ],
+          }
+        : {}),
+    })),
+  );
 }

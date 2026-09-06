@@ -2,14 +2,22 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+@plugin "tailwind-scrollbar";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-footer: var(--footer);
+  --color-footer-foreground: var(--footer-foreground);
+  /* Bengali sits in every stack so the `bn` locale renders in Noto Sans Bengali
+     instead of dropping to whatever the OS happens to have. */
+  --font-sans: var(--font-sans), var(--font-bengali), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-display), var(--font-bengali), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -49,72 +57,81 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
+  /* ---------------------------------------------------------------------- */
+  /*  Zoom Property brand palette — Basic Brand Guideline                    */
+  /*                                                                         */
+  /*  Primary   #133050  deep navy   (guideline, "Primary Color")            */
+  /*            #2867A0  mid blue    (guideline, "Primary Color")            */
+  /*  Accent    #C00918  brand red   (measured off the logo artwork)         */
+  /*                                                                         */
+  /*  Brand values are written as hex, not oklch, so they stay exactly the    */
+  /*  numbers in the guideline rather than a round-tripped approximation.     */
+  /*                                                                         */
+  /*  NOTE: the guideline labels the red swatch "495045", which renders as a  */
+  /*  dark olive grey, not the red shown next to it. The logo art samples as  */
+  /*  a #820918 → #C00918 gradient, so #C00918 is used. Worth confirming.     */
+  /* ---------------------------------------------------------------------- */
+  --brand-navy: #133050;
+  --brand-navy-deep: #0a1b2d;
+  --brand-blue: #2867a0;
+  --brand-red: #c00918;
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Footer ground. A deeper cut of the brand navy — dark enough to close the
+     page off, still unmistakably the same colour as the primary buttons.
+     White on it clears 16:1. */
+  --footer: #0a1b2d;
+  --footer-foreground: #ffffff;
+
+  --background: #ffffff;
+  --foreground: #101f31;              /* navy-tinted near-black body text */
+  --card: #ffffff;
+  --card-foreground: #101f31;
+  --popover: #ffffff;
+  --popover-foreground: #101f31;
+
+  --primary: #133050;                 /* 13.4:1 with white text */
+  --primary-foreground: #ffffff;
+
+  --secondary: #eef3f8;               /* pale navy wash */
+  --secondary-foreground: #133050;
+
+  --muted: #f2f6fa;
+  --muted-foreground: #5b6b7d;        /* 4.9:1 on --background */
+
+  /* shadcn uses --accent as the *hover / focus surface* for menu and select
+     items (`focus:bg-accent`), not as a brand colour. Putting the brand red
+     here painted every open dropdown item bright red. It is a quiet wash; the
+     brand red lives in --brand below. */
+  --accent: #eef3f8;
+  --accent-foreground: #133050;
+
+  /* The brand red, for the few places that genuinely want it: rating stars,
+     eyebrow dots, small emphasis marks. 6.6:1 with white text. */
+  --brand: #c00918;
+  --brand-foreground: #ffffff;
+
+  --destructive: #c00918;
+
+  --border: #dee6ee;
+  --input: #cbd7e3;
+  --ring: #2867a0;
+
+  --chart-1: #133050;
+  --chart-2: #2867a0;
+  --chart-3: #c00918;
+  --chart-4: #6b9cc9;
+  --chart-5: #9fbcd6;
+
+  --radius: 0.5rem;                   /* 8px — inputs, buttons, cards */
+
+  --sidebar: #f7fafc;
+  --sidebar-foreground: #101f31;
+  --sidebar-primary: #133050;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eef3f8;
+  --sidebar-accent-foreground: #133050;
+  --sidebar-border: #dee6ee;
+  --sidebar-ring: #2867a0;
 }
 
 @layer base {
@@ -126,6 +143,86 @@
   }
   html {
     @apply font-sans;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Scrollbar — tailwind-scrollbar                                     */
+  /*                                                                     */
+  /*  The plugin writes both standards at once: `scrollbar-width` /      */
+  /*  `scrollbar-color` for Firefox and current Chrome, and the          */
+  /*  `::-webkit-scrollbar` pseudo-elements for everything older. One    */
+  /*  set of classes instead of two hand-maintained rule blocks.         */
+  /*                                                                     */
+  /*  Applied to `html` so inner scroll containers (the area comparison  */
+  /*  table, the mobile nav sheet) inherit it.                           */
+  /* ------------------------------------------------------------------ */
+  html {
+    @apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary/35 hover:scrollbar-thumb-primary/60;
+
+    /* Radius is set through the plugin's own custom property rather than its
+     * `scrollbar-thumb-rounded-*` class: that utility is registered from the
+     * legacy `theme(borderRadius)` scale, which Tailwind v4 does not define, so
+     * the class never exists — not even with an arbitrary value. The variable
+     * is what the utility would have written anyway. */
+    --scrollbar-thumb-radius: 999px;
+
+    /* Reserve the gutter permanently.
+     *
+     * Radix (Select, Sheet, Dialog) locks scrolling by setting
+     * `overflow: hidden` on the body. Without a reserved gutter the scrollbar
+     * disappears, the viewport gains its width back, and everything — most
+     * visibly the fixed header — jumps sideways for as long as the overlay is
+     * open. With `stable` the space stays whether or not the bar is drawn. */
+    scrollbar-gutter: stable;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /*  Scroll lock                                                        */
+  /*                                                                     */
+  /*  Radix overlays lock the page through react-remove-scroll, which    */
+  /*  stamps `data-scroll-locked` on the body and injects                */
+  /*                                                                     */
+  /*      body[data-scroll-locked] { overflow: hidden; padding-right: N }*/
+  /*                                                                     */
+  /*  Two problems with that here:                                       */
+  /*                                                                     */
+  /*  1. `overflow: hidden` removes the scrollbar. On a Select that is   */
+  /*     wrong — a native <select> does not freeze the page — and the    */
+  /*     bar vanishing mid-interaction reads as a glitch.                */
+  /*  2. The padding is a second correction for a shift that cannot      */
+  /*     happen any more, because `scrollbar-gutter: stable` above       */
+  /*     already reserves the space. Left alone it pushes content left.  */
+  /*                                                                     */
+  /*  A Sheet or Dialog *is* modal, so those keep the lock. `:has()`     */
+  /*  tells the two cases apart: the rule only releases the page when no */
+  /*  sheet or dialog is open, i.e. when a Select or dropdown locked it. */
+  /*                                                                     */
+  /*  `!important` because the rules being overridden are injected at    */
+  /*  runtime by the library, not authored here.                         */
+  /* ------------------------------------------------------------------ */
+  body[data-scroll-locked]:not(
+      :has(
+          [data-slot="sheet-content"][data-state="open"],
+          [data-slot="dialog-content"][data-state="open"]
+        )
+    ) {
+    /* Every declaration the library injects is listed, not just `overflow`:
+       leaving any of them in place lets the body geometry change by a pixel or
+       two as an overlay opens, which reads as a flinch. */
+    overflow: visible !important;
+    overscroll-behavior: auto !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    padding-top: 0 !important;
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* A Sheet or Dialog keeps its lock, but never the width compensation — the
+     gutter above is already reserved, so padding here would shift the page. */
+  body[data-scroll-locked] {
+    padding-right: 0 !important;
   }
 }
 /* -------------------------------------------------------------------------- */
@@ -238,6 +335,33 @@
       transparent
     );
   }
+
+  /* Luxury Night Mode Glassmorphism & Gold Styling */
+  .glass-night {
+    background-color: oklch(0.16 0.018 58 / 82%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid oklch(0.612 0.155 64.2 / 18%);
+  }
+
+  /* Brand elevation. Navy in light mode, the lifted blue in dark, so a raised
+     surface reads as brand rather than as a grey drop shadow. */
+  .brand-glow {
+    box-shadow: 0 18px 45px -18px color-mix(in oklab, var(--brand-navy) 45%, transparent);
+  }
+
+  .brand-glow-subtle {
+    box-shadow: 0 10px 30px -12px color-mix(in oklab, var(--brand-navy) 28%, transparent);
+  }
+
+
+  /* The logo's red gradient, for a word or two of emphasis. */
+  .brand-gradient-text {
+    background: linear-gradient(135deg, #c00918 0%, #820918 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
 }
 
 /* Lenis (smooth scroll) required styles — see SmoothScrollProvider. */

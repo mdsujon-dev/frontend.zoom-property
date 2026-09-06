@@ -22,4 +22,52 @@ export function formatCurrency(value: number, currency = "USD") {
   }).format(value);
 }
 
+const LAKH = 100_000;
+const CRORE = 10_000_000;
+
+/**
+ * Prices the way people here actually say them.
+ *
+ * `৳2,75,00,000` is technically correct and unreadable at a glance; nobody
+ * scanning a listing grid counts digits. Lakh/crore is how the number is spoken,
+ * so that is how it is shown. Pass `exact` for a detail page where the full
+ * figure matters.
+ */
+export function formatBdt(value: number, options?: { exact?: boolean }) {
+  if (options?.exact) {
+    return `৳${new Intl.NumberFormat("en-IN", {
+      maximumFractionDigits: 0,
+    }).format(value)}`;
+  }
+
+  if (value >= CRORE) {
+    return `৳${trimZeros(value / CRORE)} Cr`;
+  }
+
+  if (value >= LAKH) {
+    return `৳${trimZeros(value / LAKH)} Lakh`;
+  }
+
+  return `৳${new Intl.NumberFormat("en-IN").format(value)}`;
+}
+
+/** Monthly rent reads differently from a sale price — keep the unit attached. */
+export function formatRent(value: number) {
+  return `${formatBdt(value)}/mo`;
+}
+
+/** 2.50 → "2.5", 3.00 → "3" — trailing zeros are noise in a price. */
+function trimZeros(value: number) {
+  return Number(value.toFixed(2)).toString();
+}
+
+/** "1,840 sq ft" — area is always sq ft here, land is always katha. */
+export function formatArea(sqft: number) {
+  return `${numberFormatter.format(sqft)} sq ft`;
+}
+
+export function formatKatha(katha: number) {
+  return `${katha} katha`;
+}
+
 export { numberFormatter };

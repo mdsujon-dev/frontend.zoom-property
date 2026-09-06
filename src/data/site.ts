@@ -1,11 +1,20 @@
 import type { IconName } from "@/components/common/icon";
 
+/**
+ * Every canonical, OG and sitemap URL is built from this. Set
+ * `NEXT_PUBLIC_SITE_URL` to the real origin (no trailing slash) in each
+ * environment — see `.env.example`. The localhost fallback is deliberate: a
+ * wrong-but-plausible domain would ship broken canonicals silently, localhost
+ * shows up the moment you look at the rendered tags.
+ */
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 export const siteConfig = {
   name: "Zoom Property",
   tagline: "Find the address you have been looking for",
   description:
     "A modern property platform — curated listings, virtual tours and a team that answers before the market moves.",
-  url: "https://zoom-property.example.com",
+  url: siteUrl,
 } as const;
 
 export const mainNav = [

@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { Container } from "@/components/common/container";
 import { Eyebrow, Heading } from "@/components/common/heading";
+import { JsonLd } from "@/components/common/json-ld";
 import { Icon } from "@/components/common/icon";
 import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
@@ -36,6 +37,7 @@ import {
   stats,
 } from "@/data/site";
 import { shimmerDataUrl } from "@/lib/image";
+import { faqSchema, listingsSchema } from "@/lib/seo";
 
 const HERO_IMAGE =
   "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2000&q=80";
@@ -43,6 +45,11 @@ const HERO_IMAGE =
 export default function Home() {
   return (
     <>
+      {/* Describes what this page actually renders: the FAQ accordion and the
+          featured listings grid. */}
+      <JsonLd schema={faqSchema()} />
+      <JsonLd schema={listingsSchema()} />
+
       {/* ---------------------------------------------------------------- Hero */}
       <section className="relative isolate flex min-h-[92svh] items-end overflow-hidden">
         <Parallax speed={0.18} zoom className="absolute inset-0 -z-10">

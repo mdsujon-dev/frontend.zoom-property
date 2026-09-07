@@ -1,4 +1,4 @@
-import { Container } from "@/components/common/container";
+import { AppContainer } from "@/components/common/app-container";
 import { Heading } from "@/components/common/heading";
 import { Icon } from "@/components/common/icon";
 import { SectionHeading } from "@/components/common/section-heading";
@@ -18,7 +18,7 @@ export async function ServicesShowcase() {
     >
       <div aria-hidden className="absolute inset-0 -z-10 bg-black/75" />
 
-      <Container>
+      <AppContainer>
         <SectionHeading
           title={dict.services.title}
           tone="inverse"
@@ -63,7 +63,7 @@ export async function ServicesShowcase() {
             );
           })}
         </Stagger>
-      </Container>
+      </AppContainer>
     </section>
   );
 }

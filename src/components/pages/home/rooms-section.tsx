@@ -1,4 +1,4 @@
-import { Container } from "@/components/common/container";
+import { AppContainer } from "@/components/common/app-container";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { RoomsAccordion } from "./rooms-accordion";
@@ -11,7 +11,7 @@ export async function RoomsSection() {
 
   return (
     <section className="border-t border-border bg-muted/30 py-16 sm:py-24">
-      <Container size="lg">
+      <AppContainer size="lg">
         <SectionHeading
           title={dict.rooms.title}
           align="center"
@@ -25,7 +25,7 @@ export async function RoomsSection() {
             contactHref={localeHref(locale, "/contact")}
           />
         </Reveal>
-      </Container>
+      </AppContainer>
     </section>
   );
 }

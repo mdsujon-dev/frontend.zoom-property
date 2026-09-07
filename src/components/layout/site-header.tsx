@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 import { useLenis } from "lenis/react";
 
-import { Container } from "@/components/common/container";
+import { AppContainer } from "@/components/common/app-container";
 import { Icon } from "@/components/common/icon";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { Logo } from "@/components/layout/logo";
@@ -92,7 +92,7 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) 
       )}
     >
 
-      <Container className="relative flex h-16 items-center justify-between gap-4 sm:h-20">
+      <AppContainer className="relative flex h-16 items-center justify-between gap-4 sm:h-20">
         <Link href={home} aria-label={siteConfig.name} className="shrink-0">
           <Logo
             priority
@@ -224,7 +224,7 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) 
             </SheetContent>
           </Sheet>
         </div>
-      </Container>
+      </AppContainer>
     </motion.header>
   );
 }

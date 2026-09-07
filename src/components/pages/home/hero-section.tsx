@@ -1,5 +1,5 @@
 import Image from "@/components/common/image";
-import { Container } from "@/components/common/container";
+import { AppContainer } from "@/components/common/app-container";
 import { Heading } from "@/components/common/heading";
 import { Icon, type IconName } from "@/components/common/icon";
 import { Text } from "@/components/common/text";
@@ -46,7 +46,7 @@ export async function HeroSection() {
         className="absolute inset-0 -z-10 bg-linear-to-t from-black via-black/70 to-black/40"
       />
 
-      <Container className="pb-16 pt-36">
+      <AppContainer className="pb-16 pt-36">
         <div className="flex max-w-4xl flex-col gap-6">
           <Reveal>
             <Badge className="w-fit gap-1.5 px-3 py-1 text-xs font-semibold">
@@ -83,7 +83,7 @@ export async function HeroSection() {
             ))}
           </ul>
         </Reveal>
-      </Container>
+      </AppContainer>
     </section>
   );
 }

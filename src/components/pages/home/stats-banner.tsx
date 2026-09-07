@@ -1,5 +1,5 @@
 import Image from "@/components/common/image";
-import { Container } from "@/components/common/container";
+import { AppContainer } from "@/components/common/app-container";
 import { Counter } from "@/components/motion/counter";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -69,7 +69,7 @@ export async function StatsBanner({
       </div>
 
       {/* Foreground Stats Content Layer (z-20) */}
-      <Container size="lg" className="relative z-20">
+      <AppContainer size="lg" className="relative z-20">
         <Stagger className="grid grid-cols-2 gap-y-6 gap-x-6 sm:gap-8 md:grid-cols-4 md:gap-8">
           {stats.map((item, index) => (
             <StaggerItem
@@ -90,7 +90,7 @@ export async function StatsBanner({
             </StaggerItem>
           ))}
         </Stagger>
-      </Container>
+      </AppContainer>
     </section>
   );
 }

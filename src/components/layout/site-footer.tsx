@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { Icon } from "@/components/common/icon";
-import { Container } from "@/components/common/container";
+import { AppContainer } from "@/components/common/app-container";
 import { Logo } from "@/components/layout/logo";
 import { Text } from "@/components/common/text";
 import { footerNav, siteConfig, socialLinks } from "@/data/site";
@@ -28,7 +28,7 @@ export async function SiteFooter() {
 
   return (
     <footer className="bg-footer text-footer-foreground">
-      <Container className="py-14">
+      <AppContainer className="py-14">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
           <div className="flex flex-col gap-4">
             <Link href={localeHref(locale, "/")} aria-label={siteConfig.name}>
@@ -97,19 +97,19 @@ export async function SiteFooter() {
             </nav>
           ))}
         </div>
-      </Container>
+      </AppContainer>
 
       {/* Slim bottom bar: one line of small print, so it gets a hairline rule
           and just enough padding to clear the text — not another section. */}
       <div className="border-t border-footer-foreground/15">
-        <Container className="flex flex-col items-center justify-between gap-1 py-3 text-footer-foreground/60 sm:flex-row">
+        <AppContainer className="flex flex-col items-center justify-between gap-1 py-3 text-footer-foreground/60 sm:flex-row">
           <Text size="xs" tone="inverse" className="text-footer-foreground/60">
             © {new Date().getFullYear()} {siteConfig.name} {dict.footer.rights}
           </Text>
           <Text size="xs" tone="inverse" className="text-footer-foreground/60">
             {dict.footer.demo}
           </Text>
-        </Container>
+        </AppContainer>
       </div>
     </footer>
   );

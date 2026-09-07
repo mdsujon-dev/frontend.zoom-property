@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-import { Container, type ContainerProps } from "./container";
+import { AppContainer, type AppContainerProps } from "./app-container";
 
 /** Vertical rhythm: page sections never hand-roll their own padding. */
 const sectionVariants = cva("relative w-full", {
@@ -27,8 +27,9 @@ const sectionVariants = cva("relative w-full", {
 export interface SectionProps
   extends ComponentPropsWithoutRef<"section">,
     VariantProps<typeof sectionVariants> {
-  /** Wrap children in a <Container />. Pass `false` for full-bleed sections. */
-  container?: false | ContainerProps["size"];
+  /** Wrap children in an <AppContainer />. Pass `false` for full-bleed sections. */
+  container?: false | AppContainerProps["size"];
+  containerClassName?: string;
   children?: ReactNode;
 }
 
@@ -36,6 +37,7 @@ export function Section({
   spacing,
   tone,
   container = "xl",
+  containerClassName,
   className,
   children,
   ...props
@@ -45,7 +47,13 @@ export function Section({
       className={cn(sectionVariants({ spacing, tone }), className)}
       {...props}
     >
-      {container === false ? children : <Container size={container}>{children}</Container>}
+      {container === false ? (
+        children
+      ) : (
+        <AppContainer size={container} className={containerClassName}>
+          {children}
+        </AppContainer>
+      )}
     </section>
   );
 }

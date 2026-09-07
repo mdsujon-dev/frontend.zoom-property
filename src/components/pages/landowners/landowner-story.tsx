@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 
-import { Container } from "@/components/common/container";
+import { AppContainer } from "@/components/common/app-container";
 import { Heading } from "@/components/common/heading";
 import { Icon } from "@/components/common/icon";
 import { Text } from "@/components/common/text";
@@ -20,7 +20,7 @@ export async function LandownerStory() {
 
   return (
     <section className="border-t border-border bg-background py-16 sm:py-24">
-      <Container className="flex flex-col gap-16 sm:gap-24">
+      <AppContainer className="flex flex-col gap-16 sm:gap-24">
         {/* 1 — a landowner's own words, then why that matters */}
         <Row
           media={
@@ -123,7 +123,7 @@ export async function LandownerStory() {
             </Link>
           </Button>
         </Row>
-      </Container>
+      </AppContainer>
     </section>
   );
 }

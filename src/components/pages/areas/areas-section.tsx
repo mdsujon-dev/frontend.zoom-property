@@ -1,7 +1,7 @@
 import Image from "@/components/common/image";
 import Link from "next/link";
 
-import { Container } from "@/components/common/container";
+import { AppContainer } from "@/components/common/app-container";
 import { Icon } from "@/components/common/icon";
 import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
@@ -72,7 +72,7 @@ export async function AreasSection({
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
 
       {/* Section Header */}
-      <Container size="xl" className="relative z-10">
+      <AppContainer size="xl" className="relative z-10">
         <SectionHeading
           title={dict.areas.title}
           tone="inverse"
@@ -86,7 +86,7 @@ export async function AreasSection({
             </Link>
           }
         />
-      </Container>
+      </AppContainer>
 
       {/* Marquee Track with Edge Fades */}
       <div className="relative z-10 mt-8 sm:mt-10 w-full overflow-hidden">

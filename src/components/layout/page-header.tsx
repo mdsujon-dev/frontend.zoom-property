@@ -1,6 +1,6 @@
 import Image from "@/components/common/image";
 
-import { Container } from "@/components/common/container";
+import { AppContainer } from "@/components/common/app-container";
 import { Heading } from "@/components/common/heading";
 import { Text } from "@/components/common/text";
 import { Reveal } from "@/components/motion/reveal";
@@ -53,7 +53,7 @@ export function PageHeader({
         className="absolute inset-0 -z-10 bg-linear-to-t from-black/85 via-black/55 to-black/35"
       />
 
-      <Container>
+      <AppContainer>
         <Reveal>
           <div className="flex max-w-3xl flex-col gap-4">
             {eyebrow ? (
@@ -78,7 +78,7 @@ export function PageHeader({
             {children}
           </div>
         </Reveal>
-      </Container>
+      </AppContainer>
     </section>
   );
 }

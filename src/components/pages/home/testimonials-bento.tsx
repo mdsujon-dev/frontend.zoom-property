@@ -1,5 +1,5 @@
 import Image from "@/components/common/image";
-import { Container } from "@/components/common/container";
+import { AppContainer } from "@/components/common/app-container";
 import { Icon } from "@/components/common/icon";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Text } from "@/components/common/text";
@@ -26,7 +26,7 @@ export async function TestimonialsBento() {
 
   return (
     <section className="border-t border-border bg-muted/30 py-16 sm:py-24">
-      <Container>
+      <AppContainer>
         <SectionHeading
           title={t.title}
           align="center"
@@ -143,7 +143,7 @@ export async function TestimonialsBento() {
             </Reveal>
           ))}
         </div>
-      </Container>
+      </AppContainer>
     </section>
   );
 }

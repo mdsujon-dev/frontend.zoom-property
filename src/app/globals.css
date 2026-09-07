@@ -366,6 +366,13 @@
     -webkit-text-fill-color: transparent;
   }
 
+  /* App container and main container for flexible max-width control across sections */
+  .app-container,
+  .main-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 /* Lenis (smooth scroll) required styles — see SmoothScrollProvider. */

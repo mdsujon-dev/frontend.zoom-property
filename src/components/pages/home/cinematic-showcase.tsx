@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "@/components/common/image";
-import { Container } from "@/components/common/container";
+import { AppContainer } from "@/components/common/app-container";
 import { Eyebrow, Heading } from "@/components/common/heading";
 import { Icon } from "@/components/common/icon";
 import { Text } from "@/components/common/text";
@@ -70,7 +70,7 @@ export function CinematicShowcase({
             </span>
           </button>
 
-          <Container className="pointer-events-none absolute inset-x-0 bottom-0 z-10 pb-12 sm:pb-16">
+          <AppContainer className="pointer-events-none absolute inset-x-0 bottom-0 z-10 pb-12 sm:pb-16">
             <div className="flex max-w-2xl flex-col gap-3">
               <Eyebrow className="text-white/70">{dict.eyebrow}</Eyebrow>
               <Heading as="h2" size="h2" className="text-white">
@@ -84,7 +84,7 @@ export function CinematicShowcase({
                 {dict.duration}
               </span>
             </div>
-          </Container>
+          </AppContainer>
         </>
       )}
     </section>

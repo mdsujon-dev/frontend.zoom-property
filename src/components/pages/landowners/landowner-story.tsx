@@ -14,17 +14,6 @@ import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
 import { cn } from "@/lib/utils";
 
-/**
- * The landowner pitch, as alternating media/copy rows.
- *
- * Three rows, each flipping which side the media sits on. The zig-zag is the
- * point: a landowner reads this page slowly and in order, and alternating sides
- * gives the eye a reason to keep going down instead of scanning a column of
- * identical cards.
- *
- * On mobile every row collapses to media-then-copy regardless of the desktop
- * side, so the reading order never depends on the layout.
- */
 export async function LandownerStory() {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
   const t = dict.landowners.story;
@@ -139,10 +128,6 @@ export async function LandownerStory() {
   );
 }
 
-/**
- * One media/copy pair. `reverse` moves the media to the right on desktop; the
- * DOM order stays media-first so mobile always reads the same way.
- */
 function Row({
   media,
   reverse = false,

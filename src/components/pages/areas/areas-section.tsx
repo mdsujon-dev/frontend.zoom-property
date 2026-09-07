@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/common/image";
 import Link from "next/link";
 
 import { Container } from "@/components/common/container";
@@ -7,7 +7,7 @@ import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Marquee } from "@/components/motion/marquee";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
-import { AreaCard } from "@/components/property/area-card";
+import { AreaCard } from "./area-card";
 import { areas } from "@/data/areas";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
@@ -47,7 +47,7 @@ export async function AreasSection({
       id="areas"
       style={{ backgroundColor: "#071524" }}
       className={cn(
-        "relative w-full overflow-hidden border-y border-white/10 bg-[#071524] py-20 sm:py-28",
+        "relative w-full overflow-hidden border-y border-white/10 bg-[#071524] py-14 sm:py-20",
         className,
       )}
     >
@@ -89,7 +89,7 @@ export async function AreasSection({
       </Container>
 
       {/* Marquee Track with Edge Fades */}
-      <div className="relative z-10 mt-12 sm:mt-16 w-full overflow-hidden">
+      <div className="relative z-10 mt-8 sm:mt-10 w-full overflow-hidden">
         {/* Left and Right Edge Gradient Fades */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-16 sm:w-32 bg-gradient-to-r from-[#050e18] to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-16 sm:w-32 bg-gradient-to-l from-[#050e18] to-transparent" />

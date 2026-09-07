@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { Section } from "@/components/common/section";
 import { PageHeader } from "@/components/layout/page-header";
-import { BlogCategoryView } from "@/components/blog/blog-category-view";
+import { BlogCategoryView } from "@/components/pages/blog/blog-category-view";
 import { insights } from "@/data/insights";
 import { pageBanners } from "@/data/page-banners";
 import { LOCALES, type Locale } from "@/i18n/config";

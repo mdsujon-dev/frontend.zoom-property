@@ -1,12 +1,11 @@
-import Image from "next/image";
-
+import Image from "@/components/common/image";
 import { Container } from "@/components/common/container";
 import { Heading } from "@/components/common/heading";
 import { Icon, type IconName } from "@/components/common/icon";
 import { Text } from "@/components/common/text";
 import { Parallax } from "@/components/motion/parallax";
 import { Reveal } from "@/components/motion/reveal";
-import { PropertySearch } from "@/components/property/property-search";
+import { PropertySearch } from "@/components/pages/properties/property-search";
 import { Badge } from "@/components/ui/badge";
 import { getDictionary } from "@/i18n/dictionaries";
 import { shimmerDataUrl } from "@/lib/image";
@@ -14,13 +13,6 @@ import { shimmerDataUrl } from "@/lib/image";
 const HERO_IMAGE =
   "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=80";
 
-/**
- * Home hero.
- *
- * Text here is hard-coded white rather than `text-foreground`: it always sits
- * on a dark scrim over a photograph, so it must not follow the theme. In light
- * mode `text-foreground` would put near-black type on a dark image.
- */
 const TRUST_ICONS: IconName[] = ["approved", "clock", "gallery", "check"];
 
 export async function HeroSection() {

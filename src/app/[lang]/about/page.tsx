@@ -2,14 +2,10 @@ import type { Metadata } from "next";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { pageBanners } from "@/data/page-banners";
-import {
-  MilestonesSection,
-  VettingSection,
-} from "@/components/sections/process-sections";
-import {
-  GallerySection,
-  StatsSection,
-} from "@/components/sections/shared-sections";
+import { MilestonesSection } from "@/components/pages/about/milestones-section";
+import { VettingSection } from "@/components/pages/about/vetting-section";
+import { GallerySection } from "@/components/pages/about/gallery-section";
+import { StatsSection } from "@/components/pages/shared/stats-section";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeAlternates } from "@/i18n/alternates";
 

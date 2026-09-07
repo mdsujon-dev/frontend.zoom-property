@@ -1,11 +1,11 @@
-import type { ReactNode } from "react";
-import Image from "next/image";
+import Image from "@/components/common/image";
 
 import { Container } from "@/components/common/container";
 import { Heading } from "@/components/common/heading";
 import { Text } from "@/components/common/text";
 import { Reveal } from "@/components/motion/reveal";
 import { shimmerDataUrl } from "@/lib/image";
+import { ReactNode } from "react";
 
 /**
  * The banner every inner page opens with.

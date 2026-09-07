@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-
+import Image from "@/components/common/image";
 import { Container } from "@/components/common/container";
 import { Eyebrow, Heading } from "@/components/common/heading";
 import { Icon } from "@/components/common/icon";
@@ -18,17 +17,6 @@ export interface ShowcaseDict {
   duration: string;
 }
 
-/**
- * Full-bleed film panel.
- *
- * The still fills the viewport width and the iframe is only injected after a
- * click — no YouTube payload, cookies or third-party JS until someone actually
- * wants the video. Same trade as `<VideoEmbed />`, but full-bleed and with the
- * copy sitting on the image rather than beside it.
- *
- * Text is hard-coded white over a scrim for the same reason as the hero: it is
- * always on a photograph, so it must not follow the theme.
- */
 export function CinematicShowcase({
   poster,
   video,
@@ -62,15 +50,11 @@ export function CinematicShowcase({
             blurDataURL={shimmerDataUrl()}
             className="object-cover object-center"
           />
-          {/* Scrim: dark at the foot where the copy sits, clear at the top so
-              the photograph still reads as the subject. */}
           <div
             aria-hidden
             className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-black/20"
           />
 
-          {/* The play control is the whole panel — a 60px target in the middle
-              of a full-bleed image is a small hit area on a phone. */}
           <button
             type="button"
             onClick={() => setPlaying(true)}

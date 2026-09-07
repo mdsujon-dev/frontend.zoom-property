@@ -7,7 +7,7 @@ import { Text } from "@/components/common/text";
 import { PageHeader } from "@/components/layout/page-header";
 import { pageBanners } from "@/data/page-banners";
 import { Reveal } from "@/components/motion/reveal";
-import { ContactForm } from "@/components/property/contact-form";
+import { ContactForm } from "@/components/pages/contact/contact-form";
 import { siteConfig, socialLinks } from "@/data/site";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeAlternates } from "@/i18n/alternates";

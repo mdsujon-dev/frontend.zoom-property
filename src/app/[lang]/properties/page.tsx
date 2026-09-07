@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { pageBanners } from "@/data/page-banners";
-import { ListingsSection } from "@/components/sections/listings-section";
-import { BuyingStepsSection } from "@/components/sections/process-sections";
+import { ListingsSection } from "@/components/pages/properties/listings-section";
+import { BuyingStepsSection } from "@/components/pages/properties/buying-steps-section";
 import { properties } from "@/data/properties";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeAlternates } from "@/i18n/alternates";

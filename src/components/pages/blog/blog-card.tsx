@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/common/image";
 import Link from "next/link";
 
 import { Icon } from "@/components/common/icon";

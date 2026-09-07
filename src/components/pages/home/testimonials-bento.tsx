@@ -1,7 +1,5 @@
-import Image from "next/image";
-
+import Image from "@/components/common/image";
 import { Container } from "@/components/common/container";
-import { Heading } from "@/components/common/heading";
 import { Icon } from "@/components/common/icon";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Text } from "@/components/common/text";
@@ -13,18 +11,6 @@ import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { LOCALE_TAGS } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
-/**
- * Testimonials, as a mosaic rather than a carousel.
- *
- * A carousel hides most of its content behind an interaction nobody performs;
- * this puts the aggregate score, the proof photography and two full quotes on
- * screen at once. Three columns on desktop that stack to one on mobile — the
- * tall centre panel drops to a normal aspect ratio there rather than becoming a
- * letterbox.
- *
- * The score and review count are derived from the review data, not typed in, so
- * they cannot drift from the quotes shown beside them.
- */
 export async function TestimonialsBento() {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
   const t = dict.reviews;
@@ -36,7 +22,6 @@ export async function TestimonialsBento() {
   });
   const percent = new Intl.NumberFormat(LOCALE_TAGS[locale]);
 
-  // The two most recent quotes get the right-hand column.
   const featured = reviews.slice(0, 2);
 
   return (
@@ -48,7 +33,6 @@ export async function TestimonialsBento() {
         />
 
         <div className="mt-12 grid gap-4 lg:grid-cols-3 lg:grid-rows-[auto_1fr]">
-          {/* Aggregate score */}
           <Reveal className="lg:col-start-1 lg:row-start-1">
             <div className="flex h-full flex-col gap-4 rounded-xl border border-border bg-card p-6">
               <div className="flex items-baseline gap-2">
@@ -63,7 +47,6 @@ export async function TestimonialsBento() {
               </Text>
 
               <div className="mt-auto flex items-center gap-4 pt-2">
-                {/* Avatar stack — negative margin overlaps them, ring separates. */}
                 <ul className="flex">
                   {reviews.map((review) => (
                     <li key={review.id} className="-ml-2.5 first:ml-0">
@@ -87,7 +70,6 @@ export async function TestimonialsBento() {
             </div>
           </Reveal>
 
-          {/* Supporting photograph */}
           <Reveal delay={0.05} className="lg:col-start-1 lg:row-start-2">
             <ImageFrame
               src={galleryImages[4].src}
@@ -100,7 +82,6 @@ export async function TestimonialsBento() {
             />
           </Reveal>
 
-          {/* Tall centre panel with the headline number over it */}
           <Reveal delay={0.1} className="lg:col-start-2 lg:row-span-2 lg:row-start-1">
             <div className="relative h-full min-h-72 overflow-hidden rounded-xl">
               <Image
@@ -126,7 +107,6 @@ export async function TestimonialsBento() {
             </div>
           </Reveal>
 
-          {/* Two full quotes */}
           {featured.map((review, index) => (
             <Reveal
               key={review.id}
@@ -168,7 +148,6 @@ export async function TestimonialsBento() {
   );
 }
 
-/** Filled up to `value`, hollow after — five glyphs either way. */
 function Stars({ value }: { value: number }) {
   return (
     <div className="flex gap-0.5" role="img" aria-label={`${value} / 5`}>

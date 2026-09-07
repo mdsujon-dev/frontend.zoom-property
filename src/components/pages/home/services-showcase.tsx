@@ -8,20 +8,6 @@ import { services, servicesBackdrop } from "@/data/services";
 import { getDictionary } from "@/i18n/dictionaries";
 import { Text } from "@/components/common/text";
 
-/**
- * The in-house units, on a fixed backdrop.
- *
- * The photograph is attached to the viewport (`bg-fixed`), so the cards slide
- * over a still image as you scroll. Two caveats that shape the markup:
- *
- * - iOS Safari ignores `background-attachment: fixed` and, worse, repaints the
- *   whole layer on every scroll frame. `max-md:bg-scroll` drops back to a
- *   normal background below the md breakpoint, where the effect would not read
- *   at that size anyway.
- * - A photograph alone is not a reliable ground for white text, so a fixed
- *   scrim sits between it and the content. It is `black`, not a theme token:
- *   the text on top is white in every theme, so the scrim must be too.
- */
 export async function ServicesShowcase() {
   const dict = await getDictionary();
 

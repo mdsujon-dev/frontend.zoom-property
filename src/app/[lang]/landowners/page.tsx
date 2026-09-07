@@ -6,7 +6,7 @@ import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Text } from "@/components/common/text";
 import { PageHeader } from "@/components/layout/page-header";
-import { LandownerStory } from "@/components/sections/landowner-story";
+import { LandownerStory } from "@/components/pages/landowners/landowner-story";
 import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { ImageFrame } from "@/components/media/image-frame";

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { pageBanners } from "@/data/page-banners";
-import { ConstructionStagesSection } from "@/components/sections/process-sections";
-import { ProjectsSection } from "@/components/sections/projects-section";
+import { ConstructionStagesSection } from "@/components/pages/projects/construction-stages-section";
+import { ProjectsSection } from "@/components/pages/projects/projects-section";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeAlternates } from "@/i18n/alternates";
 

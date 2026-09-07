@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { pageBanners } from "@/data/page-banners";
-import { AreaComparisonSection } from "@/components/sections/area-comparison";
-import { AreasSection } from "@/components/sections/areas-section";
+import { AreaComparisonSection } from "@/components/pages/areas/area-comparison";
+import { AreasSection } from "@/components/pages/areas/areas-section";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeAlternates } from "@/i18n/alternates";
 

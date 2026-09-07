@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { pageBanners } from "@/data/page-banners";
-import { AdvisorMatchSection } from "@/components/sections/process-sections";
-import { AgentsSection } from "@/components/sections/shared-sections";
+import { AdvisorMatchSection } from "@/components/pages/agents/advisor-match-section";
+import { AgentsSection } from "@/components/pages/agents/agents-section";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeAlternates } from "@/i18n/alternates";
 

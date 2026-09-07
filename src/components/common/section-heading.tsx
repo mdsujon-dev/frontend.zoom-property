@@ -18,6 +18,7 @@ export interface SectionHeadingProps {
   /** Right-hand slot (e.g. a "View all" button) — desktop only alignment. */
   action?: ReactNode;
   className?: string;
+  titleClassName?: string;
   animate?: boolean;
 }
 
@@ -35,6 +36,7 @@ export function SectionHeading({
   tone = "default",
   action,
   className,
+  titleClassName,
   animate = true,
 }: SectionHeadingProps) {
   const inverse = tone === "inverse";
@@ -55,7 +57,7 @@ export function SectionHeading({
         size={size}
         align={align}
         tone={inverse ? "inverse" : "default"}
-        className="max-w-2xl"
+        className={cn("max-w-none md:whitespace-nowrap", titleClassName)}
       >
         {title}
       </Heading>
@@ -76,7 +78,7 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between",
+        "flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between",
         align === "center" && "sm:flex-col sm:items-center",
         className,
       )}

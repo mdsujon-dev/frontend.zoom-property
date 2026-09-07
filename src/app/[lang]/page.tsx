@@ -1,15 +1,13 @@
 import { JsonLd } from "@/components/common/json-ld";
-import { CinematicShowcase } from "@/components/sections/cinematic-showcase";
-import { AreasSection } from "@/components/sections/areas-section";
-import { HeroSection } from "@/components/sections/hero-section";
-import { ListingsSection } from "@/components/sections/listings-section";
-import { ProjectsSection } from "@/components/sections/projects-section";
-import { RoomsSection } from "@/components/sections/rooms-section";
-import { ServicesShowcase } from "@/components/sections/services-showcase";
-import { TestimonialsBento } from "@/components/sections/testimonials-bento";
-import {
-  FaqSection,
-} from "@/components/sections/shared-sections";
+import { CinematicShowcase } from "@/components/pages/home/cinematic-showcase";
+import { HeroSection } from "@/components/pages/home/hero-section";
+import { RoomsSection } from "@/components/pages/home/rooms-section";
+import { ServicesShowcase } from "@/components/pages/home/services-showcase";
+import { TestimonialsBento } from "@/components/pages/home/testimonials-bento";
+import { ListingsSection } from "@/components/pages/properties/listings-section";
+import { ProjectsSection } from "@/components/pages/projects/projects-section";
+import { AreasSection } from "@/components/pages/areas/areas-section";
+import { FaqSection } from "@/components/pages/shared/faq-section";
 import { showcase } from "@/data/services";
 import { getDictionary } from "@/i18n/dictionaries";
 import { faqSchema, listingsSchema } from "@/lib/seo";

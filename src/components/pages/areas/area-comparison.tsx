@@ -6,22 +6,11 @@ import { areas } from "@/data/areas";
 import { getDictionary } from "@/i18n/dictionaries";
 import { formatBdt, numberFormatter } from "@/lib/format";
 
-/**
- * /areas — the comparison table.
- *
- * A table, not cards. The whole point of this page is reading one column down
- * across six neighbourhoods, and cards make that impossible. The tiles above it
- * sell the place; this tells you whether you can afford it.
- *
- * The table scrolls inside its own container so the page body never scrolls
- * sideways on a phone.
- */
 export async function AreaComparisonSection() {
   const dict = await getDictionary();
   const { comparison } = dict.pages;
   const col = comparison.columns;
 
-  // Highest price per sq ft anchors the bar widths.
   const peak = Math.max(...areas.map((area) => area.pricePerSqft));
 
   return (
@@ -73,13 +62,6 @@ export async function AreaComparisonSection() {
                   <td className="px-5 py-4 text-right font-medium tabular-nums text-foreground">
                     {formatBdt(area.medianPrice)}
                   </td>
-                  {/* Inline bar: the relative gap between areas is the story,
-                      and it reads faster than six four-digit numbers.
-
-                      Fixed-width track with a proportional fill inside — a
-                      percentage width on a flex *item* resolves against the
-                      row and then gets shrunk, so every bar comes out the
-                      same length. */}
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
                       <span className="w-20 shrink-0 tabular-nums text-foreground">

@@ -1,4 +1,4 @@
-import Image, { type ImageProps } from "next/image";
+import Image, { type AppImageProps as ImageProps } from "@/components/common/image";
 import type { ReactNode } from "react";
 
 import { ASPECT_RATIOS, IMAGE_SIZES, shimmerDataUrl, type AspectRatio } from "@/lib/image";

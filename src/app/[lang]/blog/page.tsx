@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { Section } from "@/components/common/section";
 import { PageHeader } from "@/components/layout/page-header";
-import { BlogFeed } from "@/components/blog/blog-feed";
+import { BlogFeed } from "@/components/pages/blog/blog-feed";
 import { insights } from "@/data/insights";
 import { pageBanners } from "@/data/page-banners";
 import { localeAlternates } from "@/i18n/alternates";

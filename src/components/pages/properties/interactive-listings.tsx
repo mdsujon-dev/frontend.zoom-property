@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PropertyCard } from "@/components/property/property-card";
+import { PropertyCard } from "./property-card";
 import { properties, type Property } from "@/data/properties";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { cn } from "@/lib/utils";

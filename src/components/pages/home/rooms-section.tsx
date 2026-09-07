@@ -1,7 +1,7 @@
 import { Container } from "@/components/common/container";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Reveal } from "@/components/motion/reveal";
-import { RoomsAccordion } from "@/components/property/rooms-accordion";
+import { RoomsAccordion } from "./rooms-accordion";
 import { rooms } from "@/data/rooms";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";

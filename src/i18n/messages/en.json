@@ -66,6 +66,8 @@
     "eyebrow": "Client testimonials",
     "title": "Real stories from people who bought here",
     "description": "Every review names the property it came from, so you can check the claim against the listing.",
+    "homeTitle": "What our clients say",
+    "homeDescription": "Honest experiences from buyers and tenants who found their next place with us.",
     "viewAll": "View all reviews",
     "pageTitle": "Real stories from people who bought here",
     "pageDescription": "Verified buyers, tenants and teams share what the process felt like, from the first shortlist to the signed handover.",
@@ -551,7 +553,7 @@
   },
   "rooms": {
     "pill": "Room details",
-    "title": "Rooms designed for comfort and style",
+    "title": "Comfortable rooms",
     "description": "A walkthrough of a representative three-bedroom home in Gulshan — what each room actually measures, and what comes with it.",
     "readMore": "Read more",
     "expand": "Show details for"

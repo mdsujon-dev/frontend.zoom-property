@@ -1,16 +1,13 @@
 import Image from "@/components/common/image";
-import Link from "next/link";
 
 import { AppContainer } from "@/components/common/app-container";
-import { Icon } from "@/components/common/icon";
 import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Marquee } from "@/components/motion/marquee";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { AreaCard } from "./area-card";
 import { areas } from "@/data/areas";
-import { getDictionary, getLocale } from "@/i18n/dictionaries";
-import { localeHref } from "@/i18n/href";
+import { getLocale } from "@/i18n/dictionaries";
 import { cn } from "@/lib/utils";
 
 interface AreasSectionProps {
@@ -22,7 +19,7 @@ export async function AreasSection({
   variant = "marquee",
   className,
 }: AreasSectionProps = {}) {
-  const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
+  const locale = await getLocale();
 
   if (variant === "grid") {
     return (
@@ -74,20 +71,20 @@ export async function AreasSection({
 
       {/* Section Header */}
       <AppContainer size="xl" className="relative z-10">
-        <SectionHeading
-          title={locale === "bn" ? "সার্ভিস এরিয়া" : "Service Areas"}
-          size="h1"
-          tone="inverse"
-          action={
-            <Link
-              href={localeHref(locale, "/properties")}
-              className="inline-flex items-center gap-2 self-start sm:self-auto shrink-0 rounded-full border border-white/25 bg-white/10 px-5 py-2.5 font-heading text-xs sm:text-sm font-bold uppercase tracking-wider text-white backdrop-blur-md transition-all hover:border-sky-400 hover:bg-sky-500 hover:text-white shadow-sm"
-            >
-              <span>{locale === "bn" ? "সবগুলো দেখুন" : "Explore All"}</span>
-              <Icon name="arrowRight" size="xs" />
-            </Link>
-          }
-        />
+        <div className="relative">
+          <SectionHeading
+            title={locale === "bn" ? "সার্ভিস এরিয়া" : "Service Areas"}
+            description={
+              locale === "bn"
+                ? "ঢাকা ও চট্টগ্রামের যাচাই করা প্রাইম এলাকাগুলো দেখুন।"
+                : "Explore verified prime locations across Dhaka and Chattogram."
+            }
+            size="h1"
+            align="center"
+            tone="inverse"
+            className="sm:block"
+          />
+        </div>
       </AppContainer>
 
       {/* Marquee Track with Edge Fades */}

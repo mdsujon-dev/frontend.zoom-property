@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { AppContainer } from "@/components/common/app-container";
 import { Heading } from "@/components/common/heading";
 import { Icon } from "@/components/common/icon";
@@ -7,7 +6,6 @@ import { ImageFrame } from "@/components/media/image-frame";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { services, servicesBackdrop } from "@/data/services";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
-import { localeHref } from "@/i18n/href";
 import { Text } from "@/components/common/text";
 
 export async function ServicesShowcase() {
@@ -23,17 +21,24 @@ export async function ServicesShowcase() {
       <AppContainer>
         <SectionHeading
           title={dict.services.title}
+          description={dict.services.description}
+          align="center"
           tone="inverse"
         />
 
-        <Stagger className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div aria-hidden className="mx-auto mt-8 flex w-full max-w-4xl items-center gap-4">
+          <span className="h-px flex-1 bg-linear-to-r from-transparent via-white/25 to-white/25" />
+          <span className="size-2 rotate-45 border border-sky-300/80 bg-sky-300/20 shadow-[0_0_14px_rgba(125,211,252,0.45)]" />
+          <span className="h-px flex-1 bg-linear-to-l from-transparent via-white/25 to-white/25" />
+        </div>
+
+        <Stagger className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service, index) => {
             const copy = dict.content.services[index];
             return (
               <StaggerItem key={service.id}>
-                <Link
-                  href={localeHref(locale, `/services/${service.id}`)}
-                  className="group flex h-full flex-col overflow-hidden rounded-xl border border-white/15 bg-white/5 backdrop-blur-md transition-all duration-500 hover:border-sky-400/50 hover:bg-white/[0.08] hover:shadow-2xl hover:shadow-sky-500/10 cursor-pointer block"
+                <div
+                  className="group flex h-full flex-col overflow-hidden rounded-xl border border-white/15 bg-white/5 backdrop-blur-md transition-all duration-500 hover:border-sky-400/50 hover:bg-white/[0.08] hover:shadow-2xl hover:shadow-sky-500/10"
                 >
                   <ImageFrame
                     src={service.image}
@@ -56,14 +61,8 @@ export async function ServicesShowcase() {
                       {copy.description}
                     </Text>
 
-                    <span className="mt-3 flex items-center gap-2 text-sm font-medium text-white transition-colors duration-300 group-hover:text-sky-400">
-                      {dict.services.cta}
-                      <span className="flex size-7 items-center justify-center rounded-full border border-white/30 transition-all duration-300 group-hover:translate-x-1 group-hover:border-sky-400 group-hover:bg-sky-400/20 group-hover:text-sky-400">
-                        <Icon name="arrowRight" size="xs" />
-                      </span>
-                    </span>
                   </div>
-                </Link>
+                </div>
               </StaggerItem>
             );
           })}

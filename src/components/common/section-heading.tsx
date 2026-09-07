@@ -19,6 +19,7 @@ export interface SectionHeadingProps {
   action?: ReactNode;
   className?: string;
   titleClassName?: string;
+  descriptionClassName?: string;
   animate?: boolean;
 }
 
@@ -37,6 +38,7 @@ export function SectionHeading({
   action,
   className,
   titleClassName,
+  descriptionClassName,
   animate = true,
 }: SectionHeadingProps) {
   const inverse = tone === "inverse";
@@ -67,7 +69,7 @@ export function SectionHeading({
           size="lead"
           align={align}
           tone={inverse ? "inverse" : "muted"}
-          className="max-w-2xl"
+          className={cn("max-w-2xl", descriptionClassName)}
         >
           {description}
         </Text>

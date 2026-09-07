@@ -11,6 +11,10 @@
   --color-foreground: var(--foreground);
   --color-brand: var(--brand);
   --color-brand-foreground: var(--brand-foreground);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-navy-deep: var(--brand-navy-deep);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-red: var(--brand-red);
   --color-footer: var(--footer);
   --color-footer-foreground: var(--footer-foreground);
   /* Bengali sits in every stack so the `bn` locale renders in Noto Sans Bengali

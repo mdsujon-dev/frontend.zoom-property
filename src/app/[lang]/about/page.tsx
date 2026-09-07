@@ -8,7 +8,6 @@ import {
 } from "@/components/sections/process-sections";
 import {
   GallerySection,
-  PartnersSection,
   StatsSection,
 } from "@/components/sections/shared-sections";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
@@ -39,7 +38,7 @@ export default async function AboutPage() {
       <VettingSection />
       <MilestonesSection />
       <GallerySection />
-      <PartnersSection />
+
     </>
   );
 }

@@ -9,9 +9,6 @@ import { ServicesShowcase } from "@/components/sections/services-showcase";
 import { TestimonialsBento } from "@/components/sections/testimonials-bento";
 import {
   FaqSection,
-  FeaturesSection,
-  PartnersSection,
-  StatsSection,
 } from "@/components/sections/shared-sections";
 import { showcase } from "@/data/services";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -32,8 +29,8 @@ export default async function Home() {
       <JsonLd schema={listingsSchema()} />
 
       <HeroSection />
-      <PartnersSection />
-      <StatsSection />
+
+      {/* <StatsSection /> */}
       <ListingsSection variant="preview" limit={6} />
 
       <CinematicShowcase
@@ -46,7 +43,6 @@ export default async function Home() {
       <AreasSection />
       <ProjectsSection />
       <ServicesShowcase />
-      <FeaturesSection />
       <TestimonialsBento />
       <FaqSection />
     </>

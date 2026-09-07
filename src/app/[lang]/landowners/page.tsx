@@ -42,9 +42,7 @@ export default async function LandownersPage() {
       {/* The four contract terms, as cards. */}
       <Section className="border-t border-border bg-muted/30">
         <SectionHeading
-          eyebrow={t.eyebrow}
           title={t.benefitsTitle}
-          description={t.benefitsLead}
         />
 
         <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

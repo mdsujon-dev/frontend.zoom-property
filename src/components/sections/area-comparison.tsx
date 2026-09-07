@@ -27,9 +27,7 @@ export async function AreaComparisonSection() {
   return (
     <Section className="border-t border-border bg-muted/30">
       <SectionHeading
-        eyebrow={comparison.eyebrow}
         title={comparison.title}
-        description={comparison.description}
       />
 
       <Reveal delay={0.1} className="mt-10">

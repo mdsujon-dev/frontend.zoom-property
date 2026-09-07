@@ -23,6 +23,7 @@ export const mainNav = [
   { key: "properties", href: "/properties" },
   { key: "projects", href: "/projects" },
   { key: "areas", href: "/areas" },
+  { key: "blog", href: "/blog" },
   { key: "contact", href: "/contact" },
 ] as const;
 

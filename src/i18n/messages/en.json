@@ -14,7 +14,7 @@
     "openMenu": "Open menu",
     "language": "Language",
     "landowners": "Landowners",
-    "blog": "Market notes"
+    "blog": "Blog"
   },
   "hero": {
     "badge": "RAJUK plan & title deed cleared",
@@ -475,19 +475,64 @@
     }
   },
   "blog": {
-    "eyebrow": "Market notes",
-    "title": "Written for the question you already have",
-    "description": "Short, specific pieces on the legal, financial and market questions that come up before a purchase. No listicles.",
+    "eyebrow": "Market Notes & Intelligence",
+    "title": "Explore News, Insights and Guides",
+    "description": "In-depth research on Dhaka real estate, architectural movements, property regulations, and market trends.",
     "metaTitle": "Market notes and guides",
     "metaDescription": "Legal checklists, market reads and non-resident buying guides for Dhaka and Chattogram property, written by the Zoom Property team.",
     "all": "All",
     "categories": {
       "Market": "Market",
-      "Legal": "Legal",
+      "Legal": "Legal & Advisory",
       "Guide": "Guide",
-      "NRB": "NRB"
+      "NRB": "NRB Desk",
+      "Real Estate": "Real Estate",
+      "Architecture": "Architecture",
+      "Economy": "Economy",
+      "Technology": "Technology",
+      "Lifestyle": "Lifestyle"
     },
-    "readMore": "Read more"
+    "readMore": "Read article",
+    "viewAll": "View all",
+    "minRead": "min read",
+    "publishedOn": "Published",
+    "searchPlaceholder": "Search articles, market trends, guides...",
+    "featuredBadge": "Featured Story",
+    "trendingBadge": "Trending",
+    "browsingCategory": "Browsing Category",
+    "featuredForYou": "Here are the featured blogs for you",
+    "postsCount": "Posts",
+    "backToAll": "All Articles",
+    "sections": {
+      "explore": "Explore News, Insights & Stories",
+      "architecture": "Architecture News",
+      "architectureDesc": "Contemporary aesthetics, spatial innovations, and building trends.",
+      "lifestyle": "Awards & Recognition News",
+      "lifestyleDesc": "Dining, international schools, and prime community living.",
+      "advisory": "Company Information News",
+      "advisoryDesc": "Deed vetting, home loan rates, and asset management guides.",
+      "economy": "Economy News",
+      "economyDesc": "National megaprojects, monetary policies, and commercial growth.",
+      "realEstate": "Real Estate News",
+      "realEstateDesc": "Commercial hubs, residential enclaves, and price movements.",
+      "technology": "Technology News",
+      "technologyDesc": "PropTech solutions, smart home automation, and digital infrastructure."
+    },
+    "promo": {
+      "badge": "Zoom Property Verified",
+      "title": "READY FOR AN UPGRADE?",
+      "subtitle": "Discover your dream home with 100% verified legal deeds and RAJUK permits.",
+      "cta1": "Browse Verified Listings",
+      "cta2": "Consult an Advisor"
+    },
+    "newsletter": {
+      "badge": "Monthly Market Memo",
+      "title": "Stay Ahead of the Bangladesh Property Market",
+      "description": "Receive monthly audited pricing reports, megaproject milestones, and regulatory updates directly in your inbox.",
+      "placeholder": "Enter your email address",
+      "button": "Subscribe",
+      "note": "Zero spam. Only actionable property insights and market data."
+    }
   },
   "rooms": {
     "pill": "Room details",

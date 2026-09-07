@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Container } from "@/components/common/container";
 import { Heading } from "@/components/common/heading";
 import { Icon } from "@/components/common/icon";
+import { SectionHeading } from "@/components/common/section-heading";
 import { Text } from "@/components/common/text";
 import { ImageFrame } from "@/components/media/image-frame";
 import { Reveal } from "@/components/motion/reveal";
@@ -41,19 +42,10 @@ export async function TestimonialsBento() {
   return (
     <section className="border-t border-border bg-muted/30 py-16 sm:py-24">
       <Container>
-        <Reveal>
-          <div className="flex flex-col items-center gap-4 text-center">
-            <span className="rounded-full border border-border bg-background px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">
-              {t.pill}
-            </span>
-            <Heading as="h2" size="h2" align="center" className="max-w-2xl">
-              {t.title}
-            </Heading>
-            <Text size="lead" align="center" className="max-w-2xl text-muted-foreground">
-              {t.description}
-            </Text>
-          </div>
-        </Reveal>
+        <SectionHeading
+          title={t.title}
+          align="center"
+        />
 
         <div className="mt-12 grid gap-4 lg:grid-cols-3 lg:grid-rows-[auto_1fr]">
           {/* Aggregate score */}

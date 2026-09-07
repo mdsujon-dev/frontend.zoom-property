@@ -21,9 +21,7 @@ export async function BuyingStepsSection() {
   return (
     <Section className="border-t border-border bg-muted/30">
       <SectionHeading
-        eyebrow={buying.eyebrow}
         title={buying.title}
-        description={buying.description}
       />
 
       {/* A numbered rail rather than cards: the order is the content. */}
@@ -63,9 +61,7 @@ export async function ConstructionStagesSection() {
   return (
     <Section className="border-t border-border bg-muted/30">
       <SectionHeading
-        eyebrow={construction.eyebrow}
         title={construction.title}
-        description={construction.description}
       />
 
       <Stagger className="mt-12 flex flex-col gap-0">
@@ -105,9 +101,7 @@ export async function AdvisorMatchSection() {
   return (
     <Section className="border-t border-border bg-muted/30">
       <SectionHeading
-        eyebrow={match.eyebrow}
         title={match.title}
-        description={match.description}
       />
 
       <Stagger className="mt-12 grid gap-6 md:grid-cols-3">
@@ -138,9 +132,7 @@ export async function VettingSection() {
     <Section className="border-t border-border bg-background">
       <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
         <SectionHeading
-          eyebrow={vetting.eyebrow}
           title={vetting.title}
-          description={vetting.description}
           className="lg:flex-col lg:items-start"
         />
 

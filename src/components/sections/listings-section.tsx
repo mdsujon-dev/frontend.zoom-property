@@ -32,9 +32,7 @@ export async function ListingsSection({
   return (
     <Section id="listings" className="bg-background">
       <SectionHeading
-        eyebrow={dict.listings.eyebrow}
         title={dict.listings.title}
-        description={dict.listings.description}
       />
 
       <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

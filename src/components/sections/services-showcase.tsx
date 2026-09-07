@@ -1,12 +1,12 @@
 import { Container } from "@/components/common/container";
-import { Eyebrow, Heading } from "@/components/common/heading";
+import { Heading } from "@/components/common/heading";
 import { Icon } from "@/components/common/icon";
-import { Text } from "@/components/common/text";
+import { SectionHeading } from "@/components/common/section-heading";
 import { ImageFrame } from "@/components/media/image-frame";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
-import { Reveal } from "@/components/motion/reveal";
 import { services, servicesBackdrop } from "@/data/services";
 import { getDictionary } from "@/i18n/dictionaries";
+import { Text } from "@/components/common/text";
 
 /**
  * The in-house units, on a fixed backdrop.
@@ -33,17 +33,10 @@ export async function ServicesShowcase() {
       <div aria-hidden className="absolute inset-0 -z-10 bg-black/75" />
 
       <Container>
-        <Reveal>
-          <div className="flex max-w-2xl flex-col gap-4">
-            <Eyebrow className="text-white/70">{dict.services.eyebrow}</Eyebrow>
-            <Heading as="h2" size="h2" className="text-white">
-              {dict.services.title}
-            </Heading>
-            <Text size="lead" className="text-white/75">
-              {dict.services.description}
-            </Text>
-          </div>
-        </Reveal>
+        <SectionHeading
+          title={dict.services.title}
+          tone="inverse"
+        />
 
         <Stagger className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service, index) => {

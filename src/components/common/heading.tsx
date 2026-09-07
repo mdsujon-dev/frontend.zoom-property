@@ -27,7 +27,7 @@ const headingVariants = cva("font-heading text-balance", {
       default: "text-foreground",
       muted: "text-muted-foreground",
       primary: "text-primary",
-      inverse: "text-background",
+      inverse: "text-white drop-shadow-sm",
     },
     align: {
       left: "text-left",

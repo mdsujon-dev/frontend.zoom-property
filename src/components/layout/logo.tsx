@@ -24,26 +24,38 @@ export function Logo({
 }) {
   const dimensions = { width: 900, height: 303 };
 
-  if (variant === "onDark") {
-    return (
+  return (
+    <div
+      className={cn(
+        "relative inline-flex shrink-0 items-center aspect-[900/303]",
+        className,
+      )}
+    >
       <Image
         src="/logo-dark.png"
         alt="Zoom Property"
         {...dimensions}
         priority={priority}
-        className={cn("h-auto w-auto", className)}
+        className={cn(
+          "h-full w-auto object-contain transition-opacity duration-300",
+          variant === "onDark"
+            ? "opacity-100"
+            : "pointer-events-none absolute inset-0 opacity-0",
+        )}
       />
-    );
-  }
-
-  return (
-    <Image
-      src="/logo.png"
-      alt="Zoom Property"
-      {...dimensions}
-      priority={priority}
-      className={cn("h-auto w-auto", className)}
-    />
+      <Image
+        src="/logo.png"
+        alt="Zoom Property"
+        {...dimensions}
+        priority={priority}
+        className={cn(
+          "h-full w-auto object-contain transition-opacity duration-300",
+          variant === "onDark"
+            ? "pointer-events-none absolute inset-0 opacity-0"
+            : "opacity-100",
+        )}
+      />
+    </div>
   );
 }
 

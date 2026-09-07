@@ -79,19 +79,20 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) 
       transition={
         prefersReducedMotion
           ? { duration: 0 }
-          : // Symmetric ease-in-out: expo eased out of the gate, which made the
-            // header appear to snap down before settling. This leaves and
-            // returns at the same speed, which is what reads as smooth.
-            { duration: 0.42, ease: [0.32, 0.72, 0, 1] }
+          : hidden
+            ? { duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }
+            : { duration: 0.32, ease: [0.16, 1, 0.3, 1] }
       }
+      style={{ willChange: "transform" }}
       className={cn(
         "fixed inset-x-0 top-0 z-40 transition-colors duration-300",
         overHero
-          ? "bg-linear-to-b from-black/60 to-transparent"
-          : "border-b border-border bg-background/90 backdrop-blur-xl",
+          ? "bg-transparent"
+          : "border-b border-border/80 bg-background/90 backdrop-blur-xl shadow-xs",
       )}
     >
-      <Container className="flex h-16 items-center justify-between gap-4 sm:h-20">
+
+      <Container className="relative flex h-16 items-center justify-between gap-4 sm:h-20">
         <Link href={home} aria-label={siteConfig.name} className="shrink-0">
           <Logo
             priority
@@ -100,24 +101,36 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) 
           />
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-1.5 lg:flex">
           {mainNav.map((item) => {
             const href = localeHref(locale, item.href);
-            const active = pathname === href;
+            const active = pathname === href || pathname.startsWith(`${href}/`);
             return (
               <Link
                 key={item.key}
                 href={href}
                 className={cn(
-                  "rounded-lg px-3.5 py-2 text-sm font-medium transition-colors duration-200",
+                  "relative flex items-center justify-center rounded-lg px-3.5 py-2 text-sm transition-all duration-200",
                   overHero
-                    ? "text-white/85 hover:bg-white/10 hover:text-white"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
-                  active && !overHero && "bg-muted text-foreground",
-                  active && overHero && "text-white",
+                    ? active
+                      ? "bg-white/20 font-semibold text-white backdrop-blur-xs"
+                      : "font-medium text-white/80 hover:bg-white/10 hover:text-white"
+                    : active
+                      ? "bg-primary/[0.08] font-semibold text-primary"
+                      : "font-medium text-muted-foreground hover:bg-muted/60 hover:text-foreground",
                 )}
               >
-                {dict[item.key]}
+                <span>{dict[item.key]}</span>
+                {active && (
+                  <motion.span
+                    layoutId="activeNavIndicator"
+                    className={cn(
+                      "absolute bottom-0 left-3 right-3 h-[2.5px] rounded-full",
+                      overHero ? "bg-white shadow-xs" : "bg-primary shadow-xs",
+                    )}
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
               </Link>
             );
           })}
@@ -172,19 +185,23 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) 
               <nav className="flex flex-col gap-1 py-4">
                 {mainNav.map((item) => {
                   const href = localeHref(locale, item.href);
+                  const active = pathname === href || pathname.startsWith(`${href}/`);
                   return (
                     <Link
                       key={item.key}
                       href={href}
                       onClick={() => setOpen(false)}
                       className={cn(
-                        "rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-                        pathname === href
-                          ? "bg-muted text-foreground"
-                          : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                        "flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm transition-all",
+                        active
+                          ? "bg-primary/[0.08] font-semibold text-primary border-l-4 border-primary pl-3"
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground font-medium",
                       )}
                     >
-                      {dict[item.key]}
+                      <span>{dict[item.key]}</span>
+                      {active && (
+                        <span className="size-1.5 rounded-full bg-primary" />
+                      )}
                     </Link>
                   );
                 })}
@@ -198,7 +215,7 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) 
                   <Icon name="phone" size="xs" />
                   {siteConfig.phone}
                 </a>
-                <Button size="lg" className="w-full" asChild>
+                <Button size="lg" className="w-full" style={{ height: "42px" }} asChild>
                   <Link href={localeHref(locale, "/contact")} onClick={() => setOpen(false)}>
                     {dict.bookViewing}
                   </Link>

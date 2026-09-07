@@ -16,7 +16,7 @@ const textVariants = cva("text-pretty", {
       default: "text-foreground",
       muted: "text-muted-foreground",
       primary: "text-primary",
-      inverse: "text-background/80",
+      inverse: "text-white/80",
     },
     align: {
       left: "text-left",

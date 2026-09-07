@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/common/section-heading";
 import { Text } from "@/components/common/text";
 import { Gallery } from "@/components/media/gallery";
 import { Counter } from "@/components/motion/counter";
-import { Marquee } from "@/components/motion/marquee";
+
 import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { AgentCard } from "@/components/property/agent-card";
@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
 import { agents } from "@/data/people";
-import { featureIcons, galleryImages, partners, stats } from "@/data/site";
+import { featureIcons, galleryImages, stats } from "@/data/site";
 import { getDictionary } from "@/i18n/dictionaries";
 
 /**
@@ -28,22 +28,7 @@ import { getDictionary } from "@/i18n/dictionaries";
  * comes from `next/root-params` inside `getDictionary()`.
  */
 
-export async function PartnersSection() {
-  return (
-    <Section spacing="sm" container={false} className="border-y border-border bg-muted/40">
-      <Marquee speed={40} gap="4rem">
-        {partners.map((partner) => (
-          <span
-            key={partner}
-            className="cursor-default font-heading text-sm font-semibold uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary md:text-base"
-          >
-            {partner}
-          </span>
-        ))}
-      </Marquee>
-    </Section>
-  );
-}
+
 
 export async function StatsSection() {
   const dict = await getDictionary();
@@ -79,9 +64,7 @@ export async function FeaturesSection() {
   return (
     <Section className="border-t border-border bg-background">
       <SectionHeading
-        eyebrow={dict.features.eyebrow}
         title={dict.features.title}
-        description={dict.features.description}
       />
 
       <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -113,9 +96,7 @@ export async function AgentsSection() {
   return (
     <Section id="agents" className="border-t border-border bg-background">
       <SectionHeading
-        eyebrow={dict.agentsSection.eyebrow}
         title={dict.agentsSection.title}
-        description={dict.agentsSection.description}
       />
 
       <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -135,9 +116,7 @@ export async function GallerySection() {
   return (
     <Section id="gallery" className="border-t border-border bg-background">
       <SectionHeading
-        eyebrow={dict.gallery.eyebrow}
         title={dict.gallery.title}
-        description={dict.gallery.description}
         align="center"
       />
       <div className="mt-12">
@@ -154,9 +133,7 @@ export async function FaqSection() {
     <Section id="faq" className="border-t border-border bg-background">
       <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
         <SectionHeading
-          eyebrow={dict.faq.eyebrow}
           title={dict.faq.title}
-          description={dict.faq.description}
           className="lg:flex-col lg:items-start"
         />
 

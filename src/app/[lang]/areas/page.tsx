@@ -28,7 +28,7 @@ export default async function AreasPage() {
         image={pageBanners.areas}
       />
 
-      <AreasSection />
+      <AreasSection variant="grid" />
       <AreaComparisonSection />
     </>
   );

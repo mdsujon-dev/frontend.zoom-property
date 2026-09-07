@@ -1,11 +1,12 @@
-import Link from "next/link";
 import { AppContainer } from "@/components/common/app-container";
 import { SectionHeading } from "@/components/common/section-heading";
+import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { InsightCard } from "@/components/pages/blog/insight-card";
 import { insights } from "@/data/insights";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { LOCALE_TAGS } from "@/i18n/config";
 import { localeHref } from "@/i18n/href";
+import Link from "next/link";
 
 export async function HomeBlogSection() {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
@@ -20,29 +21,32 @@ export async function HomeBlogSection() {
   const latestInsights = insights.slice(0, 3);
 
   return (
-    <section className="border-t border-border bg-background py-16 sm:py-24">
-      <AppContainer size="lg">
+    <section className="bg-background py-16 sm:py-24">
+      <AppContainer>
         <SectionHeading
           title={t.title}
+          description={t.description}
           align="center"
         />
 
-        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <Stagger className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
           {latestInsights.map((insight) => (
-            <Link key={insight.id} href={localeHref(locale, `/blog/${insight.id}`)} className="group h-full">
-              <InsightCard
-                insight={{
-                  ...insight,
-                  title: locale === "bn" ? insight.titleBn : insight.title,
-                  excerpt: locale === "bn" ? insight.excerptBn : insight.excerpt,
-                }}
-                readMore={t.readMore || "Read More"}
-                category={t.categories[insight.category as keyof typeof t.categories] ?? insight.category}
-                date={dateFormatter.format(new Date(insight.date))}
-              />
-            </Link>
+            <StaggerItem key={insight.id}>
+              <Link href={localeHref(locale, `/blog/${insight.id}`)} className="group h-full block">
+                <InsightCard
+                  insight={{
+                    ...insight,
+                    title: locale === "bn" ? insight.titleBn : insight.title,
+                    excerpt: locale === "bn" ? insight.excerptBn : insight.excerpt,
+                  }}
+                  readMore={t.readMore || "Read More"}
+                  category={t.categories[insight.category as keyof typeof t.categories] ?? insight.category}
+                  date={dateFormatter.format(new Date(insight.date))}
+                />
+              </Link>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </AppContainer>
     </section>
   );

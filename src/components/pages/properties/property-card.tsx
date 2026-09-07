@@ -25,6 +25,7 @@ export function PropertyCard({
     city,
     price,
     purpose,
+    status = "available",
     beds,
     baths,
     size,
@@ -36,6 +37,7 @@ export function PropertyCard({
     furnishing,
     handover,
   } = property;
+  const isSold = status === "sold";
 
   const specs: { icon: IconName; label: string }[] = [
     ...(beds > 0 ? [{ icon: "bed" as const, label: `${beds} Beds` }] : []),
@@ -47,7 +49,8 @@ export function PropertyCard({
   return (
     <Card
       className={cn(
-        "group h-full overflow-hidden p-0 border border-border bg-card transition-all duration-500 ease-out-expo hover:border-primary/60 hover:shadow-xl hover:-translate-y-1",
+        "group h-full overflow-hidden p-0 border border-border transition-all duration-500 ease-out-expo hover:border-primary/60 hover:shadow-xl hover:-translate-y-1",
+        isSold ? "bg-muted/70" : "bg-card",
         className,
       )}
     >
@@ -68,6 +71,12 @@ export function PropertyCard({
             </Badge>
           ) : null}
 
+          {isSold ? (
+            <Badge className="border-0 bg-foreground/85 px-2.5 py-1 text-xs font-semibold text-background shadow-md">
+              Sold
+            </Badge>
+          ) : null}
+
           {hasVirtualTour ? (
             <span className="flex items-center gap-1 rounded-full bg-black/70 px-2.5 py-1 text-[11px] font-medium text-white border border-white/20 backdrop-blur-md">
               <span className="size-1.5 rounded-full bg-primary animate-pulse" />
@@ -85,9 +94,12 @@ export function PropertyCard({
       <CardContent className="flex flex-col gap-3 px-5 pt-5 pb-2">
         <div className="flex items-baseline justify-between gap-3">
           <span className="font-heading text-h4 font-bold text-primary tracking-tight">
-            {purpose === "rent" ? formatRent(price) : formatBdt(price)}
+            {isSold ? "Sold" : purpose === "rent" ? formatRent(price) : formatBdt(price)}
           </span>
-          <span className="rounded-md bg-primary/15 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-primary border border-primary/25">
+          <span className={cn(
+            "rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider border",
+            isSold ? "border-border bg-background/60 text-muted-foreground" : "border-primary/25 bg-primary/15 text-primary",
+          )}>
             For {purpose}
           </span>
         </div>

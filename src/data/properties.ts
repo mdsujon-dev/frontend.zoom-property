@@ -4,6 +4,7 @@
  */
 
 export type Purpose = "sale" | "rent";
+export type PropertyStatus = "available" | "sold";
 
 export type PropertyType =
   | "apartment"
@@ -20,6 +21,7 @@ export interface Property {
   area: string;
   city: string;
   purpose: Purpose;
+  status?: PropertyStatus;
   type: PropertyType;
   /** Sale price, or monthly rent when `purpose` is "rent". Always BDT. */
   price: number;
@@ -261,6 +263,7 @@ export const properties: Property[] = [
     area: "Khulshi Hills",
     city: "Chattogram",
     purpose: "sale",
+    status: "sold",
     type: "apartment",
     price: 19_800_000,
     beds: 3,

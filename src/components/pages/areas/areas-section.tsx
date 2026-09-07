@@ -28,13 +28,14 @@ export async function AreasSection({
     return (
       <Section id="areas" className={cn("border-t border-border bg-background", className)}>
         <SectionHeading
-          title={dict.areas.title}
+          title={locale === "bn" ? "সার্ভিস এরিয়া" : "Service Areas"}
+          size="h1"
         />
 
         <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {areas.map((area) => (
             <StaggerItem key={area.id}>
-              <AreaCard area={area} />
+              <AreaCard area={area} locale={locale} />
             </StaggerItem>
           ))}
         </Stagger>
@@ -47,7 +48,7 @@ export async function AreasSection({
       id="areas"
       style={{ backgroundColor: "#071524" }}
       className={cn(
-        "relative w-full overflow-hidden border-y border-white/10 bg-[#071524] py-14 sm:py-20",
+        "relative w-full overflow-hidden border-y border-white/10 bg-[#071524] py-[44px] sm:py-[68px]",
         className,
       )}
     >
@@ -74,14 +75,15 @@ export async function AreasSection({
       {/* Section Header */}
       <AppContainer size="xl" className="relative z-10">
         <SectionHeading
-          title={dict.areas.title}
+          title={locale === "bn" ? "সার্ভিস এরিয়া" : "Service Areas"}
+          size="h1"
           tone="inverse"
           action={
             <Link
-              href={localeHref(locale, "/areas")}
-              className="inline-flex items-center gap-2 self-start sm:self-auto shrink-0 rounded-full border border-white/25 bg-white/10 px-5 py-2.5 font-heading text-xs sm:text-sm font-bold uppercase tracking-wider text-white backdrop-blur-md transition-all hover:bg-white/20 hover:border-white/40 shadow-sm"
+              href={localeHref(locale, "/properties")}
+              className="inline-flex items-center gap-2 self-start sm:self-auto shrink-0 rounded-full border border-white/25 bg-white/10 px-5 py-2.5 font-heading text-xs sm:text-sm font-bold uppercase tracking-wider text-white backdrop-blur-md transition-all hover:border-sky-400 hover:bg-sky-500 hover:text-white shadow-sm"
             >
-              <span>{locale === "bn" ? "সবগুলো এলাকা দেখুন" : "Explore All Areas"}</span>
+              <span>{locale === "bn" ? "সবগুলো দেখুন" : "Explore All"}</span>
               <Icon name="arrowRight" size="xs" />
             </Link>
           }
@@ -99,6 +101,7 @@ export async function AreasSection({
             <AreaCard
               key={area.id}
               area={area}
+              locale={locale}
               className="w-[290px] sm:w-[350px] lg:w-[390px] shrink-0 border-white/15 bg-card/15 shadow-2xl transition-all duration-300 hover:border-sky-400/60 hover:scale-[1.02]"
             />
           ))}

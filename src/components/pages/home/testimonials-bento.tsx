@@ -1,4 +1,5 @@
 import Image from "@/components/common/image";
+import Link from "next/link";
 import { AppContainer } from "@/components/common/app-container";
 import { Icon } from "@/components/common/icon";
 import { SectionHeading } from "@/components/common/section-heading";
@@ -9,6 +10,7 @@ import { reviews } from "@/data/people";
 import { galleryImages } from "@/data/site";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { LOCALE_TAGS } from "@/i18n/config";
+import { localeHref } from "@/i18n/href";
 import { cn } from "@/lib/utils";
 
 export async function TestimonialsBento() {
@@ -29,7 +31,15 @@ export async function TestimonialsBento() {
       <AppContainer>
         <SectionHeading
           title={t.title}
-          align="center"
+          action={
+            <Link
+              href={localeHref(locale, "/reviews")}
+              className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-brand hover:text-brand"
+            >
+              {t.viewAll}
+              <Icon name="arrowUpRight" size="sm" aria-hidden />
+            </Link>
+          }
         />
 
         <div className="mt-12 grid gap-4 lg:grid-cols-3 lg:grid-rows-[auto_1fr]">

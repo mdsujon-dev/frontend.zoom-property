@@ -8,10 +8,12 @@ import { StatsBanner } from "@/components/pages/home/stats-banner";
 import { ListingsSection } from "@/components/pages/properties/listings-section";
 import { ProjectsSection } from "@/components/pages/projects/projects-section";
 import { AreasSection } from "@/components/pages/areas/areas-section";
-import { FaqSection } from "@/components/pages/shared/faq-section";
+import { VideoSection } from "@/components/pages/home/video-section";
+import { HomeBlogSection } from "@/components/pages/home/home-blog-section";
 import { showcase } from "@/data/services";
 import { getDictionary } from "@/i18n/dictionaries";
-import { faqSchema, listingsSchema } from "@/lib/seo";
+import { listingsSchema } from "@/lib/seo";
+import { VideoCarouselSection } from "@/components/pages/home/video-carousel-section";
 
 /**
  * Home page.
@@ -24,7 +26,6 @@ export default async function Home() {
 
   return (
     <>
-      <JsonLd schema={await faqSchema()} />
       <JsonLd schema={listingsSchema()} />
 
       <HeroSection />
@@ -38,12 +39,15 @@ export default async function Home() {
       />
 
       <RoomsSection />
+      <div className="mb-8 md:mb-16 lg:mb-20">
+        <StatsBanner />
+      </div>
       <AreasSection />
       <ProjectsSection />
       <ServicesShowcase />
       <TestimonialsBento />
-      <StatsBanner />
-      <FaqSection />
+      <VideoSection />
+      <HomeBlogSection />
     </>
   );
 }

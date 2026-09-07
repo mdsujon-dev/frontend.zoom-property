@@ -19,6 +19,7 @@ export const pageBanners = {
   contact: photo("photo-1497366811353-6870744d04b2"),
   landowners: photo("photo-1503387762-592deb58ef4e"),
   blog: photo("photo-1450101499163-c8848c66ca85"),
+  reviews: photo("photo-1600607687920-4e2a09cf159d"),
 } as const;
 
 export type BannerKey = keyof typeof pageBanners;

@@ -37,13 +37,16 @@
     "metaDescription": "Verified apartments, duplexes, houses and commercial floors across Dhaka and Chattogram. Every listing inspected and title-checked before it goes live."
   },
   "areas": {
-    "eyebrow": "Micro-market intelligence",
-    "title": "Explore by prime enclave",
-    "description": "Average price per square foot, gross rental yield and security tier across Dhaka and Chattogram's most requested addresses.",
-    "pageTitle": "Neighbourhoods, with the numbers",
-    "pageDescription": "Most people pick an area before a price. Each tile carries what is listed there, the median, and what the middle of that market costs per square foot.",
-    "metaTitle": "Neighbourhoods in Dhaka and Chattogram",
-    "metaDescription": "Price per square foot, rental yield and security tier for Gulshan, Banani, Dhanmondi, Bashundhara, Uttara and Khulshi."
+    "eyebrow": "Our Service Areas & Locations",
+    "title": "Prime Service Areas Where We Sell Luxury Flats & Units",
+    "description": "Discover Dhaka & Chattogram's most prestigious neighbourhoods where Zoom Property offers verified luxury apartments, duplexes, and residential units for sale.",
+    "badge": "Service Area",
+    "unitsAvailable": "Flats & Units For Sale",
+    "viewServiceAreas": "Explore All Service Areas",
+    "pageTitle": "Service Areas for Luxury Flats",
+    "pageDescription": "Browse verified luxury apartments, duplexes, and commercial floors across Dhaka & Chattogram's most requested addresses.",
+    "metaTitle": "Service Areas in Dhaka & Chattogram | Zoom Property",
+    "metaDescription": "Explore prime service locations in Gulshan, Banani, Baridhara, Dhanmondi, Bashundhara, Uttara and Khulshi where Zoom Property sells luxury flats."
   },
   "projects": {
     "eyebrow": "Under construction",
@@ -63,6 +66,18 @@
     "eyebrow": "Client testimonials",
     "title": "Real stories from people who bought here",
     "description": "Every review names the property it came from, so you can check the claim against the listing.",
+    "viewAll": "View all reviews",
+    "pageTitle": "Real stories from people who bought here",
+    "pageDescription": "Verified buyers, tenants and teams share what the process felt like, from the first shortlist to the signed handover.",
+    "allReviewsTitle": "Reviews you can trace to a property",
+    "verified": "Verified client",
+    "videoTitle": "See the spaces before you visit",
+    "videoDescription": "Walk through real homes and live projects with the same candour our clients expect from us.",
+    "ctaTitle": "Want an honest shortlist?",
+    "ctaDescription": "Tell us what you are looking for and we will send only the properties that fit.",
+    "ctaAction": "Start a conversation",
+    "metaTitle": "Client reviews and property walkthroughs",
+    "metaDescription": "Read verified Zoom Property client reviews and watch real property walkthroughs across Dhaka.",
     "pill": "Client testimonials",
     "ratingNote": "Average across verified buyers and tenants in the last twelve months.",
     "outOf": "out of 5",
@@ -549,5 +564,17 @@
       { "value": 20, "suffix": "+", "label": "Years of experience" },
       { "value": 95, "suffix": "+", "label": "Team engineers" }
     ]
+  },
+  "videoSection": {
+    "eyebrow": "Virtual Property Tours",
+    "title": "Experience Luxury Living in Motion",
+    "description": "Immerse yourself in cinematic walkthroughs, architectural inspections, and exclusive project showcases verified by Zoom Property & Zoom IT.",
+    "channelBadge": "Official Zoom IT Channel",
+    "channelAction": "YouTube Channel",
+    "play": "Play Video",
+    "close": "Close Player",
+    "verified": "Verified Walkthrough",
+    "prev": "Previous video",
+    "next": "Next video"
   }
 }

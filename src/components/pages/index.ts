@@ -5,6 +5,7 @@ export * from "./home/rooms-section";
 export * from "./home/rooms-accordion";
 export * from "./home/services-showcase";
 export * from "./home/testimonials-bento";
+export * from "./home/stats-banner";
 
 // Properties
 export * from "./properties/listings-section";

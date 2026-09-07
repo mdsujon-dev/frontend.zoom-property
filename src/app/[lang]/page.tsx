@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/pages/home/hero-section";
 import { RoomsSection } from "@/components/pages/home/rooms-section";
 import { ServicesShowcase } from "@/components/pages/home/services-showcase";
 import { TestimonialsBento } from "@/components/pages/home/testimonials-bento";
+import { StatsBanner } from "@/components/pages/home/stats-banner";
 import { ListingsSection } from "@/components/pages/properties/listings-section";
 import { ProjectsSection } from "@/components/pages/projects/projects-section";
 import { AreasSection } from "@/components/pages/areas/areas-section";
@@ -28,7 +29,6 @@ export default async function Home() {
 
       <HeroSection />
 
-      {/* <StatsSection /> */}
       <ListingsSection variant="preview" limit={6} />
 
       <CinematicShowcase
@@ -42,6 +42,7 @@ export default async function Home() {
       <ProjectsSection />
       <ServicesShowcase />
       <TestimonialsBento />
+      <StatsBanner />
       <FaqSection />
     </>
   );

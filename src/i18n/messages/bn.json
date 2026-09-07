@@ -540,5 +540,14 @@
     "description": "গুলশানের একটি তিন-বেডরুম ফ্ল্যাট ঘুরে দেখা — কোন ঘর আসলে কত বড়, আর সাথে কী কী থাকছে।",
     "readMore": "বিস্তারিত",
     "expand": "বিস্তারিত দেখুন:"
+  },
+  "statsBanner": {
+    "watermark": "SINGLE PROPERTY",
+    "stats": [
+      { "value": 8, "suffix": "k+", "label": "সম্পূর্ণ প্রজেক্ট" },
+      { "value": 3, "suffix": "k+", "label": "গ্লোবাল গ্রাহক" },
+      { "value": 20, "suffix": "+", "label": "বছরের অভিজ্ঞতা" },
+      { "value": 95, "suffix": "+", "label": "টিম ইঞ্জিনিয়ার" }
+    ]
   }
 }

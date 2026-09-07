@@ -540,5 +540,14 @@
     "description": "A walkthrough of a representative three-bedroom home in Gulshan — what each room actually measures, and what comes with it.",
     "readMore": "Read more",
     "expand": "Show details for"
+  },
+  "statsBanner": {
+    "watermark": "SINGLE PROPERTY",
+    "stats": [
+      { "value": 8, "suffix": "k+", "label": "Projects completed" },
+      { "value": 3, "suffix": "k+", "label": "Global customers" },
+      { "value": 20, "suffix": "+", "label": "Years of experience" },
+      { "value": 95, "suffix": "+", "label": "Team engineers" }
+    ]
   }
 }

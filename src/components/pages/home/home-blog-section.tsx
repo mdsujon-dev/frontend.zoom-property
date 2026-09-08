@@ -1,4 +1,5 @@
 import { AppContainer } from "@/components/common/app-container";
+import { OrnamentDivider } from "@/components/common/ornament-divider";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { InsightCard } from "@/components/pages/blog/insight-card";
@@ -23,11 +24,9 @@ export async function HomeBlogSection() {
   return (
     <section className="bg-background py-16 sm:py-24">
       <AppContainer>
-        <SectionHeading
-          title={t.title}
-          description={t.description}
-          align="center"
-        />
+        <SectionHeading title={t.title} align="center" />
+
+        <OrnamentDivider className="mt-7" />
 
         <Stagger className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
           {latestInsights.map((insight) => (

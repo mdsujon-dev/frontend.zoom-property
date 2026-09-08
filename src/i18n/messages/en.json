@@ -37,6 +37,19 @@
     "metaDescription": "Verified apartments, duplexes, houses and commercial floors across Dhaka and Chattogram. Every listing inspected and title-checked before it goes live."
   },
   "areas": {
+    "service": {
+      "eyebrow": "Our Service Areas",
+      "titleLead": "We Serve Across ",
+      "titleAccent": "Dhaka & Nearby",
+      "titleTail": " Areas",
+      "description": "From the heart of Dhaka to the surrounding towns, there is an advisor who already knows your street, your building and what it last sold for.",
+      "inArea": "in {name}",
+      "viewAll": "Explore all service areas",
+      "showing": "Showing {from}-{to} of {total} areas",
+      "prev": "Previous",
+      "next": "Next",
+      "page": "Page {page}"
+    },
     "eyebrow": "Our Service Areas & Locations",
     "title": "Prime Service Areas Where We Sell Luxury Flats & Units",
     "description": "Discover Dhaka & Chattogram's most prestigious neighbourhoods where Zoom Property offers verified luxury apartments, duplexes, and residential units for sale.",
@@ -430,6 +443,9 @@
   "services": {
     "eyebrow": "In-house units",
     "title": "The teams behind a sale",
+    "titleLead": "The Teams Behind ",
+    "titleAccent": "Every Sale",
+    "titleTail": " We Handle",
     "description": "Four units we run ourselves rather than subcontract, because every one of them is a place a purchase usually goes wrong.",
     "cta": "Learn more"
   },
@@ -492,6 +508,48 @@
     }
   },
   "blog": {
+    "article": {
+      "backToBlog": "All articles",
+      "breadcrumbHome": "Home",
+      "by": "By",
+      "share": "Share this article",
+      "copyLink": "Copy link",
+      "copied": "Link copied",
+      "tocTitle": "In this article",
+      "quickContact": {
+        "title": "Quick contact",
+        "subtitle": "Ask about anything in this article. An advisor replies the same working day.",
+        "name": "Your name",
+        "namePlaceholder": "Full name",
+        "phone": "Phone",
+        "email": "Email",
+        "message": "Message",
+        "messagePlaceholder": "What would you like to know?",
+        "submit": "Book a callback",
+        "submitting": "Sending…",
+        "successTitle": "Request received",
+        "successBody": "An advisor will call you back on the number you gave.",
+        "privacy": "We use your details to answer this enquiry and nothing else."
+      },
+      "comments": {
+        "title": "Leave a comment",
+        "subtitle": "Questions and corrections are both welcome. Comments are reviewed before they appear.",
+        "name": "Name",
+        "namePlaceholder": "Your name",
+        "email": "Email",
+        "emailNote": "Not published.",
+        "comment": "Comment",
+        "commentPlaceholder": "Write your comment…",
+        "submit": "Post comment",
+        "submitting": "Posting…",
+        "successTitle": "Comment submitted",
+        "successBody": "Thanks — it will appear once a moderator has read it."
+      },
+      "related": {
+        "title": "Keep reading",
+        "description": "Three more pieces from the same desk, picked for what you just read."
+      }
+    },
     "eyebrow": "Market Notes & Intelligence",
     "title": "Explore News, Insights and Guides",
     "description": "In-depth research on Dhaka real estate, architectural movements, property regulations, and market trends.",
@@ -578,5 +636,24 @@
     "verified": "Verified Walkthrough",
     "prev": "Previous video",
     "next": "Next video"
+  },
+  "notFound": {
+    "code": "404",
+    "eyebrow": "Page not found",
+    "title": "This address isn't on our books",
+    "description": "The page you asked for has moved, been renamed, or never existed. Nothing is lost — pick up the trail below.",
+    "attempted": "You asked for",
+    "suggestion": "Did you mean",
+    "linksTitle": "Or start from one of these",
+    "back": "Go back",
+    "home": "Back to home",
+    "links": {
+      "properties": "Every listing, filtered the way you search.",
+      "projects": "Developments under construction and delivered.",
+      "areas": "Neighbourhood guides with real price ranges.",
+      "landowners": "Joint ventures, with the terms in writing.",
+      "blog": "Market notes from the people doing the deals.",
+      "contact": "Talk to an advisor about what you need."
+    }
   }
 }

@@ -40,3 +40,15 @@ export async function getDictionary(): Promise<Dictionary> {
   const locale = await getLocale();
   return dictionaries[locale]();
 }
+
+/**
+ * Load a dictionary for an explicitly given locale.
+ *
+ * `getDictionary()` reads the locale from root params and calls `notFound()`
+ * when it is missing — which is exactly what a `not-found.tsx` must not do.
+ * Boundaries that render *because* a route did not match resolve their own
+ * locale (falling back to the default) and come through here instead.
+ */
+export function getDictionaryFor(locale: Locale): Promise<Dictionary> {
+  return dictionaries[locale]();
+}

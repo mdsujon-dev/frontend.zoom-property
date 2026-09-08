@@ -16,6 +16,10 @@ import { cn } from "@/lib/utils";
  * The bar is `black/40 + backdrop-blur` because it lands on whatever the photo
  * happens to be — a token background would be unreadable over a bright image,
  * and a solid one would hide the part of the picture it covers.
+ *
+ * The card is a bordered surface with the photograph running edge to edge into
+ * it, so the image needs no corner radius of its own — `overflow-hidden` on the
+ * article clips it to the border instead, and the two curves stay in sync.
  */
 export function InsightCard({
   insight,
@@ -33,12 +37,18 @@ export function InsightCard({
   className?: string;
 }) {
   return (
-    <article className={cn("group flex h-full flex-col gap-6", className)}>
+    <article
+      className={cn(
+        "group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card",
+        "transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg",
+        className,
+      )}
+    >
       <ImageFrame
         src={insight.image}
         alt=""
         ratio="3/2"
-        rounded="2xl"
+        rounded="none"
         hover="zoom"
         sizes="third"
       >
@@ -49,7 +59,7 @@ export function InsightCard({
         </div>
       </ImageFrame>
 
-      <div className="flex flex-1 flex-col gap-4">
+      <div className="flex flex-1 flex-col gap-4 p-6">
         <Heading
           as="h3"
           size="h4"
@@ -63,7 +73,7 @@ export function InsightCard({
           {insight.excerpt}
         </Text>
 
-        <span className="flex items-center gap-2.5 text-[15px] font-bold text-foreground">
+        <span className="mt-auto flex items-center gap-2.5 border-t border-border pt-4 text-[15px] font-bold text-foreground">
           {readMore}
           <Icon
             name="arrowRight"

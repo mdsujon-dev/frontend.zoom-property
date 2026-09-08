@@ -6,7 +6,6 @@ import { Heading } from "@/components/common/heading";
 import { Icon } from "@/components/common/icon";
 import { Text } from "@/components/common/text";
 import { ImageFrame } from "@/components/media/image-frame";
-import { VideoEmbed } from "@/components/media/video-embed";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { landownerStory } from "@/data/landowner";
@@ -21,47 +20,17 @@ export async function LandownerStory() {
   return (
     <section className="border-t border-border bg-background py-16 sm:py-24">
       <AppContainer className="flex flex-col gap-16 sm:gap-24">
-        {/* 1 — a landowner's own words, then why that matters */}
+        {/* 1 — photograph on one side, the words on the other */}
         <Row
           media={
-            <figure className="overflow-hidden rounded-2xl border border-border bg-card">
-              <ImageFrame
-                src={landownerStory.testimonial.portrait}
-                alt=""
-                ratio="4/3"
-                rounded="none"
-                sizes="half"
-              >
-                <span className="absolute left-5 top-5 rounded-lg bg-black/55 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-white backdrop-blur-md">
-                  {t.quoteLabel}
-                </span>
-              </ImageFrame>
-
-              <blockquote className="flex flex-col gap-4 p-6">
-                <Icon name="quote" size="lg" className="text-primary/30" />
-                <Text size="base" tone="default" className="leading-relaxed">
-                  “{t.quote}”
-                </Text>
-                <figcaption className="flex items-center gap-3 border-t border-border pt-4">
-                  <ImageFrame
-                    src={landownerStory.testimonial.image}
-                    alt=""
-                    ratio="square"
-                    rounded="full"
-                    sizes="quarter"
-                    className="w-11 shrink-0"
-                  />
-                  <span className="flex min-w-0 flex-col">
-                    <span className="truncate text-sm font-semibold text-foreground">
-                      {t.quoteName}
-                    </span>
-                    <span className="truncate text-xs text-muted-foreground">
-                      {t.quoteRole}
-                    </span>
-                  </span>
-                </figcaption>
-              </blockquote>
-            </figure>
+            <ImageFrame
+              src={landownerStory.testimonial.portrait}
+              alt={`${t.quoteName} — ${t.quoteRole}`}
+              ratio="4/3"
+              rounded="2xl"
+              hover="zoom"
+              sizes="half"
+            />
           }
         >
           <Heading as="h2" size="h3">
@@ -72,21 +41,18 @@ export async function LandownerStory() {
           </Text>
         </Row>
 
-        {/* 2 — copy first, video second (the flip) */}
+        {/* 2 — copy first, photograph second (the flip) */}
         <Row
           reverse
           media={
-            <div className="flex flex-col gap-3">
-              <VideoEmbed
-                url={landownerStory.video.url}
-                poster={landownerStory.video.poster}
-                title={t.videoCaption}
-                ratio="video"
-              />
-              <Text size="sm" className="text-muted-foreground">
-                {t.videoCaption}
-              </Text>
-            </div>
+            <ImageFrame
+              src={landownerStory.video.poster}
+              alt={t.videoCaption}
+              ratio="4/3"
+              rounded="2xl"
+              hover="zoom"
+              sizes="half"
+            />
           }
         >
           <Heading as="h2" size="h3">

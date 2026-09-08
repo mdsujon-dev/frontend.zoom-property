@@ -13,7 +13,7 @@ export async function ProjectsSection() {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
 
   return (
-    <Section id="projects" className="border-t border-border bg-background">
+    <Section id="projects" className="bg-background">
       <SectionHeading
         title={dict.projects.title}
         action={

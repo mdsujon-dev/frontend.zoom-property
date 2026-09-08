@@ -200,7 +200,7 @@ export function BlogCategoryView({
           {posts.map((post) => {
             const title = isBn && post.titleBn ? post.titleBn : post.title;
             const excerpt = isBn && post.excerptBn ? post.excerptBn : post.excerpt;
-            const href = localeHref(locale, `/blog#${post.id}`);
+            const href = localeHref(locale, `/blog/${post.id}`);
             const categoryLabel = t.categories[post.category] ?? post.category;
 
             return (

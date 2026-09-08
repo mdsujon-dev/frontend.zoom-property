@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { DEFAULT_LOCALE, LOCALES, isLocale } from "@/i18n/config";
+import { PATHNAME_HEADER } from "@/lib/not-found";
 
 /**
  * Locale routing.
@@ -9,6 +10,11 @@ import { DEFAULT_LOCALE, LOCALES, isLocale } from "@/i18n/config";
  * previously chosen locale cookie first, then the browser's Accept-Language.
  * Once a path already carries a locale it is left alone, so the redirect only
  * ever costs one hop on the first visit.
+ *
+ * It also stamps the requested path onto `x-pathname`. The 404 pages need it:
+ * a request that matches no route reaches them with no params, and
+ * `usePathname()` prerenders as `/_not-found`, so the real URL can only come
+ * from here.
  *
  * Hand-rolled rather than pulling in `negotiator` + `intl-localematcher`: two
  * locales do not need a full RFC 4647 matcher, and the dependency would run on
@@ -47,7 +53,11 @@ export function proxy(request: NextRequest) {
   const hasLocale = LOCALES.some(
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
   );
-  if (hasLocale) return NextResponse.next();
+  if (hasLocale) {
+    const headers = new Headers(request.headers);
+    headers.set(PATHNAME_HEADER, pathname);
+    return NextResponse.next({ request: { headers } });
+  }
 
   const locale = pickLocale(request);
   const url = request.nextUrl.clone();

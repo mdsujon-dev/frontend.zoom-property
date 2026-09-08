@@ -1,8 +1,8 @@
 import { AppContainer } from "@/components/common/app-container";
-import { Icon } from "@/components/common/icon";
+import { OrnamentDivider } from "@/components/common/ornament-divider";
 import { SectionHeading } from "@/components/common/section-heading";
 import { VideoCarousel } from "@/components/pages/home/video-carousel";
-import { homeVideos, videoSectionBackdrop, zoomItYoutubeChannel } from "@/data/videos";
+import { homeVideos, videoSectionBackdrop } from "@/data/videos";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 
 /**
@@ -38,21 +38,9 @@ export async function VideoSection() {
       />
 
       <AppContainer>
-        <SectionHeading
-          title={t.title}
-          tone="inverse"
-          action={
-            <a
-              href={zoomItYoutubeChannel}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2.5 font-heading text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-md shadow-lg transition-all hover:border-primary hover:bg-primary"
-            >
-              <Icon name="youtube" size="sm" className="text-red-500" />
-              <span>{t.channelAction}</span>
-            </a>
-          }
-        />
+        <SectionHeading title={t.title} align="center" tone="inverse" />
+
+        <OrnamentDivider tone="inverse" className="mt-7" />
 
         <div className="mt-12">
           <VideoCarousel videos={homeVideos} locale={locale} dict={t} />

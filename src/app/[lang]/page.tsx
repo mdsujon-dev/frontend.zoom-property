@@ -1,8 +1,6 @@
 import { JsonLd } from "@/components/common/json-ld";
 import { CinematicShowcase } from "@/components/pages/home/cinematic-showcase";
 import { HeroSection } from "@/components/pages/home/hero-section";
-import { RoomsSection } from "@/components/pages/home/rooms-section";
-import { ServicesShowcase } from "@/components/pages/home/services-showcase";
 import { TestimonialsBento } from "@/components/pages/home/testimonials-bento";
 import { StatsBanner } from "@/components/pages/home/stats-banner";
 import { ListingsSection } from "@/components/pages/properties/listings-section";
@@ -13,7 +11,7 @@ import { HomeBlogSection } from "@/components/pages/home/home-blog-section";
 import { showcase } from "@/data/services";
 import { getDictionary } from "@/i18n/dictionaries";
 import { listingsSchema } from "@/lib/seo";
-import { VideoCarouselSection } from "@/components/pages/home/video-carousel-section";
+// import { VideoCarouselSection } from "@/components/pages/home/video-carousel-section";
 
 /**
  * Home page.
@@ -38,13 +36,11 @@ export default async function Home() {
         dict={dict.showcase}
       />
 
-      <RoomsSection />
-      <div className="mb-8 md:mb-16 lg:mb-20">
-        <StatsBanner />
-      </div>
       <AreasSection />
       <ProjectsSection />
-      <ServicesShowcase />
+      {/* <div className="mb-8 md:mb-16 lg:mb-20"> */}
+        <StatsBanner />
+      {/* </div> */}
       <TestimonialsBento />
       <VideoSection />
       <HomeBlogSection />

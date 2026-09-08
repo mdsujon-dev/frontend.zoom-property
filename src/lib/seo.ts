@@ -92,3 +92,66 @@ export function listingsSchema() {
     })),
   };
 }
+
+/**
+ * One blog post. `BlogPosting`, not `Article`: it is the narrower type and it
+ * is what Google's article rich result actually looks for.
+ *
+ * Only fields the page really renders are included — there is no `dateModified`
+ * in the data, so none is claimed.
+ */
+export function articleSchema({
+  url,
+  headline,
+  description,
+  image,
+  datePublished,
+  authorName,
+  authorRole,
+  section,
+}: {
+  url: string;
+  headline: string;
+  description: string;
+  image: string;
+  datePublished: string;
+  authorName: string;
+  authorRole: string;
+  section: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${url}#article`,
+    mainEntityOfPage: url,
+    url,
+    headline,
+    description,
+    image,
+    datePublished,
+    articleSection: section,
+    author: {
+      "@type": "Person",
+      name: authorName,
+      jobTitle: authorRole,
+    },
+    publisher: { "@id": `${absoluteUrl()}#organization` },
+  };
+}
+
+/**
+ * Breadcrumbs for a nested route. Pass the trail in order, root first; every
+ * entry needs a real URL, so never put a hash link in here.
+ */
+export function breadcrumbSchema(trail: { name: string; url: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: trail.map((crumb, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: crumb.name,
+      item: crumb.url,
+    })),
+  };
+}

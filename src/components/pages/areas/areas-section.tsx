@@ -1,109 +1,93 @@
-import Image from "@/components/common/image";
-
-import { AppContainer } from "@/components/common/app-container";
+import { Heading } from "@/components/common/heading";
+import { Icon } from "@/components/common/icon";
 import { Section } from "@/components/common/section";
-import { SectionHeading } from "@/components/common/section-heading";
-import { Marquee } from "@/components/motion/marquee";
+import { Text } from "@/components/common/text";
+import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
-import { AreaCard } from "./area-card";
 import { areas } from "@/data/areas";
-import { getLocale } from "@/i18n/dictionaries";
+import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { cn } from "@/lib/utils";
 
-interface AreasSectionProps {
-  variant?: "marquee" | "grid";
-  className?: string;
-}
+import { AreaServiceCard } from "./area-service-card";
 
-export async function AreasSection({
-  variant = "marquee",
-  className,
-}: AreasSectionProps = {}) {
-  const locale = await getLocale();
+/** How many the home page shows. `/areas` paginates the rest. */
+const HOME_COUNT = 10;
 
-  if (variant === "grid") {
-    return (
-      <Section id="areas" className={cn("border-t border-border bg-background", className)}>
-        <SectionHeading
-          title={locale === "bn" ? "সার্ভিস এরিয়া" : "Service Areas"}
-          size="h1"
-        />
+/**
+ * Service areas on the home page.
+ *
+ * Ten cards in a five-up grid, then a link through to the full list. The order
+ * in `src/data/areas.ts` is the editorial order, so the strongest addresses
+ * lead — no sorting here.
+ */
+export async function AreasSection({ className }: { className?: string } = {}) {
+  const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
+  const t = dict.areas.service;
 
-        <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {areas.map((area) => (
-            <StaggerItem key={area.id}>
-              <AreaCard area={area} locale={locale} />
-            </StaggerItem>
-          ))}
-        </Stagger>
-      </Section>
-    );
-  }
+  const shown = areas.slice(0, HOME_COUNT);
 
   return (
-    <section
+    <Section
       id="areas"
-      style={{ backgroundColor: "#071524" }}
-      className={cn(
-        "relative w-full overflow-hidden border-y border-white/10 bg-[#071524] py-[44px] sm:py-[68px]",
-        className,
-      )}
+      className={cn(" bg-background", className)}
     >
-      {/* High-Resolution Luxury City Skyline Background */}
-      <Image
-        src="https://images.unsplash.com/photo-1477959858617-67f30bc75b82?auto=format&fit=crop&w=2400&q=80"
-        alt="Prime city enclaves background"
-        fill
-        className="pointer-events-none object-cover object-center brightness-90"
-        sizes="100vw"
-      />
+      <AreasHeading t={t} />
 
-      {/* Deep Luxury Gradient & Dark Overlays for Optimal Legibility */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#050e18]/85 via-[#071524]/75 to-[#050e18]/90" />
-      <div className="pointer-events-none absolute inset-0 bg-[#050e18]/30 backdrop-blur-[1px]" />
-
-      {/* Ambient Lighting Orbs */}
-      <div className="pointer-events-none absolute -top-32 left-1/4 size-[500px] rounded-full bg-blue-600/15 blur-[140px]" />
-      <div className="pointer-events-none absolute -bottom-32 right-1/4 size-[500px] rounded-full bg-sky-500/15 blur-[140px]" />
-
-      {/* Subtle Architectural Grid Pattern */}
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
-
-      {/* Section Header */}
-      <AppContainer size="xl" className="relative z-10">
-        <div className="relative">
-          <SectionHeading
-            title={locale === "bn" ? "সার্ভিস এরিয়া" : "Service Areas"}
-            description={
-              locale === "bn"
-                ? "ঢাকা ও চট্টগ্রামের যাচাই করা প্রাইম এলাকাগুলো দেখুন।"
-                : "Explore verified prime locations across Dhaka and Chattogram."
-            }
-            size="h1"
-            align="center"
-            tone="inverse"
-            className="sm:block"
-          />
-        </div>
-      </AppContainer>
-
-      {/* Marquee Track with Edge Fades */}
-      <div className="relative z-10 mt-8 sm:mt-10 w-full overflow-hidden">
-        {/* Left and Right Edge Gradient Fades */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-16 sm:w-32 bg-gradient-to-r from-[#050e18] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-16 sm:w-32 bg-gradient-to-l from-[#050e18] to-transparent" />
-
-        <Marquee speed={38} gap="1.5rem" pauseOnHover fade={false}>
-          {areas.map((area) => (
-            <AreaCard
-              key={area.id}
+      <Stagger className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {shown.map((area) => (
+          <StaggerItem key={area.id}>
+            <AreaServiceCard
               area={area}
               locale={locale}
-              className="w-[290px] sm:w-[350px] lg:w-[390px] shrink-0 border-white/15 bg-card/15 shadow-2xl transition-all duration-300 hover:border-sky-400/60 hover:scale-[1.02]"
+              inAreaLabel={t.inArea.replace(
+                "{name}",
+                locale === "bn" && area.nameBn ? area.nameBn : area.name,
+              )}
             />
-          ))}
-        </Marquee>
+          </StaggerItem>
+        ))}
+      </Stagger>
+    </Section>
+  );
+}
+
+/**
+ * Eyebrow pill, two-tone title, lead. Shared with `/areas` so the two pages
+ * open the same way.
+ *
+ * The title is three dictionary strings rather than one with markup in it:
+ * translators need to move the accent to a different position in the sentence,
+ * and Bangla does exactly that.
+ */
+export function AreasHeading({
+  t,
+}: {
+  t: {
+    eyebrow: string;
+    titleLead: string;
+    titleAccent: string;
+    titleTail: string;
+    description: string;
+  };
+}) {
+  return (
+    <Reveal>
+      <div className="flex flex-col items-center gap-4 text-center">
+        <span className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/5 px-4 py-1.5 text-sm font-semibold text-primary">
+          <Icon name="location" size="xs" />
+          {t.eyebrow}
+        </span>
+
+        <Heading as="h2" size="h2" align="center" className="max-w-4xl">
+          {t.titleLead}
+          <span className="text-primary">{t.titleAccent}</span>
+          {t.titleTail}
+        </Heading>
+
+        <Text size="base" align="center" className="max-w-2xl leading-relaxed">
+          {t.description}
+        </Text>
       </div>
-    </section>
+    </Reveal>
   );
 }

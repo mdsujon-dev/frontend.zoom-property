@@ -37,7 +37,7 @@ export function BlogFeaturedOverlayCard({
   const title = (isBn && insight.titleBn) ? insight.titleBn : insight.title;
   const excerpt = (isBn && insight.excerptBn) ? insight.excerptBn : insight.excerpt;
   const authorName = (isBn && insight.author.nameBn) ? insight.author.nameBn : insight.author.name;
-  const href = localeHref(locale, `/blog#${insight.id}`);
+  const href = localeHref(locale, `/blog/${insight.id}`);
 
   return (
     <article
@@ -136,7 +136,7 @@ export function BlogStandardCard({
   const isBn = locale === "bn";
   const title = (isBn && insight.titleBn) ? insight.titleBn : insight.title;
   const excerpt = (isBn && insight.excerptBn) ? insight.excerptBn : insight.excerpt;
-  const href = localeHref(locale, `/blog#${insight.id}`);
+  const href = localeHref(locale, `/blog/${insight.id}`);
 
   return (
     <article
@@ -214,7 +214,7 @@ export function BlogHorizontalCard({
 }: Omit<CardBaseProps, "readMoreLabel">) {
   const isBn = locale === "bn";
   const title = (isBn && insight.titleBn) ? insight.titleBn : insight.title;
-  const href = localeHref(locale, `/blog#${insight.id}`);
+  const href = localeHref(locale, `/blog/${insight.id}`);
 
   return (
     <article

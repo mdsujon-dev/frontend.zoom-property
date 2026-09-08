@@ -7,10 +7,8 @@ import { SectionHeading } from "@/components/common/section-heading";
 import { Text } from "@/components/common/text";
 import { PageHeader } from "@/components/layout/page-header";
 import { LandownerStory } from "@/components/pages/landowners/landowner-story";
-import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
-import { ImageFrame } from "@/components/media/image-frame";
-import { landmarkJVProjects, landownerBenefits } from "@/data/landowner";
+import { landownerBenefits } from "@/data/landowner";
 import { pageBanners } from "@/data/page-banners";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeAlternates } from "@/i18n/alternates";
@@ -90,68 +88,7 @@ export default async function LandownersPage() {
           ))}
         </Stagger>
       </Section>
-
-      {/* Completed joint ventures — the proof, with the share each owner got. */}
-      <Section className="border-t border-border bg-background">
-        <SectionHeading title={t.builtTitle} description={t.builtLead} />
-
-        <Stagger className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {landmarkJVProjects.map((project) => (
-            <StaggerItem key={project.name}>
-              <article className="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card">
-                <ImageFrame
-                  src={project.image}
-                  alt={`${project.name}, ${project.location}`}
-                  ratio="3/2"
-                  rounded="none"
-                  hover="zoom"
-                  sizes="third"
-                >
-                  <span className="absolute right-3 top-3 rounded-full bg-black/70 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-md">
-                    {project.ownerSharePercent}% {t.columns.share}
-                  </span>
-                </ImageFrame>
-
-                <div className="flex flex-1 flex-col gap-3 p-5">
-                  <div className="flex flex-col gap-1">
-                    <Heading as="h3" size="h6">
-                      {project.name}
-                    </Heading>
-                    <Text size="sm" className="flex items-center gap-1.5">
-                      <Icon name="location" size="xs" />
-                      {project.location}
-                    </Text>
-                  </div>
-
-                  <dl className="mt-auto grid grid-cols-3 gap-2 border-t border-border pt-4">
-                    <Stat label={t.columns.land} value={`${project.landSizeKatha}`} />
-                    <Stat label={t.columns.floors} value={`${project.floors}`} />
-                    <Stat
-                      label={t.columns.completed}
-                      value={`${project.completedYear}`}
-                    />
-                  </dl>
-                </div>
-              </article>
-            </StaggerItem>
-          ))}
-        </Stagger>
-
-        <Reveal delay={0.1} className="mt-6">
-          <Text size="xs" className="text-muted-foreground">
-            {t.columns.land}: katha.
-          </Text>
-        </Reveal>
-      </Section>
     </>
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex flex-col gap-0.5">
-      <dt className="text-xs text-muted-foreground">{label}</dt>
-      <dd className="text-sm font-medium tabular-nums text-foreground">{value}</dd>
-    </div>
-  );
-}

@@ -77,7 +77,10 @@ export function ReviewVideoCard({
       <figure
         ref={frame}
         className={cn(
-          "group relative isolate aspect-9/16 w-full overflow-hidden rounded-xl bg-black",
+          // Just short of Shorts' 9:16 — about 20px off the tile at the width
+          // the shelf runs at on a desktop, kept as a ratio rather than a fixed
+          // height so it still scales with the column.
+          "group relative isolate aspect-[9/15.35] w-full overflow-hidden rounded-xl bg-black",
           className,
         )}
       >

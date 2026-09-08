@@ -1,44 +1,37 @@
-import Image from "@/components/common/image";
 import { AppContainer } from "@/components/common/app-container";
 import { Heading } from "@/components/common/heading";
-import { Icon, type IconName } from "@/components/common/icon";
+import { Icon } from "@/components/common/icon";
 import { Text } from "@/components/common/text";
 import { Parallax } from "@/components/motion/parallax";
 import { Reveal } from "@/components/motion/reveal";
-import { PropertySearch } from "@/components/pages/properties/property-search";
+import { HeroBackdrop } from "@/components/pages/home/hero-backdrop";
+import { PropertyCalculator } from "@/components/pages/home/property-calculator";
 import { Badge } from "@/components/ui/badge";
-import { getDictionary } from "@/i18n/dictionaries";
-import { shimmerDataUrl } from "@/lib/image";
+import { getDictionary, getLocale } from "@/i18n/dictionaries";
 
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=80";
+const photo = (id: string) =>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=2000&q=80`;
 
-const TRUST_ICONS: IconName[] = ["approved", "clock", "gallery", "check"];
+/**
+ * The backdrop rotation. Four addresses rather than four angles on one
+ * building: the hero is the first claim the site makes about what it sells, and
+ * a penthouse, a lakefront block and a lit facade at dusk make that claim
+ * wider than four views of the same villa.
+ */
+const HERO_IMAGES = [
+  photo("photo-1600596542815-ffad4c1539a9"),
+  photo("photo-1600607687939-ce8a6c25118c"),
+  photo("photo-1613977257363-707ba9348227"),
+  photo("photo-1512917774080-9991f1c4c750"),
+];
 
 export async function HeroSection() {
-  const dict = await getDictionary();
-  const trust = [
-    dict.hero.trust.rajuk,
-    dict.hero.trust.reply,
-    dict.hero.trust.photos,
-    dict.hero.trust.fees,
-  ];
+  const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
 
   return (
     <section className="relative isolate flex min-h-[92svh] items-end overflow-hidden">
       <Parallax speed={0.18} zoom className="absolute inset-0 -z-10">
-        <div className="relative size-full">
-          <Image
-            src={HERO_IMAGE}
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            placeholder="blur"
-            blurDataURL={shimmerDataUrl()}
-            className="object-cover object-center"
-          />
-        </div>
+        <HeroBackdrop images={HERO_IMAGES} />
       </Parallax>
 
       <div
@@ -47,42 +40,32 @@ export async function HeroSection() {
       />
 
       <AppContainer className="pb-16 pt-36">
-        <div className="flex max-w-4xl flex-col gap-6">
-          <Reveal>
-            <Badge className="w-fit gap-1.5 px-3 py-1 text-xs font-semibold">
-              <Icon name="approved" size="xs" />
-              {dict.hero.badge}
-            </Badge>
-          </Reveal>
+        {/* Copy left, calculator right. They stack under `lg`, where two
+            columns would leave the search box too narrow to type an area into. */}
+        <div className="grid items-center gap-10 lg:grid-cols-[1fr_minmax(0,26rem)] lg:gap-14">
+          <div className="flex flex-col gap-6">
+            <Reveal>
+              <Badge className="w-fit gap-1.5 px-3 py-1 text-xs font-semibold">
+                <Icon name="approved" size="xs" />
+                {dict.hero.badge}
+              </Badge>
+            </Reveal>
 
-          <Heading as="h1" size="display" className="text-white">
-            {dict.hero.title}
-          </Heading>
+            <Heading as="h1" size="h1" className="text-white">
+              {dict.hero.title}
+            </Heading>
 
-          <Reveal delay={0.12}>
-            <Text size="lead" className="max-w-2xl leading-relaxed text-white/80">
-              {dict.hero.lead}
-            </Text>
+            <Reveal delay={0.12}>
+              <Text size="lead" className="max-w-2xl leading-relaxed text-white/80">
+                {dict.hero.lead}
+              </Text>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.2}>
+            <PropertyCalculator dict={dict.calculator} locale={locale} />
           </Reveal>
         </div>
-
-        <Reveal delay={0.2} className="mt-10">
-          <PropertySearch dict={dict.search} />
-        </Reveal>
-
-        <Reveal delay={0.3}>
-          <ul className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3">
-            {trust.map((label, index) => (
-              <li
-                key={label}
-                className="flex items-center gap-2 text-xs font-medium text-white/75 md:text-sm"
-              >
-                <Icon name={TRUST_ICONS[index]} size="xs" />
-                {label}
-              </li>
-            ))}
-          </ul>
-        </Reveal>
       </AppContainer>
     </section>
   );

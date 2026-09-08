@@ -184,6 +184,19 @@
       }
     }
   },
+  "calculator": {
+    "title": "প্রপার্টি ক্যালকুলেটর",
+    "searchPlaceholder": "এলাকা বা প্রপার্টির নাম দিয়ে খুঁজুন",
+    "categoriesLabel": "জনপ্রিয় ক্যাটাগরি",
+    "areasLabel": "জনপ্রিয় এলাকা",
+    "propertiesLabel": "প্রপার্টি",
+    "type": "প্রপার্টির ধরন",
+    "anyType": "যেকোনো ধরন",
+    "priceRange": "দামের সীমা",
+    "minimum": "সর্বনিম্ন",
+    "maximum": "সর্বোচ্চ",
+    "submit": "খুঁজুন"
+  },
   "search": {
     "buy": "কিনুন",
     "rent": "ভাড়া",

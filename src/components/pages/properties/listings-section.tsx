@@ -4,7 +4,7 @@ import { Icon } from "@/components/common/icon";
 import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
-import { InteractiveListings } from "./interactive-listings";
+import { InteractiveListings, type ListingFilters } from "./interactive-listings";
 import { PropertyCard } from "./property-card";
 import { properties } from "@/data/properties";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
@@ -13,14 +13,19 @@ import { localeHref } from "@/i18n/href";
 export async function ListingsSection({
   variant = "preview",
   limit = 6,
+  filters,
+  clearHref,
 }: {
   variant?: "preview" | "full";
   limit?: number;
+  /** From the query string, when the visitor arrived via the calculator. */
+  filters?: ListingFilters;
+  clearHref?: string;
 }) {
   if (variant === "full") {
     return (
       <Section id="listings" className="bg-background">
-        <InteractiveListings />
+        <InteractiveListings filters={filters} clearHref={clearHref} />
       </Section>
     );
   }

@@ -1,14 +1,42 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Icon } from "@/components/common/icon";
 import { PropertyCard } from "./property-card";
-import { properties, type Property } from "@/data/properties";
+import { areas } from "@/data/areas";
+import { properties, propertyTypes, type Property, type Purpose } from "@/data/properties";
+import { formatBdt } from "@/lib/format";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { cn } from "@/lib/utils";
 
 type FilterTab = "all" | "gulshan" | "penthouse" | "ready" | "commercial" | "rent";
 const PAGE_SIZE = 12;
+
+/**
+ * What the hero's property calculator sends over in the query string. Every
+ * field is optional: the page is reachable with none of them.
+ */
+export interface ListingFilters {
+  purpose?: Purpose;
+  /**
+   * An area id from `src/data/areas.ts`, picked from the calculator's
+   * suggestions. Ids are the neighbourhood itself — `gulshan`, `mirpur-dohs` —
+   * and a listing's `area` is that name plus its block or sector ("Gulshan 2"),
+   * so the id matched as a prefix word is what ties the two lists together.
+   */
+  area?: string;
+  /** Free text, matched against the title, the area and the city. */
+  q?: string;
+  type?: string;
+  min?: number;
+  max?: number;
+}
+
+/** "mirpur-dohs" → "mirpur dohs", the shape listing areas are written in. */
+function areaTerm(areaId: string) {
+  return areaId.replace(/-/g, " ").toLowerCase();
+}
 
 const FILTER_TABS: { id: FilterTab; label: string }[] = [
   { id: "all", label: "All Curated" },
@@ -19,11 +47,71 @@ const FILTER_TABS: { id: FilterTab; label: string }[] = [
   { id: "commercial", label: "Commercial Floors" },
 ];
 
-export function InteractiveListings() {
+export function InteractiveListings({
+  filters,
+  clearHref,
+}: {
+  /** Applied before the tabs — the tabs narrow the search, never widen it. */
+  filters?: ListingFilters;
+  /** Where "clear" goes: the same page without the query string. */
+  clearHref?: string;
+} = {}) {
   const [activeTab, setActiveTab] = useState<FilterTab>("all");
   const [page, setPage] = useState(1);
 
-  const filteredProperties = properties.filter((prop: Property) => {
+  const searched = useMemo(() => {
+    if (!filters) return properties;
+
+    const query = filters.q?.toLowerCase().trim();
+
+    const area = filters.area ? areaTerm(filters.area) : undefined;
+
+    return properties.filter((property) => {
+      if (filters.purpose && property.purpose !== filters.purpose) return false;
+      if (area && !property.area.toLowerCase().includes(area)) return false;
+      if (filters.type && property.type !== filters.type) return false;
+      if (filters.min !== undefined && property.price < filters.min) return false;
+      if (filters.max !== undefined && property.price > filters.max) return false;
+
+      if (query) {
+        const haystack =
+          `${property.title} ${property.area} ${property.city}`.toLowerCase();
+        if (!haystack.includes(query)) return false;
+      }
+
+      return true;
+    });
+  }, [filters]);
+
+  const activeChips = useMemo(() => {
+    if (!filters) return [];
+
+    const chips: string[] = [];
+    if (filters.area) {
+      chips.push(
+        areas.find((area) => area.id === filters.area)?.name ?? filters.area,
+      );
+    }
+    if (filters.q) chips.push(`“${filters.q}”`);
+    if (filters.type) {
+      chips.push(
+        propertyTypes.find((type) => type.value === filters.type)?.label ??
+          filters.type,
+      );
+    }
+    if (filters.min !== undefined || filters.max !== undefined) {
+      chips.push(
+        `${formatBdt(filters.min ?? 0)} – ${filters.max !== undefined ? formatBdt(filters.max) : "∞"}`,
+      );
+    }
+    if (filters.purpose) {
+      chips.push(filters.purpose === "rent" ? "For rent" : "For sale");
+    }
+
+    return chips;
+  }, [filters]);
+
+  const filteredProperties = searched.filter((prop: Property) => {
     if (activeTab === "all") return true;
     if (activeTab === "gulshan") {
       return prop.area.toLowerCase().includes("gulshan") || prop.area.toLowerCase().includes("baridhara");
@@ -62,6 +150,33 @@ export function InteractiveListings() {
 
   return (
     <div className="flex flex-col gap-8">
+      {/* What arrived from the property calculator, and the way back out. */}
+      {activeChips.length > 0 ? (
+        <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-primary/20 bg-primary/5 px-4 py-3">
+          <span className="text-sm font-semibold text-foreground">
+            Your search:
+          </span>
+
+          {activeChips.map((chip) => (
+            <span
+              key={chip}
+              className="rounded-full border border-primary/25 bg-card px-3 py-1 text-xs font-medium text-primary"
+            >
+              {chip}
+            </span>
+          ))}
+
+          {clearHref ? (
+            <Link
+              href={clearHref}
+              className="ml-auto text-xs font-semibold uppercase tracking-wider text-primary hover:underline"
+            >
+              Clear
+            </Link>
+          ) : null}
+        </div>
+      ) : null}
+
       {/* Filter Tabs */}
       <div className="flex flex-wrap items-center gap-2">
         {FILTER_TABS.map((tab) => {

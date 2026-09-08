@@ -184,6 +184,19 @@
       }
     }
   },
+  "calculator": {
+    "title": "Property calculator",
+    "searchPlaceholder": "Search by location or property name",
+    "categoriesLabel": "Popular categories",
+    "areasLabel": "Popular areas",
+    "propertiesLabel": "Properties",
+    "type": "Property type",
+    "anyType": "Any type",
+    "priceRange": "Price range",
+    "minimum": "Minimum",
+    "maximum": "Maximum",
+    "submit": "Search"
+  },
   "search": {
     "buy": "Buy",
     "rent": "Rent",

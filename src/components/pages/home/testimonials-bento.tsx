@@ -1,151 +1,84 @@
-import Image from "@/components/common/image";
 import { AppContainer } from "@/components/common/app-container";
 import { Icon } from "@/components/common/icon";
+import { OrnamentDivider } from "@/components/common/ornament-divider";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Text } from "@/components/common/text";
-import { ImageFrame } from "@/components/media/image-frame";
 import { Reveal } from "@/components/motion/reveal";
 import { reviews } from "@/data/people";
-import { galleryImages } from "@/data/site";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { LOCALE_TAGS } from "@/i18n/config";
-import { cn } from "@/lib/utils";
 
+import { ReviewVideoCarousel } from "./review-video-carousel";
+
+/**
+ * One shadow for every card.
+ *
+ * Tinted with `primary` rather than black: on the near-white section a neutral
+ * shadow just greys the edge, while a trace of the brand hue reads as the card
+ * lifting off the page.
+ *
+ * Wide and faint rather than tight and dark — a big blur with a negative spread
+ * puts the whole pool under the card instead of drawing a second outline around
+ * it, so the border stays the only hard edge on the tile.
+ */
+const CARD_SHADOW = "shadow-[0_26px_60px_-28px] shadow-primary/45";
+
+/**
+ * Client reviews on the home page — filmed ones only.
+ *
+ * A face saying it outweighs the same sentence set in type, so the home page
+ * shows nothing but video and slides through the set. Written reviews still
+ * exist and still have a home on `/reviews`; the filter is what keeps a review
+ * without a recording from silently rendering as a black card here.
+ */
 export async function TestimonialsBento() {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
   const t = dict.reviews;
 
-  const average = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+  const videoReviews = reviews.filter((review) => review.video);
+  if (videoReviews.length === 0) return null;
+
+  const average =
+    videoReviews.reduce((sum, r) => sum + r.rating, 0) / videoReviews.length;
   const number = new Intl.NumberFormat(LOCALE_TAGS[locale], {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
   });
-  const percent = new Intl.NumberFormat(LOCALE_TAGS[locale]);
-
-  const featured = reviews.slice(0, 2);
 
   return (
     <section className="border-t border-border bg-muted/30 py-16 sm:py-24">
       <AppContainer>
         <SectionHeading
           title={t.homeTitle}
-          description={t.homeDescription}
           titleClassName="whitespace-nowrap"
-          descriptionClassName="max-w-2xl"
           align="center"
         />
 
-        <div className="mt-12 grid gap-4 lg:grid-cols-3 lg:grid-rows-[auto_1fr]">
-          <Reveal className="lg:col-start-1 lg:row-start-1">
-            <div className="flex h-full flex-col gap-4 rounded-xl border border-border bg-card p-6">
-              <div className="flex items-baseline gap-2">
-                <span className="font-heading text-h1 leading-none text-foreground">
-                  {number.format(average)}
-                </span>
-                <span className="text-sm text-muted-foreground">{t.outOf}</span>
-              </div>
+        <OrnamentDivider className="mt-7" />
 
-              <Text size="sm" className="text-muted-foreground">
-                {t.ratingNote}
-              </Text>
-
-              <div className="mt-auto flex items-center gap-4 pt-2">
-                <ul className="flex">
-                  {reviews.map((review) => (
-                    <li key={review.id} className="-ml-2.5 first:ml-0">
-                      <Image
-                        src={review.image}
-                        alt=""
-                        width={40}
-                        height={40}
-                        className="size-9 rounded-full object-cover ring-2 ring-card"
-                      />
-                    </li>
-                  ))}
-                </ul>
-
-                <Stars value={Math.round(average)} />
-              </div>
-
-              <Text as="span" size="xs" className="text-muted-foreground">
-                {reviews.length} {t.reviewCount}
-              </Text>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.05} className="lg:col-start-1 lg:row-start-2">
-            <ImageFrame
-              src={galleryImages[4].src}
-              alt={galleryImages[4].alt}
-              ratio="4/3"
-              rounded="xl"
-              hover="zoom"
-              sizes="third"
-              className="h-full"
-            />
-          </Reveal>
-
-          <Reveal delay={0.1} className="lg:col-start-2 lg:row-span-2 lg:row-start-1">
-            <div className="relative h-full min-h-72 overflow-hidden rounded-xl">
-              <Image
-                src={galleryImages[0].src}
-                alt={galleryImages[0].alt}
-                fill
-                sizes="(min-width: 1024px) 33vw, 100vw"
-                className="object-cover"
-              />
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-linear-to-t from-black/90 via-black/35 to-transparent"
-              />
-              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 p-6">
-                <Icon name="quote" size="lg" className="mb-1 text-white/50" />
-                <Text size="sm" className="text-white/80">
-                  {t.statLabel}
-                </Text>
-                <span className="font-heading text-h1 leading-none text-white">
-                  {percent.format(41)}%
-                </span>
-              </div>
-            </div>
-          </Reveal>
-
-          {featured.map((review, index) => (
-            <Reveal
-              key={review.id}
-              delay={0.15 + index * 0.05}
-              className={cn("lg:col-start-3", index === 0 ? "lg:row-start-1" : "lg:row-start-2")}
-            >
-              <figure className="flex h-full flex-col gap-4 rounded-xl border border-border bg-card p-6">
-                <Stars value={review.rating} />
-
-                <blockquote className="flex-1">
-                  <Text size="sm" tone="default">
-                    “{review.quote}”
-                  </Text>
-                </blockquote>
-
-                <figcaption className="flex items-center gap-3 border-t border-border pt-4">
-                  <Image
-                    src={review.image}
-                    alt=""
-                    width={40}
-                    height={40}
-                    className="size-10 shrink-0 rounded-full object-cover"
-                  />
-                  <span className="flex min-w-0 flex-col">
-                    <span className="truncate text-sm font-semibold text-foreground">
-                      {review.name}
-                    </span>
-                    <span className="truncate text-xs text-muted-foreground">
-                      {review.property}
-                    </span>
-                  </span>
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
+        {/* The average, as one line rather than a card — it is a caption on the
+            reviews below, not a claim that needs its own tile. */}
+        <div className="mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-sm">
+          <Stars value={Math.round(average)} />
+          <span className="font-semibold text-foreground">
+            {number.format(average)}{" "}
+            <span className="font-normal text-muted-foreground">{t.outOf}</span>
+          </span>
+          <span aria-hidden className="text-muted-foreground/40">
+            ·
+          </span>
+          <Text as="span" size="sm">
+            {videoReviews.length} {t.reviewCount}
+          </Text>
         </div>
+
+        <Reveal className="mt-12">
+          <ReviewVideoCarousel
+            reviews={videoReviews}
+            cardClassName={CARD_SHADOW}
+            labels={{ play: t.playVideo, close: t.closeVideo }}
+          />
+        </Reveal>
       </AppContainer>
     </section>
   );

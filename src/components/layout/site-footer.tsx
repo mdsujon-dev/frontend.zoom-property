@@ -4,6 +4,7 @@ import { Icon } from "@/components/common/icon";
 import { AppContainer } from "@/components/common/app-container";
 import { Logo } from "@/components/layout/logo";
 import { Text } from "@/components/common/text";
+import { projects } from "@/data/projects";
 import { footerNav, siteConfig, socialLinks } from "@/data/site";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
@@ -29,7 +30,7 @@ export async function SiteFooter() {
   return (
     <footer className="bg-footer text-footer-foreground">
       <AppContainer className="py-14">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr]">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="flex flex-col gap-4">
             <Link href={localeHref(locale, "/")} aria-label={siteConfig.name}>
               {/* White lockup — the navy one would vanish into the background. */}
@@ -96,6 +97,24 @@ export async function SiteFooter() {
               ))}
             </nav>
           ))}
+
+          {/* Projects get their own column rather than a link to the index:
+              there are three of them, they are what the company is actually
+              building, and the fourth column was empty without them. */}
+          <nav className="flex flex-col gap-3">
+            <h3 className="font-heading text-h6 text-footer-foreground">
+              {dict.nav.projects}
+            </h3>
+            {projects.map((project) => (
+              <Link
+                key={project.id}
+                href={localeHref(locale, `/projects#${project.id}`)}
+                className="text-sm text-footer-foreground/70 transition-colors hover:text-footer-foreground"
+              >
+                {project.name}
+              </Link>
+            ))}
+          </nav>
         </div>
       </AppContainer>
 

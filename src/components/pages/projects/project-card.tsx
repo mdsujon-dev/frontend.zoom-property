@@ -20,7 +20,11 @@ export function ProjectCard({
 
   return (
     <Card
+      // Anchor target for the footer's project line — the cards are the only
+      // page a project has, so `/projects#<id>` is its address.
+      id={project.id}
       className={cn(
+        "scroll-mt-24",
         "group h-full overflow-hidden p-0 border border-border bg-card transition-all duration-500 ease-out-expo hover:border-primary/60 hover:shadow-xl",
         className,
       )}

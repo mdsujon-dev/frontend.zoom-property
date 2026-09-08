@@ -29,10 +29,32 @@ export interface Review {
   property: string;
   rating: number;
   image: string;
+  /**
+   * Present when the client said it on camera. The quote still has to be
+   * written out: it is what the card shows before anyone presses play, and it
+   * is the only version a crawler or a muted visitor ever reads.
+   */
+  video?: {
+    /**
+     * Placeholder clips until the real recordings are uploaded — swap the id
+     * for the client's own video and nothing else here has to change.
+     */
+    youtubeUrl: string;
+    /**
+     * A frame of the person talking, not the property. The whole point of a
+     * filmed review is the face saying it, so the still shows the same face as
+     * `image` — a wider crop of the same photograph.
+     */
+    poster: string;
+    duration: string;
+  };
 }
 
 const face = (id: string) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=400&q=80`;
+
+const still = (id: string) =>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=80`;
 
 export const agents: Agent[] = [
   {
@@ -91,6 +113,11 @@ export const reviews: Review[] = [
     property: "Heritage Court, Dhanmondi 27",
     rating: 5,
     image: face("photo-1487412720507-e7ab37603c6f"),
+    video: {
+      youtubeUrl: "https://www.youtube.com/watch?v=ScMzIvxBSi4",
+      poster: still("photo-1487412720507-e7ab37603c6f"),
+      duration: "02:14",
+    },
   },
   {
     id: "r2",
@@ -101,6 +128,11 @@ export const reviews: Review[] = [
     property: "Lake View Residence, Gulshan 2",
     rating: 5,
     image: face("photo-1500648767791-00dcc994a43e"),
+    video: {
+      youtubeUrl: "https://www.youtube.com/watch?v=LXb3EKWsInQ",
+      poster: still("photo-1500648767791-00dcc994a43e"),
+      duration: "03:02",
+    },
   },
   {
     id: "r3",
@@ -111,6 +143,11 @@ export const reviews: Review[] = [
     property: "Diplomatic Zone Residence",
     rating: 5,
     image: face("photo-1438761681033-6461ffad8d80"),
+    video: {
+      youtubeUrl: "https://www.youtube.com/watch?v=9xwazD5SyVg",
+      poster: still("photo-1438761681033-6461ffad8d80"),
+      duration: "01:48",
+    },
   },
   {
     id: "r4",
@@ -121,5 +158,25 @@ export const reviews: Review[] = [
     property: "Avenue Office Floor, Gulshan 1",
     rating: 4,
     image: face("photo-1519085360753-af0119f7cbe7"),
+    video: {
+      youtubeUrl: "https://www.youtube.com/watch?v=ysz5S6PUM-U",
+      poster: still("photo-1519085360753-af0119f7cbe7"),
+      duration: "02:36",
+    },
+  },
+  {
+    id: "r5",
+    quote:
+      "I asked for the service charge history before signing. They sent four years of it the same afternoon, including the year it went up and why.",
+    name: "Farhana Rahman",
+    role: "Bought in Bashundhara",
+    property: "Courtyard Villa, Bashundhara R/A",
+    rating: 5,
+    image: face("photo-1544005313-94ddf0286df2"),
+    video: {
+      youtubeUrl: "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+      poster: still("photo-1544005313-94ddf0286df2"),
+      duration: "02:05",
+    },
   },
 ];

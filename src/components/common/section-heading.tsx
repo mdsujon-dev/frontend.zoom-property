@@ -59,7 +59,7 @@ export function SectionHeading({
         size={size}
         align={align}
         tone={inverse ? "inverse" : "default"}
-        className={cn("max-w-none md:whitespace-nowrap", titleClassName)}
+        className={cn("max-w-none md:whitespace-nowrap font-bold", titleClassName)}
       >
         {title}
       </Heading>

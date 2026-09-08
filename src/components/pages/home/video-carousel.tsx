@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useLenis } from "lenis/react";
 import Image from "@/components/common/image";
 import { Icon } from "@/components/common/icon";
 import {
@@ -10,14 +9,8 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { VideoLightbox } from "@/components/media/video-lightbox";
 import type { VideoItem } from "@/data/videos";
-import { embedUrl, parseVideoId } from "@/lib/video";
 import { shimmerDataUrl } from "@/lib/image";
 import { cn } from "@/lib/utils";
 
@@ -228,85 +221,18 @@ export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
         </div>
       )}
 
-      <VideoDialog
-        video={activeVideo}
-        locale={locale}
-        dict={dict}
+      <VideoLightbox
+        url={activeVideo?.youtubeUrl ?? null}
+        title={
+          activeVideo
+            ? locale === "bn"
+              ? activeVideo.titleBn
+              : activeVideo.title
+            : ""
+        }
+        closeLabel={dict.close}
         onClose={() => setActiveId(null)}
       />
     </div>
-  );
-}
-
-/**
- * The player dialog.
- *
- * The video and nothing else — every badge and caption already sits on the
- * card behind it, so repeating them here only shrinks the picture.
- *
- * Mounted only while a video is selected, so the iframe is created on open and
- * destroyed on close — that is what stops the audio, and it also keeps YouTube
- * off the page entirely for visitors who never press play.
- */
-function VideoDialog({
-  video,
-  locale,
-  dict,
-  onClose,
-}: {
-  video: VideoItem | null;
-  locale: string;
-  dict: VideoCarouselDict;
-  onClose: () => void;
-}) {
-  const lenis = useLenis();
-
-  // Radix locks the *body*, but Lenis drives the scroll position on the root
-  // element and keeps going right past that lock — the page would slide away
-  // under the open dialog. Pause it for as long as the player is up.
-  useEffect(() => {
-    if (!video || !lenis) return;
-
-    lenis.stop();
-    return () => lenis.start();
-  }, [lenis, video]);
-
-  if (!video) return null;
-
-  const title = locale === "bn" ? video.titleBn : video.title;
-  const videoId = parseVideoId(video.youtubeUrl, "youtube");
-
-  return (
-    <Dialog open onOpenChange={(open) => !open && onClose()}>
-      <DialogContent
-        showCloseButton={false}
-        data-lenis-prevent
-        // `w-screen`: `inset-0` stops at the reserved scrollbar gutter, which
-        // would leave an unpainted strip down the right of the scrim.
-        overlayClassName="w-screen bg-black/85 supports-backdrop-filter:backdrop-blur-sm"
-        className="max-w-[calc(100%-1.5rem)] gap-0 overflow-hidden rounded-2xl border border-white/15 bg-black p-0 text-white shadow-2xl shadow-black/60 ring-0 sm:max-w-3xl lg:max-w-5xl"
-      >
-        <DialogTitle className="sr-only">{title}</DialogTitle>
-
-        <div className="relative aspect-video w-full bg-black">
-          <iframe
-            src={embedUrl(videoId, "youtube")}
-            title={title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-            className="absolute inset-0 size-full border-none"
-          />
-        </div>
-
-        {/* Close — inside the frame: the panel clips its overflow to keep the
-            corners rounded, so a negative offset here would be cut off. */}
-        <DialogClose
-          aria-label={dict.close}
-          className="absolute right-2 top-2 z-10 flex size-9 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-black/70 text-white backdrop-blur-md transition-all duration-200 hover:scale-105 hover:border-sky-400 hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
-        >
-          <Icon name="close" size="sm" />
-        </DialogClose>
-      </DialogContent>
-    </Dialog>
   );
 }

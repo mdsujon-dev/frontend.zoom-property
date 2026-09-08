@@ -1,15 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 import { Heading } from "@/components/common/heading";
-import { Button } from "@/components/ui/button";
 import type { Insight } from "@/data/insights";
 import { LOCALE_TAGS, type Locale } from "@/i18n/config";
 import { Reveal } from "@/components/motion/reveal";
 import { BlogCategoryFilter } from "./blog-category-filter";
 import { BlogGridCard } from "./blog-grid-card";
-import { BlogNewsletter } from "./blog-newsletter";
+import { BlogPagination } from "./blog-pagination";
 
 interface BlogFeedProps {
   insights: Insight[];
@@ -22,24 +21,18 @@ interface BlogFeedProps {
     searchPlaceholder: string;
     categoriesPrev: string;
     categoriesNext: string;
-    postsCount: string;
-    loadMore: string;
     noResults: string;
     resetFilter: string;
+    prevPage: string;
+    nextPage: string;
+    pageLabel: string;
+    pageOf: string;
     article: { by: string };
-    newsletter: {
-      badge: string;
-      title: string;
-      description: string;
-      placeholder: string;
-      button: string;
-      note: string;
-    };
   };
 }
 
-/** How many articles the grid opens with, and how many each press adds. */
-const PAGE_SIZE = 9;
+/** Articles per page — three rows of the three-up grid. */
+const PER_PAGE = 9;
 
 /**
  * The all-articles index.
@@ -51,13 +44,15 @@ const PAGE_SIZE = 9;
  * The editorial layouts still exist as components and still run on the category
  * pages.
  *
- * Filtering is client-side because the whole corpus is a static array that is
- * already in the bundle; a round trip to filter it would be slower than not.
+ * Every match is rendered — no pagination. The corpus is a static array that is
+ * already in the bundle, so filtering is client-side and there is nothing to
+ * fetch that a "load more" would be hiding.
  */
 export function BlogFeed({ insights, locale, t }: BlogFeedProps) {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [shown, setShown] = useState(PAGE_SIZE);
+  const [page, setPage] = useState(1);
+  const gridTop = useRef<HTMLDivElement>(null);
 
   const dateFormatter = useMemo(
     () =>
@@ -66,12 +61,6 @@ export function BlogFeed({ insights, locale, t }: BlogFeedProps) {
         month: "long",
         year: "numeric",
       }),
-    [locale],
-  );
-
-  // Bangla gets Bangla digits — the count sits next to Bangla words.
-  const countFormatter = useMemo(
-    () => new Intl.NumberFormat(LOCALE_TAGS[locale]),
     [locale],
   );
 
@@ -117,30 +106,39 @@ export function BlogFeed({ insights, locale, t }: BlogFeedProps) {
     });
   }, [activeCategory, searchQuery, insights]);
 
-  // A new filter is a new list, so it starts at the first page. Done where the
-  // filter changes rather than in an effect: this is one event, not two states
-  // that have to be synchronised afterwards.
+  // Every filter change is a new list, so it starts on page one. Done in the
+  // handlers rather than an effect: this is one event, not two states to
+  // reconcile after the fact.
   const selectCategory = (categoryId: string) => {
     setActiveCategory(categoryId);
-    setShown(PAGE_SIZE);
+    setPage(1);
   };
 
   const search = (query: string) => {
     setSearchQuery(query);
-    setShown(PAGE_SIZE);
+    setPage(1);
   };
 
   const reset = () => {
     setActiveCategory("All");
     setSearchQuery("");
-    setShown(PAGE_SIZE);
+    setPage(1);
+  };
+
+  const goToPage = (next: number) => {
+    setPage(next);
+    // Otherwise page two opens at the bottom of page one.
+    gridTop.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const isFiltered = activeCategory !== "All" || searchQuery.trim() !== "";
-  const visible = filtered.slice(0, shown);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+  // A filter can shrink the list under the page someone is on.
+  const current = Math.min(page, totalPages);
+  const visible = filtered.slice((current - 1) * PER_PAGE, current * PER_PAGE);
 
   return (
-    <div className="flex flex-col gap-10 sm:gap-12">
+    <div ref={gridTop} className="flex flex-col gap-10 sm:gap-12 scroll-mt-28">
       <Reveal>
         <BlogCategoryFilter
           categories={categories}
@@ -154,24 +152,16 @@ export function BlogFeed({ insights, locale, t }: BlogFeedProps) {
         />
       </Reveal>
 
-      {/* The count is always there; the title and the reset only once a filter
-          is doing something, so the default view opens straight into the grid. */}
-      <div className="flex flex-wrap items-end justify-between gap-3 border-b border-border/60 pb-5">
-        <div className="flex flex-col gap-1">
-          {isFiltered ? (
-            <Heading as="h2" size="h4" className="font-heading font-bold">
-              {activeCategory !== "All"
-                ? (t.categories[activeCategory] ?? activeCategory)
-                : t.all}
-            </Heading>
-          ) : null}
+      {/* Only once a filter is doing something: the default view goes straight
+          from the pills into the grid. */}
+      {isFiltered ? (
+        <div className="flex flex-wrap items-end justify-between gap-3 border-b border-border/60 pb-5">
+          <Heading as="h2" size="h4" className="font-heading font-bold">
+            {activeCategory !== "All"
+              ? (t.categories[activeCategory] ?? activeCategory)
+              : t.all}
+          </Heading>
 
-          <span className="text-sm text-muted-foreground">
-            {countFormatter.format(filtered.length)} {t.postsCount}
-          </span>
-        </div>
-
-        {isFiltered ? (
           <button
             type="button"
             onClick={reset}
@@ -179,45 +169,37 @@ export function BlogFeed({ insights, locale, t }: BlogFeedProps) {
           >
             {t.resetFilter}
           </button>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
 
       {filtered.length === 0 ? (
         <p className="py-16 text-center text-muted-foreground">{t.noResults}</p>
       ) : (
-        <>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-12">
-            {visible.map((post) => (
-              <BlogGridCard
-                key={post.id}
-                insight={post}
-                locale={locale}
-                formattedDate={formatDate(post.date)}
-                readMoreLabel={t.readMore}
-                byLabel={t.article.by}
-              />
-            ))}
-          </div>
-
-          {shown < filtered.length ? (
-            <div className="flex justify-center">
-              <Button
-                type="button"
-                variant="outline"
-                size="lg"
-                onClick={() => setShown((count) => count + PAGE_SIZE)}
-                className="px-8"
-              >
-                {t.loadMore}
-              </Button>
-            </div>
-          ) : null}
-        </>
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-12">
+          {visible.map((post) => (
+            <BlogGridCard
+              key={post.id}
+              insight={post}
+              locale={locale}
+              formattedDate={formatDate(post.date)}
+              readMoreLabel={t.readMore}
+              byLabel={t.article.by}
+            />
+          ))}
+        </div>
       )}
 
-      <Reveal>
-        <BlogNewsletter newsletter={t.newsletter} />
-      </Reveal>
+      <BlogPagination
+        current={current}
+        total={totalPages}
+        onSelect={goToPage}
+        labels={{
+          prev: t.prevPage,
+          next: t.nextPage,
+          page: t.pageLabel,
+          pageOf: t.pageOf,
+        }}
+      />
     </div>
   );
 }

@@ -595,6 +595,10 @@
     "loadMore": "Load more articles",
     "noResults": "No articles matched. Try another category or a different search term.",
     "resetFilter": "Reset filter",
+    "prevPage": "Previous",
+    "nextPage": "Next",
+    "pageLabel": "Page {page}",
+    "pageOf": "Page {page} of {total}",
     "backToAll": "All Articles",
     "sections": {
       "explore": "Explore News, Insights & Stories",

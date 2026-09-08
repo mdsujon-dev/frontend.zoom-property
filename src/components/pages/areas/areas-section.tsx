@@ -29,8 +29,10 @@ export async function AreasSection({ className }: { className?: string } = {}) {
   return (
     <Section
       id="areas"
-      className={cn(" bg-background", className)}
+      className={cn("overflow-hidden bg-background", className)}
     >
+      <AreasOrnaments />
+
       <AreasHeading t={t} />
 
       <Stagger className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
@@ -73,14 +75,28 @@ export function AreasHeading({
   return (
     <Reveal>
       <div className="flex flex-col items-center gap-4 text-center">
-        <span className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/5 px-4 py-1.5 text-sm font-semibold text-primary">
-          <Icon name="location" size="xs" />
-          {t.eyebrow}
-        </span>
+        {/* The pill sits between two rules, as the reference has it. They are
+            drawn rather than bordered so they can fade out at the far end. */}
+        <div className="flex items-center justify-center gap-4">
+          <span
+            aria-hidden
+            className="hidden h-px w-16 bg-linear-to-r from-transparent to-border sm:block"
+          />
+
+          <span className="inline-flex items-center gap-2 rounded-full border border-brand-blue/20 bg-card px-4 py-1.5 text-sm font-semibold text-brand-blue shadow-[0_6px_18px_-12px] shadow-brand-blue/60">
+            <Icon name="location" size="xs" />
+            {t.eyebrow}
+          </span>
+
+          <span
+            aria-hidden
+            className="hidden h-px w-16 bg-linear-to-l from-transparent to-border sm:block"
+          />
+        </div>
 
         <Heading as="h2" size="h2" align="center" className="max-w-4xl">
           {t.titleLead}
-          <span className="text-primary">{t.titleAccent}</span>
+          <span className="text-brand-blue">{t.titleAccent}</span>
           {t.titleTail}
         </Heading>
 
@@ -89,5 +105,28 @@ export function AreasHeading({
         </Text>
       </div>
     </Reveal>
+  );
+}
+
+/**
+ * The background of the reference design: a dot grid in the top-left, another
+ * in the bottom-right, and a soft blue disc bleeding in from the top-right
+ * corner.
+ *
+ * All three are drawn in CSS rather than shipped as artwork, and none of them
+ * is content — the section reads identically with them switched off. They are
+ * dropped below `lg`, where there is no margin for them to sit in.
+ */
+function AreasOrnaments() {
+  const dots =
+    "absolute hidden h-16 w-28 bg-[radial-gradient(circle,var(--color-brand-blue)_1.5px,transparent_1.5px)] [background-size:14px_14px] opacity-25 lg:block";
+
+  return (
+    <div aria-hidden className="pointer-events-none">
+      <span className={cn(dots, "top-10 left-0")} />
+      <span className={cn(dots, "right-0 bottom-10")} />
+
+      <span className="absolute -top-24 -right-24 size-80 rounded-full bg-brand-blue/8 blur-3xl" />
+    </div>
   );
 }

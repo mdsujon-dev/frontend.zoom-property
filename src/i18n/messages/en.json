@@ -40,8 +40,8 @@
     "service": {
       "eyebrow": "Our Service Areas",
       "titleLead": "We Serve Across ",
-      "titleAccent": "Dhaka & Nearby",
-      "titleTail": " Areas",
+      "titleAccent": "Dhaka & Nearby Areas",
+      "titleTail": "",
       "description": "From the heart of Dhaka to the surrounding towns, there is an advisor who already knows your street, your building and what it last sold for.",
       "inArea": "in {name}",
       "viewAll": "Explore all service areas",

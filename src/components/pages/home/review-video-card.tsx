@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { Icon } from "@/components/common/icon";
 import Image from "@/components/common/image";
 import { VideoLightbox } from "@/components/media/video-lightbox";
 import type { Review } from "@/data/people";
@@ -26,10 +25,9 @@ import { cn } from "@/lib/utils";
  *   the click always belongs to the card — never swallowed by the iframe — and
  *   there is something to look at for the second before YouTube answers.
  *
- * The play button sits in the middle of the tile and blinks — a ring that
- * expands out of it and fades — so a shelf of stopped video still reads as
- * something to press. It stops blinking on hover, where the button's own scale
- * already answers, and never starts for a visitor who asked for less motion.
+ * There is no play button of ours on the tile: the parked player draws its own
+ * in the middle of the frame, and a second one on top of it was two buttons for
+ * one action. The whole card is the trigger, so the click works anywhere.
  *
  * Wordless by design: the still is a frame of the person talking, so a caption
  * adds nothing that pressing play does not answer better. The name and the
@@ -108,25 +106,6 @@ export function ReviewVideoCard({
           aria-hidden
           className="absolute inset-0 bg-linear-to-t from-black/55 via-transparent to-black/25"
         />
-
-        {/* One play affordance, ours, centred on the tile. It covers the parked
-            player's own button rather than sitting beside it, so there is still
-            only one thing to press — ours, and bigger. */}
-        <span
-          aria-hidden
-          className="absolute top-1/2 left-1/2 flex size-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center"
-        >
-          {/* The blink: a ring pushed out of the button and faded away. */}
-          <span className="absolute inset-0 animate-ping rounded-full bg-secondary/50 group-hover:animate-none motion-reduce:animate-none" />
-
-          <span className="relative flex size-14 items-center justify-center rounded-full border border-secondary/60 bg-secondary/85 text-secondary-foreground shadow-lg shadow-black/25 backdrop-blur-md transition-all duration-300 ease-out group-hover:scale-110 group-hover:bg-secondary">
-            <Icon
-              name="play"
-              size="md"
-              className="ml-0.5 fill-secondary-foreground text-secondary-foreground"
-            />
-          </span>
-        </span>
 
         {/* Runtime, bottom right — the one thing a YouTube thumbnail says. */}
         <span className="absolute right-2.5 bottom-2.5 rounded-md bg-black/75 px-1.5 py-0.5 text-xs font-medium text-white tabular-nums">

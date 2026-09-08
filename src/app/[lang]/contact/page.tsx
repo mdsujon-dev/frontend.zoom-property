@@ -8,6 +8,7 @@ import { PageHeader } from "@/components/layout/page-header";
 import { pageBanners } from "@/data/page-banners";
 import { Reveal } from "@/components/motion/reveal";
 import { ContactForm } from "@/components/pages/contact/contact-form";
+import { areas } from "@/data/areas";
 import { siteConfig, socialLinks } from "@/data/site";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeAlternates } from "@/i18n/alternates";
@@ -23,8 +24,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactPage() {
-  const dict = await getDictionary();
+  const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
   const c = dict.contact.channels;
+
+  // The enquiry form asks which area, and the answer has to be one of the areas
+  // we actually cover — so the options are the same list the areas section and
+  // `/areas` render, not a second copy that can drift.
+  const areaOptions = areas.map((area) => ({
+    value: area.id,
+    label: locale === "bn" && area.nameBn ? area.nameBn : area.name,
+  }));
 
   const channels: {
     icon: IconName;
@@ -134,7 +143,7 @@ export default async function ContactPage() {
                 {dict.contact.formTitle}
               </Heading>
               <Text size="sm">{dict.contact.formLead}</Text>
-              <ContactForm dict={dict.contact.form} />
+              <ContactForm dict={dict.contact.form} areas={areaOptions} />
             </div>
           </Reveal>
         </div>

@@ -1,25 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Icon } from "@/components/common/icon";
 import Image from "@/components/common/image";
 import { VideoLightbox } from "@/components/media/video-lightbox";
 import type { Review } from "@/data/people";
 import { shimmerDataUrl } from "@/lib/image";
+import { cardEmbedUrl, parseVideoId } from "@/lib/video";
 import { cn } from "@/lib/utils";
 
 /**
  * A filmed client review, shaped like a Shorts tile.
  *
- * 9:16 and wordless: the still is a frame of the person talking, so the
- * thumbnail already says who this is and there is nothing for a caption to add
- * that pressing play does not answer better. The name and the written quote
- * still reach assistive tech through the trigger's label, and both are on
- * `/reviews` in full.
+ * The tile holds the video itself — YouTube's own player, parked on its first
+ * frame — not a picture of it. Nothing autoplays: the clip stands still until
+ * someone clicks, and the click opens the lightbox, which is where it plays
+ * properly, with sound, controls and a frame big enough to watch.
  *
- * Each card owns its own dialog. Only one can be open at a time anyway, and a
- * lifted `activeId` would drag the whole section into a client component.
+ * Two details keep that from being expensive or fragile:
+ *
+ * - Nothing loads until the card is near the viewport. Five players is a real
+ *   cost, and paying it for a section nobody scrolled to is waste.
+ * - The player layer is `pointer-events-none` and the still stays behind it, so
+ *   the click always belongs to the card — never swallowed by the iframe — and
+ *   there is something to look at for the second before YouTube answers.
+ *
+ * The play button sits in the middle of the tile and blinks — a ring that
+ * expands out of it and fades — so a shelf of stopped video still reads as
+ * something to press. It stops blinking on hover, where the button's own scale
+ * already answers, and never starts for a visitor who asked for less motion.
+ *
+ * Wordless by design: the still is a frame of the person talking, so a caption
+ * adds nothing that pressing play does not answer better. The name and the
+ * written quote still reach assistive tech through the trigger's label, and
+ * both are on `/reviews` in full.
  */
 export function ReviewVideoCard({
   review,
@@ -33,14 +48,38 @@ export function ReviewVideoCard({
   className?: string;
 }) {
   const [open, setOpen] = useState(false);
+  const [inView, setInView] = useState(false);
+  const frame = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const node = frame.current;
+    if (!node || inView) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setInView(true);
+        observer.disconnect();
+      },
+      // Start loading just before the shelf arrives, so the players are ready
+      // by the time the tiles are on screen.
+      { rootMargin: "300px" },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [inView]);
 
   if (!review.video) return null;
+
+  const videoId = parseVideoId(review.video.youtubeUrl, "youtube");
 
   return (
     <>
       <figure
+        ref={frame}
         className={cn(
-          "group relative isolate aspect-9/16 w-full overflow-hidden rounded-xl bg-neutral-900",
+          "group relative isolate aspect-9/16 w-full overflow-hidden rounded-xl bg-black",
           className,
         )}
       >
@@ -51,8 +90,18 @@ export function ReviewVideoCard({
           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 66vw"
           placeholder="blur"
           blurDataURL={shimmerDataUrl()}
-          className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+          className="object-cover object-top"
         />
+
+        {inView ? (
+          <iframe
+            src={cardEmbedUrl(videoId)}
+            title=""
+            aria-hidden
+            tabIndex={-1}
+            className="pointer-events-none absolute inset-0 size-full border-none"
+          />
+        ) : null}
 
         {/* Just enough scrim to hold the controls, top and bottom. */}
         <span
@@ -60,13 +109,22 @@ export function ReviewVideoCard({
           className="absolute inset-0 bg-linear-to-t from-black/55 via-transparent to-black/25"
         />
 
-        {/* Play affordance — decorative; the whole tile is the button. */}
+        {/* One play affordance, ours, centred on the tile. It covers the parked
+            player's own button rather than sitting beside it, so there is still
+            only one thing to press — ours, and bigger. */}
         <span
           aria-hidden
-          className="absolute inset-0 flex items-center justify-center"
+          className="absolute top-1/2 left-1/2 flex size-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center"
         >
-          <span className="flex size-14 items-center justify-center rounded-full border border-white/40 bg-black/35 text-white backdrop-blur-md transition-all duration-300 ease-out group-hover:scale-110 group-hover:border-primary group-hover:bg-primary">
-            <Icon name="play" size="md" className="ml-0.5 fill-white text-white" />
+          {/* The blink: a ring pushed out of the button and faded away. */}
+          <span className="absolute inset-0 animate-ping rounded-full bg-secondary/50 group-hover:animate-none motion-reduce:animate-none" />
+
+          <span className="relative flex size-14 items-center justify-center rounded-full border border-secondary/60 bg-secondary/85 text-secondary-foreground shadow-lg shadow-black/25 backdrop-blur-md transition-all duration-300 ease-out group-hover:scale-110 group-hover:bg-secondary">
+            <Icon
+              name="play"
+              size="md"
+              className="ml-0.5 fill-secondary-foreground text-secondary-foreground"
+            />
           </span>
         </span>
 

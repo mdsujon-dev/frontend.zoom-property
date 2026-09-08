@@ -33,10 +33,11 @@ const AUTOPLAY_MS = 4000;
  * readout and as the way to jump. Movement stops while a pointer is over the
  * shelf or focus is inside it — otherwise the tile someone is reaching for
  * slides out from under them — and never starts at all for a visitor who asked
- * for reduced motion. Dragging still works throughout.
+ * for reduced motion.
  *
- * Each card keeps its own player dialog — only one can be open at a time, so
- * lifting that state here would buy nothing.
+ * The first click or keypress stops it permanently: once someone has opened a
+ * review, a shelf that kept reshuffling underneath the player is worse than one
+ * that simply stopped moving. Dragging works throughout.
  */
 export function ReviewVideoCarousel({
   reviews,
@@ -51,6 +52,7 @@ export function ReviewVideoCarousel({
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [engaged, setEngaged] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
   const onSelect = useCallback(() => {
@@ -71,11 +73,11 @@ export function ReviewVideoCarousel({
   }, [api, onSelect]);
 
   useEffect(() => {
-    if (!api || paused || prefersReducedMotion) return;
+    if (!api || paused || engaged || prefersReducedMotion) return;
 
     const timer = setInterval(() => api.scrollNext(), AUTOPLAY_MS);
     return () => clearInterval(timer);
-  }, [api, paused, prefersReducedMotion]);
+  }, [api, paused, engaged, prefersReducedMotion]);
 
   return (
     <div
@@ -84,6 +86,8 @@ export function ReviewVideoCarousel({
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
       onBlurCapture={() => setPaused(false)}
+      onPointerDownCapture={() => setEngaged(true)}
+      onKeyDownCapture={() => setEngaged(true)}
     >
       <Carousel setApi={setApi} opts={{ align: "start", loop: true }}>
         <CarouselContent className="-ml-4">

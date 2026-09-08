@@ -29,9 +29,11 @@ export function ScrollToTop() {
         >
           <Button
             size="icon"
-            variant="secondary"
             onClick={scrollToTop}
             aria-label="Back to top"
+            // Primary, not the secondary wash: it floats over whatever the page
+            // happens to be showing, and a pale button on a pale listing card
+            // disappears exactly where it is most wanted.
             className="size-11 rounded-full shadow-lg"
           >
             <Icon name="chevronDown" size="md" className="rotate-180" />

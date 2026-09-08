@@ -146,7 +146,7 @@ export function PropertyCalculator({
           .slice(0, MAX_LISTINGS)
           .map((property) => ({
             kind: "listing" as const,
-            id: property.id,
+            id: property.slug,
             label: property.title,
             note: property.area,
           }))
@@ -179,10 +179,8 @@ export function PropertyCalculator({
       return;
     }
 
-    // A listing has no page of its own yet, so it goes through to the results
-    // with its title as the search — one card, the one that was picked.
-    const params = new URLSearchParams({ purpose: "sale", q: suggestion.label });
-    router.push(`${localeHref(locale, "/properties")}?${params.toString()}`);
+    // A listing goes straight to its own page — the search is over.
+    router.push(localeHref(locale, `/properties/${suggestion.id}`));
   };
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

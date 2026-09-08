@@ -300,3 +300,26 @@ export const propertyTypes: { value: PropertyType; label: string; count: number 
   { value: "commercial", label: "Commercial Floors", count: 2340 },
   { value: "land", label: "Residential Plots", count: 760 },
 ];
+
+/** One listing by its slug — the URL segment, not the id. */
+export function propertyBySlug(slug: string) {
+  return properties.find((property) => property.slug === slug);
+}
+
+/**
+ * What to show under a listing: same area first, then same type, then anything
+ * else of the same purpose. Sorted that way rather than filtered to it, so the
+ * row is never short — three cards with one weak match reads better than one
+ * card and a gap.
+ */
+export function similarProperties(property: Property, limit = 3) {
+  const score = (other: Property) =>
+    (other.area === property.area ? 2 : 0) + (other.type === property.type ? 1 : 0);
+
+  return properties
+    .filter(
+      (other) => other.id !== property.id && other.purpose === property.purpose,
+    )
+    .sort((a, b) => score(b) - score(a))
+    .slice(0, limit);
+}

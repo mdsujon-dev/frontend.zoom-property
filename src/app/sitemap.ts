@@ -53,6 +53,31 @@ function articleEntries(): MetadataRoute.Sitemap {
   );
 }
 
+/**
+ * One entry per listing per locale. No `lastModified` that pretends to be a
+ * content date — the listings carry no updated-at, and a build timestamp on
+ * every one of them is worth less than nothing.
+ */
+function propertyEntries(): MetadataRoute.Sitemap {
+  return LOCALES.flatMap((locale) =>
+    properties.map((property) => {
+      const route = `/properties/${property.slug}`;
+      return {
+        url: url(locale, route),
+        alternates: {
+          languages: {
+            ...Object.fromEntries(
+              LOCALES.map((l) => [LOCALE_TAGS[l], url(l, route)]),
+            ),
+            "x-default": url(DEFAULT_LOCALE, route),
+          },
+        },
+        images: property.images,
+      };
+    }),
+  );
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
@@ -79,5 +104,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
-  return [...pages, ...articleEntries()];
+  return [...pages, ...propertyEntries(), ...articleEntries()];
 }

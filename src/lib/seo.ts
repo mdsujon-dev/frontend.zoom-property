@@ -1,4 +1,4 @@
-import { properties } from "@/data/properties";
+import { properties, type Property } from "@/data/properties";
 import { siteConfig, socialLinks } from "@/data/site";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -153,5 +153,63 @@ export function breadcrumbSchema(trail: { name: string; url: string }[]) {
       name: crumb.name,
       item: crumb.url,
     })),
+  };
+}
+
+/**
+ * One listing, as a `RealEstateListing` with the asking price nested in an
+ * `Offer`.
+ *
+ * `price` is a plain number and `priceCurrency` is separate — a formatted
+ * string like "৳11.5 Cr" is what the page shows a person, and what Google
+ * refuses to parse. Rentals carry the period as well, because ৳3,00,000 a month
+ * and ৳3,00,000 outright are not the same claim.
+ *
+ * The agency is referenced by id rather than repeated: the root layout already
+ * emits it as `#organization`.
+ */
+export function propertySchema(property: Property, path: string) {
+  const isRent = property.purpose === "rent";
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    "@id": absoluteUrl(path),
+    url: absoluteUrl(path),
+    name: property.title,
+    image: property.images,
+    numberOfBedrooms: property.beds || undefined,
+    numberOfBathroomsTotal: property.baths,
+    floorSize: {
+      "@type": "QuantitativeValue",
+      value: property.size,
+      unitCode: "FTK",
+    },
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: property.area,
+      addressRegion: property.city,
+      addressCountry: "BD",
+    },
+    offers: {
+      "@type": "Offer",
+      price: property.price,
+      priceCurrency: "BDT",
+      availability:
+        property.status === "sold"
+          ? "https://schema.org/SoldOut"
+          : "https://schema.org/InStock",
+      ...(isRent
+        ? {
+            priceSpecification: {
+              "@type": "UnitPriceSpecification",
+              price: property.price,
+              priceCurrency: "BDT",
+              unitCode: "MON",
+            },
+          }
+        : {}),
+    },
+    provider: { "@id": `${siteConfig.url}/#organization` },
   };
 }

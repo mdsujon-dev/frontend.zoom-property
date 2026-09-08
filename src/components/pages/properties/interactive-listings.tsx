@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { Icon } from "@/components/common/icon";
 import { PropertyCard } from "./property-card";
 import { areas } from "@/data/areas";
+import type { Locale } from "@/i18n/config";
 import { properties, propertyTypes, type Property, type Purpose } from "@/data/properties";
 import { formatBdt } from "@/lib/format";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
@@ -48,9 +49,12 @@ const FILTER_TABS: { id: FilterTab; label: string }[] = [
 ];
 
 export function InteractiveListings({
+  locale = "en",
   filters,
   clearHref,
 }: {
+  /** Needed by the cards, which link into `/[lang]/properties/…`. */
+  locale?: Locale;
   /** Applied before the tabs — the tabs narrow the search, never widen it. */
   filters?: ListingFilters;
   /** Where "clear" goes: the same page without the query string. */
@@ -213,7 +217,7 @@ export function InteractiveListings({
       <Stagger key={`${activeTab}-${currentPage}`} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {paginatedProperties.map((property) => (
           <StaggerItem key={property.id}>
-            <PropertyCard property={property} />
+            <PropertyCard property={property} locale={locale} />
           </StaggerItem>
         ))}
       </Stagger>

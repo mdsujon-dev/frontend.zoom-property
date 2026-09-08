@@ -22,15 +22,19 @@ export async function ListingsSection({
   filters?: ListingFilters;
   clearHref?: string;
 }) {
+  const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
+
   if (variant === "full") {
     return (
       <Section id="listings" className="bg-background">
-        <InteractiveListings filters={filters} clearHref={clearHref} />
+        <InteractiveListings
+          locale={locale}
+          filters={filters}
+          clearHref={clearHref}
+        />
       </Section>
     );
   }
-
-  const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
 
   return (
     <Section id="listings" className="bg-background">
@@ -54,7 +58,7 @@ export async function ListingsSection({
       <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {properties.slice(0, limit).map((property) => (
           <StaggerItem key={property.id}>
-            <PropertyCard property={property} />
+            <PropertyCard property={property} locale={locale} />
           </StaggerItem>
         ))}
       </Stagger>

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 
 import { fontVariables } from "../fonts";
 import { JsonLd } from "@/components/common/json-ld";
+import { ContactDock } from "@/components/layout/contact-dock";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
@@ -85,6 +86,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
             {children}
           </main>
           <SiteFooter />
+          <ContactDock />
           <ScrollToTop />
         </Providers>
       </body>

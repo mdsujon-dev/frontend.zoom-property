@@ -283,6 +283,12 @@
   --animate-marquee: marquee 40s linear infinite;
   --animate-shimmer: shimmer 2s linear infinite;
 
+  /* The contact dock's call button. Both run on the same 4s cycle so the
+     handset and the halo are one gesture: it rings for about a second, then
+     rests for three. A continuous shake reads as an advert, not an invitation. */
+  --animate-phone-ring: phone-ring 4s ease-in-out infinite;
+  --animate-call-halo: call-halo 4s ease-out infinite;
+
   @keyframes marquee {
     from {
       transform: translateX(0);
@@ -298,6 +304,38 @@
     }
     to {
       background-position: -200% 0;
+    }
+  }
+
+  /* Three quick rocks and a stop — the cadence of a handset, not a wobble. */
+  @keyframes phone-ring {
+    0%,
+    32%,
+    100% {
+      transform: rotate(0deg);
+    }
+    4%,
+    14%,
+    24% {
+      transform: rotate(-14deg);
+    }
+    9%,
+    19%,
+    29% {
+      transform: rotate(14deg);
+    }
+  }
+
+  /* One ring pushed out of the button while it is ringing, then nothing. */
+  @keyframes call-halo {
+    0% {
+      transform: scale(0.85);
+      opacity: 0.5;
+    }
+    30%,
+    100% {
+      transform: scale(1.7);
+      opacity: 0;
     }
   }
 }

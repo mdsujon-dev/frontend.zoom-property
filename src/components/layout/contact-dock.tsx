@@ -1,3 +1,4 @@
+import { CallChime } from "@/components/layout/call-chime";
 import { Icon, type IconName } from "@/components/common/icon";
 import { siteConfig } from "@/data/site";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -23,6 +24,15 @@ import { cn } from "@/lib/utils";
  * whole cell and the icon goes white, so the colour is the resting state and
  * the fill is the response.
  *
+ * The call cell rings. Three cells that all sit still make the most valuable
+ * one no easier to find than the other two, so the handset rocks and a halo
+ * pushes out of the button — for about a second in every four, on one shared
+ * cycle, and never while a pointer is on it. Continuous movement would read as
+ * an advert; a beat of it every few seconds reads as a phone.
+ *
+ * `CallChime` gives that first minute a sound as well, once per tab. It is the
+ * only client code in here.
+ *
  * Plain `<a href>` — `tel:`, `https://wa.me/…`, `mailto:` — so the phone dials,
  * WhatsApp opens, and the mail client gets the address. No state, no client
  * bundle: it is a server component.
@@ -42,6 +52,8 @@ export async function ContactDock() {
     href: string;
     /** Resting colour. WhatsApp's is its own; the other two are the brand's. */
     tone: string;
+    /** Only the call cell rings; two ringing icons would be noise. */
+    ring?: boolean;
     external?: boolean;
   }[] = [
     {
@@ -49,6 +61,7 @@ export async function ContactDock() {
       title: channels.call,
       href: telHref(siteConfig.phone),
       tone: "text-primary",
+      ring: true,
     },
     {
       icon: "whatsapp",
@@ -74,6 +87,8 @@ export async function ContactDock() {
       // register at all.
       className="fixed top-1/2 right-0 z-40 flex -translate-y-1/2 flex-col divide-y divide-border rounded-l-lg border border-r-0 border-input bg-card shadow-[-8px_0_28px_-14px] shadow-foreground/40 [&>a:first-child]:rounded-tl-lg [&>a:last-child]:rounded-bl-lg"
     >
+      <CallChime />
+
       {links.map((link) => (
         <a
           key={link.icon}
@@ -84,12 +99,29 @@ export async function ContactDock() {
             ? { target: "_blank", rel: "noreferrer" }
             : undefined)}
           className={cn(
-            "flex size-12 items-center justify-center transition-colors",
+            "group relative flex size-12 items-center justify-center transition-colors",
             link.tone,
             "hover:bg-primary hover:text-primary-foreground focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-primary",
           )}
         >
-          <Icon name={link.icon} size="md" />
+          {link.ring ? (
+            // The halo. Behind the icon, clipped to nothing on hover so the
+            // cell is a plain button the moment someone reaches for it.
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-2 animate-(--animate-call-halo) rounded-full bg-primary/35 group-hover:hidden motion-reduce:hidden"
+            />
+          ) : null}
+
+          <span
+            className={cn(
+              "relative",
+              link.ring &&
+                "animate-(--animate-phone-ring) group-hover:animate-none motion-reduce:animate-none",
+            )}
+          >
+            <Icon name={link.icon} size="md" />
+          </span>
         </a>
       ))}
     </nav>

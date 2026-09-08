@@ -34,7 +34,7 @@ export async function ProjectsSection() {
       <Stagger className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {projects.map((project) => (
           <StaggerItem key={project.id}>
-            <ProjectCard project={project} />
+            <ProjectCard project={project} locale={locale} />
           </StaggerItem>
         ))}
       </Stagger>

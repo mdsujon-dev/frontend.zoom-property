@@ -1,3 +1,4 @@
+import type { Project } from "@/data/projects";
 import { properties, type Property } from "@/data/properties";
 import { siteConfig, socialLinks } from "@/data/site";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -209,6 +210,41 @@ export function propertySchema(property: Property, path: string) {
             },
           }
         : {}),
+    },
+    provider: { "@id": `${siteConfig.url}/#organization` },
+  };
+}
+
+/**
+ * A development, as an `ApartmentComplex` with the entry price as an `Offer`.
+ *
+ * Not `RealEstateListing`: that describes one unit for sale, and this is a
+ * building of them at a starting price. The construction stage has no schema
+ * of its own, so it is not claimed here — the page states it, and inventing a
+ * property for it would put an unverifiable number in structured data.
+ */
+export function projectSchema(project: Project, path: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ApartmentComplex",
+    "@id": absoluteUrl(path),
+    url: absoluteUrl(path),
+    name: project.name,
+    image: project.images,
+    numberOfAccommodationUnits: project.units,
+    numberOfAvailableAccommodationUnits: project.unitsLeft,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: project.area,
+      addressRegion: project.city,
+      addressCountry: "BD",
+    },
+    makesOffer: {
+      "@type": "Offer",
+      price: project.startingPrice,
+      priceCurrency: "BDT",
+      availability: "https://schema.org/PreOrder",
+      availabilityStarts: project.handover,
     },
     provider: { "@id": `${siteConfig.url}/#organization` },
   };

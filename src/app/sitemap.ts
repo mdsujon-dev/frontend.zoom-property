@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { insights } from "@/data/insights";
+import { projects } from "@/data/projects";
 import { properties } from "@/data/properties";
 import { galleryImages, siteConfig } from "@/data/site";
 import { DEFAULT_LOCALE, LOCALES, LOCALE_TAGS } from "@/i18n/config";
@@ -78,6 +79,27 @@ function propertyEntries(): MetadataRoute.Sitemap {
   );
 }
 
+/** One entry per development per locale. */
+function projectEntries(): MetadataRoute.Sitemap {
+  return LOCALES.flatMap((locale) =>
+    projects.map((project) => {
+      const route = `/projects/${project.slug}`;
+      return {
+        url: url(locale, route),
+        alternates: {
+          languages: {
+            ...Object.fromEntries(
+              LOCALES.map((l) => [LOCALE_TAGS[l], url(l, route)]),
+            ),
+            "x-default": url(DEFAULT_LOCALE, route),
+          },
+        },
+        images: project.images,
+      };
+    }),
+  );
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
@@ -104,5 +126,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
-  return [...pages, ...propertyEntries(), ...articleEntries()];
+  return [
+    ...pages,
+    ...propertyEntries(),
+    ...projectEntries(),
+    ...articleEntries(),
+  ];
 }

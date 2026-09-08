@@ -6,12 +6,12 @@ import { Heading } from "@/components/common/heading";
 import { Icon, type IconName } from "@/components/common/icon";
 import { JsonLd } from "@/components/common/json-ld";
 import { Section } from "@/components/common/section";
-import { Text } from "@/components/common/text";
-import { ImageFrame } from "@/components/media/image-frame";
 import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
+import { AdvisorCard } from "@/components/pages/properties/advisor-card";
 import { PropertyBanner } from "@/components/pages/properties/property-banner";
 import { PropertyCard } from "@/components/pages/properties/property-card";
+import { PropertyDetails } from "@/components/pages/properties/property-details";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { agents } from "@/data/people";
@@ -24,7 +24,7 @@ import { localeAlternates } from "@/i18n/alternates";
 import { LOCALES, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
-import { telHref, whatsappHref } from "@/lib/contact";
+import { telHref } from "@/lib/contact";
 import { siteConfig } from "@/data/site";
 import { formatArea, formatBdt, formatKatha, formatRent } from "@/lib/format";
 import { absoluteUrl, breadcrumbSchema, propertySchema } from "@/lib/seo";
@@ -261,70 +261,39 @@ export default async function PropertyDetailPage({
                 </ul>
               </section>
             ) : null}
+
+            <PropertyDetails
+              property={property}
+              dict={{
+                about: t.about,
+                neighbourhood: t.neighbourhood,
+                papers: t.papers,
+                pricePerSqft: t.pricePerSqft,
+                rentalYield: t.rentalYield,
+                security: t.security,
+                metro: t.metro,
+                listingsHere: t.listingsHere,
+                rajukYes: t.rajukYes,
+                rajukNo: t.rajukNo,
+                handover: t.handover,
+                furnishing: t.furnishing,
+              }}
+            />
           </div>
 
           {agent ? (
             <aside className="lg:sticky lg:top-28 lg:self-start">
-              <div className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 shadow-sm">
-                <span className="font-heading text-xs font-bold tracking-wider text-muted-foreground uppercase">
-                  {t.advisor}
-                </span>
-
-                <div className="flex items-center gap-4">
-                  <div className="size-16 shrink-0">
-                    <ImageFrame
-                      src={agent.image}
-                      alt={agent.name}
-                      ratio="square"
-                      rounded="full"
-                      sizes="64px"
-                    />
-                  </div>
-
-                  <div className="flex min-w-0 flex-col">
-                    <span className="truncate font-heading text-base font-bold text-foreground">
-                      {agent.name}
-                    </span>
-                    <span className="truncate text-sm text-muted-foreground">
-                      {agent.role}
-                    </span>
-                    <span className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
-                      <Icon name="star" size="xs" className="text-brand" />
-                      {agent.rating} ·{" "}
-                      {t.deals.replace("{count}", String(agent.deals))}
-                    </span>
-                  </div>
-                </div>
-
-                <Text size="sm" className="text-muted-foreground">
-                  {t.advisorNote}
-                </Text>
-
-                <div className="flex flex-col gap-2">
-                  <Button asChild size="lg" className="w-full">
-                    <a href={telHref(siteConfig.phone)}>
-                      <Icon name="phone" size="xs" />
-                      {t.call}
-                    </a>
-                  </Button>
-
-                  <Button asChild size="lg" variant="outline" className="w-full">
-                    <a
-                      href={whatsappHref(siteConfig.phone)}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <Icon name="whatsapp" size="xs" />
-                      {t.whatsapp}
-                    </a>
-                  </Button>
-                </div>
-
-                <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                  <Icon name="clock" size="xs" />
-                  {t.respondsIn.replace("{minutes}", String(agent.respondsIn))}
-                </span>
-              </div>
+              <AdvisorCard
+                agent={agent}
+                dict={{
+                  heading: t.advisor,
+                  note: t.advisorNote,
+                  call: t.call,
+                  whatsapp: t.whatsapp,
+                  respondsIn: t.respondsIn,
+                  deals: t.deals,
+                }}
+              />
             </aside>
           ) : null}
         </div>

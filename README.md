@@ -1,6 +1,6 @@
-# Zoom Property
+# Zoom Property — Public Web Storefront
 
-Next.js 16 (App Router, Turbopack) + React 19 + Tailwind CSS v4 + shadcn/ui.
+The public web application for **Zoom Property**, built with **Next.js 16 (App Router, Turbopack)**, **React 19**, **Tailwind CSS v4**, and **Motion**.
 
 ```bash
 pnpm dev      # http://localhost:3000
@@ -8,87 +8,45 @@ pnpm build
 pnpm lint
 ```
 
-## Project structure
+---
+
+## Project Structure
 
 ```
 src/
-  app/                 routes, root layout, globals.css (design tokens)
-  components/
-    ui/                shadcn/ui primitives — vendored, keep close to the registry
-    common/            Heading, Text, Eyebrow, Container, Section, SectionHeading, Icon
-    motion/            Reveal, Stagger, Parallax, Marquee, Counter, AnimatedText, ScrollProgress, ScrollToTop
-    media/             ImageFrame, Gallery, MediaCarousel, VideoPlayer, VideoEmbed
-    layout/            SiteHeader, SiteFooter, ThemeToggle
-    property/          PropertyCard (domain component — copy this pattern)
-    providers/         theme + Lenis smooth scroll + tooltip + toaster
-  hooks/               useMediaQuery, useSmoothScroll, useScrollDirection
-  lib/                 cn, motion tokens, image + video helpers, formatters
-  data/                site config, nav, demo content
+├── app/                 # Next.js App Router pages, root layout, globals.css (design tokens)
+├── components/
+│   ├── ui/              # Primitive components (Radix UI / shadcn)
+│   ├── common/          # Heading, Text, Eyebrow, Container, Section, SectionHeading, Icon
+│   ├── motion/          # Reveal, Stagger, Parallax, Marquee, Counter, AnimatedText, ScrollProgress
+│   ├── media/           # ImageFrame, Gallery, MediaCarousel, VideoPlayer, VideoEmbed
+│   ├── layout/          # SiteHeader, SiteFooter, ThemeToggle
+│   ├── property/        # PropertyCard, PropertyFilter, PropertyGrid (Domain components)
+│   └── providers/       # ThemeProvider, Lenis smooth scroll, Toaster
+├── hooks/               # useMediaQuery, useSmoothScroll, useScrollDirection
+├── lib/                 # Class merging (cn), motion tokens, formatters, image helpers
+└── data/                # Site configuration, navigation, demo content
 ```
 
-## The rules that keep it consistent
+---
 
-**1. One type scale.** Sizes live in `src/app/globals.css` as `--text-display`
-… `--text-h6`, `--text-eyebrow`, `--text-lead`. Never write `text-4xl` on a
-title:
+## Design System & Architecture Rules
 
-```tsx
-<Heading as="h1" size="display">…</Heading>   // semantics and size are separate
-<Heading as="h3" size="h5">…</Heading>        // h3 in the outline, h5 on screen
-<Text size="lead">…</Text>
-```
+1. **Structured Typography Scale**: Font sizes are managed via `src/app/globals.css` design tokens (`--text-display`, `--text-h1` … `--text-lead`).
+2. **Unified Layout Shell**: Use `<Section>` for vertical rhythm and `<Container>` for layout max-widths.
+3. **Icon Registry**: Icons are centralized in `src/components/common/icon.tsx` using `lucide-react` and `react-icons/fa6`.
+4. **Motion Vocabulary**: Entrance animations and micro-interactions use motion tokens defined in `src/lib/motion.ts`.
+5. **Optimized Media**: Images and videos use standard frames (`ImageFrame`, `Gallery`, `VideoEmbed`) with blurred placeholders and lightboxes.
 
-Changing a heading size anywhere in the app = editing one token.
+---
 
-> Custom sizes must also be listed in `src/lib/utils.ts`, otherwise
-> tailwind-merge mistakes `text-h2` for a colour and drops it.
+## Tech Stack
 
-**2. One section shell.** `Section` owns vertical rhythm and background tone,
-`Container` owns max-width and gutters, `SectionHeading` owns the
-eyebrow → title → description block:
-
-```tsx
-<Section id="listings" tone="muted" spacing="lg">
-  <SectionHeading eyebrow="Featured" title="…" description="…" action={<Button …/>} />
-</Section>
-```
-
-**3. One icon surface.** `src/components/common/icon.tsx` registers UI icons
-from `lucide-react` and brand icons from `react-icons/fa6`, with a locked size
-scale (`xs → xl`). Add an icon to the registry, then `<Icon name="bed" />`.
-
-**4. One motion vocabulary.** Durations and easings live in `src/lib/motion.ts`;
-components never hard-code them.
-
-```tsx
-<Reveal delay={0.1}>…</Reveal>                      // scroll-triggered entrance
-<Stagger><StaggerItem>…</StaggerItem></Stagger>     // lists and grids
-<Parallax speed={0.2} zoom>…</Parallax>             // scroll-linked layers
-<Counter to={12500} compact suffix="+" />
-<Marquee speed={40}>…</Marquee>
-```
-
-Everything degrades to a static render under `prefers-reduced-motion`, and
-Lenis smooth scrolling turns itself off for those users too.
-
-**5. Media always goes through a component.** `ImageFrame` wraps `next/image`
-with an aspect-ratio scale, `sizes` presets and a shimmer blur placeholder;
-`Gallery` adds the lightbox; `VideoEmbed` keeps YouTube/Vimeo off the page until
-someone presses play; `VideoPlayer` handles self-hosted files.
-
-Remote image hosts must be allowed in `next.config.ts` → `images.remotePatterns`.
-
-## Stack
-
-| Concern | Package |
-| --- | --- |
-| UI primitives | `shadcn/ui` (radix-nova style, Radix UI) |
-| Smooth scroll | `lenis` |
-| Animation | `motion` (Framer Motion) |
+| Concern | Choice |
+|---------|--------|
+| Framework | **Next.js 16** (App Router + Turbopack) |
+| UI Library | **React 19** + `shadcn/ui` |
+| Styling | **Tailwind CSS v4** |
+| Animation | **Motion** (Framer Motion) + **Lenis** smooth scroll |
 | Icons | `lucide-react`, `react-icons/fa6` |
-| Lightbox | `yet-another-react-lightbox` |
-| Carousel | `embla-carousel-react` |
-| Theming | `next-themes` |
-| Toasts | `sonner` |
-
-Add more primitives with `pnpm dlx shadcn@latest add <component>`.
+| Lightbox & Carousel | `yet-another-react-lightbox`, `embla-carousel-react` |

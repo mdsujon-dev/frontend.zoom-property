@@ -28,25 +28,25 @@ export async function AreaComparisonSection({
 
       <Reveal delay={0.1} className="mt-10">
         <div className="overflow-x-auto rounded-xl border border-border bg-card">
-          <table className="w-full min-w-[720px] border-collapse text-sm">
+          <table className="w-full min-w-[880px] border-collapse text-sm">
             <thead>
               <tr className="border-b border-border text-left">
-                <th scope="col" className="px-5 py-4 font-medium text-muted-foreground">
+                <th scope="col" className="px-5 py-4 font-medium text-muted-foreground whitespace-nowrap">
                   {col.area}
                 </th>
-                <th scope="col" className="px-5 py-4 text-right font-medium text-muted-foreground">
+                <th scope="col" className="px-5 py-4 text-right font-medium text-muted-foreground whitespace-nowrap">
                   {col.listings}
                 </th>
-                <th scope="col" className="px-5 py-4 text-right font-medium text-muted-foreground">
+                <th scope="col" className="px-5 py-4 text-right font-medium text-muted-foreground whitespace-nowrap">
                   {col.median}
                 </th>
-                <th scope="col" className="px-5 py-4 font-medium text-muted-foreground">
+                <th scope="col" className="px-5 py-4 font-medium text-muted-foreground whitespace-nowrap">
                   {col.perSqft}
                 </th>
-                <th scope="col" className="px-5 py-4 text-right font-medium text-muted-foreground">
+                <th scope="col" className="px-5 py-4 text-right font-medium text-muted-foreground whitespace-nowrap">
                   {col.yield}
                 </th>
-                <th scope="col" className="px-5 py-4 font-medium text-muted-foreground">
+                <th scope="col" className="px-5 py-4 font-medium text-muted-foreground whitespace-nowrap">
                   {col.security}
                 </th>
               </tr>
@@ -57,21 +57,21 @@ export async function AreaComparisonSection({
                   key={area.id}
                   className="border-b border-border last:border-0 transition-colors hover:bg-muted/50"
                 >
-                  <th scope="row" className="px-5 py-4 text-left font-semibold text-foreground">
+                  <th scope="row" className="px-5 py-4 text-left font-semibold text-foreground whitespace-nowrap">
                     {locale === "bn" && area.nameBn ? area.nameBn : area.name}
                     <span className="block text-xs font-normal text-muted-foreground">
                       {area.city}
                     </span>
                   </th>
-                  <td className="px-5 py-4 text-right tabular-nums text-muted-foreground">
+                  <td className="px-5 py-4 text-right tabular-nums text-muted-foreground whitespace-nowrap">
                     {numberFormatter.format(area.listings || 0)}
                   </td>
-                  <td className="px-5 py-4 text-right font-medium tabular-nums text-foreground">
+                  <td className="px-5 py-4 text-right font-medium tabular-nums text-foreground whitespace-nowrap">
                     {area.medianPrice ? formatBdt(area.medianPrice) : "—"}
                   </td>
-                  <td className="px-5 py-4">
+                  <td className="px-5 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-3">
-                      <span className="w-20 shrink-0 tabular-nums text-foreground">
+                      <span className="w-20 shrink-0 tabular-nums text-foreground whitespace-nowrap">
                         {area.pricePerSqft ? `৳${numberFormatter.format(area.pricePerSqft)}` : "—"}
                       </span>
                       <span
@@ -87,10 +87,10 @@ export async function AreaComparisonSection({
                       </span>
                     </div>
                   </td>
-                  <td className="px-5 py-4 text-right tabular-nums text-foreground">
+                  <td className="px-5 py-4 text-right tabular-nums text-foreground whitespace-nowrap">
                     {area.rentalYield || "—"}
                   </td>
-                  <td className="px-5 py-4 text-xs text-muted-foreground">
+                  <td className="px-5 py-4 text-xs text-muted-foreground whitespace-nowrap">
                     {area.securityTier || "—"}
                   </td>
                 </tr>

@@ -43,28 +43,28 @@ export async function SiteFooter() {
 
             <Text
               size="sm"
-              className="max-w-sm leading-relaxed text-footer-foreground"
+              className="max-w-sm leading-relaxed text-footer-foreground/75"
             >
               {dict.meta.description}
             </Text>
 
-            <div className="flex flex-col gap-1.5 pt-1">
+            <div className="flex flex-col gap-2 pt-1">
               <a
                 href={telHref(siteConfig.phone)}
-                className="flex w-fit items-center gap-2 whitespace-nowrap text-sm font-semibold text-footer-foreground transition-opacity hover:opacity-75"
+                className="flex w-fit items-center gap-2 whitespace-nowrap text-sm text-footer-foreground/85 transition-colors hover:text-brand-green-light"
               >
-                <Icon name="phone" size="xs" />
+                <Icon name="phone" size="xs" className="text-footer-foreground/60" />
                 {siteConfig.phone}
               </a>
               <a
                 href={mailHref(siteConfig.email)}
-                className="flex w-fit items-center gap-2 text-sm text-footer-foreground transition-colors hover:text-brand-green-light"
+                className="flex w-fit items-center gap-2 text-sm text-footer-foreground/85 transition-colors hover:text-brand-green-light"
               >
-                <Icon name="mail" size="xs" />
+                <Icon name="mail" size="xs" className="text-footer-foreground/60" />
                 {siteConfig.email}
               </a>
-              <span className="flex items-start gap-2 text-sm text-footer-foreground">
-                <Icon name="location" size="xs" className="mt-1 shrink-0" />
+              <span className="flex items-start gap-2 text-sm text-footer-foreground/75">
+                <Icon name="location" size="xs" className="mt-1 shrink-0 text-footer-foreground/60" />
                 {siteConfig.address}
               </span>
             </div>
@@ -77,7 +77,7 @@ export async function SiteFooter() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={social.label}
-                  className="flex size-9 items-center justify-center rounded-lg border border-footer-foreground/40 text-footer-foreground transition-colors hover:border-brand-green-light hover:bg-footer-foreground/10 hover:text-brand-green-light"
+                  className="flex size-9 items-center justify-center rounded-lg border border-footer-foreground/20 text-footer-foreground/75 transition-colors hover:border-brand-green-light hover:bg-footer-foreground/10 hover:text-brand-green-light"
                 >
                   <Icon name={social.icon} size="xs" />
                 </a>
@@ -87,14 +87,14 @@ export async function SiteFooter() {
 
           {footerNav.map((group) => (
             <nav key={group.key} className="flex flex-col gap-3">
-              <h3 className="font-heading text-h6 text-footer-foreground">
+              <h3 className="font-heading text-h6 text-footer-foreground font-semibold">
                 {labels[group.key]}
               </h3>
               {group.links.map((link) => (
                 <Link
                   key={link.href}
                   href={localeHref(locale, link.href)}
-                  className="text-sm text-footer-foreground transition-colors hover:text-brand-green-light"
+                  className="text-sm text-footer-foreground/75 transition-colors hover:text-brand-green-light"
                 >
                   {labels[link.key]}
                 </Link>
@@ -106,14 +106,14 @@ export async function SiteFooter() {
               there are three of them, they are what the company is actually
               building, and the fourth column was empty without them. */}
           <nav className="flex flex-col gap-3">
-            <h3 className="font-heading text-h6 text-footer-foreground">
+            <h3 className="font-heading text-h6 text-footer-foreground font-semibold">
               {dict.nav.projects}
             </h3>
             {projects.map((project) => (
               <Link
                 key={project.id}
                 href={localeHref(locale, `/projects#${project.id}`)}
-                className="text-sm text-footer-foreground transition-colors hover:text-brand-green-light"
+                className="text-sm text-footer-foreground/75 transition-colors hover:text-brand-green-light"
               >
                 {project.name}
               </Link>
@@ -124,12 +124,12 @@ export async function SiteFooter() {
 
       {/* Slim bottom bar: one line of small print, so it gets a hairline rule
           and just enough padding to clear the text — not another section. */}
-      <div className="border-t border-footer-foreground/15">
-        <AppContainer className="flex flex-col items-center justify-between gap-1 py-3 text-footer-foreground sm:flex-row">
-          <Text size="xs" tone="inverse" className="text-footer-foreground">
+      <div className="border-t border-footer-foreground/10">
+        <AppContainer className="flex flex-col items-center justify-between gap-1 py-3 text-footer-foreground/60 sm:flex-row">
+          <Text size="xs" tone="inverse" className="text-footer-foreground/60">
             © {new Date().getFullYear()} {siteConfig.name} {dict.footer.rights}
           </Text>
-          <Text size="xs" tone="inverse" className="text-footer-foreground">
+          <Text size="xs" tone="inverse" className="text-footer-foreground/60">
             {dict.footer.demo}
           </Text>
         </AppContainer>

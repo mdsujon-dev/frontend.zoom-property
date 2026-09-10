@@ -407,6 +407,18 @@
   }
 
 
+  /* The 404 numerals, and anything else announcing that something went wrong.
+     Red rather than the brand green for the same reason `--destructive` is
+     red: an error has to read as an error, and a page rendered in the brand
+     colour reads as a page that is working. */
+  .error-gradient-text {
+    background: linear-gradient(135deg, #c00918 0%, #820918 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+
   /* The logo's green gradient, for a word or two of emphasis. */
   .brand-gradient-text {
     background: linear-gradient(135deg, #67ae3e 0%, #4b802d 100%);

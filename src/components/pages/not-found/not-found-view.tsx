@@ -79,10 +79,10 @@ export function NotFoundView({
         >
           {/* The numerals are decoration — the page's real h1 is the sentence below. */}
           <motion.div variants={item} aria-hidden className="relative">
-            <span className="brand-gradient-text font-heading text-[clamp(5rem,22vw,11rem)] leading-none font-bold tracking-tight">
+            <span className="error-gradient-text font-heading text-[clamp(5rem,22vw,11rem)] leading-none font-bold tracking-tight">
               {t.code}
             </span>
-            <span className="brand-gradient-text absolute inset-0 -z-10 font-heading text-[clamp(5rem,22vw,11rem)] leading-none font-bold tracking-tight opacity-30 blur-3xl">
+            <span className="error-gradient-text absolute inset-0 -z-10 font-heading text-[clamp(5rem,22vw,11rem)] leading-none font-bold tracking-tight opacity-30 blur-3xl">
               {t.code}
             </span>
           </motion.div>

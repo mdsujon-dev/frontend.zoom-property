@@ -8,7 +8,6 @@ import { Text } from "@/components/common/text";
 import { PageHeader } from "@/components/layout/page-header";
 
 import { LandownerBlocks } from "@/components/pages/landowners/landowner-blocks";
-import { LandownerStory } from "@/components/pages/landowners/landowner-story";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { pageBanners } from "@/data/page-banners";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
@@ -35,8 +34,6 @@ export default async function LandownersPage() {
         description={t.description}
         image={dict.landowner.backgroundImage || pageBanners.landowners}
       />
-
-      <LandownerStory />
 
       {/* Written in the panel. Removes itself when nothing is published. */}
       <LandownerBlocks />

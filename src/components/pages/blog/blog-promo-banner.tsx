@@ -19,7 +19,7 @@ interface BlogPromoBannerProps {
 
 export function BlogPromoBanner({ locale, promo }: BlogPromoBannerProps) {
   return (
-    <div className="relative isolate overflow-hidden rounded-3xl border border-border/70 bg-gradient-to-r from-slate-900 via-[#133050] to-slate-900 px-6 py-10 shadow-lg sm:px-12 sm:py-14">
+    <div className="relative isolate overflow-hidden rounded-3xl border border-border/70 bg-gradient-to-r from-brand-charcoal via-brand-green-dark to-brand-charcoal px-6 py-10 shadow-lg sm:px-12 sm:py-14">
       {/* Background architectural image on right side with gradient overlay */}
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-35 mix-blend-overlay">
         <Image
@@ -32,8 +32,8 @@ export function BlogPromoBanner({ locale, promo }: BlogPromoBannerProps) {
 
       <div className="relative z-10 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
         <div className="flex max-w-2xl flex-col gap-2.5">
-          <span className="inline-flex items-center gap-2 font-heading text-xs font-bold uppercase tracking-widest text-emerald-400">
-            <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="inline-flex items-center gap-2 font-heading text-xs font-bold uppercase tracking-widest text-brand-green-light">
+            <span className="size-2 rounded-full bg-brand-green-light animate-pulse" />
             {promo.badge}
           </span>
 
@@ -49,7 +49,7 @@ export function BlogPromoBanner({ locale, promo }: BlogPromoBannerProps) {
         <div className="flex flex-wrap items-center gap-3">
           <Button
             size="lg"
-            className="bg-primary hover:bg-brand-blue text-white shadow-md font-semibold"
+            className="bg-primary hover:bg-brand-green-dark text-white shadow-md font-semibold"
             asChild
           >
             <Link href={localeHref(locale, "/properties")}>

@@ -5,7 +5,7 @@ import { Icon } from "@/components/common/icon";
 import { Text } from "@/components/common/text";
 import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
-import { areas } from "@/data/areas";
+import { areas as fallbackAreas, type Area } from "@/data/areas";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
@@ -27,17 +27,20 @@ export function AreasPaginated({
   page,
   locale,
   t,
+  areas: areasProp,
 }: {
   page: number;
   locale: Locale;
   t: Dictionary["areas"]["service"];
+  areas?: Area[];
 }) {
-  const totalPages = Math.max(1, Math.ceil(areas.length / PER_PAGE));
+  const areaList = areasProp && areasProp.length > 0 ? areasProp : fallbackAreas;
+  const totalPages = Math.max(1, Math.ceil(areaList.length / PER_PAGE));
   // Clamp rather than 404: `?page=99` is a URL someone edited, not a broken link.
   const current = Math.min(Math.max(1, page), totalPages);
 
   const start = (current - 1) * PER_PAGE;
-  const shown = areas.slice(start, start + PER_PAGE);
+  const shown = areaList.slice(start, start + PER_PAGE);
 
   const href = (target: number) =>
     target <= 1
@@ -71,7 +74,7 @@ export function AreasPaginated({
           {t.showing
             .replace("{from}", String(start + 1))
             .replace("{to}", String(start + shown.length))
-            .replace("{total}", String(areas.length))}
+            .replace("{total}", String(areaList.length))}
         </Text>
 
         <nav className="flex items-center gap-2" aria-label={t.eyebrow}>

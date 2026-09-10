@@ -6,6 +6,7 @@ import { AreaComparisonSection } from "@/components/pages/areas/area-comparison"
 import { AreasPaginated } from "@/components/pages/areas/areas-paginated";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeAlternates } from "@/i18n/alternates";
+import { getAreas } from "@/server/features/areas";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
@@ -29,10 +30,11 @@ export default async function AreasPage({
 }: {
   searchParams: Promise<{ page?: string }>;
 }) {
-  const [dict, locale, query] = await Promise.all([
+  const [dict, locale, query, allAreas] = await Promise.all([
     getDictionary(),
     getLocale(),
     searchParams,
+    getAreas(100),
   ]);
 
   const page = Number.parseInt(query.page ?? "1", 10);
@@ -43,16 +45,17 @@ export default async function AreasPage({
         eyebrow={dict.areas.eyebrow}
         title={dict.areas.pageTitle}
         description={dict.areas.pageDescription}
-        image={pageBanners.areas}
+        image={dict.areas.backgroundImage || pageBanners.areas}
       />
 
       <AreasPaginated
         page={Number.isNaN(page) ? 1 : page}
         locale={locale}
         t={dict.areas.service}
+        areas={allAreas}
       />
 
-      <AreaComparisonSection />
+      <AreaComparisonSection areas={allAreas} />
     </>
   );
 }

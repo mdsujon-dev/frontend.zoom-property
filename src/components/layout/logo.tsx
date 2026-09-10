@@ -5,13 +5,14 @@ import { cn } from "@/lib/utils";
 /**
  * The brand lockup.
  *
- * The site is light-only, so `auto` is simply the navy lockup. `onDark` swaps
- * in `logo-dark.png` for the one place a dark ground exists — the header while
- * it sits over the home page's photographic hero.
+ * The site is light-only, so `auto` is simply the standard lockup. `onDark`
+ * swaps in `logo-dark.png` for the one place a dark ground exists — the header
+ * while it sits over the home page's photographic hero.
  *
- * Two files rather than a CSS filter: the wordmark is navy and the arch is red,
- * and a filter that lightens the navy would drag the red with it. Only the navy
- * is recoloured in `logo-dark.png`.
+ * Two files rather than a CSS filter: the wordmark is charcoal and the arch is
+ * green, and a filter that lightens the wordmark would drag the arch with it.
+ * Only the wordmark is recoloured in `logo-dark.png` — which is exactly the
+ * reversed lockup the brand guideline shows.
  */
 export function Logo({
   className,

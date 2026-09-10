@@ -13,11 +13,15 @@ import { mailHref, telHref } from "@/lib/contact";
 /**
  * Footer.
  *
- * Sits on `--footer`, a deeper cut of the brand navy than `--primary` so the
- * page closes off rather than just repeating the button colour. Nothing here
+ * Sits on `--footer`, the guideline's charcoal secondary rather than the
+ * primary green, so the page closes off rather than just repeating the button
+ * colour. It is also the ground the guideline shows its reversed logo on. Nothing here
  * uses the foreground / muted-foreground tokens — those resolve to near-black
- * in the light palette and would be unreadable — so text is
- * `footer-foreground` at varying opacity, and the logo uses the white lockup.
+ * in the light palette and would be unreadable — so text is `footer-foreground`
+ * at full strength (8.3:1 on the charcoal; the 60% it used to be measured
+ * 4.21:1 and failed AA), and the logo uses the white lockup. Links hover to the
+ * guideline's light green, since white-on-white would leave them with no hover
+ * state at all.
  *
  * Three columns rather than four, and no newsletter form — it was asking for an
  * email before the visitor had a reason to give one, and it squeezed the
@@ -39,7 +43,7 @@ export async function SiteFooter() {
 
             <Text
               size="sm"
-              className="max-w-sm leading-relaxed text-footer-foreground/70"
+              className="max-w-sm leading-relaxed text-footer-foreground"
             >
               {dict.meta.description}
             </Text>
@@ -54,12 +58,12 @@ export async function SiteFooter() {
               </a>
               <a
                 href={mailHref(siteConfig.email)}
-                className="flex w-fit items-center gap-2 text-sm text-footer-foreground/70 transition-colors hover:text-footer-foreground"
+                className="flex w-fit items-center gap-2 text-sm text-footer-foreground transition-colors hover:text-brand-green-light"
               >
                 <Icon name="mail" size="xs" />
                 {siteConfig.email}
               </a>
-              <span className="flex items-start gap-2 text-sm text-footer-foreground/70">
+              <span className="flex items-start gap-2 text-sm text-footer-foreground">
                 <Icon name="location" size="xs" className="mt-1 shrink-0" />
                 {siteConfig.address}
               </span>
@@ -73,7 +77,7 @@ export async function SiteFooter() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={social.label}
-                  className="flex size-9 items-center justify-center rounded-lg border border-footer-foreground/25 text-footer-foreground/80 transition-colors hover:border-footer-foreground/60 hover:bg-footer-foreground/10 hover:text-footer-foreground"
+                  className="flex size-9 items-center justify-center rounded-lg border border-footer-foreground/40 text-footer-foreground transition-colors hover:border-brand-green-light hover:bg-footer-foreground/10 hover:text-brand-green-light"
                 >
                   <Icon name={social.icon} size="xs" />
                 </a>
@@ -90,7 +94,7 @@ export async function SiteFooter() {
                 <Link
                   key={link.href}
                   href={localeHref(locale, link.href)}
-                  className="text-sm text-footer-foreground/70 transition-colors hover:text-footer-foreground"
+                  className="text-sm text-footer-foreground transition-colors hover:text-brand-green-light"
                 >
                   {labels[link.key]}
                 </Link>
@@ -109,7 +113,7 @@ export async function SiteFooter() {
               <Link
                 key={project.id}
                 href={localeHref(locale, `/projects#${project.id}`)}
-                className="text-sm text-footer-foreground/70 transition-colors hover:text-footer-foreground"
+                className="text-sm text-footer-foreground transition-colors hover:text-brand-green-light"
               >
                 {project.name}
               </Link>
@@ -121,11 +125,11 @@ export async function SiteFooter() {
       {/* Slim bottom bar: one line of small print, so it gets a hairline rule
           and just enough padding to clear the text — not another section. */}
       <div className="border-t border-footer-foreground/15">
-        <AppContainer className="flex flex-col items-center justify-between gap-1 py-3 text-footer-foreground/60 sm:flex-row">
-          <Text size="xs" tone="inverse" className="text-footer-foreground/60">
+        <AppContainer className="flex flex-col items-center justify-between gap-1 py-3 text-footer-foreground sm:flex-row">
+          <Text size="xs" tone="inverse" className="text-footer-foreground">
             © {new Date().getFullYear()} {siteConfig.name} {dict.footer.rights}
           </Text>
-          <Text size="xs" tone="inverse" className="text-footer-foreground/60">
+          <Text size="xs" tone="inverse" className="text-footer-foreground">
             {dict.footer.demo}
           </Text>
         </AppContainer>

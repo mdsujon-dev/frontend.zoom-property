@@ -73,7 +73,7 @@ export function ProjectProgress({
           aria-label={`${project.progress}% ${dict.complete}`}
         >
           <div
-            className="h-full rounded-full bg-linear-to-r from-primary to-brand-blue"
+            className="h-full rounded-full bg-linear-to-r from-primary to-brand-green"
             style={{ width: `${project.progress}%` }}
           />
         </div>
@@ -140,8 +140,8 @@ export function ProjectProgress({
           </Chip>
 
           {project.cctvStreamActive ? (
-            <span className="flex items-center gap-1.5 rounded-full border border-emerald-600/30 bg-emerald-600/10 px-2.5 py-1 text-xs font-semibold text-emerald-700">
-              <span className="size-1.5 animate-pulse rounded-full bg-emerald-600 motion-reduce:animate-none" />
+            <span className="flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
+              <span className="size-1.5 animate-pulse rounded-full bg-primary motion-reduce:animate-none" />
               {dict.liveCctv}
             </span>
           ) : null}

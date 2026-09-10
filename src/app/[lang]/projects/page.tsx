@@ -16,8 +16,19 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function ProjectsPage() {
-  const dict = await getDictionary();
+export default async function ProjectsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    stage?: string;
+    q?: string;
+    page?: string;
+  }>;
+}) {
+  const [dict, query] = await Promise.all([
+    getDictionary(),
+    searchParams,
+  ]);
 
   return (
     <>
@@ -28,7 +39,12 @@ export default async function ProjectsPage() {
         image={dict.projects.backgroundImage || pageBanners.projects}
       />
 
-      <ProjectsSection variant="full" />
+      <ProjectsSection
+        variant="full"
+        initialStage={query?.stage}
+        initialSearch={query?.q}
+        initialPage={query?.page ? Number(query.page) : undefined}
+      />
 
       <ConstructionStagesSection />
     </>

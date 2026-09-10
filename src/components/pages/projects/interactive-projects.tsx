@@ -1,26 +1,48 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Icon } from "@/components/common/icon";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Icon, type IconName } from "@/components/common/icon";
 import { ProjectCard } from "./project-card";
 import type { Project } from "@/data/projects";
 import type { Locale } from "@/i18n/config";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { cn } from "@/lib/utils";
 
-export type ProjectStageFilter = "all" | "Planning" | "Processing" | "Completed";
+export type ProjectStageFilter = "all" | "Completed" | "Planning" | "Processing";
 const PAGE_SIZE = 9;
 
 export function InteractiveProjects({
   projects = [],
   locale = "en",
+  initialStage,
+  initialSearch,
+  initialPage,
 }: {
   projects: Project[];
   locale?: Locale;
+  initialStage?: string;
+  initialSearch?: string;
+  initialPage?: number;
 }) {
-  const [selectedStage, setSelectedStage] = useState<ProjectStageFilter>("all");
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [page, setPage] = useState(1);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Normalize initial stage
+  const getStageFromParam = (val?: string | null): ProjectStageFilter => {
+    if (!val) return "all";
+    const lower = val.toLowerCase();
+    if (lower === "completed" || lower === "done" || lower === "complete") return "Completed";
+    if (lower === "planning") return "Planning";
+    if (lower === "processing" || lower === "under construction" || lower === "in progress") return "Processing";
+    return "all";
+  };
+
+  const selectedStage = getStageFromParam(searchParams.get("stage") ?? initialStage);
+  const urlQ = searchParams.get("q") ?? initialSearch ?? "";
+  const [searchQuery, setSearchQuery] = useState<string>(urlQ);
+  const page = searchParams.get("page") ? Number(searchParams.get("page")) : (initialPage ?? 1);
 
   const isBn = locale === "bn";
 
@@ -28,15 +50,18 @@ export function InteractiveProjects({
   const counts = useMemo(() => {
     return {
       all: projects.length,
+      Completed: projects.filter(
+        (p) =>
+          p.status?.toLowerCase() === "completed" ||
+          p.status?.toLowerCase() === "done" ||
+          p.status?.toLowerCase() === "complete",
+      ).length,
       Planning: projects.filter((p) => p.status?.toLowerCase() === "planning").length,
       Processing: projects.filter(
         (p) =>
           p.status?.toLowerCase() === "processing" ||
           p.status?.toLowerCase() === "under construction" ||
           p.status?.toLowerCase() === "in progress",
-      ).length,
-      Completed: projects.filter(
-        (p) => p.status?.toLowerCase() === "completed" || p.status?.toLowerCase() === "done" || p.status?.toLowerCase() === "complete",
       ).length,
     };
   }, [projects]);
@@ -47,20 +72,20 @@ export function InteractiveProjects({
       // Stage filter
       if (selectedStage !== "all") {
         const pStatus = (project.status || "").toLowerCase();
+        if (
+          selectedStage === "Completed" &&
+          pStatus !== "completed" &&
+          pStatus !== "done" &&
+          pStatus !== "complete"
+        ) {
+          return false;
+        }
         if (selectedStage === "Planning" && pStatus !== "planning") return false;
         if (
           selectedStage === "Processing" &&
           pStatus !== "processing" &&
           pStatus !== "under construction" &&
           pStatus !== "in progress"
-        ) {
-          return false;
-        }
-        if (
-          selectedStage === "Completed" &&
-          pStatus !== "completed" &&
-          pStatus !== "done" &&
-          pStatus !== "complete"
         ) {
           return false;
         }
@@ -77,15 +102,31 @@ export function InteractiveProjects({
     });
   }, [projects, selectedStage, searchQuery]);
 
+  // Update URL search params
+  const updateUrl = (newStage: ProjectStageFilter, newSearch: string, newPage: number) => {
+    const params = new URLSearchParams();
+    if (newStage !== "all") params.set("stage", newStage.toLowerCase());
+    if (newSearch.trim()) params.set("q", newSearch.trim());
+    if (newPage > 1) params.set("page", String(newPage));
+
+    const qs = params.toString();
+    const targetUrl = qs ? `${pathname}?${qs}` : pathname;
+    router.replace(targetUrl, { scroll: false });
+  };
+
   // Reset page when filter changes
   const handleStageChange = (stage: ProjectStageFilter) => {
-    setSelectedStage(stage);
-    setPage(1);
+    updateUrl(stage, searchQuery, 1);
   };
 
   const handleSearchChange = (val: string) => {
     setSearchQuery(val);
-    setPage(1);
+    updateUrl(selectedStage, val, 1);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    updateUrl(selectedStage, searchQuery, newPage);
+    window.scrollTo({ top: 380, behavior: "smooth" });
   };
 
   // Pagination calculation
@@ -95,19 +136,55 @@ export function InteractiveProjects({
     return filtered.slice(start, start + PAGE_SIZE);
   }, [filtered, page]);
 
-  const stagesTabs: { id: ProjectStageFilter; labelEn: string; labelBn: string; count: number; icon: string }[] = [
-    { id: "all", labelEn: "All Projects", labelBn: "সব প্রজেক্ট", count: counts.all, icon: "building" },
-    { id: "Planning", labelEn: "Planning", labelBn: "পরিকল্পনাধীন", count: counts.Planning, icon: "layers" },
-    { id: "Processing", labelEn: "Processing", labelBn: "চলমান নির্মাণ", count: counts.Processing, icon: "construction" },
-    { id: "Completed", labelEn: "Completed", labelBn: "সম্পন্ন", count: counts.Completed, icon: "check" },
+  // Tabs ordered: All, Completed, Planning, Processing
+  const stagesTabs: {
+    id: ProjectStageFilter;
+    labelEn: string;
+    labelBn: string;
+    count: number;
+    icon: IconName;
+    activeColor: string;
+  }[] = [
+    {
+      id: "all",
+      labelEn: "All Projects",
+      labelBn: "সব প্রজেক্ট",
+      count: counts.all,
+      icon: "building",
+      activeColor: "bg-primary text-primary-foreground",
+    },
+    {
+      id: "Completed",
+      labelEn: "Completed",
+      labelBn: "সম্পন্ন",
+      count: counts.Completed,
+      icon: "check",
+      activeColor: "bg-primary text-white",
+    },
+    {
+      id: "Planning",
+      labelEn: "Planning",
+      labelBn: "পরিকল্পনাধীন",
+      count: counts.Planning,
+      icon: "layers",
+      activeColor: "bg-primary text-white",
+    },
+    {
+      id: "Processing",
+      labelEn: "Processing",
+      labelBn: "চলমান নির্মাণ",
+      count: counts.Processing,
+      icon: "construction",
+      activeColor: "bg-primary text-white",
+    },
   ];
 
   return (
     <div className="flex flex-col gap-8">
       {/* 1. Filter Tabs Bar & Search Box */}
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        {/* Status Filter Tabs */}
-        <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-secondary-100/70 dark:bg-card border border-border/80 shadow-xs">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        {/* Status Filter Tabs (Completed, Planning, Processing, All) */}
+        <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-secondary-100/80 dark:bg-card border border-border/80 shadow-xs">
           {stagesTabs.map((tab) => {
             const isActive = selectedStage === tab.id;
             return (
@@ -116,18 +193,19 @@ export function InteractiveProjects({
                 type="button"
                 onClick={() => handleStageChange(tab.id)}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer select-none",
+                  "flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer select-none",
                   isActive
-                    ? "bg-primary text-primary-foreground shadow-sm scale-[1.02]"
+                    ? `${tab.activeColor} shadow-sm scale-[1.02]`
                     : "text-muted-foreground hover:text-foreground hover:bg-background/80",
                 )}
               >
+                <Icon name={tab.icon} size="xs" />
                 <span>{isBn ? tab.labelBn : tab.labelEn}</span>
                 <span
                   className={cn(
                     "flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-bold transition-colors",
                     isActive
-                      ? "bg-primary-foreground/20 text-primary-foreground"
+                      ? "bg-white/25 text-white"
                       : "bg-muted text-muted-foreground",
                   )}
                 >
@@ -139,7 +217,7 @@ export function InteractiveProjects({
         </div>
 
         {/* Quick Search */}
-        <div className="relative w-full md:w-72">
+        <div className="relative w-full lg:w-72">
           <input
             type="text"
             value={searchQuery}
@@ -173,9 +251,8 @@ export function InteractiveProjects({
           <button
             type="button"
             onClick={() => {
-              setSelectedStage("all");
               setSearchQuery("");
-              setPage(1);
+              updateUrl("all", "", 1);
             }}
             className="text-xs font-semibold text-primary hover:underline cursor-pointer flex items-center gap-1"
           >
@@ -203,15 +280,14 @@ export function InteractiveProjects({
           </h3>
           <p className="mt-1 text-xs text-muted-foreground max-w-sm">
             {isBn
-              ? "নির্বাচিত ক্যাটাগরি বা সার্চের সাথে মিলে এমন কোনো প্রজেক্ট এই মুহূর্তে নেই।"
+              ? "নির্বাচিত স্ট্যাটাস বা সার্চের সাথে মিলে এমন কোনো প্রজেক্ট এই মুহূর্তে নেই।"
               : "No projects match the selected status filter or search query."}
           </p>
           <button
             type="button"
             onClick={() => {
-              setSelectedStage("all");
               setSearchQuery("");
-              setPage(1);
+              updateUrl("all", "", 1);
             }}
             className="mt-4 inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-xs transition hover:bg-primary/90 cursor-pointer"
           >
@@ -233,10 +309,7 @@ export function InteractiveProjects({
             <button
               type="button"
               disabled={page <= 1}
-              onClick={() => {
-                setPage((p) => Math.max(1, p - 1));
-                window.scrollTo({ top: 400, behavior: "smooth" });
-              }}
+              onClick={() => handlePageChange(Math.max(1, page - 1))}
               className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-foreground shadow-xs transition hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
             >
               <Icon name="arrowLeft" size="xs" />
@@ -247,10 +320,7 @@ export function InteractiveProjects({
               <button
                 key={p}
                 type="button"
-                onClick={() => {
-                  setPage(p);
-                  window.scrollTo({ top: 400, behavior: "smooth" });
-                }}
+                onClick={() => handlePageChange(p)}
                 className={cn(
                   "flex size-8 items-center justify-center rounded-xl text-xs font-bold transition shadow-xs cursor-pointer",
                   p === page
@@ -265,10 +335,7 @@ export function InteractiveProjects({
             <button
               type="button"
               disabled={page >= totalPages}
-              onClick={() => {
-                setPage((p) => Math.min(totalPages, p + 1));
-                window.scrollTo({ top: 400, behavior: "smooth" });
-              }}
+              onClick={() => handlePageChange(Math.min(totalPages, page + 1))}
               className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-foreground shadow-xs transition hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
             >
               <span>{isBn ? "পরের" : "Next"}</span>

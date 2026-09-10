@@ -2,7 +2,7 @@ import "server-only";
 
 import { projects as fallback, type Project } from "@/data/projects";
 
-import { CACHE_TAGS, createResource } from "../../base-api";
+import { CACHE_TAGS, createResource, type QueryParams } from "../../base-api";
 import { toProject } from "./mapper";
 import type { ApiProject, ApiProjectDetail } from "./types";
 
@@ -20,8 +20,24 @@ export async function getHomeProjects(limit = 6): Promise<Project[]> {
   return picked ?? fallback.slice(0, limit);
 }
 
+export interface ProjectFilters {
+  stage?: string;
+  searchTerm?: string;
+  q?: string;
+  page?: number | string;
+  limit?: number | string;
+  area?: string;
+  city?: string;
+  sort?: string;
+}
+
 /** Every live development, for `/projects`. */
-export const getProjects = (limit = 60) => projects.list({ limit });
+export const getProjects = (params?: number | ProjectFilters) => {
+  if (typeof params === "number") {
+    return projects.list({ limit: params });
+  }
+  return projects.list(params as QueryParams);
+};
 
 /**
  * One development and the listings inside it.

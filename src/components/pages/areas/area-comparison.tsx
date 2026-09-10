@@ -2,21 +2,28 @@ import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Text } from "@/components/common/text";
 import { Reveal } from "@/components/motion/reveal";
-import { areas } from "@/data/areas";
-import { getDictionary } from "@/i18n/dictionaries";
+import { areas as fallbackAreas, type Area } from "@/data/areas";
+import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { formatBdt, numberFormatter } from "@/lib/format";
 
-export async function AreaComparisonSection() {
-  const dict = await getDictionary();
+export async function AreaComparisonSection({
+  areas: areasProp,
+}: {
+  areas?: Area[];
+} = {}) {
+  const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
   const { comparison } = dict.pages;
   const col = comparison.columns;
 
-  const peak = Math.max(...areas.map((area) => area.pricePerSqft));
+  const areaList = areasProp && areasProp.length > 0 ? areasProp : fallbackAreas;
+  const peak = Math.max(...areaList.map((area) => area.pricePerSqft || 0), 1);
 
   return (
     <Section className="border-t border-border bg-muted/30">
       <SectionHeading
+        eyebrow={comparison.eyebrow}
         title={comparison.title}
+        description={comparison.description}
       />
 
       <Reveal delay={0.1} className="mt-10">
@@ -45,27 +52,27 @@ export async function AreaComparisonSection() {
               </tr>
             </thead>
             <tbody>
-              {areas.map((area) => (
+              {areaList.map((area) => (
                 <tr
                   key={area.id}
                   className="border-b border-border last:border-0 transition-colors hover:bg-muted/50"
                 >
                   <th scope="row" className="px-5 py-4 text-left font-semibold text-foreground">
-                    {area.name}
+                    {locale === "bn" && area.nameBn ? area.nameBn : area.name}
                     <span className="block text-xs font-normal text-muted-foreground">
                       {area.city}
                     </span>
                   </th>
                   <td className="px-5 py-4 text-right tabular-nums text-muted-foreground">
-                    {numberFormatter.format(area.listings)}
+                    {numberFormatter.format(area.listings || 0)}
                   </td>
                   <td className="px-5 py-4 text-right font-medium tabular-nums text-foreground">
-                    {formatBdt(area.medianPrice)}
+                    {area.medianPrice ? formatBdt(area.medianPrice) : "—"}
                   </td>
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
                       <span className="w-20 shrink-0 tabular-nums text-foreground">
-                        ৳{numberFormatter.format(area.pricePerSqft)}
+                        {area.pricePerSqft ? `৳${numberFormatter.format(area.pricePerSqft)}` : "—"}
                       </span>
                       <span
                         aria-hidden
@@ -74,17 +81,17 @@ export async function AreaComparisonSection() {
                         <span
                           className="block h-full rounded-full bg-primary"
                           style={{
-                            width: `${Math.round((area.pricePerSqft / peak) * 100)}%`,
+                            width: `${Math.round(((area.pricePerSqft || 0) / peak) * 100)}%`,
                           }}
                         />
                       </span>
                     </div>
                   </td>
                   <td className="px-5 py-4 text-right tabular-nums text-foreground">
-                    {area.rentalYield}
+                    {area.rentalYield || "—"}
                   </td>
                   <td className="px-5 py-4 text-xs text-muted-foreground">
-                    {area.securityTier}
+                    {area.securityTier || "—"}
                   </td>
                 </tr>
               ))}

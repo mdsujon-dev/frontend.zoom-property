@@ -53,10 +53,10 @@ export function ProjectCard({
               className={cn(
                 "font-semibold px-2.5 py-1 text-xs shadow-md border-0 gap-1.5",
                 project.status?.toLowerCase() === "completed" || project.status?.toLowerCase() === "done"
-                  ? "bg-emerald-600 text-white"
+                  ? "bg-primary text-white"
                   : project.status?.toLowerCase() === "processing" || project.status?.toLowerCase() === "under construction"
-                  ? "bg-amber-600 text-white"
-                  : "bg-indigo-600 text-white",
+                  ? "bg-primary text-white"
+                  : "bg-primary text-white",
               )}
             >
               <Icon
@@ -73,8 +73,8 @@ export function ProjectCard({
             </Badge>
 
             {project.cctvStreamActive ? (
-              <span className="flex items-center gap-1 rounded-full bg-black/70 px-2.5 py-1 text-[11px] font-medium text-emerald-400 border border-emerald-500/30 backdrop-blur-md">
-                <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="flex items-center gap-1 rounded-full bg-black/70 px-2.5 py-1 text-[11px] font-medium text-brand-green-light border border-primary/30 backdrop-blur-md">
+                <span className="size-1.5 rounded-full bg-brand-green-light animate-pulse" />
                 Live CCTV
               </span>
             ) : null}

@@ -45,7 +45,7 @@ export function AreaCard({
             className={cn(
               "text-center font-bold tracking-wide text-white drop-shadow-lg transition-all duration-500",
               "text-2xl sm:text-3xl",
-              "group-hover:text-sky-400 group-hover:drop-shadow-[0_0_16px_rgba(56,189,248,0.9)]",
+              "group-hover:text-brand-green-light group-hover:drop-shadow-[0_0_16px_rgba(153,255,153,0.9)]",
             )}
           >
             {area.name}

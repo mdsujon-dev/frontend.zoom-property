@@ -11,10 +11,10 @@
   --color-foreground: var(--foreground);
   --color-brand: var(--brand);
   --color-brand-foreground: var(--brand-foreground);
-  --color-brand-navy: var(--brand-navy);
-  --color-brand-navy-deep: var(--brand-navy-deep);
-  --color-brand-blue: var(--brand-blue);
-  --color-brand-red: var(--brand-red);
+  --color-brand-green-dark: var(--brand-green-dark);
+  --color-brand-green: var(--brand-green);
+  --color-brand-green-light: var(--brand-green-light);
+  --color-brand-charcoal: var(--brand-charcoal);
   --color-footer: var(--footer);
   --color-footer-foreground: var(--footer-foreground);
   /* Bengali sits in every stack so the `bn` locale renders in Noto Sans Bengali
@@ -62,80 +62,90 @@
 
 :root {
   /* ---------------------------------------------------------------------- */
-  /*  Zoom Property brand palette — Basic Brand Guideline                    */
-  /*                                                                         */
-  /*  Primary   #133050  deep navy   (guideline, "Primary Color")            */
-  /*            #2867A0  mid blue    (guideline, "Primary Color")            */
-  /*  Accent    #C00918  brand red   (measured off the logo artwork)         */
-  /*                                                                         */
-  /*  Brand values are written as hex, not oklch, so they stay exactly the    */
-  /*  numbers in the guideline rather than a round-tripped approximation.     */
-  /*                                                                         */
-  /*  NOTE: the guideline labels the red swatch "495045", which renders as a  */
-  /*  dark olive grey, not the red shown next to it. The logo art samples as  */
-  /*  a #820918 → #C00918 gradient, so #C00918 is used. Worth confirming.     */
+  /*  Zoom Property brand palette - Basic Brand Guideline                     */
+  /*                                                                          */
+  /*  Primary    #4B802D  deep green   (guideline, "Primary Color")           */
+  /*             #67AE3E  mid green    (guideline, "Primary Color")           */
+  /*             #99FF99  light green  (guideline, "Primary Color")           */
+  /*  Secondary  #495045  charcoal     (guideline, "Secondary Color")         */
+  /*                                                                          */
+  /*  Written as hex, not oklch, so they stay exactly the numbers in the      */
+  /*  guideline rather than a round-tripped approximation.                    */
+  /*                                                                          */
+  /*  Which green carries text is decided by contrast, not by preference:     */
+  /*    #4B802D on white  4.75:1  - passes AA, so it takes every label,       */
+  /*                                link and button that holds white text     */
+  /*    #67AE3E on white  2.73:1  - fails AA at any size, so it is used for   */
+  /*                                fills, rules, glows and hover washes only */
+  /*    #99FF99 on white  1.23:1  - invisible; it belongs on dark grounds,    */
+  /*                                which is exactly where the guideline's    */
+  /*                                own dark logo lockup puts it (6.8:1 on    */
+  /*                                the charcoal)                             */
+  /*    #495045 with white 8.34:1 - the dark surface, and the ground the      */
+  /*                                guideline shows the reversed logo on      */
   /* ---------------------------------------------------------------------- */
-  --brand-navy: #133050;
-  --brand-navy-deep: #0a1b2d;
-  --brand-blue: #2867a0;
-  --brand-red: #c00918;
+  --brand-green-dark: #4b802d;
+  --brand-green: #67ae3e;
+  --brand-green-light: #99ff99;
+  --brand-charcoal: #495045;
 
-  /* Footer ground. A deeper cut of the brand navy — dark enough to close the
-     page off, still unmistakably the same colour as the primary buttons.
-     White on it clears 16:1. */
-  --footer: #0a1b2d;
+  /* Footer ground. The guideline's secondary, which is the same colour its
+     dark logo lockup sits on. White on it clears 8.3:1. */
+  --footer: #495045;
   --footer-foreground: #ffffff;
 
   --background: #ffffff;
-  --foreground: #101f31;              /* navy-tinted near-black body text */
+  --foreground: #1b2318;              /* green-tinted near-black, 16.2:1 */
   --card: #ffffff;
-  --card-foreground: #101f31;
+  --card-foreground: #1b2318;
   --popover: #ffffff;
-  --popover-foreground: #101f31;
+  --popover-foreground: #1b2318;
 
-  --primary: #133050;                 /* 13.4:1 with white text */
+  --primary: #4b802d;                 /* 4.75:1 with white text */
   --primary-foreground: #ffffff;
 
-  --secondary: #eef3f8;               /* pale navy wash */
-  --secondary-foreground: #133050;
+  --secondary: #eff5ea;               /* pale green wash */
+  --secondary-foreground: #3a6323;
 
-  --muted: #f2f6fa;
-  --muted-foreground: #5b6b7d;        /* 4.9:1 on --background */
+  --muted: #f3f7f0;
+  --muted-foreground: #5b6b5d;        /* 5.7:1 on --background */
 
   /* shadcn uses --accent as the *hover / focus surface* for menu and select
-     items (`focus:bg-accent`), not as a brand colour. Putting the brand red
-     here painted every open dropdown item bright red. It is a quiet wash; the
-     brand red lives in --brand below. */
-  --accent: #eef3f8;
-  --accent-foreground: #133050;
+     items (`focus:bg-accent`), not as a brand colour - a saturated value here
+     paints every open dropdown item. It is a quiet wash; the brand green for
+     emphasis lives in --brand below. */
+  --accent: #eff5ea;
+  --accent-foreground: #3a6323;
 
-  /* The brand red, for the few places that genuinely want it: rating stars,
-     eyebrow dots, small emphasis marks. 6.6:1 with white text. */
-  --brand: #c00918;
+  /* The brand green, for the few places that genuinely want it: rating stars,
+     eyebrow dots, small emphasis marks. The dark cut, so it stays legible. */
+  --brand: #4b802d;
   --brand-foreground: #ffffff;
 
+  /* Not a brand colour. An error has to read as an error, and a green one
+     does not - so this stays red whatever the palette does. */
   --destructive: #c00918;
 
-  --border: #dee6ee;
-  --input: #cbd7e3;
-  --ring: #2867a0;
+  --border: #dde7d6;
+  --input: #c9d8c0;
+  --ring: #67ae3e;
 
-  --chart-1: #133050;
-  --chart-2: #2867a0;
-  --chart-3: #c00918;
-  --chart-4: #6b9cc9;
-  --chart-5: #9fbcd6;
+  --chart-1: #4b802d;
+  --chart-2: #67ae3e;
+  --chart-3: #495045;
+  --chart-4: #8cc46a;
+  --chart-5: #b9dfa3;
 
   --radius: 0.5rem;                   /* 8px — inputs, buttons, cards */
 
-  --sidebar: #f7fafc;
-  --sidebar-foreground: #101f31;
-  --sidebar-primary: #133050;
+  --sidebar: #f8faf6;
+  --sidebar-foreground: #1b2318;
+  --sidebar-primary: #4b802d;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #eef3f8;
-  --sidebar-accent-foreground: #133050;
-  --sidebar-border: #dee6ee;
-  --sidebar-ring: #2867a0;
+  --sidebar-accent: #eff5ea;
+  --sidebar-accent-foreground: #3a6323;
+  --sidebar-border: #dde7d6;
+  --sidebar-ring: #67ae3e;
 }
 
 @layer base {
@@ -386,20 +396,20 @@
     border: 1px solid oklch(0.612 0.155 64.2 / 18%);
   }
 
-  /* Brand elevation. Navy in light mode, the lifted blue in dark, so a raised
-     surface reads as brand rather than as a grey drop shadow. */
+  /* Brand elevation, so a raised surface reads as brand rather than as a grey
+     drop shadow. */
   .brand-glow {
-    box-shadow: 0 18px 45px -18px color-mix(in oklab, var(--brand-navy) 45%, transparent);
+    box-shadow: 0 18px 45px -18px color-mix(in oklab, var(--brand-green-dark) 45%, transparent);
   }
 
   .brand-glow-subtle {
-    box-shadow: 0 10px 30px -12px color-mix(in oklab, var(--brand-navy) 28%, transparent);
+    box-shadow: 0 10px 30px -12px color-mix(in oklab, var(--brand-green-dark) 28%, transparent);
   }
 
 
-  /* The logo's red gradient, for a word or two of emphasis. */
+  /* The logo's green gradient, for a word or two of emphasis. */
   .brand-gradient-text {
-    background: linear-gradient(135deg, #c00918 0%, #820918 100%);
+    background: linear-gradient(135deg, #67ae3e 0%, #4b802d 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }

@@ -116,7 +116,7 @@ export default async function ServiceDetailPage({
                           : "Dedicated relationship advisor support on call",
                       ].map((item, idx) => (
                         <li key={idx} className="flex items-start gap-3 text-sm text-foreground/85">
-                          <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-600">
+                          <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
                             <Icon name="check" size="xs" />
                           </span>
                           <span>{item}</span>
@@ -152,7 +152,7 @@ export default async function ServiceDetailPage({
                       rel="noopener noreferrer"
                       className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-border py-2.5 text-xs font-semibold text-foreground transition-colors hover:bg-muted"
                     >
-                      <Icon name="whatsapp" size="xs" className="text-emerald-500" />
+                      <Icon name="whatsapp" size="xs" className="text-primary" />
                       <span>WhatsApp Desk</span>
                     </a>
                   </div>

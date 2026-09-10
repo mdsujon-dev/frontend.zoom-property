@@ -167,8 +167,8 @@ export default async function ProjectDetailPage({
                 </Badge>
 
                 {project.cctvStreamActive ? (
-                  <span className="flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-black/45 px-2.5 py-1 text-[11px] font-semibold text-emerald-300 backdrop-blur-md">
-                    <span className="size-1.5 animate-pulse rounded-full bg-emerald-400 motion-reduce:animate-none" />
+                  <span className="flex items-center gap-1.5 rounded-full border border-brand-green-light/40 bg-black/45 px-2.5 py-1 text-[11px] font-semibold text-brand-green-light backdrop-blur-md">
+                    <span className="size-1.5 animate-pulse rounded-full bg-brand-green-light motion-reduce:animate-none" />
                     {t.liveCctv}
                   </span>
                 ) : null}

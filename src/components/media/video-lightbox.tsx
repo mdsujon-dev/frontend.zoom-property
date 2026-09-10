@@ -77,7 +77,7 @@ export function VideoLightbox({
           />
 
           <div className="rounded-2xl bg-linear-to-br from-white/35 via-white/10 to-white/5 p-px shadow-2xl shadow-black/70">
-            <div className="rounded-[15px] bg-neutral-950 p-1.5 sm:p-2.5">
+            <div className="rounded-[15px] bg-brand-charcoal p-1.5 sm:p-2.5">
               <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black ring-1 ring-white/10">
                 <iframe
                   src={embedUrl(videoId, "youtube")}
@@ -95,7 +95,7 @@ export function VideoLightbox({
               beside it. */}
           <DialogClose
             aria-label={closeLabel}
-            className="absolute -top-12 right-0 flex size-9 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-200 hover:scale-105 hover:border-sky-400 hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 sm:-right-4 sm:-top-4"
+            className="absolute -top-12 right-0 flex size-9 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-200 hover:scale-105 hover:border-brand-green-light hover:bg-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green-light sm:-right-4 sm:-top-4"
           >
             <Icon name="close" size="sm" />
           </DialogClose>

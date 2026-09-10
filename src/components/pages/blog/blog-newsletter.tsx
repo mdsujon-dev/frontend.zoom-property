@@ -46,7 +46,7 @@ export function BlogNewsletter({ newsletter }: BlogNewsletterProps) {
 
         <div className="flex flex-col gap-3 lg:col-span-5">
           {status === "success" ? (
-            <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-800 dark:text-emerald-300">
+            <div className="rounded-2xl border border-primary/30 bg-primary/10 p-4 text-primary dark:text-brand-green-light">
               <p className="text-sm font-semibold">✓ {newsletter.note}</p>
             </div>
           ) : (

@@ -126,7 +126,7 @@ export function BlogCategoryFilter({
                   className={cn(
                     "shrink-0 rounded-full px-4 py-2 font-heading text-xs sm:text-sm font-semibold uppercase tracking-wider transition-all duration-200 cursor-pointer",
                     isActive
-                      ? "bg-emerald-700 text-white shadow-sm ring-2 ring-emerald-700/30"
+                      ? "bg-primary text-white shadow-sm ring-2 ring-primary/30"
                       : "bg-muted/70 text-muted-foreground hover:bg-muted hover:text-foreground border border-border/60",
                   )}
                 >

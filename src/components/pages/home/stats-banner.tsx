@@ -86,7 +86,7 @@ export async function StatsBanner({
                   className="font-serif text-white"
                 />
               </div>
-              <p className="mt-2 text-xs font-medium tracking-wide text-zinc-200 drop-shadow-md sm:text-sm">
+              <p className="mt-2 text-xs font-medium tracking-wide text-white/85 drop-shadow-md sm:text-sm">
                 {item.label}
               </p>
             </StaggerItem>

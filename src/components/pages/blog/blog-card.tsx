@@ -42,7 +42,7 @@ export function BlogFeaturedOverlayCard({
   return (
     <article
       className={cn(
-        "group relative isolate flex flex-col justify-end overflow-hidden rounded-3xl border border-border/60 bg-brand-navy-deep shadow-md transition-all duration-300 hover:shadow-xl",
+        "group relative isolate flex flex-col justify-end overflow-hidden rounded-3xl border border-border/60 bg-brand-charcoal shadow-md transition-all duration-300 hover:shadow-xl",
         className,
       )}
     >
@@ -63,11 +63,11 @@ export function BlogFeaturedOverlayCard({
       <div className="relative z-10 flex flex-col gap-3.5 p-6 sm:p-8 lg:p-10">
         {/* Category badge and read time */}
         <div className="flex flex-wrap items-center gap-2.5">
-          <span className="inline-flex items-center rounded-full bg-emerald-600/90 px-3 py-1 font-heading text-xs font-bold uppercase tracking-wider text-white shadow-xs backdrop-blur-sm">
+          <span className="inline-flex items-center rounded-full bg-primary/90 px-3 py-1 font-heading text-xs font-bold uppercase tracking-wider text-white shadow-xs backdrop-blur-sm">
             {categoryLabel}
           </span>
           {insight.trending && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-brand-red/90 px-2.5 py-0.5 text-xs font-semibold text-white">
+            <span className="inline-flex items-center gap-1 rounded-full bg-brand-green-dark/90 px-2.5 py-0.5 text-xs font-semibold text-white">
               <span className="size-1.5 rounded-full bg-white animate-pulse" />
               HOT
             </span>
@@ -81,7 +81,7 @@ export function BlogFeaturedOverlayCard({
         <Heading
           as="h2"
           size="h3"
-          className="text-balance font-extrabold text-white transition-colors duration-200 group-hover:text-amber-200"
+          className="text-balance font-extrabold text-white transition-colors duration-200 group-hover:text-brand-green-light"
         >
           <Link href={href} className="focus:outline-none focus:underline">
             {title}
@@ -185,7 +185,7 @@ export function BlogStandardCard({
         <div className="mt-4 pt-3 border-t border-border/60">
           <Link
             href={href}
-            className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-primary hover:text-brand-blue"
+            className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-primary hover:text-brand-green-dark"
           >
             <span>{readMoreLabel}</span>
             <Icon

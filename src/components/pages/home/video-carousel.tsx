@@ -93,7 +93,7 @@ export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
             type="button"
             onClick={scrollPrev}
             aria-label={prevLabel}
-            className="flex size-10 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-200 hover:border-sky-400 hover:bg-sky-500 hover:text-white active:scale-95 disabled:pointer-events-none disabled:opacity-40"
+            className="flex size-10 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-200 hover:border-brand-green-light hover:bg-primary hover:text-white active:scale-95 disabled:pointer-events-none disabled:opacity-40"
           >
             <Icon name="chevronLeft" size="sm" />
           </button>
@@ -101,7 +101,7 @@ export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
             type="button"
             onClick={scrollNext}
             aria-label={nextLabel}
-            className="flex size-10 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-200 hover:border-sky-400 hover:bg-sky-500 hover:text-white active:scale-95 disabled:pointer-events-none disabled:opacity-40"
+            className="flex size-10 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-200 hover:border-brand-green-light hover:bg-primary hover:text-white active:scale-95 disabled:pointer-events-none disabled:opacity-40"
           >
             <Icon name="chevronRight" size="sm" />
           </button>
@@ -129,7 +129,7 @@ export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
                 key={video.id}
                 className="basis-full pl-4 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
               >
-                <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/15 bg-white/[0.06] backdrop-blur-xl shadow-xl transition-all duration-500 hover:border-sky-400/50 hover:bg-white/[0.09] hover:shadow-2xl hover:shadow-sky-500/10">
+                <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/15 bg-white/[0.06] backdrop-blur-xl shadow-xl transition-all duration-500 hover:border-brand-green-light/50 hover:bg-white/[0.09] hover:shadow-2xl hover:shadow-primary/10">
                   {/* Top: poster only. Playback moved to the dialog — a quarter-width
                       card is too small to actually watch a walkthrough in. */}
                   <div className="relative h-[225px] w-full overflow-hidden bg-black sm:h-[240px]">
@@ -166,8 +166,8 @@ export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
                       aria-hidden
                       className="absolute inset-0 flex items-center justify-center"
                     >
-                      <span className="relative flex size-14 items-center justify-center rounded-full border border-white/40 bg-white/20 text-white backdrop-blur-md shadow-xl transition-all duration-300 ease-out group-hover:scale-110 group-hover:border-sky-400 group-hover:bg-sky-500 sm:size-16">
-                        <span className="absolute inset-0 rounded-full bg-white/20 animate-ping opacity-60 group-hover:bg-sky-400/40" />
+                      <span className="relative flex size-14 items-center justify-center rounded-full border border-white/40 bg-white/20 text-white backdrop-blur-md shadow-xl transition-all duration-300 ease-out group-hover:scale-110 group-hover:border-brand-green-light group-hover:bg-primary sm:size-16">
+                        <span className="absolute inset-0 rounded-full bg-white/20 animate-ping opacity-60 group-hover:bg-brand-green-light/40" />
                         <Icon
                           name="play"
                           size="md"
@@ -184,13 +184,13 @@ export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
                         <Icon name="location" size="xs" className="text-brand" />
                         {location}
                       </span>
-                      <span className="flex items-center gap-1 text-[11px] text-emerald-400">
+                      <span className="flex items-center gap-1 text-[11px] text-brand-green-light">
                         <Icon name="approved" size="xs" />
                         {verifiedLabel}
                       </span>
                     </div>
 
-                    <h3 className="line-clamp-2 font-heading text-base font-semibold text-white transition-colors duration-300 group-hover:text-sky-400 sm:text-lg leading-snug">
+                    <h3 className="line-clamp-2 font-heading text-base font-semibold text-white transition-colors duration-300 group-hover:text-brand-green-light sm:text-lg leading-snug">
                       {title}
                     </h3>
 
@@ -204,7 +204,7 @@ export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
                   <button
                     type="button"
                     onClick={() => setActiveId(video.id)}
-                    className="absolute inset-0 cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
+                    className="absolute inset-0 cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-green-light"
                   >
                     <span className="sr-only">{`${playLabel}: ${title}`}</span>
                   </button>
@@ -227,7 +227,7 @@ export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
               className={cn(
                 "h-1.5 rounded-full transition-all duration-300",
                 current === index
-                  ? "w-8 bg-sky-400 shadow-sm shadow-sky-400/50"
+                  ? "w-8 bg-brand-green-light shadow-sm shadow-brand-green-light/50"
                   : "w-2 bg-white/20 hover:bg-white/40",
               )}
             />

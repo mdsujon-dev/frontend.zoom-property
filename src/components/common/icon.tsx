@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import {
+  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
   Bath,
@@ -19,6 +20,7 @@ import {
   Heart,
   Images,
   Languages,
+  Layers,
   KeyRound,
   LayoutGrid,
   Mail,
@@ -72,6 +74,7 @@ export type IconComponent = ComponentType<{
 
 export const icons = {
   // Navigation & actions
+  arrowLeft: ArrowLeft,
   arrowRight: ArrowRight,
   arrowUpRight: ArrowUpRight,
   chevronDown: ChevronDown,
@@ -112,6 +115,7 @@ export const icons = {
   handover: KeyRound,
   construction: HardHat,
   approved: FileCheck2,
+  layers: Layers,
   trend: TrendingUp,
   clock: Clock,
   users: Users,

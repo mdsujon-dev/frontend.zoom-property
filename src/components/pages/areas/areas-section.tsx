@@ -80,7 +80,7 @@ export function AreasHeading({
       <div className="flex flex-col items-center gap-4 text-center">
         <Heading as="h2" size="h2" align="center" className="max-w-4xl">
           {t.titleLead ? `${t.titleLead.trimEnd()} ` : ""}
-          <span className="text-brand-blue">{t.titleAccent?.trim()}</span>
+          <span className="text-brand-green-dark">{t.titleAccent?.trim()}</span>
           {t.titleTail ? ` ${t.titleTail.trimStart()}` : ""}
         </Heading>
 
@@ -101,14 +101,14 @@ export function AreasHeading({
  */
 function AreasOrnaments() {
   const dots =
-    "absolute hidden h-16 w-28 bg-[radial-gradient(circle,var(--color-brand-blue)_1.5px,transparent_1.5px)] [background-size:14px_14px] opacity-25 lg:block";
+    "absolute hidden h-16 w-28 bg-[radial-gradient(circle,var(--color-brand-green)_1.5px,transparent_1.5px)] [background-size:14px_14px] opacity-25 lg:block";
 
   return (
     <div aria-hidden className="pointer-events-none">
       <span className={cn(dots, "top-10 left-0")} />
       <span className={cn(dots, "right-0 bottom-10")} />
 
-      <span className="absolute -top-24 -right-24 size-80 rounded-full bg-brand-blue/8 blur-3xl" />
+      <span className="absolute -top-24 -right-24 size-80 rounded-full bg-brand-green/8 blur-3xl" />
     </div>
   );
 }

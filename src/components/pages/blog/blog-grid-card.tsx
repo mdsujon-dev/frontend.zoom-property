@@ -91,7 +91,7 @@ export function BlogGridCard({
 
       <Link
         href={href}
-        className="mt-auto inline-flex w-fit items-center gap-1.5 font-heading text-xs font-bold tracking-wider text-primary uppercase transition-colors hover:text-brand-blue"
+        className="mt-auto inline-flex w-fit items-center gap-1.5 font-heading text-xs font-bold tracking-wider text-primary uppercase transition-colors hover:text-brand-green-dark"
       >
         {readMoreLabel}
         <Icon

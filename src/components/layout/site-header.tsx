@@ -41,7 +41,7 @@ type NavDict = Record<string, string>;
  */
 export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) {
   const [open, setOpen] = useState(false);
-  const { direction, atTop, scrolledPast } = useScrollDirection();
+  const { direction, scrolledPast } = useScrollDirection();
   const prefersReducedMotion = useReducedMotion();
   const pathname = usePathname();
   const lenis = useLenis();
@@ -69,8 +69,6 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) 
   }, [open, lenis]);
 
   const home = localeHref(locale, "/");
-  // Only the home page opens with a full-bleed image behind the header.
-  const overHero = pathname === home && atTop;
 
   return (
     <motion.header
@@ -84,19 +82,19 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) 
             : { duration: 0.32, ease: [0.16, 1, 0.3, 1] }
       }
       style={{ willChange: "transform" }}
-      className={cn(
-        "fixed inset-x-0 top-0 z-40 transition-colors duration-300",
-        overHero
-          ? "bg-transparent"
-          : "border-b border-border/80 bg-background/90 backdrop-blur-xl shadow-xs",
-      )}
+      /* Solid white in every state, including over the home page's hero
+         image. A translucent bar took its colour from whatever photograph
+         happened to be behind it, so the wordmark and the nav changed contrast
+         as the hero rotated. White is the one ground the brand logo is drawn
+         for. */
+      className="fixed inset-x-0 top-0 z-40 border-b border-border/80 bg-background shadow-xs"
     >
 
       <AppContainer className="relative flex h-16 items-center justify-between gap-4 sm:h-20">
         <Link href={home} aria-label={siteConfig.name} className="shrink-0">
           <Logo
             priority
-            variant={overHero ? "onDark" : "auto"}
+            variant="auto"
             className="h-8 w-auto sm:h-9"
           />
         </Link>
@@ -111,23 +109,16 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) 
                 href={href}
                 className={cn(
                   "relative flex items-center justify-center rounded-lg px-3.5 py-2 text-sm transition-all duration-200",
-                  overHero
-                    ? active
-                      ? "bg-white/20 font-semibold text-white backdrop-blur-xs"
-                      : "font-medium text-white/80 hover:bg-white/10 hover:text-white"
-                    : active
-                      ? "bg-primary/[0.08] font-semibold text-primary"
-                      : "font-medium text-muted-foreground hover:bg-muted/60 hover:text-foreground",
+                  active
+                    ? "bg-primary/[0.08] font-semibold text-primary"
+                    : "font-medium text-muted-foreground hover:bg-muted/60 hover:text-foreground",
                 )}
               >
                 <span>{dict[item.key]}</span>
                 {active && (
                   <motion.span
                     layoutId="activeNavIndicator"
-                    className={cn(
-                      "absolute bottom-0 left-3 right-3 h-[2.5px] rounded-full",
-                      overHero ? "bg-white shadow-xs" : "bg-primary shadow-xs",
-                    )}
+                    className="absolute bottom-0 left-3 right-3 h-[2.5px] rounded-full bg-primary shadow-xs"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -140,12 +131,7 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) 
           {/* whitespace-nowrap keeps the number on one line at every width. */}
           <a
             href={telHref(siteConfig.phone)}
-            className={cn(
-              "hidden items-center gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors xl:flex",
-              overHero
-                ? "text-white/85 hover:bg-white/10 hover:text-white"
-                : "text-foreground hover:bg-muted",
-            )}
+            className="hidden items-center gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted xl:flex"
           >
             <Icon name="phone" size="xs" />
             {siteConfig.phone}
@@ -154,7 +140,7 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) 
           <LanguageSwitcher
             locale={locale}
             label={dict.language}
-            onDark={overHero}
+            onDark={false}
           />
 
           <Button size="lg" className="ml-1 hidden font-medium sm:inline-flex" asChild>
@@ -167,10 +153,7 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) 
                 variant="ghost"
                 size="icon-lg"
                 aria-label={dict.openMenu}
-                className={cn(
-                  "lg:hidden",
-                  overHero && "text-white hover:bg-white/10 hover:text-white",
-                )}
+                className="lg:hidden"
               >
                 <Icon name="menu" size="sm" />
               </Button>

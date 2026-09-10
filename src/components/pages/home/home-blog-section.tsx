@@ -3,7 +3,7 @@ import { OrnamentDivider } from "@/components/common/ornament-divider";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { InsightCard } from "@/components/pages/blog/insight-card";
-import { insights } from "@/data/insights";
+import { getHomeInsights } from "@/server/features/insights";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { LOCALE_TAGS } from "@/i18n/config";
 import { localeHref } from "@/i18n/href";
@@ -19,7 +19,7 @@ export async function HomeBlogSection() {
     day: "numeric",
   });
 
-  const latestInsights = insights.slice(0, 3);
+  const latestInsights = await getHomeInsights(3);
 
   return (
     <section className="bg-background py-16 sm:py-24">

@@ -19,7 +19,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { agents } from "@/data/people";
 import { projectBySlug, projects, otherProjects } from "@/data/projects";
-import { siteConfig } from "@/data/site";
 import { localeAlternates } from "@/i18n/alternates";
 import { LOCALES, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -185,7 +184,7 @@ export default async function ProjectDetailPage({
             }}
             action={
               <Button asChild size="lg" className="shrink-0">
-                <a href={telHref(siteConfig.phone)}>
+                <a href={telHref(dict.contact.details.phone)}>
                   <Icon name="phone" size="xs" />
                   {t.call}
                 </a>
@@ -273,6 +272,8 @@ export default async function ProjectDetailPage({
                 respondsIn: t.respondsIn,
                 deals: t.deals,
               }}
+              phone={dict.contact.details.phone}
+              whatsapp={dict.contact.details.whatsapp}
             />
           </aside>
         </div>

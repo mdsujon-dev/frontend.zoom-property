@@ -276,6 +276,21 @@
       "email": "Email",
       "emailNote": "Replies within one business hour"
     },
+    "details": {
+      "phone": "+880 1958 253301",
+      "whatsapp": "+880 1958 253301",
+      "email": "concierge@zoomproperty.com",
+      "dhakaAddress": "House 42, Road 11, Block D, Banani & Gulshan Avenue, Dhaka",
+      "chattogramAddress": "CDA Avenue, GEC Circle & Khulshi"
+    },
+    "social": {
+      "facebook": "https://facebook.com",
+      "instagram": "https://instagram.com",
+      "x": "https://x.com",
+      "linkedin": "https://linkedin.com",
+      "youtube": "https://youtube.com",
+      "whatsapp": "https://wa.me/8801958253301"
+    },
     "offices": "Offices",
     "dhaka": "Dhaka",
     "chattogram": "Chattogram",
@@ -551,9 +566,8 @@
       ]
     },
     "vetting": {
-      "eyebrow": "Our standard",
       "title": "What a listing has to pass",
-      "description": "Seven checks. If one fails, the listing does not go online — which is why you find fewer results here than on the big portals.",
+      "image": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80",
       "checks": [
         "RAJUK approved plan, matched against what is actually built",
         "Title deed traced through the CS, SA, RS and BS records",

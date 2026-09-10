@@ -1,6 +1,5 @@
 import { CallChime } from "@/components/layout/call-chime";
 import { Icon, type IconName } from "@/components/common/icon";
-import { siteConfig } from "@/data/site";
 import { getDictionary } from "@/i18n/dictionaries";
 import { mailHref, telHref, whatsappHref } from "@/lib/contact";
 import { cn } from "@/lib/utils";
@@ -44,6 +43,7 @@ import { cn } from "@/lib/utils";
 export async function ContactDock() {
   const dict = await getDictionary();
   const channels = dict.contact.channels;
+  const d = dict.contact.details;
 
   const links: {
     icon: IconName;
@@ -59,21 +59,21 @@ export async function ContactDock() {
     {
       icon: "phone",
       title: channels.call,
-      href: telHref(siteConfig.phone),
+      href: telHref(d.phone),
       tone: "text-primary",
       ring: true,
     },
     {
       icon: "whatsapp",
       title: channels.whatsapp,
-      href: whatsappHref(siteConfig.phone),
+      href: whatsappHref(d.whatsapp),
       tone: "text-[#25d366]",
       external: true,
     },
     {
       icon: "mail",
       title: channels.email,
-      href: mailHref(siteConfig.email),
+      href: mailHref(d.email),
       tone: "text-brand",
     },
   ];

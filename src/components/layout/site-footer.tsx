@@ -5,10 +5,10 @@ import { AppContainer } from "@/components/common/app-container";
 import { Logo } from "@/components/layout/logo";
 import { Text } from "@/components/common/text";
 import { projects } from "@/data/projects";
-import { footerNav, siteConfig, socialLinks } from "@/data/site";
+import { footerNav, siteConfig } from "@/data/site";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
-import { mailHref, telHref } from "@/lib/contact";
+import { mailHref, socialProfiles, telHref } from "@/lib/contact";
 
 /**
  * Footer.
@@ -30,6 +30,11 @@ import { mailHref, telHref } from "@/lib/contact";
 export async function SiteFooter() {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
   const labels: Record<string, string> = { ...dict.nav, ...dict.footer };
+  // Same source as the contact page: one edit in the panel moves the
+  // number in both places, which is the only way a phone number on two
+  // pages stays the same phone number.
+  const d = dict.contact.details;
+  const socials = socialProfiles(dict.contact.social);
 
   return (
     <footer className="bg-footer text-footer-foreground">
@@ -50,27 +55,27 @@ export async function SiteFooter() {
 
             <div className="flex flex-col gap-2 pt-1">
               <a
-                href={telHref(siteConfig.phone)}
+                href={telHref(d.phone)}
                 className="flex w-fit items-center gap-2 whitespace-nowrap text-sm text-footer-foreground/85 transition-colors hover:text-brand-green-light"
               >
                 <Icon name="phone" size="xs" className="text-footer-foreground/60" />
-                {siteConfig.phone}
+                {d.phone}
               </a>
               <a
-                href={mailHref(siteConfig.email)}
+                href={mailHref(d.email)}
                 className="flex w-fit items-center gap-2 text-sm text-footer-foreground/85 transition-colors hover:text-brand-green-light"
               >
                 <Icon name="mail" size="xs" className="text-footer-foreground/60" />
-                {siteConfig.email}
+                {d.email}
               </a>
               <span className="flex items-start gap-2 text-sm text-footer-foreground/75">
                 <Icon name="location" size="xs" className="mt-1 shrink-0 text-footer-foreground/60" />
-                {siteConfig.address}
+                {d.dhakaAddress}
               </span>
             </div>
 
             <div className="flex flex-wrap gap-2 pt-2">
-              {socialLinks.map((social) => (
+              {socials.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}

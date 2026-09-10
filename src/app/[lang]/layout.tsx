@@ -12,6 +12,7 @@ import { siteConfig } from "@/data/site";
 import { LOCALES, LOCALE_TAGS } from "@/i18n/config";
 import { localeAlternates } from "@/i18n/alternates";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
+import { socialProfiles } from "@/lib/contact";
 import { organizationSchema, websiteSchema } from "@/lib/seo";
 
 import "../globals.css";
@@ -86,11 +87,15 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
       </head>
       <body className="flex min-h-dvh flex-col bg-background text-foreground">
         {/* Site-wide entities. Page-level schemas reference these by @id. */}
-        <JsonLd schema={organizationSchema()} />
+        <JsonLd schema={organizationSchema(socialProfiles(dict.contact.social))} />
         <JsonLd schema={websiteSchema()} />
         <Providers>
           <ScrollProgress />
-          <SiteHeader locale={locale} dict={dict.nav} />
+          <SiteHeader
+            locale={locale}
+            dict={dict.nav}
+            phone={dict.contact.details.phone}
+          />
           <main id="top" className="flex-1">
             {children}
           </main>

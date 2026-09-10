@@ -25,7 +25,6 @@ import { LOCALES, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
 import { telHref } from "@/lib/contact";
-import { siteConfig } from "@/data/site";
 import { formatArea, formatBdt, formatKatha, formatRent } from "@/lib/format";
 import { absoluteUrl, breadcrumbSchema, propertySchema } from "@/lib/seo";
 
@@ -208,7 +207,7 @@ export default async function PropertyDetailPage({
             }}
             action={
               <Button asChild size="lg" className="shrink-0">
-                <a href={telHref(siteConfig.phone)}>
+                <a href={telHref(dict.contact.details.phone)}>
                   <Icon name="phone" size="xs" />
                   {t.call}
                 </a>
@@ -293,6 +292,8 @@ export default async function PropertyDetailPage({
                   respondsIn: t.respondsIn,
                   deals: t.deals,
                 }}
+                phone={dict.contact.details.phone}
+                whatsapp={dict.contact.details.whatsapp}
               />
             </aside>
           ) : null}

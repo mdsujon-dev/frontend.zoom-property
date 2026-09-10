@@ -37,9 +37,18 @@ type NavDict = Record<string, string>;
  * on a dark photograph.
  *
  * Strings arrive as a prop because this is a Client Component and cannot call
- * `getDictionary()` itself.
+ * `getDictionary()` itself. The desk number comes down the same way, so the
+ * call button here shows whatever the CMS holds rather than a second copy.
  */
-export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) {
+export function SiteHeader({
+  locale,
+  dict,
+  phone,
+}: {
+  locale: Locale;
+  dict: NavDict;
+  phone: string;
+}) {
   const [open, setOpen] = useState(false);
   const { direction, scrolledPast } = useScrollDirection();
   const prefersReducedMotion = useReducedMotion();
@@ -130,11 +139,11 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) 
         <div className="flex items-center gap-1">
           {/* whitespace-nowrap keeps the number on one line at every width. */}
           <a
-            href={telHref(siteConfig.phone)}
+            href={telHref(phone)}
             className="hidden items-center gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted xl:flex"
           >
             <Icon name="phone" size="xs" />
-            {siteConfig.phone}
+            {phone}
           </a>
 
           <LanguageSwitcher
@@ -192,11 +201,11 @@ export function SiteHeader({ locale, dict }: { locale: Locale; dict: NavDict }) 
 
               <div className="flex flex-col gap-3 border-t border-border pt-4">
                 <a
-                  href={telHref(siteConfig.phone)}
+                  href={telHref(phone)}
                   className="flex items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-border py-2.5 text-sm font-medium text-foreground"
                 >
                   <Icon name="phone" size="xs" />
-                  {siteConfig.phone}
+                  {phone}
                 </a>
                 <Button size="lg" className="w-full" style={{ height: "42px" }} asChild>
                   <Link href={localeHref(locale, "/contact")} onClick={() => setOpen(false)}>

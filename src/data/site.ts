@@ -8,9 +8,10 @@ export const siteConfig = {
   description:
     "Bangladesh's definitive high-end property platform. Every residence RAJUK-cleared, construction milestones tracked live, zero hidden markups.",
   url: siteUrl,
-  phone: "+880 1958 253301",
-  email: "concierge@zoomproperty.com",
-  address: "House 42, Road 11, Block D, Banani & Gulshan Avenue, Dhaka",
+  // The phone, the email and the office addresses are not here any more. They
+  // are edited in the CMS and read from `dict.contact.details`, so the number
+  // in the header, the footer, the dock and the contact page is always the one
+  // number — a second copy in code is how those four fall out of step.
 } as const;
 
 /**
@@ -50,14 +51,11 @@ export const footerNav = [
   },
 ] as const;
 
-export const socialLinks: { label: string; href: string; icon: IconName }[] = [
-  { label: "Facebook", href: "https://facebook.com", icon: "facebook" },
-  { label: "Instagram", href: "https://instagram.com", icon: "instagram" },
-  { label: "X", href: "https://x.com", icon: "x" },
-  { label: "LinkedIn", href: "https://linkedin.com", icon: "linkedin" },
-  { label: "YouTube", href: "https://youtube.com", icon: "youtube" },
-  { label: "WhatsApp", href: "https://wa.me/8801958253301", icon: "whatsapp" },
-];
+/**
+ * The social profiles live in the CMS as well — `dict.contact.social`, one URL
+ * per network. `socialProfiles()` in `lib/contact` turns them into the list the
+ * footer and the contact page render, and drops any address left blank.
+ */
 
 /**
  * Stat values. The labels live in `dict.content.stats` in the same order —

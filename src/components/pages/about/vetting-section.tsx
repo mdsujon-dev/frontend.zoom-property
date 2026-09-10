@@ -1,6 +1,7 @@
 import { Icon } from "@/components/common/icon";
 import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
+import { ImageFrame } from "@/components/media/image-frame";
 import { Reveal } from "@/components/motion/reveal";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -16,11 +17,18 @@ export async function VettingSection() {
             title={vetting.title}
             className="lg:flex-col lg:items-start"
           />
-          <Reveal delay={0.2} className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border mt-auto hidden lg:block">
-            <img 
-              src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80" 
-              alt="Vetting Process" 
-              className="absolute inset-0 h-full w-full object-cover"
+          {/* Decorative, so no alt text: the photograph illustrates the
+              checks beside it and says nothing a reader would otherwise miss.
+              Hidden on narrow screens, where the list is the whole point and
+              a picture above it only pushes the checks off the fold. */}
+          <Reveal delay={0.2} className="mt-auto hidden lg:block">
+            <ImageFrame
+              src={vetting.image}
+              alt=""
+              ratio="4/3"
+              rounded="2xl"
+              sizes="half"
+              className="border border-border"
             />
           </Reveal>
         </div>

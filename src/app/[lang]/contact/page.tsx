@@ -9,10 +9,14 @@ import { pageBanners } from "@/data/page-banners";
 import { Reveal } from "@/components/motion/reveal";
 import { ContactForm } from "@/components/pages/contact/contact-form";
 import { areas } from "@/data/areas";
-import { siteConfig, socialLinks } from "@/data/site";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeAlternates } from "@/i18n/alternates";
-import { mailHref, telHref, whatsappHref } from "@/lib/contact";
+import {
+  mailHref,
+  socialProfiles,
+  telHref,
+  whatsappHref,
+} from "@/lib/contact";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
@@ -26,6 +30,11 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ContactPage() {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
   const c = dict.contact.channels;
+  // The numbers, the addresses and the profile links all come from the
+  // panel — the labels beside them always did. Nothing on this column is
+  // typed into the code any more.
+  const d = dict.contact.details;
+  const socials = socialProfiles(dict.contact.social);
 
   // The enquiry form asks which area, and the answer has to be one of the areas
   // we actually cover — so the options are the same list the areas section and
@@ -45,22 +54,22 @@ export default async function ContactPage() {
     {
       icon: "phone",
       label: c.call,
-      value: siteConfig.phone,
-      href: telHref(siteConfig.phone),
+      value: d.phone,
+      href: telHref(d.phone),
       note: c.callNote,
     },
     {
       icon: "whatsapp",
       label: c.whatsapp,
-      value: siteConfig.phone,
-      href: whatsappHref(siteConfig.phone),
+      value: d.whatsapp,
+      href: whatsappHref(d.whatsapp),
       note: c.whatsappNote,
     },
     {
       icon: "mail",
       label: c.email,
-      value: siteConfig.email,
-      href: mailHref(siteConfig.email),
+      value: d.email,
+      href: mailHref(d.email),
       note: c.emailNote,
     },
   ];
@@ -109,18 +118,18 @@ export default async function ContactPage() {
                 <div className="flex flex-col gap-3 text-sm text-muted-foreground">
                   <div className="flex flex-col">
                     <span className="font-medium text-foreground">{dict.contact.dhaka}</span>
-                    <span>{siteConfig.address}</span>
+                    <span>{d.dhakaAddress}</span>
                   </div>
                   <div className="flex flex-col">
                     <span className="font-medium text-foreground">
                       {dict.contact.chattogram}
                     </span>
-                    <span>CDA Avenue, GEC Circle &amp; Khulshi</span>
+                    <span>{d.chattogramAddress}</span>
                   </div>
                 </div>
 
                 <div className="flex flex-wrap gap-2 pt-1">
-                  {socialLinks.map((social) => (
+                  {socials.map((social) => (
                     <a
                       key={social.label}
                       href={social.href}

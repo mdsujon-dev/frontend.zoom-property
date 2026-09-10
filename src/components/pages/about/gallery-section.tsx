@@ -1,3 +1,4 @@
+import { OrnamentDivider } from "@/components/common/ornament-divider";
 import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Gallery } from "@/components/media/gallery";
@@ -18,10 +19,13 @@ export async function GallerySection() {
   return (
     <Section id="gallery" className="border-t border-border bg-background">
       <SectionHeading
+        eyebrow={dict.gallery.eyebrow}
         title={dict.gallery.title}
+        description={dict.gallery.description}
         align="center"
       />
-      <div className="mt-12">
+      <OrnamentDivider className="mt-7" />
+      <div className="mt-10">
         <Gallery images={images} columns={3} ratio="4/3" />
       </div>
     </Section>

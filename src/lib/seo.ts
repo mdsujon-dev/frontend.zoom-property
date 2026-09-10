@@ -1,6 +1,7 @@
 import type { Project } from "@/data/projects";
 import { properties, type Property } from "@/data/properties";
-import { siteConfig, socialLinks } from "@/data/site";
+import { siteConfig } from "@/data/site";
+import type { SocialProfile } from "@/lib/contact";
 import { getDictionary } from "@/i18n/dictionaries";
 
 /**
@@ -16,7 +17,11 @@ export function absoluteUrl(path = "/") {
   return new URL(path, siteConfig.url).toString();
 }
 
-export function organizationSchema() {
+/**
+ * `sameAs` is passed in rather than imported: the profile addresses live in the
+ * CMS now, and this file has no dictionary to read.
+ */
+export function organizationSchema(profiles: SocialProfile[] = []) {
   return {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
@@ -25,7 +30,7 @@ export function organizationSchema() {
     description: siteConfig.description,
     url: absoluteUrl(),
     image: absoluteUrl("/opengraph-image"),
-    sameAs: socialLinks
+    sameAs: profiles
       // wa.me is a contact channel, not a profile page — sameAs is for profiles.
       .filter((link) => !link.href.startsWith("https://wa.me/"))
       .map((link) => link.href),

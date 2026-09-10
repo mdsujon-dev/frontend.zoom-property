@@ -29,10 +29,17 @@ const posts = createResource<ApiPost, Insight>({
 /** Published posts, newest first, for the blog index and the home strip. */
 export const getInsights = (limit = 24) => posts.list({ limit });
 
-/** The few the home page shows. */
+/**
+ * The few the home page shows.
+ *
+ * The ones the desk ticked "on home page", newest first. Nothing ticked and it
+ * falls back to the newest published — a home page with an empty blog strip is
+ * worse than one showing whatever was written last.
+ */
 export async function getHomeInsights(limit = 3): Promise<Insight[]> {
-  const all = await getInsights(limit);
-  return all.slice(0, limit);
+  const picked = await posts.query({ isHome: true, limit });
+  if (picked?.length) return picked;
+  return posts.list({ limit });
 }
 
 /** Posts in one category, for `/blog/category/[category]`. */

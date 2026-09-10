@@ -277,6 +277,21 @@
       "email": "ইমেইল",
       "emailNote": "এক কর্মঘণ্টার মধ্যে উত্তর"
     },
+    "details": {
+      "phone": "+880 1958 253301",
+      "whatsapp": "+880 1958 253301",
+      "email": "concierge@zoomproperty.com",
+      "dhakaAddress": "হাউস ৪২, রোড ১১, ব্লক ডি, বনানী ও গুলশান অ্যাভিনিউ, ঢাকা",
+      "chattogramAddress": "সিডিএ অ্যাভিনিউ, জিইসি মোড় ও খুলশী"
+    },
+    "social": {
+      "facebook": "https://facebook.com",
+      "instagram": "https://instagram.com",
+      "x": "https://x.com",
+      "linkedin": "https://linkedin.com",
+      "youtube": "https://youtube.com",
+      "whatsapp": "https://wa.me/8801958253301"
+    },
     "offices": "অফিস",
     "dhaka": "ঢাকা",
     "chattogram": "চট্টগ্রাম",
@@ -552,9 +567,8 @@
       ]
     },
     "vetting": {
-      "eyebrow": "আমাদের মান",
       "title": "একটি লিস্টিংকে যা যা পেরোতে হয়",
-      "description": "সাতটি যাচাই। একটিও না মিললে লিস্টিং অনলাইনে যায় না — এ কারণেই বড় পোর্টালের চেয়ে এখানে ফলাফল কম পাবেন।",
+      "image": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80",
       "checks": [
         "রাজউক অনুমোদিত নকশা, বাস্তবে যা নির্মিত তার সঙ্গে মিলিয়ে দেখা",
         "সিএস, এসএ, আরএস ও বিএস রেকর্ড ধরে দলিলের ধারাবাহিকতা",

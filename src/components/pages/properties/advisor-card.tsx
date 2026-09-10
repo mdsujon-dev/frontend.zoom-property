@@ -3,7 +3,6 @@ import { Text } from "@/components/common/text";
 import { ImageFrame } from "@/components/media/image-frame";
 import { Button } from "@/components/ui/button";
 import type { Agent } from "@/data/people";
-import { siteConfig } from "@/data/site";
 import { telHref, whatsappHref } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
@@ -31,10 +30,15 @@ export interface AdvisorCardDict {
 export function AdvisorCard({
   agent,
   dict,
+  phone,
+  whatsapp,
   className,
 }: {
   agent: Agent;
   dict: AdvisorCardDict;
+  /** The desk number, from the CMS — not the advisor's own line. */
+  phone: string;
+  whatsapp: string;
   className?: string;
 }) {
   return (
@@ -79,7 +83,7 @@ export function AdvisorCard({
 
       <div className="flex flex-col gap-2">
         <Button asChild size="lg" className="w-full">
-          <a href={telHref(siteConfig.phone)}>
+          <a href={telHref(phone)}>
             <Icon name="phone" size="xs" />
             {dict.call}
           </a>
@@ -87,7 +91,7 @@ export function AdvisorCard({
 
         <Button asChild size="lg" variant="outline" className="w-full">
           <a
-            href={whatsappHref(siteConfig.phone)}
+            href={whatsappHref(whatsapp)}
             target="_blank"
             rel="noreferrer"
           >

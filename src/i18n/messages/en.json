@@ -216,11 +216,24 @@
     "description": "Guaranteed owner share, bank-secured signing advance, BNBC 2020 seismic compliance and a delivery pledge in the contract."
   },
   "about": {
+    "backgroundImage": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=2000&q=80",
     "eyebrow": "Who we are",
     "title": "Fewer listings, checked properly",
     "description": "We publish less than the big portals because a listing does not go live until someone from our team has stood in it and read the paperwork.",
     "metaTitle": "About us",
-    "metaDescription": "How Zoom Property vets a listing: physical inspection, RAJUK approval, title deed and mutation checked before anything goes online."
+    "metaDescription": "How Zoom Property vets a listing: physical inspection, RAJUK approval, title deed and mutation checked before anything goes online.",
+    "story": {
+      "eyebrow": "Who we are",
+      "title": "We started because buying here was a leap of faith",
+      "lead": "Zoom Property was built by people who had bought property in Dhaka themselves, and knew how little of it could be checked before the money moved.",
+      "bodyOne": "Every listing on this site has been walked by a member of our survey team, photographed the month it went live, and had its RAJUK plan and title deed read line by line before it was published. Nothing is listed on a developer's word.",
+      "bodyTwo": "That is slower than the way this market usually works. It is also the only version of the job we were willing to do — a buyer should be told what is wrong with a property by us, not by their lawyer three months later.",
+      "imageOne": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+      "imageTwo": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=80",
+      "badge": "Every paper read before it is listed"
+    },
+    "figuresTitle": "The numbers behind the promise",
+    "figuresLead": "Counted from our own records, not the market's."
   },
   "contact": {
     "backgroundImage": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=2000&q=80",
@@ -583,6 +596,28 @@
     "metaDescription": "Joint-venture development for landowners in Dhaka and Chattogram. Fixed owner share, bank-secured signing advance, BNBC 2020 seismic compliance and a contractual delivery date.",
     "benefitsTitle": "What the agreement gives you",
     "benefitsLead": "The four terms landowners ask about first, answered before you send us the deed.",
+    "benefitsList": [
+      {
+        "icon": "check",
+        "title": "Highest Market Ratio",
+        "body": "Up to 50% - 55% landowner share with upfront signing security deposit guaranteed via bank escrow."
+      },
+      {
+        "icon": "approved",
+        "title": "BNBC 2020 Seismic Code",
+        "body": "Built to withstand Zone 2/3 earthquakes with pile-depth ultrasonic testing and BUET-vetted structural design."
+      },
+      {
+        "icon": "clock",
+        "title": "Strict Handover Guarantee",
+        "body": "36-month construction pledge with penalty compensation per day of any unexpected developer delay."
+      },
+      {
+        "icon": "building",
+        "title": "RAJUK Approval By Us",
+        "body": "Full regulatory clearance handling — Special Project clearance, Fire safety, and WASA/DESCO approvals."
+      }
+    ],
     "builtTitle": "Built with landowners",
     "builtLead": "Completed joint ventures, with the share the owner actually received.",
     "columns": {

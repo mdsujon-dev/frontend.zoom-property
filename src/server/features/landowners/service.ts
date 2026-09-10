@@ -1,18 +1,24 @@
 import "server-only";
 
-import { landmarkJVProjects as fallback, type LandmarkJVProject } from "@/data/landowner";
-
 import { CACHE_TAGS, createResource } from "../../base-api";
-import { toJVProject } from "./mapper";
-import type { ApiLandownerProject } from "./types";
+import { toBlock } from "./mapper";
+import type { ApiLandownerBlock, LandownerBlock } from "./types";
 
-const projects = createResource<ApiLandownerProject, LandmarkJVProject>({
+/**
+ * The blocks on the landowners page.
+ *
+ * No built-in fallback: unlike a listing or an area, there is no demo version
+ * of this copy worth showing. When nothing is published the section takes
+ * itself off the page, which is why `getLandownerBlocks` can return empty.
+ */
+const blocks = createResource<ApiLandownerBlock, LandownerBlock>({
   path: "landowner-projects/public",
   tag: CACHE_TAGS.landowners,
-  map: toJVProject,
-  fallback,
+  map: toBlock,
+  fallback: [],
   sort: "order",
 });
 
-/** The completed joint ventures shown on the landowners page. */
-export const getLandownerProjects = (limit = 12) => projects.list({ limit });
+export async function getLandownerBlocks(limit = 12): Promise<LandownerBlock[]> {
+  return (await blocks.query({ limit })) ?? [];
+}

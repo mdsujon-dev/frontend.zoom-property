@@ -52,7 +52,7 @@ export {
   getVideoReviews,
 } from "./features/reviews";
 export { getHomeVideos, getVideos } from "./features/videos";
-export { getLandownerProjects } from "./features/landowners";
+export { getLandownerBlocks } from "./features/landowners";
 
 export {
   ALL_CACHE_TAGS,

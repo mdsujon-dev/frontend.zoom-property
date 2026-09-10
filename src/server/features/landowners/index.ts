@@ -1,3 +1,3 @@
-export { getLandownerProjects } from "./service";
-export { toJVProject } from "./mapper";
-export type { ApiLandownerProject } from "./types";
+export { getLandownerBlocks } from "./service";
+export { toBlock } from "./mapper";
+export type { ApiLandownerBlock, LandownerBlock } from "./types";

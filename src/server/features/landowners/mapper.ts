@@ -1,17 +1,20 @@
 import "server-only";
 
-import type { LandmarkJVProject } from "@/data/landowner";
-
 import { mediaUrl } from "../../base-api";
-import type { ApiLandownerProject } from "./types";
+import type { ApiLandownerBlock, LandownerBlock } from "./types";
 
-/** An API case study to the shape the landowners table consumes. */
-export const toJVProject = (p: ApiLandownerProject): LandmarkJVProject => ({
-  name: p.name,
-  location: p.location || "",
-  landSizeKatha: p.landSizeKatha ?? 0,
-  floors: p.floors ?? 0,
-  ownerSharePercent: p.ownerSharePercent ?? 0,
-  completedYear: p.completedYear ?? 0,
-  image: mediaUrl(p.image),
+/**
+ * An API block to the shape the landowners page renders.
+ *
+ * Each Bangla field falls back to its English one rather than to an empty
+ * string: a block with a blank heading in one language is worse than the same
+ * block in both.
+ */
+export const toBlock = (b: ApiLandownerBlock): LandownerBlock => ({
+  id: b._id,
+  title: b.title,
+  titleBn: b.titleBn || b.title,
+  description: b.description || "",
+  descriptionBn: b.descriptionBn || b.description || "",
+  image: mediaUrl(b.image),
 });

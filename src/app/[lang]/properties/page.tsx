@@ -3,11 +3,12 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/page-header";
 import { pageBanners } from "@/data/page-banners";
 import { ListingsSection } from "@/components/pages/properties/listings-section";
-import { BuyingStepsSection } from "@/components/pages/properties/buying-steps-section";
-import { properties, type Purpose } from "@/data/properties";
+import type { Purpose } from "@/data/properties";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
 import { localeAlternates } from "@/i18n/alternates";
+import { getProperties } from "@/server/features/properties";
+import { getAreas } from "@/server/features/areas";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
@@ -31,8 +32,7 @@ function toNumber(value?: string) {
  * The home page's property calculator arrives here with its filters in the
  * query string — `?purpose=sale&area=gulshan&type=apartment&min=…&max=…` — so a
  * search is a URL that can be shared and reopened rather than state that only
- * exists in the tab it was typed in. Reading it makes this route render per
- * request; without a query it is the same page it always was.
+ * exists in the tab it was typed in.
  */
 export default async function PropertiesPage({
   searchParams,
@@ -46,10 +46,12 @@ export default async function PropertiesPage({
     max?: string;
   }>;
 }) {
-  const [dict, locale, query] = await Promise.all([
+  const [dict, locale, query, allProperties, allAreas] = await Promise.all([
     getDictionary(),
     getLocale(),
     searchParams,
+    getProperties(100),
+    getAreas(60),
   ]);
 
   const filters = {
@@ -66,23 +68,25 @@ export default async function PropertiesPage({
 
   return (
     <>
+      {/* 1. Fast / Top Header Section */}
       <PageHeader
         eyebrow={dict.listings.eyebrow}
         title={dict.listings.pageTitle}
         description={dict.listings.pageDescription.replace(
           "{count}",
-          String(properties.length),
+          String(allProperties.length),
         )}
-        image={pageBanners.properties}
+        image={dict.listings.backgroundImage || pageBanners.properties}
       />
 
+      {/* 2. Middle Properties Section with Dynamic Area Filters & Cards */}
       <ListingsSection
         variant="full"
         filters={filters}
+        properties={allProperties}
+        areas={allAreas}
         clearHref={localeHref(locale, "/properties")}
       />
-
-      <BuyingStepsSection />
     </>
   );
 }

@@ -2,7 +2,8 @@ import { AppContainer } from "@/components/common/app-container";
 import { OrnamentDivider } from "@/components/common/ornament-divider";
 import { SectionHeading } from "@/components/common/section-heading";
 import { VideoCarousel } from "@/components/pages/home/video-carousel";
-import { homeVideos, videoSectionBackdrop } from "@/data/videos";
+import { videoSectionBackdrop } from "@/data/videos";
+import { getHomeVideos } from "@/server/features/videos";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 
 /**
@@ -43,7 +44,7 @@ export async function VideoSection() {
         <OrnamentDivider tone="inverse" className="mt-7" />
 
         <div className="mt-12">
-          <VideoCarousel videos={homeVideos} locale={locale} dict={t} />
+          <VideoCarousel videos={await getHomeVideos()} locale={locale} dict={t} />
         </div>
       </AppContainer>
     </section>

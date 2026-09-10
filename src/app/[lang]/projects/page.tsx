@@ -25,10 +25,10 @@ export default async function ProjectsPage() {
         eyebrow={dict.projects.eyebrow}
         title={dict.projects.pageTitle}
         description={dict.projects.pageDescription}
-        image={pageBanners.projects}
+        image={dict.projects.backgroundImage || pageBanners.projects}
       />
 
-      <ProjectsSection />
+      <ProjectsSection variant="full" />
 
       <ConstructionStagesSection />
     </>

@@ -51,6 +51,7 @@ export {
   getReviews,
   getVideoReviews,
 } from "./features/reviews";
+export { getHomeVideos, getVideos } from "./features/videos";
 
 export {
   ALL_CACHE_TAGS,

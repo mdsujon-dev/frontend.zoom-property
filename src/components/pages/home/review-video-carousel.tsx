@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useReducedMotion } from "motion/react";
 
 import {
@@ -55,22 +55,29 @@ export function ReviewVideoCarousel({
   const [engaged, setEngaged] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
-  const onSelect = useCallback(() => {
-    if (!api) return;
-    setCurrent(api.selectedScrollSnap());
-  }, [api]);
-
   useEffect(() => {
     if (!api) return;
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap());
+    const onSelect = () => {
+      setCurrent(api.selectedScrollSnap());
+    };
+    const onReInit = () => {
+      setCount(api.scrollSnapList().length);
+      setCurrent(api.selectedScrollSnap());
+    };
+
+    queueMicrotask(() => {
+      setCount(api.scrollSnapList().length);
+      setCurrent(api.selectedScrollSnap());
+    });
+
     api.on("select", onSelect);
-    api.on("reInit", onSelect);
+    api.on("reInit", onReInit);
 
     return () => {
       api.off("select", onSelect);
+      api.off("reInit", onReInit);
     };
-  }, [api, onSelect]);
+  }, [api]);
 
   useEffect(() => {
     if (!api || paused || engaged || prefersReducedMotion) return;

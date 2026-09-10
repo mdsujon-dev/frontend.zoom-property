@@ -49,8 +49,26 @@ export function ProjectCard({
           sizes="third"
         >
           <div className="absolute left-3 top-3 flex flex-wrap gap-1.5 z-10">
-            <Badge className="bg-primary text-primary-foreground font-semibold px-2.5 py-1 text-xs shadow-md border-0 gap-1.5">
-              <Icon name="construction" size="xs" />
+            <Badge
+              className={cn(
+                "font-semibold px-2.5 py-1 text-xs shadow-md border-0 gap-1.5",
+                project.status?.toLowerCase() === "completed" || project.status?.toLowerCase() === "done"
+                  ? "bg-emerald-600 text-white"
+                  : project.status?.toLowerCase() === "processing" || project.status?.toLowerCase() === "under construction"
+                  ? "bg-amber-600 text-white"
+                  : "bg-indigo-600 text-white",
+              )}
+            >
+              <Icon
+                name={
+                  project.status?.toLowerCase() === "completed" || project.status?.toLowerCase() === "done"
+                    ? "check"
+                    : project.status?.toLowerCase() === "processing"
+                    ? "construction"
+                    : "building"
+                }
+                size="xs"
+              />
               {project.status}
             </Badge>
 

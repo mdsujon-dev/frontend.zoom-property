@@ -74,6 +74,7 @@
     "priceOnRequest": "Price on request"
   },
   "listings": {
+    "backgroundImage": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=2000&q=80",
     "eyebrow": "Curated portfolio",
     "title": "Verified residences and commercial floors",
     "description": "Every listing has been physically inspected by our survey team this month, with title deeds verified before it went online.",
@@ -147,6 +148,7 @@
     "videoLead": "Filmed on the same site visit as the inspection above. No commentary over a render — the camera walks the floors that exist today."
   },
   "projects": {
+    "backgroundImage": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=2000&q=80",
     "eyebrow": "Under construction",
     "title": "Milestone progress you can audit",
     "description": "You pay in instalments for years before you get keys, so every project shows its audited structural stage and RAJUK permit — not a marketing render.",

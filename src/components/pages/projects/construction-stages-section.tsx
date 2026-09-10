@@ -8,17 +8,22 @@ import { getDictionary } from "@/i18n/dictionaries";
 export async function ConstructionStagesSection() {
   const dict = await getDictionary();
   const { construction } = dict.pages;
+  const stages = (construction?.stages || []).filter(
+    (s): s is { title: string; body: string } => Boolean(s && (s.title || s.body)),
+  );
 
   return (
     <Section className="border-t border-border bg-muted/30">
       <SectionHeading
+        eyebrow={construction.eyebrow}
         title={construction.title}
+        description={construction.description}
       />
 
       <Stagger className="mt-12 flex flex-col gap-0">
-        {construction.stages.map((stage, index) => (
+        {stages.map((stage, index) => (
           <StaggerItem
-            key={stage.title}
+            key={`${stage.title}-${index}`}
             className="grid gap-2 border-l-2 border-border py-5 pl-6 sm:grid-cols-[200px_1fr] sm:gap-6"
           >
             <div className="relative flex items-center gap-3">

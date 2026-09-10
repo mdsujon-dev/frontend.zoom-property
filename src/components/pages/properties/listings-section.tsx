@@ -6,36 +6,51 @@ import { SectionHeading } from "@/components/common/section-heading";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { InteractiveListings, type ListingFilters } from "./interactive-listings";
 import { PropertyCard } from "./property-card";
-import { getHomeProperties } from "@/server/features/properties";
+import { getHomeProperties, getProperties } from "@/server/features/properties";
+import { getAreas } from "@/server/features/areas";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
+import type { Property } from "@/data/properties";
+import type { Area } from "@/data/areas";
 
 export async function ListingsSection({
   variant = "preview",
   limit = 6,
   filters,
   clearHref,
+  properties: initialProperties,
+  areas: initialAreas,
 }: {
   variant?: "preview" | "full";
   limit?: number;
   /** From the query string, when the visitor arrived via the calculator. */
   filters?: ListingFilters;
   clearHref?: string;
+  properties?: Property[];
+  areas?: Area[];
 }) {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
 
-
   if (variant === "full") {
+    const [propList, areaList] = await Promise.all([
+      initialProperties ? Promise.resolve(initialProperties) : getProperties(100),
+      initialAreas ? Promise.resolve(initialAreas) : getAreas(60),
+    ]);
+
     return (
       <Section id="listings" className="bg-background">
         <InteractiveListings
           locale={locale}
           filters={filters}
           clearHref={clearHref}
+          properties={propList}
+          areas={areaList}
         />
       </Section>
     );
   }
+
+  const propList = initialProperties ?? (await getHomeProperties(limit));
 
   return (
     <Section id="listings" className="bg-background">
@@ -59,7 +74,7 @@ export async function ListingsSection({
       />
 
       <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {(await getHomeProperties(limit)).map((property) => (
+        {propList.map((property) => (
           <StaggerItem key={property.id}>
             <PropertyCard property={property} locale={locale} />
           </StaggerItem>

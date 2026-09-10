@@ -50,14 +50,17 @@ const GROUPS = [
  * branch onto the object the components destructure.
  */
 const setPath = (target: Record<string, unknown>, path: string[], value: string) => {
-  let node: Record<string, unknown> = target;
-  for (const segment of path.slice(0, -1)) {
-    const next = node[segment];
-    if (typeof next !== "object" || next === null || Array.isArray(next)) return;
-    node = next as Record<string, unknown>;
+  let node = target as Record<string, unknown>;
+  for (let i = 0; i < path.length - 1; i++) {
+    const segment = path[i];
+    const nextSegment = path[i + 1];
+    if (node[segment] === undefined || node[segment] === null) {
+      const isNextNumeric = /^\d+$/.test(nextSegment);
+      node[segment] = isNextNumeric ? [] : {};
+    }
+    node = node[segment] as Record<string, unknown>;
   }
   const last = path[path.length - 1];
-  if (typeof node[last] !== "string") return;
   node[last] = value;
 };
 

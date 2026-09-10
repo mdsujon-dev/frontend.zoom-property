@@ -18,6 +18,7 @@ export const CACHE_TAGS = {
   properties: "zp:properties",
   reviews: "zp:reviews",
   insights: "zp:insights",
+  videos: "zp:videos",
   cms: "zp:cms",
 } as const;
 

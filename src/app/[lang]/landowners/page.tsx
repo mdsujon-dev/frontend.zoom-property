@@ -22,9 +22,17 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function LandownersPage() {
-  const dict = await getDictionary();
+export default async function LandownersPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const [dict, query] = await Promise.all([getDictionary(), searchParams]);
   const t = dict.landowners;
+
+  // `?page=abc` is a URL somebody edited; treat it as the first page rather
+  // than passing NaN down.
+  const page = Number.parseInt(query.page ?? "1", 10);
 
   return (
     <>
@@ -36,7 +44,7 @@ export default async function LandownersPage() {
       />
 
       {/* Written in the panel. Removes itself when nothing is published. */}
-      <LandownerBlocks />
+      <LandownerBlocks page={Number.isNaN(page) ? 1 : page} />
 
       {/* The four contract terms, as cards. */}
       <Section className="border-t border-border bg-muted/30">

@@ -659,7 +659,11 @@
       "moreTitle": "Want to know more?",
       "moreBody": "Send us the plot address and the deed. Within two weeks you get a feasibility report — what can legally be built there, how many units, and the share we can offer, in writing. No obligation, and the papers stay yours.",
       "moreCta": "Talk to the land team"
-    }
+    },
+    "showing": "Showing {from}–{to} of {total}",
+    "prev": "Previous",
+    "next": "Next",
+    "page": "Page {page}"
   },
   "blog": {
     "backgroundImage": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2000&q=80",

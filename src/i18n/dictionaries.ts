@@ -1,6 +1,8 @@
 import { lang } from "next/root-params";
 import { notFound } from "next/navigation";
 
+import { applyCmsOverrides } from "@/server/cms";
+
 import { isLocale, type Locale } from "./config";
 import type enMessages from "./messages/en.json";
 
@@ -38,7 +40,10 @@ export async function getLocale(): Promise<Locale> {
 
 export async function getDictionary(): Promise<Dictionary> {
   const locale = await getLocale();
-  return dictionaries[locale]();
+  const dictionary = await dictionaries[locale]();
+  // Whatever the desk has edited in the panel wins over the JSON. Nothing
+  // edited, or no API to ask, and this hands back the dictionary unchanged.
+  return applyCmsOverrides(dictionary, locale);
 }
 
 /**
@@ -49,6 +54,7 @@ export async function getDictionary(): Promise<Dictionary> {
  * Boundaries that render *because* a route did not match resolve their own
  * locale (falling back to the default) and come through here instead.
  */
-export function getDictionaryFor(locale: Locale): Promise<Dictionary> {
-  return dictionaries[locale]();
+export async function getDictionaryFor(locale: Locale): Promise<Dictionary> {
+  const dictionary = await dictionaries[locale]();
+  return applyCmsOverrides(dictionary, locale);
 }

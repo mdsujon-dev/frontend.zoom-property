@@ -3,27 +3,29 @@ import { OrnamentDivider } from "@/components/common/ornament-divider";
 import { Section } from "@/components/common/section";
 import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
-import { areas } from "@/data/areas";
+import { getHomeAreas } from "@/server/catalogue";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { cn } from "@/lib/utils";
 
 import { AreaServiceCard } from "./area-service-card";
 
-/** How many the home page shows. `/areas` paginates the rest. */
+/** The ceiling on the home grid. `/areas` paginates the rest. */
 const HOME_COUNT = 10;
 
 /**
  * Service areas on the home page.
  *
- * Ten cards in a five-up grid, then a link through to the full list. The order
- * in `src/data/areas.ts` is the editorial order, so the strongest addresses
- * lead — no sorting here.
+ * Up to ten cards in a five-up grid, then a link through to the full list.
+ * Which areas appear is the desk's decision — the ones ticked "on home page"
+ * in the panel, in their `order` — so there is no sorting here.
  */
 export async function AreasSection({ className }: { className?: string } = {}) {
-  const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
+  const [dict, locale, shown] = await Promise.all([
+    getDictionary(),
+    getLocale(),
+    getHomeAreas(HOME_COUNT),
+  ]);
   const t = dict.areas.service;
-
-  const shown = areas.slice(0, HOME_COUNT);
 
   return (
     <Section

@@ -5,12 +5,16 @@ import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { ProjectCard } from "./project-card";
-import { projects } from "@/data/projects";
+import { getHomeProjects } from "@/server/catalogue";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
 
 export async function ProjectsSection() {
-  const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
+  const [dict, locale, projects] = await Promise.all([
+    getDictionary(),
+    getLocale(),
+    getHomeProjects(6),
+  ]);
 
   return (
     <Section id="projects" className="bg-background">

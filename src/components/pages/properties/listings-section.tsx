@@ -6,7 +6,7 @@ import { SectionHeading } from "@/components/common/section-heading";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { InteractiveListings, type ListingFilters } from "./interactive-listings";
 import { PropertyCard } from "./property-card";
-import { properties } from "@/data/properties";
+import { getHomeProperties } from "@/server/catalogue";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
 
@@ -23,6 +23,7 @@ export async function ListingsSection({
   clearHref?: string;
 }) {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
+
 
   if (variant === "full") {
     return (
@@ -56,7 +57,7 @@ export async function ListingsSection({
       />
 
       <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {properties.slice(0, limit).map((property) => (
+        {(await getHomeProperties(limit)).map((property) => (
           <StaggerItem key={property.id}>
             <PropertyCard property={property} locale={locale} />
           </StaggerItem>

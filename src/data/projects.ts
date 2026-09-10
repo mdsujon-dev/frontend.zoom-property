@@ -45,7 +45,8 @@ export interface Project {
     poster: string;
     duration: string;
   };
-  status: "Piling" | "Structure" | "Finishing" | "Handover ready";
+  /** Build stage, as the panel names it. */
+  status: "Planning" | "Processing" | "Completed";
   lastInspected: string;
   cctvStreamActive: boolean;
   rajukPermitNo: string;
@@ -88,7 +89,7 @@ export const projects: Project[] = [
       poster: photo("photo-1545324418-cc1a3fa10c00", 1200),
       duration: "04:18",
     },
-    status: "Finishing",
+    status: "Processing",
     lastInspected: "Sep 2026",
     cctvStreamActive: true,
     rajukPermitNo: "RAJUK/EM/2023/1842",
@@ -131,7 +132,7 @@ export const projects: Project[] = [
       poster: photo("photo-1600596542815-ffad4c1539a9", 1200),
       duration: "03:45",
     },
-    status: "Structure",
+    status: "Processing",
     lastInspected: "Aug 2026",
     cctvStreamActive: true,
     rajukPermitNo: "RAJUK/DP/2024/0912",
@@ -174,7 +175,7 @@ export const projects: Project[] = [
       poster: photo("photo-1517245386807-bb43f82c33c4", 1200),
       duration: "05:02",
     },
-    status: "Piling",
+    status: "Planning",
     lastInspected: "Sep 2026",
     cctvStreamActive: true,
     rajukPermitNo: "RAJUK/BS/2024/3104",

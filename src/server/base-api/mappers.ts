@@ -11,11 +11,28 @@ import type { ApiMedia } from "./types";
  * in each feature folder.
  */
 
-/** The address of a media document. Always `url`, never `key`. */
-export const mediaUrl = (m?: ApiMedia | null): string => m?.url ?? "";
+const R2_PUBLIC_FALLBACK = "https://pub-5b52277bf86041a0b4872bee7a979553.r2.dev";
+
+/** The address of a media document. Resolves url, key, or fallback R2 endpoint. */
+export const mediaUrl = (m?: any): string => {
+  if (!m) return "";
+  if (typeof m === "string") {
+    if (!m.trim()) return "";
+    if (/^(https?:)?\/\//i.test(m)) return m;
+    const r2Base = process.env.NEXT_PUBLIC_R2_PUBLIC_URL || R2_PUBLIC_FALLBACK;
+    return `${r2Base.replace(/\/+$/, "")}/${m.replace(/^\/+/, "")}`;
+  }
+  if (m.url && typeof m.url === "string" && m.url.trim()) return m.url;
+  if (m.key && typeof m.key === "string" && m.key.trim()) {
+    if (/^(https?:)?\/\//i.test(m.key)) return m.key;
+    const r2Base = process.env.NEXT_PUBLIC_R2_PUBLIC_URL || R2_PUBLIC_FALLBACK;
+    return `${r2Base.replace(/\/+$/, "")}/${m.key.replace(/^\/+/, "")}`;
+  }
+  return "";
+};
 
 /** The addresses of a list of media documents, blanks dropped. */
-export const mediaUrls = (list?: ApiMedia[] | null): string[] =>
+export const mediaUrls = (list?: any[] | null): string[] =>
   (list ?? []).map(mediaUrl).filter(Boolean);
 
 /**

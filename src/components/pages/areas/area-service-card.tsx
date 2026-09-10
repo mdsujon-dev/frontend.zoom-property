@@ -52,7 +52,6 @@ export function AreaServiceCard({
   const isBn = locale === "bn";
   const name = isBn && area.nameBn ? area.nameBn : area.name;
   const tagline = isBn && area.taglineBn ? area.taglineBn : area.tagline;
-  const tint = TINT;
 
   return (
     <Link
@@ -60,7 +59,7 @@ export function AreaServiceCard({
       className={cn(
         "group relative isolate flex h-full flex-col gap-4 overflow-hidden rounded-2xl border border-border bg-card p-4",
         "shadow-[0_10px_30px_-22px] shadow-foreground/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg",
-        tint.border,
+        TINT.border,
         className,
       )}
     >
@@ -70,14 +69,14 @@ export function AreaServiceCard({
         aria-hidden
         className={cn(
           "pointer-events-none absolute -top-14 -right-14 -z-10 size-36 rounded-full opacity-70 blur-2xl transition-opacity duration-300 group-hover:opacity-100",
-          tint.wash,
+          TINT.wash,
         )}
       />
 
       <div
         className={cn(
           "relative h-28 w-full overflow-hidden rounded-xl",
-          tint.panel,
+          TINT.panel,
         )}
       >
         <Image
@@ -96,13 +95,13 @@ export function AreaServiceCard({
           aria-hidden
           className={cn(
             "pointer-events-none absolute inset-0 mix-blend-multiply",
-            tint.panel,
+            TINT.panel,
           )}
         />
       </div>
 
       <div className="flex items-center gap-2">
-        <Icon name="location" size="sm" className={cn("shrink-0", tint.pin)} />
+        <Icon name="location" size="sm" className={cn("shrink-0", TINT.pin)} />
         <span className="truncate font-heading text-base font-bold text-foreground">
           {name}
         </span>
@@ -118,7 +117,7 @@ export function AreaServiceCard({
           aria-hidden
           className={cn(
             "flex size-9 shrink-0 items-center justify-center rounded-full transition-colors duration-300",
-            tint.chip,
+            TINT.chip,
           )}
         >
           <Icon

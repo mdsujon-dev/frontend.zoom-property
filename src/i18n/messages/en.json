@@ -63,8 +63,6 @@
     "listingsHere": "Listings here",
     "rajukYes": "RAJUK-approved plan and title deed verified by our survey team.",
     "rajukNo": "Title documents are still under review — ask us before making an offer.",
-    "handover": "Handover",
-    "furnishing": "Furnishing",
     "similar": "Similar properties",
     "gallery": "Photos",
     "fullscreen": "Fullscreen",
@@ -166,6 +164,7 @@
     "description": "The vetting that separates us from an unmoderated classifieds portal. None of it is clever — it is the work most portals skip because nobody checks."
   },
   "reviews": {
+    "backgroundImage": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2000&q=80",
     "eyebrow": "Client testimonials",
     "title": "Real stories from people who bought here",
     "description": "Every review names the property it came from, so you can check the claim against the listing.",
@@ -211,6 +210,7 @@
     "description": "Something specific about deed mutation or consular power of attorney? Call the desk — someone picks up."
   },
   "landowner": {
+    "backgroundImage": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=2000&q=80",
     "eyebrow": "Landowner joint ventures",
     "title": "Put your land into a development",
     "description": "Guaranteed owner share, bank-secured signing advance, BNBC 2020 seismic compliance and a delivery pledge in the contract."

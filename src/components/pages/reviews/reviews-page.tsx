@@ -32,7 +32,7 @@ export function ReviewsPage({
         eyebrow={t.eyebrow}
         title={t.pageTitle}
         description={t.pageDescription}
-        image={pageBanners.reviews}
+        image={t.backgroundImage || pageBanners.reviews}
       />
 
       <section className="border-b border-border bg-muted/30 py-10 sm:py-14">

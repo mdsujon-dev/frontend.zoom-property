@@ -26,7 +26,7 @@ export * from "./areas/area-card";
 
 // Landowners
 export * from "./landowners/landowner-story";
-export * from "./landowners/landowner-section";
+export * from "./landowners/landowner-case-studies";
 
 // Agents
 export * from "./agents/agents-section";

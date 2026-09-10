@@ -6,6 +6,7 @@ import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Text } from "@/components/common/text";
 import { PageHeader } from "@/components/layout/page-header";
+import { LandownerCaseStudies } from "@/components/pages/landowners/landowner-case-studies";
 import { LandownerStory } from "@/components/pages/landowners/landowner-story";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { landownerBenefits } from "@/data/landowner";
@@ -32,7 +33,7 @@ export default async function LandownersPage() {
         eyebrow={t.eyebrow}
         title={t.title}
         description={t.description}
-        image={pageBanners.landowners}
+        image={dict.landowner.backgroundImage || pageBanners.landowners}
       />
 
       <LandownerStory />
@@ -64,6 +65,8 @@ export default async function LandownersPage() {
       </Section>
 
       {/* How the process runs — a numbered rail, same language as /properties. */}
+      <LandownerCaseStudies />
+
       <Section className="border-t border-border bg-background">
         <SectionHeading eyebrow={t.eyebrow} title={t.stepsTitle} />
 

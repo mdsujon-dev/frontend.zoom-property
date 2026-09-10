@@ -34,7 +34,16 @@ export interface Insight {
   category: BlogCategory;
   readMinutes: number;
   date: string;
+  /** The card image on the index. */
   image: string;
+  /**
+   * The wide banner on the article page.
+   *
+   * Optional, and separate from `image`, because the two crops do different
+   * jobs: a banner is wide with a headline over it, a card is close and has to
+   * read small. Absent, the article page uses `image`.
+   */
+  coverImage?: string;
   author: InsightAuthor;
   featured?: boolean;
   trending?: boolean;

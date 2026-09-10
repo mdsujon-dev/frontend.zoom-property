@@ -18,7 +18,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { RichText } from "@/components/common/rich-text";
 import { getInsightBySlug, getInsights } from "@/server/features/insights";
 import { localeAlternates } from "@/i18n/alternates";
-import { LOCALES, LOCALE_TAGS, type Locale } from "@/i18n/config";
+import { LOCALE_TAGS, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
 import { relatedInsights } from "@/lib/related-insights";
@@ -40,18 +40,6 @@ import { absoluteUrl, articleSchema, breadcrumbSchema } from "@/lib/seo";
  * dead space beside the text), and one width across the page keeps the title,
  * the photograph, the body and the related row on a single left edge.
  */
-/**
- * No pre-built params.
- *
- * The article set lives in the database and changes whenever the desk
- * publishes, so it is not knowable at build time. Each article renders on its
- * first request and is cached from then on, and a publish drops that cache
- * through the `insights` tag.
- */
-export function generateStaticParams() {
-  return [] as { lang: Locale; slug: string }[];
-}
-
 export async function generateMetadata({
   params,
 }: {
@@ -77,7 +65,7 @@ export async function generateMetadata({
       description,
       publishedTime: insight.date,
       authors: [isBn && insight.author.nameBn ? insight.author.nameBn : insight.author.name],
-      images: [insight.image],
+      images: [insight.coverImage || insight.image],
     },
   };
 }
@@ -126,7 +114,7 @@ export default async function BlogPostPage({
           url: articleUrl,
           headline: title,
           description: excerpt,
-          image: insight.image,
+          image: insight.coverImage || insight.image,
           datePublished: insight.date,
           authorName,
           authorRole,
@@ -191,7 +179,7 @@ export default async function BlogPostPage({
       <AppContainer size="lg">
         <Reveal delay={0.1}>
           <ImageFrame
-            src={insight.image}
+            src={insight.coverImage || insight.image}
             alt={title}
             ratio="auto"
             rounded="2xl"

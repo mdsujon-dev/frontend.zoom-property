@@ -34,13 +34,17 @@ export const toInsight = (p: ApiPost): Insight => ({
   category: categoryOf(p.category),
   readMinutes: p.readMinutes ?? 1,
   date: isoDate(p.publishedAt),
-  image: mediaUrl(p.coverImage),
+  // The card wants the close crop; it falls back to the banner when the
+  // desk has not uploaded one.
+  image: mediaUrl(p.thumbnail) || mediaUrl(p.coverImage),
+  coverImage: mediaUrl(p.coverImage) || mediaUrl(p.thumbnail),
   author: {
     name: p.author?.name || "",
     nameBn: p.author?.nameBn || p.author?.name || "",
     role: p.author?.role || "",
     roleBn: p.author?.roleBn || p.author?.role || "",
-    avatar: mediaUrl(p.author?.avatar),
+    // A deliberate pick wins; otherwise the writer's own photograph.
+    avatar: mediaUrl(p.author?.avatar) || p.author?.avatarUrl || "",
   },
   featured: p.featured,
   trending: p.trending,

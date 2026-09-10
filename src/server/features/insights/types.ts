@@ -15,12 +15,15 @@ export interface ApiPost {
   category?: { name?: string } | string | null;
   tags?: string[];
   coverImage?: ApiMedia;
+  thumbnail?: ApiMedia;
   author?: {
     name?: string;
     nameBn?: string;
     role?: string;
     roleBn?: string;
     avatar?: ApiMedia;
+    /** The writer's own photograph, copied when the article was written. */
+    avatarUrl?: string;
   } | null;
   readMinutes?: number;
   publishedAt?: string;

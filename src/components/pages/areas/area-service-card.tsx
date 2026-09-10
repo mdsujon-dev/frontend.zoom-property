@@ -9,66 +9,23 @@ import { shimmerDataUrl } from "@/lib/image";
 import { cn } from "@/lib/utils";
 
 /**
- * The per-card hue cycle from the reference design.
+ * The card's decorative tint.
  *
- * Decorative only — it never carries meaning, so nothing is lost to a visitor
- * who cannot separate the hues. Everything that has to be read (the name, the
- * promise) stays on the type colours; the tint only paints the panel behind the
- * photograph, the pin, the corner wash and the arrow chip.
+ * One tint, the brand primary, rather than the reference design's five-hue
+ * cycle. Those hues were five colours the brand does not have - a blue, a
+ * teal, a violet, an orange and a pink - and a grid of them read as five
+ * categories rather than as decoration.
  *
- * Written as whole class strings rather than `bg-[${hue}]`: Tailwind scans
- * source text, so a class assembled at runtime is never generated.
+ * Written as whole class strings rather than assembled at runtime: Tailwind
+ * scans source text, so a class built from a variable is never generated.
  */
-const TINTS = [
-  {
-    panel: "bg-[#2f7fd8]/10",
-    wash: "bg-[#2f7fd8]/12",
-    pin: "text-[#2f7fd8]",
-    chip: "bg-[#2f7fd8]/12 text-[#2f7fd8] group-hover:bg-[#2f7fd8] group-hover:text-white",
-    border: "hover:border-[#2f7fd8]/45",
-  },
-  {
-    panel: "bg-[#2ea36c]/10",
-    wash: "bg-[#2ea36c]/12",
-    pin: "text-[#2ea36c]",
-    chip: "bg-[#2ea36c]/12 text-[#2ea36c] group-hover:bg-[#2ea36c] group-hover:text-white",
-    border: "hover:border-[#2ea36c]/45",
-  },
-  {
-    panel: "bg-[#7c5cd6]/10",
-    wash: "bg-[#7c5cd6]/12",
-    pin: "text-[#7c5cd6]",
-    chip: "bg-[#7c5cd6]/12 text-[#7c5cd6] group-hover:bg-[#7c5cd6] group-hover:text-white",
-    border: "hover:border-[#7c5cd6]/45",
-  },
-  {
-    panel: "bg-[#e08a2b]/10",
-    wash: "bg-[#e08a2b]/12",
-    pin: "text-[#e08a2b]",
-    chip: "bg-[#e08a2b]/12 text-[#e08a2b] group-hover:bg-[#e08a2b] group-hover:text-white",
-    border: "hover:border-[#e08a2b]/45",
-  },
-  {
-    panel: "bg-[#dd5b8f]/10",
-    wash: "bg-[#dd5b8f]/12",
-    pin: "text-[#dd5b8f]",
-    chip: "bg-[#dd5b8f]/12 text-[#dd5b8f] group-hover:bg-[#dd5b8f] group-hover:text-white",
-    border: "hover:border-[#dd5b8f]/45",
-  },
-] as const;
-
-/**
- * Which hue a card gets.
- *
- * Keyed off the id rather than the grid position, so an area keeps its colour
- * on page two of `/areas` and on the home page — a card that changed colour
- * when it moved would read as a state change rather than as decoration.
- */
-function tintFor(id: string) {
-  let sum = 0;
-  for (let i = 0; i < id.length; i += 1) sum += id.charCodeAt(i);
-  return TINTS[sum % TINTS.length];
-}
+const TINT = {
+  panel: "bg-primary/10",
+  wash: "bg-primary/12",
+  pin: "text-primary",
+  chip: "bg-primary/12 text-primary group-hover:bg-primary group-hover:text-white",
+  border: "hover:border-primary/45",
+} as const;
 
 /**
  * The service-area card.
@@ -95,7 +52,7 @@ export function AreaServiceCard({
   const isBn = locale === "bn";
   const name = isBn && area.nameBn ? area.nameBn : area.name;
   const tagline = isBn && area.taglineBn ? area.taglineBn : area.tagline;
-  const tint = tintFor(area.id);
+  const tint = TINT;
 
   return (
     <Link

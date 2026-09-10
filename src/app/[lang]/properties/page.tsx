@@ -82,6 +82,7 @@ export default async function PropertiesPage({
       {/* 2. Middle Properties Section with Dynamic Area Filters & Cards */}
       <ListingsSection
         variant="full"
+        limit={6}
         filters={filters}
         properties={allProperties}
         areas={allAreas}

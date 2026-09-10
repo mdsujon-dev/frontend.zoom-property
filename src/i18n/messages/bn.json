@@ -14,7 +14,8 @@
     "openMenu": "মেনু খুলুন",
     "language": "ভাষা",
     "landowners": "জমির মালিক",
-    "blog": "ব্লগ"
+    "blog": "ব্লগ",
+    "reviews": "রিভিউ"
   },
   "hero": {
     "badge": "রাজউক নকশা ও দলিল যাচাই করা",
@@ -62,8 +63,6 @@
     "listingsHere": "এখানে লিস্টিং",
     "rajukYes": "রাজউক অনুমোদিত নকশা ও দলিল আমাদের সার্ভে টিম যাচাই করেছে।",
     "rajukNo": "দলিল যাচাই এখনও চলছে — অফার করার আগে আমাদের সঙ্গে কথা বলুন।",
-    "handover": "হস্তান্তর",
-    "furnishing": "ফার্নিশিং",
     "similar": "কাছাকাছি আরও প্রপার্টি",
     "gallery": "ছবি",
     "fullscreen": "ফুলস্ক্রিন",
@@ -152,7 +151,9 @@
     "pageTitle": "নির্মাণাধীন প্রকল্প",
     "pageDescription": "চাবি পাওয়ার আগে বছরের পর বছর কিস্তি দিতে হয়। এখানে প্রতিটি প্রকল্পে নিরীক্ষিত কাঠামোগত পর্যায় ও অনুমোদন নম্বর আছে, প্রতি মাসে হালনাগাদ।",
     "metaTitle": "নির্মাণাধীন প্রকল্প",
-    "metaDescription": "জুম প্রপার্টির প্রতিটি প্রকল্পের নির্মাণ অগ্রগতি — নিরীক্ষিত কাঠামোগত পর্যায়, রাজউক অনুমোদন ও হস্তান্তরের তারিখ, সাইটের ছবি থেকে প্রতি মাসে হালনাগাদ।"
+    "metaDescription": "জুম প্রপার্টির প্রতিটি প্রকল্পের নির্মাণ অগ্রগতি — নিরীক্ষিত কাঠামোগত পর্যায়, রাজউক অনুমোদন ও হস্তান্তরের তারিখ, সাইটের ছবি থেকে প্রতি মাসে হালনাগাদ।",
+    "allProjects": "সবগুলো প্রজেক্ট দেখুন",
+    "actionLink": "/projects"
   },
   "features": {
     "eyebrow": "প্রাতিষ্ঠানিক সততা",
@@ -564,7 +565,9 @@
     "title": "গুলশানের এক ছাদ, গোধূলিতে",
     "description": "একটি ভবন নিয়ে তিন মিনিট — পুল ডেক, স্কাই লাউঞ্জ আর যে দৃশ্য দেখে মানুষ রাজি হয়। ডেভেলপার নয়, আমাদের দলের তোলা।",
     "play": "চিত্রটি দেখুন",
-    "duration": "৩ মিনিট"
+    "duration": "৩ মিনিট",
+    "poster": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=2400&q=80",
+    "video": "https://www.youtube.com/watch?v=ScMzIvxBSi4"
   },
   "landowners": {
     "eyebrow": "জমির মালিক",
@@ -736,13 +739,19 @@
     "expand": "বিস্তারিত দেখুন:"
   },
   "statsBanner": {
-    "watermark": "SINGLE PROPERTY",
-    "stats": [
-      { "value": 8, "suffix": "k+", "label": "সম্পূর্ণ প্রজেক্ট" },
-      { "value": 3, "suffix": "k+", "label": "গ্লোবাল গ্রাহক" },
-      { "value": 20, "suffix": "+", "label": "বছরের অভিজ্ঞতা" },
-      { "value": 95, "suffix": "+", "label": "টিম ইঞ্জিনিয়ার" }
-    ]
+    "backgroundImage": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85",
+    "stat1Value": "8",
+    "stat1Suffix": "k+",
+    "stat1Label": "সম্পূর্ণ প্রজেক্ট",
+    "stat2Value": "3",
+    "stat2Suffix": "k+",
+    "stat2Label": "গ্লোবাল গ্রাহক",
+    "stat3Value": "20",
+    "stat3Suffix": "+",
+    "stat3Label": "বছরের অভিজ্ঞতা",
+    "stat4Value": "95",
+    "stat4Suffix": "+",
+    "stat4Label": "টিম ইঞ্জিনিয়ার"
   },
   "videoSection": {
     "eyebrow": "ভার্চুয়াল প্রপার্টি ট্যুর",

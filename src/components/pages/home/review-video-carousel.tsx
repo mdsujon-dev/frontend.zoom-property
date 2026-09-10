@@ -15,8 +15,8 @@ import { cn } from "@/lib/utils";
 import { ReviewVideoCard } from "./review-video-card";
 
 export interface ReviewVideoCarouselLabels {
-  play: string;
-  close: string;
+  play?: string;
+  close?: string;
 }
 
 /** Long enough to watch a face, short enough that the shelf reads as moving. */
@@ -45,7 +45,7 @@ export function ReviewVideoCarousel({
   cardClassName,
 }: {
   reviews: Review[];
-  labels: ReviewVideoCarouselLabels;
+  labels?: ReviewVideoCarouselLabels;
   cardClassName?: string;
 }) {
   const [api, setApi] = useState<CarouselApi>();
@@ -98,8 +98,8 @@ export function ReviewVideoCarousel({
             >
               <ReviewVideoCard
                 review={review}
-                playLabel={labels.play}
-                closeLabel={labels.close}
+                playLabel={labels?.play}
+                closeLabel={labels?.close}
                 className={cardClassName}
               />
             </CarouselItem>

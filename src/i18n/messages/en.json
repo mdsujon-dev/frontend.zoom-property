@@ -14,7 +14,8 @@
     "openMenu": "Open menu",
     "language": "Language",
     "landowners": "Landowners",
-    "blog": "Blog"
+    "blog": "Blog",
+    "reviews": "Reviews"
   },
   "hero": {
     "badge": "RAJUK plan & title deed cleared",
@@ -149,6 +150,8 @@
     "eyebrow": "Under construction",
     "title": "Milestone progress you can audit",
     "description": "You pay in instalments for years before you get keys, so every project shows its audited structural stage and RAJUK permit — not a marketing render.",
+    "allProjects": "View All Projects",
+    "actionLink": "/projects",
     "pageTitle": "Projects under construction",
     "pageDescription": "You pay in instalments for years before you get keys. Every project here shows its audited structural stage and permit number, updated monthly.",
     "metaTitle": "Projects under construction",
@@ -564,7 +567,9 @@
     "title": "A rooftop in Gulshan, at dusk",
     "description": "Three minutes on one building — the pool deck, the sky lounge and the view that sells it. Shot by our team, not the developer.",
     "play": "Play the film",
-    "duration": "3 min"
+    "duration": "3 min",
+    "poster": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=2400&q=80",
+    "video": "https://www.youtube.com/watch?v=ScMzIvxBSi4"
   },
   "landowners": {
     "eyebrow": "Landowners",
@@ -736,13 +741,19 @@
     "expand": "Show details for"
   },
   "statsBanner": {
-    "watermark": "SINGLE PROPERTY",
-    "stats": [
-      { "value": 8, "suffix": "k+", "label": "Projects completed" },
-      { "value": 3, "suffix": "k+", "label": "Global customers" },
-      { "value": 20, "suffix": "+", "label": "Years of experience" },
-      { "value": 95, "suffix": "+", "label": "Team engineers" }
-    ]
+    "backgroundImage": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85",
+    "stat1Value": "8",
+    "stat1Suffix": "k+",
+    "stat1Label": "Projects completed",
+    "stat2Value": "3",
+    "stat2Suffix": "k+",
+    "stat2Label": "Global customers",
+    "stat3Value": "20",
+    "stat3Suffix": "+",
+    "stat3Label": "Years of experience",
+    "stat4Value": "95",
+    "stat4Suffix": "+",
+    "stat4Label": "Team engineers"
   },
   "videoSection": {
     "eyebrow": "Virtual Property Tours",

@@ -6,7 +6,6 @@ import { getDictionary } from "@/i18n/dictionaries";
 
 export interface StatsBannerProps {
   backgroundImage?: string;
-  watermark?: string;
   className?: string;
 }
 
@@ -16,28 +15,40 @@ export interface StatItem {
   label: string;
 }
 
-/**
- * Panoramic luxury estate background with lawn and dusk lighting,
- * matching the user's reference image.
- */
 const DEFAULT_BG =
   "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85";
 
 export async function StatsBanner({
-  backgroundImage = DEFAULT_BG,
-  watermark = "SINGLE PROPERTY",
+  backgroundImage,
   className = "",
 }: StatsBannerProps = {}) {
   const dict = await getDictionary();
+  const banner = dict.statsBanner;
 
-  const stats: StatItem[] = dict.statsBanner?.stats ?? [
-    { value: 8, suffix: "k+", label: "Projects completed" },
-    { value: 3, suffix: "k+", label: "Global customers" },
-    { value: 20, suffix: "+", label: "Years of experience" },
-    { value: 95, suffix: "+", label: "Team engineers" },
+  const bgImage = banner?.backgroundImage || backgroundImage || DEFAULT_BG;
+
+  const stats: StatItem[] = [
+    {
+      value: banner?.stat1Value !== undefined ? parseInt(String(banner.stat1Value), 10) || 8 : 8,
+      suffix: banner?.stat1Suffix ?? "k+",
+      label: banner?.stat1Label || "Projects completed",
+    },
+    {
+      value: banner?.stat2Value !== undefined ? parseInt(String(banner.stat2Value), 10) || 3 : 3,
+      suffix: banner?.stat2Suffix ?? "k+",
+      label: banner?.stat2Label || "Global customers",
+    },
+    {
+      value: banner?.stat3Value !== undefined ? parseInt(String(banner.stat3Value), 10) || 20 : 20,
+      suffix: banner?.stat3Suffix ?? "+",
+      label: banner?.stat3Label || "Years of experience",
+    },
+    {
+      value: banner?.stat4Value !== undefined ? parseInt(String(banner.stat4Value), 10) || 95 : 95,
+      suffix: banner?.stat4Suffix ?? "+",
+      label: banner?.stat4Label || "Team engineers",
+    },
   ];
-
-  const displayWatermark = dict.statsBanner?.watermark ?? watermark;
 
   return (
     <section
@@ -46,7 +57,8 @@ export async function StatsBanner({
       {/* Background Image Layer (z-0) - clearly visible with semi-dark overlay */}
       <div className="absolute inset-0 z-0">
         <Image
-          src={backgroundImage}
+          src={bgImage}
+          fallbackSrc={DEFAULT_BG}
           alt="Luxury property exterior"
           fill
           priority={false}
@@ -56,16 +68,6 @@ export async function StatsBanner({
         <div className="absolute inset-0 bg-black/60 sm:bg-black/55" />
         {/* Top and bottom gradient vignette for smooth transition */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80" />
-      </div>
-
-      {/* Giant "SINGLE PROPERTY" Watermark Layer (z-10) */}
-      <div
-        className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center select-none overflow-hidden"
-        aria-hidden="true"
-      >
-        <span className="whitespace-nowrap font-serif text-5xl font-bold uppercase tracking-[0.25em] text-white/[0.08] sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10.5rem]">
-          {displayWatermark}
-        </span>
       </div>
 
       {/* Foreground Stats Content Layer (z-20) */}

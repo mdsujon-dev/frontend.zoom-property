@@ -15,21 +15,28 @@ import { shimmerDataUrl } from "@/lib/image";
 import { cn } from "@/lib/utils";
 
 export interface VideoCarouselDict {
-  play: string;
-  close: string;
-  verified: string;
-  prev: string;
-  next: string;
+  play?: string;
+  close?: string;
+  verified?: string;
+  prev?: string;
+  next?: string;
   channelAction?: string;
 }
 
 export interface VideoCarouselProps {
   videos: VideoItem[];
   locale: string;
-  dict: VideoCarouselDict;
+  dict?: VideoCarouselDict;
 }
 
 export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
+  const isBn = locale === "bn";
+  const prevLabel = dict?.prev ?? (isBn ? "পূর্ববর্তী ভিডিও" : "Previous video");
+  const nextLabel = dict?.next ?? (isBn ? "পরবর্তী ভিডিও" : "Next video");
+  const playLabel = dict?.play ?? (isBn ? "ভিডিও দেখুন" : "Play Video");
+  const closeLabel = dict?.close ?? (isBn ? "ভিডিও বন্ধ করুন" : "Close Player");
+  const verifiedLabel = dict?.verified ?? (isBn ? "ভেরিফাইড ওয়াকথ্রু" : "Verified Walkthrough");
+
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
@@ -78,7 +85,7 @@ export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
           <button
             type="button"
             onClick={scrollPrev}
-            aria-label={dict.prev}
+            aria-label={prevLabel}
             className="flex size-10 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-200 hover:border-sky-400 hover:bg-sky-500 hover:text-white active:scale-95 disabled:pointer-events-none disabled:opacity-40"
           >
             <Icon name="chevronLeft" size="sm" />
@@ -86,7 +93,7 @@ export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
           <button
             type="button"
             onClick={scrollNext}
-            aria-label={dict.next}
+            aria-label={nextLabel}
             className="flex size-10 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-all duration-200 hover:border-sky-400 hover:bg-sky-500 hover:text-white active:scale-95 disabled:pointer-events-none disabled:opacity-40"
           >
             <Icon name="chevronRight" size="sm" />
@@ -172,7 +179,7 @@ export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
                       </span>
                       <span className="flex items-center gap-1 text-[11px] text-emerald-400">
                         <Icon name="approved" size="xs" />
-                        {dict.verified}
+                        {verifiedLabel}
                       </span>
                     </div>
 
@@ -192,7 +199,7 @@ export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
                     onClick={() => setActiveId(video.id)}
                     className="absolute inset-0 cursor-pointer rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
                   >
-                    <span className="sr-only">{`${dict.play}: ${title}`}</span>
+                    <span className="sr-only">{`${playLabel}: ${title}`}</span>
                   </button>
                 </div>
               </CarouselItem>
@@ -230,7 +237,7 @@ export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
               : activeVideo.title
             : ""
         }
-        closeLabel={dict.close}
+        closeLabel={closeLabel}
         onClose={() => setActiveId(null)}
       />
     </div>

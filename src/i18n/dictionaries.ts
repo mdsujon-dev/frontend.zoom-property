@@ -1,7 +1,7 @@
 import { lang } from "next/root-params";
 import { notFound } from "next/navigation";
 
-import { applyCmsOverrides } from "@/server/cms";
+import { applyCmsOverrides } from "@/server/features/cms";
 
 import { isLocale, type Locale } from "./config";
 import type enMessages from "./messages/en.json";

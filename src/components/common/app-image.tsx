@@ -11,6 +11,25 @@ export interface AppImageProps extends Omit<NextImageProps, "src"> {
   fallbackSrc?: string;
 }
 
+const SERVER_URL = (
+  process.env.NEXT_PUBLIC_IMAGE_ACCESS_URL ??
+  process.env.NEXT_PUBLIC_SERVER_URL ??
+  "http://localhost:5008"
+).replace(/\/+$/, "");
+
+export function resolveImageSrc(src: string | null | undefined): string {
+  if (!src) return "";
+  if (typeof src !== "string") return src;
+  if (/^(https?:)?\/\//i.test(src) || src.startsWith("data:") || src.startsWith("blob:")) {
+    return src;
+  }
+  if (src.startsWith("/") && !src.startsWith("/uploads")) {
+    return src;
+  }
+  const clean = src.replace(/^\/+/, "");
+  return `${SERVER_URL}/${clean}`;
+}
+
 export function AppImage({
   src,
   alt = "",
@@ -24,7 +43,8 @@ export function AppImage({
   const [hasError, setHasError] = useState(false);
 
   // Safe fallback if src is missing or failed
-  const imageSrc = !src || hasError ? fallbackSrc : src;
+  const resolved = typeof src === "string" ? resolveImageSrc(src) : src;
+  const imageSrc = !resolved || hasError ? fallbackSrc : resolved;
 
   // Resolve blur placeholder
   const resolvedBlur =
@@ -35,6 +55,12 @@ export function AppImage({
     onError?.(e);
   };
 
+  const isLocal =
+    typeof imageSrc === "string" &&
+    (imageSrc.startsWith("http://localhost") ||
+      imageSrc.startsWith("http://127.0.0.1") ||
+      imageSrc.startsWith("/"));
+
   return (
     <NextImage
       src={imageSrc}
@@ -42,6 +68,7 @@ export function AppImage({
       placeholder={placeholder}
       blurDataURL={resolvedBlur}
       onError={handleError}
+      unoptimized={isLocal || props.unoptimized}
       className={cn("transition-opacity duration-300", className)}
       {...props}
     />

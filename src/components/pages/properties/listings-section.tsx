@@ -6,7 +6,7 @@ import { SectionHeading } from "@/components/common/section-heading";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { InteractiveListings, type ListingFilters } from "./interactive-listings";
 import { PropertyCard } from "./property-card";
-import { getHomeProperties } from "@/server/properties";
+import { getHomeProperties } from "@/server/features/properties";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
 
@@ -46,7 +46,9 @@ export async function ListingsSection({
             href={localeHref(locale, "/properties")}
             className="group inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 font-heading text-xs sm:text-sm font-semibold uppercase tracking-wider text-foreground shadow-xs transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground"
           >
-            <span>{locale === "bn" ? "সবগুলো প্রপার্টি দেখুন" : "All Properties"}</span>
+            <span>
+              {locale === "bn" ? "সবগুলো প্রপার্টি" : "All Properties"}
+            </span>
             <Icon
               name="arrowRight"
               size="xs"

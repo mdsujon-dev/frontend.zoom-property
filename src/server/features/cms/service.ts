@@ -1,7 +1,8 @@
 import "server-only";
 
-import { apiList } from "@/lib/api";
 import type { Locale } from "@/i18n/config";
+
+import { baseApi, CACHE_TAGS } from "../../base-api";
 
 /**
  * Copy edited in the panel, laid over the built-in dictionary.
@@ -20,6 +21,7 @@ import type { Locale } from "@/i18n/config";
 interface CmsRow {
   key: string;
   value?: unknown;
+  imageUrl?: string;
   group?: string;
 }
 
@@ -76,7 +78,11 @@ export async function applyCmsOverrides<T extends object>(
   locale: Locale,
 ): Promise<T> {
   const groups = await Promise.all(
-    GROUPS.map((group) => apiList<CmsRow>("dynamic-content/by-group/" + group)),
+    GROUPS.map((group) =>
+      baseApi.list<CmsRow>(`dynamic-content/by-group/${group}`, undefined, {
+        tags: [CACHE_TAGS.cms],
+      }),
+    ),
   );
 
   const rows = groups.flatMap((g) => g?.rows ?? []);
@@ -88,12 +94,18 @@ export async function applyCmsOverrides<T extends object>(
 
   for (const row of rows) {
     if (typeof row?.key !== "string" || !row.key.endsWith(suffix)) continue;
-    if (typeof row.value !== "string" || !row.value.trim()) continue;
+    const rawVal =
+      typeof row.value === "string"
+        ? row.value
+        : typeof row.imageUrl === "string"
+        ? row.imageUrl
+        : "";
+    if (!rawVal.trim()) continue;
 
     const path = row.key.slice(0, -suffix.length).split(".");
     if (!path.length) continue;
 
-    setPath(merged, path, row.value);
+    setPath(merged, path, rawVal);
     applied += 1;
   }
 

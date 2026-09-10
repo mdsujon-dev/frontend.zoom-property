@@ -38,9 +38,9 @@ export async function ServicesShowcase({ className }: { className?: string } = {
           </span>
 
           <Heading as="h2" size="h2" align="center" className="max-w-4xl">
-            {t.titleLead}
-            <span className="text-primary">{t.titleAccent}</span>
-            {t.titleTail}
+            {t.titleLead ? `${t.titleLead.trimEnd()} ` : ""}
+            <span className="text-primary">{t.titleAccent?.trim()}</span>
+            {t.titleTail ? ` ${t.titleTail.trimStart()}` : ""}
           </Heading>
 
           <Text size="base" align="center" className="max-w-2xl leading-relaxed">

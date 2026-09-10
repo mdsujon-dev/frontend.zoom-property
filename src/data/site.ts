@@ -43,6 +43,7 @@ export const footerNav = [
     key: "services",
     links: [
       { key: "landowners", href: "/landowners" },
+      { key: "reviews", href: "/reviews" },
       { key: "blog", href: "/blog" },
       { key: "about", href: "/about" },
     ],

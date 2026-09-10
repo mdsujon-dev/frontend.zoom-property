@@ -3,42 +3,66 @@ import "server-only";
 /**
  * The site's server-side data layer.
  *
- * One file per thing the panel manages, each owning three concerns and no
- * more: the shape the API returns, the mapping from that shape to the type the
- * components already consume, and the fallback when the API cannot be reached.
+ *   base-api/            the one client — nothing else here calls `fetch`
+ *     client.ts          transport: address, envelope, caching, never throws
+ *     resource.ts        the factory every feature service is built from
+ *     tags.ts            cache tags, shared with the backend's revalidation
+ *     mappers.ts         media, paragraph and date helpers
+ *     types.ts           envelope, paging, populated media
  *
- *   areas.ts       neighbourhoods
- *   projects.ts    developments
- *   properties.ts  listings
- *   reviews.ts     client reviews
- *   insights.ts    blog posts
- *   cms.ts         copy edited in the panel, laid over the dictionary
- *   shared.ts      the media and paragraph helpers they all need
+ *   features/<name>/     one folder per thing the panel manages
+ *     types.ts           the shape the API returns
+ *     mapper.ts          that shape to the type `src/data` defines
+ *     service.ts         the reads a page actually calls
+ *     index.ts           what the rest of the site may import
  *
- * Two rules hold across all of them. A page component never sees an API shape
- * — it receives `Area`, `Project`, `Property`, `Review`, `Insight` exactly as
- * `src/data` defines them, so a card need not know whether its photograph
- * arrived as an object key or a URL. And nothing here throws: when the API is
- * unreachable the built-in demo data is returned, because a stale home page is
- * better than an empty one.
+ * Three rules hold throughout. A page never sees an API shape — it receives
+ * `Area`, `Project`, `Property`, `Review`, `Insight` exactly as `src/data`
+ * defines them, so a card need not know whether its photograph arrived as an
+ * object key or a URL. Nothing throws: when the API is unreachable the
+ * built-in data is served, because a stale page beats an empty one. And every
+ * read is tagged, so a save in the panel refreshes exactly the pages that
+ * showed it — see `app/api/revalidate/route.ts`.
  *
- * Import from the entity file directly (`@/server/projects`) in a page that
- * needs one thing; this barrel is for the few that need several.
+ * Import the feature you need (`@/server/features/projects`); this barrel is
+ * for the few callers that need several.
  */
 
-export { getAreaBySlug, getAreas, getHomeAreas } from "./areas";
-export { applyCmsOverrides } from "./cms";
+export { getAreaBySlug, getAreas, getHomeAreas } from "./features/areas";
+export { applyCmsOverrides } from "./features/cms";
 export {
   getHomeInsights,
   getInsightBySlug,
   getInsights,
   getInsightsByCategory,
-} from "./insights";
-export { getHomeProjects, getProjectBySlug, getProjects } from "./projects";
+} from "./features/insights";
+export {
+  getHomeProjects,
+  getProjectBySlug,
+  getProjects,
+} from "./features/projects";
 export {
   getHomeProperties,
   getProperties,
   getPropertyBySlug,
-} from "./properties";
-export { getHomeReviews, getReviews, getVideoReviews } from "./reviews";
-export type { ApiListMeta, ApiMedia } from "./shared";
+} from "./features/properties";
+export {
+  getHomeReviews,
+  getReviews,
+  getVideoReviews,
+} from "./features/reviews";
+
+export {
+  ALL_CACHE_TAGS,
+  baseApi,
+  CACHE_TAGS,
+  createResource,
+  resolveTag,
+} from "./base-api";
+export type {
+  ApiMedia,
+  ApiMeta,
+  CacheTagName,
+  QueryParams,
+  Resource,
+} from "./base-api";

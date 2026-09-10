@@ -36,13 +36,13 @@ import { cn } from "@/lib/utils";
  */
 export function ReviewVideoCard({
   review,
-  playLabel,
-  closeLabel,
+  playLabel = "Play video review",
+  closeLabel = "Close player",
   className,
 }: {
   review: Review;
-  playLabel: string;
-  closeLabel: string;
+  playLabel?: string;
+  closeLabel?: string;
   className?: string;
 }) {
   const [open, setOpen] = useState(false);

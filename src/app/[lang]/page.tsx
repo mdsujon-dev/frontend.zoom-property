@@ -31,8 +31,8 @@ export default async function Home() {
       <ListingsSection variant="preview" limit={6} />
 
       <CinematicShowcase
-        poster={showcase.poster}
-        video={showcase.video}
+        poster={dict.showcase.poster || showcase.poster}
+        video={dict.showcase.video || showcase.video}
         dict={dict.showcase}
       />
 

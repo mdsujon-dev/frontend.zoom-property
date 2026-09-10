@@ -3,7 +3,7 @@ import { OrnamentDivider } from "@/components/common/ornament-divider";
 import { Section } from "@/components/common/section";
 import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
-import { getHomeAreas } from "@/server/areas";
+import { getHomeAreas } from "@/server/features/areas";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { cn } from "@/lib/utils";
 
@@ -79,9 +79,9 @@ export function AreasHeading({
     <Reveal>
       <div className="flex flex-col items-center gap-4 text-center">
         <Heading as="h2" size="h2" align="center" className="max-w-4xl">
-          {t.titleLead}
-          <span className="text-brand-blue">{t.titleAccent}</span>
-          {t.titleTail}
+          {t.titleLead ? `${t.titleLead.trimEnd()} ` : ""}
+          <span className="text-brand-blue">{t.titleAccent?.trim()}</span>
+          {t.titleTail ? ` ${t.titleTail.trimStart()}` : ""}
         </Heading>
 
         <OrnamentDivider className="mt-3" />

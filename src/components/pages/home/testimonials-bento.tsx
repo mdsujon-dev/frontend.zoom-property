@@ -50,7 +50,6 @@ export async function TestimonialsBento() {
           <ReviewVideoCarousel
             reviews={videoReviews}
             cardClassName={CARD_SHADOW}
-            labels={{ play: t.playVideo, close: t.closeVideo }}
           />
         </Reveal>
       </AppContainer>

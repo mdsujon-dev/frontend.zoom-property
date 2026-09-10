@@ -130,7 +130,7 @@ export const icons = {
   whatsapp: FaWhatsapp,
 } satisfies Record<string, IconComponent>;
 
-export type IconName = keyof typeof icons;
+export type IconName = keyof typeof icons | string;
 
 const iconVariants = cva("shrink-0", {
   variants: {
@@ -156,8 +156,62 @@ export interface IconProps extends VariantProps<typeof iconVariants> {
 }
 
 export function Icon({ name, icon, size, className, label }: IconProps) {
-  const Component = icon ?? (name ? icons[name] : undefined);
-  if (!Component) return null;
+  const Component = icon ?? (name ? icons[name as keyof typeof icons] : undefined);
+  
+  if (!Component) {
+    if (typeof name === "string") {
+      const trimmedName = name.trim();
+      let faClasses = "";
+
+      // Check if it's a full <i> tag: <i class="fa-solid fa-house"></i>
+      const match = trimmedName.match(/<i[^>]*class(?:Name)?=["']([^"']+)["'][^>]*>/i);
+      if (match) {
+        faClasses = match[1];
+      } else if (
+        trimmedName.includes("fa-") || 
+        trimmedName.startsWith("fas ") || 
+        trimmedName.startsWith("far ") || 
+        trimmedName.startsWith("fab ")
+      ) {
+        // Assume it's raw classes like "fa-solid fa-house"
+        faClasses = trimmedName;
+      }
+
+      if (faClasses) {
+        // Map iconVariants sizes to font sizes for FontAwesome
+        const faSizeMap: Record<string, string> = {
+          xs: "text-[14px]",
+          sm: "text-[16px]",
+          md: "text-[20px]",
+          lg: "text-[24px]",
+          xl: "text-[32px]",
+        };
+        const fontSizeClass = faSizeMap[size || "sm"];
+
+        const faIcon = (
+          <i
+            className={cn(
+              "flex items-center justify-center shrink-0",
+              iconVariants({ size }),
+              fontSizeClass,
+              faClasses,
+              className
+            )}
+            aria-hidden={label ? undefined : true}
+          />
+        );
+
+        return label ? (
+          <span role="img" aria-label={label} className="contents">
+            {faIcon}
+          </span>
+        ) : (
+          faIcon
+        );
+      }
+    }
+    return null;
+  }
 
   const svg = (
     <Component

@@ -233,7 +233,33 @@
       "badge": "Every paper read before it is listed"
     },
     "figuresTitle": "The numbers behind the promise",
-    "figuresLead": "Counted from our own records, not the market's."
+    "figuresLead": "Counted from our own records, not the market's.",
+    "stats": [
+      {
+        "value": "4850",
+        "suffix": " Cr+",
+        "compact": "true",
+        "label": "Portfolio value vetted"
+      },
+      {
+        "value": "13312",
+        "suffix": "+",
+        "compact": "true",
+        "label": "RAJUK-cleared listings"
+      },
+      {
+        "value": "99.4",
+        "suffix": "%",
+        "compact": "false",
+        "label": "On-time handover rate"
+      },
+      {
+        "value": "32",
+        "suffix": "",
+        "compact": "false",
+        "label": "Median days to close"
+      }
+    ]
   },
   "contact": {
     "backgroundImage": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=2000&q=80",

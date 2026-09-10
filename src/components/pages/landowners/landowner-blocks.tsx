@@ -13,7 +13,7 @@ import { getLandownerBlockPage } from "@/server/features/landowners";
 import { cn } from "@/lib/utils";
 
 /** How many blocks are on one page. */
-const PER_PAGE = 4;
+const PER_PAGE = 8;
 
 /** The anchor a page link lands on, so paging does not jump to the banner. */
 const ANCHOR = "landowner-blocks";

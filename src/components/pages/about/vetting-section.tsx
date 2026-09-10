@@ -11,10 +11,19 @@ export async function VettingSection() {
   return (
     <Section className="border-t border-border bg-background">
       <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-        <SectionHeading
-          title={vetting.title}
-          className="lg:flex-col lg:items-start"
-        />
+        <div className="flex flex-col gap-8">
+          <SectionHeading
+            title={vetting.title}
+            className="lg:flex-col lg:items-start"
+          />
+          <Reveal delay={0.2} className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-border mt-auto hidden lg:block">
+            <img 
+              src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80" 
+              alt="Vetting Process" 
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          </Reveal>
+        </div>
 
         <Reveal delay={0.1}>
           <ol className="flex flex-col divide-y divide-border rounded-xl border border-border bg-card">

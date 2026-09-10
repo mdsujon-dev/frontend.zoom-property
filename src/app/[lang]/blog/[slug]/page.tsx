@@ -10,14 +10,13 @@ import { Text } from "@/components/common/text";
 import { ImageFrame } from "@/components/media/image-frame";
 import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
-import { ArticleBody } from "@/components/pages/blog/article-body";
 import { ArticleComments } from "@/components/pages/blog/article-comments";
 import { ArticleQuickContact } from "@/components/pages/blog/article-quick-contact";
 import { ArticleShare } from "@/components/pages/blog/article-share";
 import { InsightCard } from "@/components/pages/blog/insight-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { articleBlocks } from "@/data/insight-article";
-import { insights } from "@/data/insights";
+import { RichText } from "@/components/common/rich-text";
+import { getInsightBySlug, getInsights } from "@/server/features/insights";
 import { localeAlternates } from "@/i18n/alternates";
 import { LOCALES, LOCALE_TAGS, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -41,14 +40,16 @@ import { absoluteUrl, articleSchema, breadcrumbSchema } from "@/lib/seo";
  * dead space beside the text), and one width across the page keeps the title,
  * the photograph, the body and the related row on a single left edge.
  */
+/**
+ * No pre-built params.
+ *
+ * The article set lives in the database and changes whenever the desk
+ * publishes, so it is not knowable at build time. Each article renders on its
+ * first request and is cached from then on, and a publish drops that cache
+ * through the `insights` tag.
+ */
 export function generateStaticParams() {
-  return LOCALES.flatMap((lang) =>
-    insights.map((insight) => ({ lang, slug: insight.id })),
-  );
-}
-
-function findInsight(slug: string) {
-  return insights.find((insight) => insight.id === slug);
+  return [] as { lang: Locale; slug: string }[];
 }
 
 export async function generateMetadata({
@@ -57,9 +58,10 @@ export async function generateMetadata({
   params: Promise<{ lang: Locale; slug: string }>;
 }): Promise<Metadata> {
   const { lang, slug } = await params;
-  const insight = findInsight(slug);
+  const found = await getInsightBySlug(slug);
 
-  if (!insight) return {};
+  if (!found) return {};
+  const insight = found.insight;
 
   const isBn = lang === "bn";
   const title = isBn && insight.titleBn ? insight.titleBn : insight.title;
@@ -86,9 +88,11 @@ export default async function BlogPostPage({
   params: Promise<{ lang: Locale; slug: string }>;
 }) {
   const { lang, slug } = await params;
-  const insight = findInsight(slug);
+  const found = await getInsightBySlug(slug);
 
-  if (!insight) notFound();
+  if (!found) notFound();
+
+  const { insight, content, contentBn } = found;
 
   const dict = await getDictionary();
   const t = dict.blog;
@@ -110,8 +114,7 @@ export default async function BlogPostPage({
   });
   const formattedDate = dateFormatter.format(new Date(insight.date));
 
-  const blocks = articleBlocks(insight, lang);
-  const related = relatedInsights(insight, insights, 3);
+  const related = relatedInsights(insight, await getInsights(60), 3);
 
   const blogHref = localeHref(lang, "/blog");
   const articleUrl = absoluteUrl(`/${lang}/blog/${slug}`);
@@ -203,7 +206,7 @@ export default async function BlogPostPage({
         <AppContainer size="lg">
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-12">
             <div className="flex flex-col gap-10">
-              <ArticleBody blocks={blocks} />
+              <RichText html={isBn ? contentBn : content} />
 
               <ArticleShare
                 url={articleUrl}

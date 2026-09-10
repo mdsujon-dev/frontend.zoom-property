@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Heading } from "@/components/common/heading";
-import { Icon } from "@/components/common/icon";
+import { Icon, type IconName } from "@/components/common/icon";
 import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Text } from "@/components/common/text";
@@ -53,13 +53,13 @@ export default async function LandownersPage({
         />
 
         <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {(t.benefitsList || []).map((benefit: any, index: number) => (
+          {(t.benefitsList ?? []).map((benefit, index) => (
             <StaggerItem
               key={benefit.title || index}
               className="flex h-full flex-col gap-3 rounded-xl border border-border bg-card p-6"
             >
               <span className="flex size-11 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                <Icon name={benefit.icon as any} size="md" />
+                <Icon name={benefit.icon as IconName} size="md" />
               </span>
               <Heading as="h3" size="h6">
                 {benefit.title}

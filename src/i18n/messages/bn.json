@@ -233,7 +233,34 @@
       "badge": "তালিকাভুক্ত হওয়ার আগেই প্রতিটি কাগজ পড়া"
     },
     "figuresTitle": "প্রতিশ্রুতির পেছনের সংখ্যাগুলো",
-    "figuresLead": "বাজারের নয়, আমাদের নিজস্ব নথি থেকে গোনা।"
+    "figuresLead": "বাজারের নয়, আমাদের নিজস্ব নথি থেকে গোনা।",
+    "stats": [
+      {
+        "value": "4850",
+        "suffix": " কোটি+",
+        "compact": "true",
+        "label": "যাচাইকৃত পোর্টফোলিও মূল্য"
+      },
+      {
+        "value": "13312",
+        "suffix": "+",
+        "compact": "true",
+        "label": "রাজউক-ক্লিয়ার্ড লিস্টিং"
+      },
+      {
+        "value": "99.4",
+        "suffix": "%",
+        "compact": "false",
+        "label": "সময়মতো হস্তান্তরের হার"
+      },
+      {
+        "value": "32",
+        "suffix": "",
+        "compact": "false",
+        "label": "ক্লোজ করার গড় দিন"
+      }
+    ]
+
   },
   "contact": {
     "backgroundImage": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=2000&q=80",

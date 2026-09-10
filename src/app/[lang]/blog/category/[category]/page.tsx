@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Section } from "@/components/common/section";
 import { PageHeader } from "@/components/layout/page-header";
 import { BlogCategoryView } from "@/components/pages/blog/blog-category-view";
-import { insights } from "@/data/insights";
+import { getInsights } from "@/server/features/insights";
 import { pageBanners } from "@/data/page-banners";
 import { LOCALES, type Locale } from "@/i18n/config";
 import { localeAlternates } from "@/i18n/alternates";
@@ -45,7 +45,10 @@ export default async function BlogCategoryPage({
 }: {
   params: Promise<{ lang: Locale; category: string }>;
 }) {
-  const { lang, category } = await params;
+  const [{ lang, category }, insights] = await Promise.all([
+    params,
+    getInsights(60),
+  ]);
   const dict = await getDictionary();
   const t = dict.blog;
   const config = getCategoryConfig(category);

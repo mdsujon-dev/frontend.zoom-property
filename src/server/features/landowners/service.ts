@@ -47,7 +47,7 @@ export interface LandownerBlockPage {
  */
 export async function getLandownerBlockPage(
   page = 1,
-  perPage = 4,
+  perPage = 8,
 ): Promise<LandownerBlockPage> {
   const empty: LandownerBlockPage = {
     blocks: [],

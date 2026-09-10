@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Section } from "@/components/common/section";
 import { PageHeader } from "@/components/layout/page-header";
 import { BlogFeed } from "@/components/pages/blog/blog-feed";
-import { insights } from "@/data/insights";
+import { getInsights } from "@/server/features/insights";
 import { pageBanners } from "@/data/page-banners";
 import { localeAlternates } from "@/i18n/alternates";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
@@ -18,7 +18,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function BlogPage() {
-  const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
+  const [dict, locale, insights] = await Promise.all([
+    getDictionary(),
+    getLocale(),
+    getInsights(60),
+  ]);
   const t = dict.blog;
 
   return (

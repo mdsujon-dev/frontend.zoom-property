@@ -3,7 +3,6 @@ import { Section } from "@/components/common/section";
 import { Text } from "@/components/common/text";
 import { Counter } from "@/components/motion/counter";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
-import { stats } from "@/data/site";
 import { getDictionary } from "@/i18n/dictionaries";
 
 /**
@@ -33,25 +32,25 @@ export async function FiguresBand() {
       </div>
 
       <Stagger className="mt-10 grid grid-cols-2 gap-y-10 border-t border-footer-foreground/15 pt-10 lg:grid-cols-4 lg:gap-y-0">
-        {stats.map((stat, index) => (
+        {dict.about.stats?.map((stat, index) => (
           <StaggerItem
-            key={dict.content.stats[index]}
+            key={index}
             /* The rule sits between figures, never before the first in a row —
                which is why it is reset at each breakpoint's column count. */
             className="flex flex-col gap-2 px-2 sm:px-6 [&:nth-child(odd)]:border-l-0 lg:[&:nth-child(odd)]:border-l lg:[&:first-child]:border-l-0 border-l border-footer-foreground/15 first:border-l-0"
           >
             <span className="font-heading text-4xl font-extrabold text-brand-green-light sm:text-5xl">
               <Counter
-                to={stat.value}
-                compact={"compact" in stat ? stat.compact : false}
-                suffix={"suffix" in stat ? stat.suffix : ""}
+                to={Number(stat.value)}
+                compact={stat.compact === "true"}
+                suffix={stat.suffix || ""}
               />
             </span>
             <Text
               size="sm"
               className="font-medium text-footer-foreground/75"
             >
-              {dict.content.stats[index]}
+              {stat.label}
             </Text>
           </StaggerItem>
         ))}

@@ -13,8 +13,17 @@ import type { ApiMedia } from "./types";
 
 const R2_PUBLIC_FALLBACK = "https://pub-5b52277bf86041a0b4872bee7a979553.r2.dev";
 
+/**
+ * What this accepts.
+ *
+ * A populated media document, a bare object key, or an absolute URL — all
+ * three turn up depending on which endpoint the record came from, so the
+ * union is stated rather than left as `any`.
+ */
+export type MediaLike = ApiMedia | string | null;
+
 /** The address of a media document. Resolves url, key, or fallback R2 endpoint. */
-export const mediaUrl = (m?: any): string => {
+export const mediaUrl = (m?: MediaLike): string => {
   if (!m) return "";
   if (typeof m === "string") {
     if (!m.trim()) return "";
@@ -32,7 +41,7 @@ export const mediaUrl = (m?: any): string => {
 };
 
 /** The addresses of a list of media documents, blanks dropped. */
-export const mediaUrls = (list?: any[] | null): string[] =>
+export const mediaUrls = (list?: MediaLike[] | null): string[] =>
   (list ?? []).map(mediaUrl).filter(Boolean);
 
 /**

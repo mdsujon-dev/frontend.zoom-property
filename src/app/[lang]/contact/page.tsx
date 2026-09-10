@@ -71,7 +71,7 @@ export default async function ContactPage() {
         eyebrow={dict.contact.eyebrow}
         title={dict.contact.title}
         description={dict.contact.description}
-        image={pageBanners.contact}
+        image={dict.contact.backgroundImage || pageBanners.contact}
       />
 
       <Section className="bg-background">

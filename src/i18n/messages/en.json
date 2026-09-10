@@ -223,6 +223,7 @@
     "metaDescription": "How Zoom Property vets a listing: physical inspection, RAJUK approval, title deed and mutation checked before anything goes online."
   },
   "contact": {
+    "backgroundImage": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=2000&q=80",
     "eyebrow": "Get in touch",
     "title": "Talk to an advisor",
     "description": "Tell us the area, the budget and when you need to move. We come back with a shortlist, the papers and every cost on one page.",
@@ -626,6 +627,7 @@
     }
   },
   "blog": {
+    "backgroundImage": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2000&q=80",
     "article": {
       "backToBlog": "All articles",
       "breadcrumbHome": "Home",

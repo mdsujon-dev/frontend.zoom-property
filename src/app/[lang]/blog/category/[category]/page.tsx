@@ -64,7 +64,7 @@ export default async function BlogCategoryPage({
         eyebrow={t.browsingCategory ?? "BROWSING CATEGORY"}
         title={categoryTitle}
         description={categoryDesc}
-        image={pageBanners.blog}
+        image={dict.blog.backgroundImage || pageBanners.blog}
       />
 
       <Section className="bg-background pt-10 sm:pt-14 pb-20">

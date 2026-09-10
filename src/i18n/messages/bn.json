@@ -223,6 +223,7 @@
     "metaDescription": "জুম প্রপার্টি কীভাবে একটি লিস্টিং যাচাই করে: সরেজমিনে পরিদর্শন, রাজউক অনুমোদন, দলিল ও নামজারি — সব অনলাইনে ওঠার আগে।"
   },
   "contact": {
+    "backgroundImage": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=2000&q=80",
     "eyebrow": "যোগাযোগ করুন",
     "title": "একজন পরামর্শদাতার সঙ্গে কথা বলুন",
     "description": "এলাকা, বাজেট আর কবে উঠতে চান জানান। আমরা বাছাই তালিকা, কাগজপত্র আর সব খরচ এক পাতায় নিয়ে ফিরে আসব।",
@@ -626,6 +627,7 @@
     }
   },
   "blog": {
+    "backgroundImage": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2000&q=80",
     "article": {
       "backToBlog": "সব লেখা",
       "breadcrumbHome": "হোম",

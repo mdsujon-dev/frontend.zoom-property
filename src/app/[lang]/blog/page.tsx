@@ -27,7 +27,7 @@ export default async function BlogPage() {
         eyebrow={t.eyebrow}
         title={t.title}
         description={t.description}
-        image={pageBanners.blog}
+        image={dict.blog.backgroundImage || pageBanners.blog}
       />
 
       <Section className="bg-background pt-10 sm:pt-14 pb-20">

@@ -5,7 +5,7 @@ import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { ProjectCard } from "./project-card";
-import { getHomeProjects } from "@/server/catalogue";
+import { getHomeProjects } from "@/server/projects";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
 

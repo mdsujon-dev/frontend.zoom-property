@@ -6,7 +6,7 @@ import { SectionHeading } from "@/components/common/section-heading";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { InteractiveListings, type ListingFilters } from "./interactive-listings";
 import { PropertyCard } from "./property-card";
-import { getHomeProperties } from "@/server/catalogue";
+import { getHomeProperties } from "@/server/properties";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
 

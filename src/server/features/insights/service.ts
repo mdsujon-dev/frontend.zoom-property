@@ -26,6 +26,15 @@ const posts = createResource<ApiPost, Insight>({
   slugOf: (p) => p.id,
 });
 
+export const getBlogCategories = async (): Promise<BlogCategory[]> => {
+  try {
+    const res = await posts.raw<{ _id: string, name: string, nameBn?: string, slug: string }[]>("blog/categories/public");
+    return res?.data?.map((c) => c.name as BlogCategory) || [];
+  } catch {
+    return [];
+  }
+};
+
 /** Published posts, newest first, for the blog index and the home strip. */
 export const getInsights = (limit = 24) => posts.list({ limit });
 

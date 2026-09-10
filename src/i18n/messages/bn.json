@@ -18,6 +18,12 @@
     "reviews": "রিভিউ"
   },
   "hero": {
+    "backgroundImages": [
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2000&q=80",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2000&q=80",
+      "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=2000&q=80",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=2000&q=80"
+    ],
     "badge": "রাজউক নকশা ও দলিল যাচাই করা",
     "title": "ঘরে পা রাখার আগেই প্রতিটি সম্পত্তি যাচাই করা",
     "lead": "ঢাকা ও চট্টগ্রামের সম্পত্তি, কাগজপত্র আগে দেখে নেওয়া। নির্মাণের অগ্রগতি সরাসরি, দলিল যাচাই করা, কোনো লুকানো খরচ নেই।",
@@ -150,6 +156,7 @@
     "backgroundImage": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=2000&q=80",
     "eyebrow": "নির্মাণাধীন",
     "title": "অগ্রগতি নিজে যাচাই করুন",
+    "homeTitle": "অগ্রগতি নিজে যাচাই করুন",
     "description": "চাবি পাওয়ার আগে বছরের পর বছর কিস্তি দিতে হয়। তাই প্রতিটি প্রকল্পে নিরীক্ষিত কাঠামোগত পর্যায় ও রাজউক অনুমোদন দেখানো — বিজ্ঞাপনের ছবি নয়।",
     "pageTitle": "নির্মাণাধীন প্রকল্প",
     "pageDescription": "চাবি পাওয়ার আগে বছরের পর বছর কিস্তি দিতে হয়। এখানে প্রতিটি প্রকল্পে নিরীক্ষিত কাঠামোগত পর্যায় ও অনুমোদন নম্বর আছে, প্রতি মাসে হালনাগাদ।",

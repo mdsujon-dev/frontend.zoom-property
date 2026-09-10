@@ -49,7 +49,11 @@ const GROUPS = [
  * a section renamed, a field removed — is ignored rather than grafting a stray
  * branch onto the object the components destructure.
  */
-const setPath = (target: Record<string, unknown>, path: string[], value: string) => {
+const setPath = (
+  target: Record<string, unknown>,
+  path: string[],
+  value: string | string[],
+) => {
   let node = target as Record<string, unknown>;
   for (let i = 0; i < path.length - 1; i++) {
     const segment = path[i];
@@ -97,13 +101,21 @@ export async function applyCmsOverrides<T extends object>(
 
   for (const row of rows) {
     if (typeof row?.key !== "string" || !row.key.endsWith(suffix)) continue;
-    const rawVal =
-      typeof row.value === "string"
-        ? row.value
-        : typeof row.imageUrl === "string"
-        ? row.imageUrl
-        : "";
-    if (!rawVal.trim()) continue;
+    // A gallery field stores its addresses as an array; everything else is
+    // one string. Both come back on `value`, so the shape is what tells them
+    // apart — and an empty list means the desk cleared the field, which falls
+    // through to the built-in exactly as an empty string does.
+    const rawVal = Array.isArray(row.value)
+      ? row.value.filter(
+          (item): item is string => typeof item === "string" && !!item.trim(),
+        )
+      : typeof row.value === "string"
+      ? row.value
+      : typeof row.imageUrl === "string"
+      ? row.imageUrl
+      : "";
+
+    if (Array.isArray(rawVal) ? !rawVal.length : !rawVal.trim()) continue;
 
     const path = row.key.slice(0, -suffix.length).split(".");
     if (!path.length) continue;

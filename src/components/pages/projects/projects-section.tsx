@@ -42,10 +42,12 @@ export async function ProjectsSection({
         />
       ) : (
         <>
+          {/* Title only. The cards below carry the stage, the permit and
+              the handover date, which is what the paragraph used to say in
+              words — and `homeTitle`, not `title`, because the same row opens
+              the /projects page and the two headings are not the same job. */}
           <SectionHeading
-            eyebrow={dict.projects.eyebrow}
-            title={dict.projects.title}
-            description={dict.projects.description}
+            title={dict.projects.homeTitle}
             action={
               <Link
                 href={localeHref(locale, dict.projects.actionLink || "/projects")}

@@ -38,11 +38,11 @@ export async function TestimonialsBento() {
   return (
     <section className="border-t border-border bg-muted/30 py-16 sm:py-24">
       <AppContainer>
-        <SectionHeading
-          title={t.homeTitle}
-          titleClassName="whitespace-nowrap"
-          align="center"
-        />
+        {/* No `whitespace-nowrap` override: the title is edited in the panel
+            now, and a forced single line pushed a longer one off the side of a
+            phone. `SectionHeading` already holds it on one line from `md` up,
+            which is where the room for it actually is. */}
+        <SectionHeading title={t.homeTitle} align="center" />
 
         <OrnamentDivider className="mt-7" />
 

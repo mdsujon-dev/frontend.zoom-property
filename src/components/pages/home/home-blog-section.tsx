@@ -24,7 +24,10 @@ export async function HomeBlogSection() {
   return (
     <section className="bg-background py-16 sm:py-24">
       <AppContainer>
-        <SectionHeading title={t.title} align="center" />
+        {/* `homeTitle`, not `title`: the same words open the /blog page,
+            and one row that changes two unrelated headings is a trap for
+            whoever edits it. */}
+        <SectionHeading title={t.homeTitle} align="center" />
 
         <OrnamentDivider className="mt-7" />
 

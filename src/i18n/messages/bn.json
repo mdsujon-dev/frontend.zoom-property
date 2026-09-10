@@ -284,14 +284,7 @@
       "dhakaAddress": "হাউস ৪২, রোড ১১, ব্লক ডি, বনানী ও গুলশান অ্যাভিনিউ, ঢাকা",
       "chattogramAddress": "সিডিএ অ্যাভিনিউ, জিইসি মোড় ও খুলশী"
     },
-    "social": {
-      "facebook": "https://facebook.com",
-      "instagram": "https://instagram.com",
-      "x": "https://x.com",
-      "linkedin": "https://linkedin.com",
-      "youtube": "https://youtube.com",
-      "whatsapp": "https://wa.me/8801958253301"
-    },
+    "social": [],
     "offices": "অফিস",
     "dhaka": "ঢাকা",
     "chattogram": "চট্টগ্রাম",
@@ -772,6 +765,7 @@
     },
     "eyebrow": "বাজার নোট ও বিশ্লেষণ",
     "title": "রিয়েল এস্টেট সংবাদ, বিশ্লেষণ ও গাইড",
+    "homeTitle": "রিয়েল এস্টেট সংবাদ, বিশ্লেষণ ও গাইড",
     "description": "ঢাকার আবাসন বাজার, স্থাপত্যের বিকাশ, আইনি নীতিমালা ও অর্থনৈতিক অগ্রগতি নিয়ে নির্ভরযোগ্য গবেষণা ও বিশ্লেষণ।",
     "metaTitle": "বাজার নোট ও গাইড",
     "metaDescription": "ঢাকা ও চট্টগ্রামের সম্পত্তি নিয়ে আইনি চেকলিস্ট, বাজার বিশ্লেষণ আর প্রবাসী ক্রেতাদের গাইড।",

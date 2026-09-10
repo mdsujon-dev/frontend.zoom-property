@@ -3,6 +3,7 @@ import { AppContainer } from "@/components/common/app-container";
 import { Counter } from "@/components/motion/counter";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { getDictionary } from "@/i18n/dictionaries";
+import { toLatinDigits } from "@/lib/format";
 
 export interface StatsBannerProps {
   backgroundImage?: string;
@@ -27,27 +28,52 @@ export async function StatsBanner({
 
   const bgImage = banner?.backgroundImage || backgroundImage || DEFAULT_BG;
 
+  /**
+   * One stat, read from the panel.
+   *
+   * The value arrives as whatever somebody typed, so it is folded to ASCII
+   * digits before parsing — otherwise a number entered in Bangla numerals
+   * parses to NaN and the banner silently shows the built-in figure instead of
+   * the one that was just saved.
+   *
+   * `suffix` uses `??` rather than `||`: an empty suffix is a real choice (a
+   * plain "32" with nothing after it), and `||` would overwrite it.
+   */
+  const statFrom = (
+    value: unknown,
+    suffix: string | undefined,
+    label: string | undefined,
+    fallback: { value: number; suffix: string; label: string },
+  ): StatItem => ({
+    value:
+      value === undefined
+        ? fallback.value
+        : parseInt(toLatinDigits(String(value)), 10) || fallback.value,
+    suffix: suffix ?? fallback.suffix,
+    label: label || fallback.label,
+  });
+
   const stats: StatItem[] = [
-    {
-      value: banner?.stat1Value !== undefined ? parseInt(String(banner.stat1Value), 10) || 8 : 8,
-      suffix: banner?.stat1Suffix ?? "k+",
-      label: banner?.stat1Label || "Projects completed",
-    },
-    {
-      value: banner?.stat2Value !== undefined ? parseInt(String(banner.stat2Value), 10) || 3 : 3,
-      suffix: banner?.stat2Suffix ?? "k+",
-      label: banner?.stat2Label || "Global customers",
-    },
-    {
-      value: banner?.stat3Value !== undefined ? parseInt(String(banner.stat3Value), 10) || 20 : 20,
-      suffix: banner?.stat3Suffix ?? "+",
-      label: banner?.stat3Label || "Years of experience",
-    },
-    {
-      value: banner?.stat4Value !== undefined ? parseInt(String(banner.stat4Value), 10) || 95 : 95,
-      suffix: banner?.stat4Suffix ?? "+",
-      label: banner?.stat4Label || "Team engineers",
-    },
+    statFrom(banner?.stat1Value, banner?.stat1Suffix, banner?.stat1Label, {
+      value: 8,
+      suffix: "k+",
+      label: "Projects completed",
+    }),
+    statFrom(banner?.stat2Value, banner?.stat2Suffix, banner?.stat2Label, {
+      value: 3,
+      suffix: "k+",
+      label: "Global customers",
+    }),
+    statFrom(banner?.stat3Value, banner?.stat3Suffix, banner?.stat3Label, {
+      value: 20,
+      suffix: "+",
+      label: "Years of experience",
+    }),
+    statFrom(banner?.stat4Value, banner?.stat4Suffix, banner?.stat4Label, {
+      value: 95,
+      suffix: "+",
+      label: "Team engineers",
+    }),
   ];
 
   return (

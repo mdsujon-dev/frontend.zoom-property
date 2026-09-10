@@ -283,14 +283,7 @@
       "dhakaAddress": "House 42, Road 11, Block D, Banani & Gulshan Avenue, Dhaka",
       "chattogramAddress": "CDA Avenue, GEC Circle & Khulshi"
     },
-    "social": {
-      "facebook": "https://facebook.com",
-      "instagram": "https://instagram.com",
-      "x": "https://x.com",
-      "linkedin": "https://linkedin.com",
-      "youtube": "https://youtube.com",
-      "whatsapp": "https://wa.me/8801958253301"
-    },
+    "social": [],
     "offices": "Offices",
     "dhaka": "Dhaka",
     "chattogram": "Chattogram",
@@ -751,6 +744,7 @@
     },
     "eyebrow": "Market Notes & Intelligence",
     "title": "Explore News, Insights and Guides",
+    "homeTitle": "Explore News, Insights and Guides",
     "description": "In-depth research on Dhaka real estate, architectural movements, property regulations, and market trends.",
     "metaTitle": "Market notes and guides",
     "metaDescription": "Legal checklists, market reads and non-resident buying guides for Dhaka and Chattogram property, written by the Zoom Property team.",

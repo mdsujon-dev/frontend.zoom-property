@@ -1,3 +1,14 @@
+/**
+ * Bengali digits, folded to the ASCII the rest of this file expects.
+ *
+ * Numbers are typed into the CMS, and the Bangla side of a bilingual panel
+ * invites Bangla numerals. `parseInt` and `\d` are both ASCII-only, so without
+ * this a stat entered as ৮ reads as NaN and quietly falls back to its default
+ * — an edit that appears to save and then does nothing.
+ */
+export const toLatinDigits = (value: string) =>
+  value.replace(/[\u09e6-\u09ef]/g, (d) => String(d.charCodeAt(0) - 0x09e6));
+
 const numberFormatter = new Intl.NumberFormat("en-US");
 
 export function formatNumber(value: number, fractionDigits = 0) {

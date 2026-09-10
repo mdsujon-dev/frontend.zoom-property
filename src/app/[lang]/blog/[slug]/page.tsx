@@ -192,7 +192,7 @@ export default async function BlogPostPage({
 
       <section className="bg-background py-14 sm:py-20">
         <AppContainer size="lg">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-12">
+          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-5">
             <div className="flex flex-col gap-10">
               <RichText html={isBn ? contentBn : content} />
 

@@ -52,9 +52,10 @@ export const footerNav = [
 ] as const;
 
 /**
- * The social profiles live in the CMS as well — `dict.contact.social`, one URL
- * per network. `socialProfiles()` in `lib/contact` turns them into the list the
- * footer and the contact page render, and drops any address left blank.
+ * The social profiles live in the CMS as well — `dict.contact.social`, a list
+ * the desk adds to and deletes from, each row an icon and a link.
+ * `socialProfiles()` in `lib/contact` turns it into what the footer and the
+ * contact page render.
  */
 
 /**

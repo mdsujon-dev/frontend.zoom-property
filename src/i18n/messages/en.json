@@ -375,6 +375,13 @@
     "propertiesLabel": "Properties",
     "type": "Property type",
     "anyType": "Any type",
+    "types": {
+      "apartment": "Apartments",
+      "duplex": "Duplexes & Penthouses",
+      "house": "Independent Houses",
+      "commercial": "Commercial Floors",
+      "land": "Residential Plots"
+    },
     "priceRange": "Price range",
     "minimum": "Minimum",
     "maximum": "Maximum",

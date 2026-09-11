@@ -80,6 +80,8 @@ interface FormDict {
  * a server action when the API exists; the field names already match the shape
  * an enquiry endpoint would want.
  */
+import { submitContactForm } from "@/server/features/inquiries/action";
+
 export function ContactForm({
   dict,
   areas,
@@ -94,11 +96,17 @@ export function ContactForm({
     setSubmitting(true);
 
     const form = event.currentTarget;
-    // Stand-in for the request. Replace with a server action.
-    await new Promise((resolve) => setTimeout(resolve, 600));
+    const formData = new FormData(form);
 
-    toast.success(dict.successTitle, { description: dict.successBody });
-    form.reset();
+    const res = await submitContactForm(formData);
+
+    if (res.success) {
+      toast.success(dict.successTitle, { description: dict.successBody });
+      form.reset();
+    } else {
+      toast.error(res.error || "Failed to submit message");
+    }
+
     setSubmitting(false);
   }
 

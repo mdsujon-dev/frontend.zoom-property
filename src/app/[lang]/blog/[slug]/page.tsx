@@ -204,7 +204,7 @@ export default async function BlogPostPage({
                 copiedLabel={a.copied}
               />
 
-              <ArticleComments dict={a.comments} articleTitle={title} />
+              <ArticleComments dict={a.comments} articleTitle={title} postId={insight.id} />
             </div>
 
             <aside className="lg:sticky lg:top-28 lg:self-start">

@@ -85,6 +85,38 @@ export async function get<T>(
   }
 }
 
+/**
+ * POST to a public endpoint.
+ */
+export async function post<T>(
+  path: string,
+  body: any,
+): Promise<ApiEnvelope<T> | null> {
+  const url = buildUrl(path);
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    });
+
+    if (!res.ok) {
+      console.warn(`[api] ${res.status} ${url}`);
+      return null;
+    }
+
+    const json = (await res.json()) as ApiEnvelope<T>;
+    return json?.success ? json : null;
+  } catch (err) {
+    console.warn(`[api] failed POST ${url}:`, (err as Error).message);
+    return null;
+  }
+}
+
 /** The rows of a list endpoint, or `null` if the call did not succeed. */
 export async function list<T>(
   path: string,
@@ -96,4 +128,4 @@ export async function list<T>(
   return { rows: res.data, meta: res.meta };
 }
 
-export const baseApi = { get, list, url: buildUrl };
+export const baseApi = { get, post, list, url: buildUrl };

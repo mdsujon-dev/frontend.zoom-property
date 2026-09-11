@@ -24,6 +24,8 @@ type Dict = Dictionary["blog"]["article"]["quickContact"];
  * `articleTitle` rides along in a hidden field: an enquiry is far more useful
  * to the desk when it says which piece prompted it.
  */
+import { submitContactForm } from "@/server/features/inquiries/action";
+
 export function ArticleQuickContact({
   dict,
   articleTitle,
@@ -38,10 +40,21 @@ export function ArticleQuickContact({
     setSubmitting(true);
 
     const form = event.currentTarget;
-    await new Promise((resolve) => setTimeout(resolve, 600));
+    const formData = new FormData(form);
+    
+    // Add custom fields
+    formData.append("source", `Blog Article: ${articleTitle}`);
+    formData.append("enquiry", "Blog Quick Contact");
 
-    toast.success(dict.successTitle, { description: dict.successBody });
-    form.reset();
+    const res = await submitContactForm(formData);
+
+    if (res.success) {
+      toast.success(dict.successTitle, { description: dict.successBody });
+      form.reset();
+    } else {
+      toast.error(res.error || "Failed to submit message");
+    }
+    
     setSubmitting(false);
   }
 

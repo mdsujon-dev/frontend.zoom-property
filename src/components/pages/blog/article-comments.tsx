@@ -21,12 +21,16 @@ type Dict = Dictionary["blog"]["article"]["comments"];
  * the form confirms receipt and says a moderator reviews it, which is what a
  * real one would do.
  */
+import { submitBlogComment } from "@/server/features/blog-comments/action";
+
 export function ArticleComments({
   dict,
   articleTitle,
+  postId,
 }: {
   dict: Dict;
   articleTitle: string;
+  postId: string;
 }) {
   const [submitting, setSubmitting] = useState(false);
 
@@ -35,10 +39,20 @@ export function ArticleComments({
     setSubmitting(true);
 
     const form = event.currentTarget;
-    await new Promise((resolve) => setTimeout(resolve, 600));
+    const formData = new FormData(form);
+    
+    // Add postId
+    formData.append("postId", postId);
 
-    toast.success(dict.successTitle, { description: dict.successBody });
-    form.reset();
+    const res = await submitBlogComment(formData);
+
+    if (res.success) {
+      toast.success(dict.successTitle, { description: dict.successBody });
+      form.reset();
+    } else {
+      toast.error(res.error || "Failed to submit comment");
+    }
+
     setSubmitting(false);
   }
 

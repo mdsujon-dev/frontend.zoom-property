@@ -12,8 +12,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { areas } from "@/data/areas";
-import { properties, propertyTypes } from "@/data/properties";
+import { areas as fallbackAreas, type Area } from "@/data/areas";
+import {
+  properties as fallbackProperties,
+  propertyTypes as fallbackTypes,
+  type Property,
+} from "@/data/properties";
 import type { Locale } from "@/i18n/config";
 import { localeHref } from "@/i18n/href";
 import { formatBdt } from "@/lib/format";
@@ -51,20 +55,32 @@ type Suggestion =
   | { kind: "area"; id: string; label: string; note: string }
   | { kind: "listing"; id: string; label: string; note: string };
 
-/**
- * The slider's range, taken from the listings themselves rather than typed in:
- * a hand-written ceiling silently hides every property above it the day someone
- * adds a more expensive one.
- */
-const SALE_PRICES = properties
-  .filter((property) => property.purpose === "sale")
-  .map((property) => property.price);
-
 const PRICE_MIN = 0;
-const PRICE_MAX = Math.max(...SALE_PRICES);
+
+/** Used only when the catalogue is empty, so the slider still has a range. */
+const PRICE_CEILING = 200_000_000;
 
 /** ৳5 lakh per notch — fine enough to aim with, coarse enough to drag. */
 const PRICE_STEP = 500_000;
+
+/**
+ * The slider's ceiling, taken from the listings themselves rather than typed
+ * in: a hand-written ceiling silently hides every property above it the day
+ * somebody adds a more expensive one.
+ *
+ * Rounded up to the next notch so the dearest listing is reachable — landing
+ * exactly on the maximum is fiddly with a drag, and a property you cannot
+ * include in a search may as well not be listed.
+ */
+const ceilingFor = (list: Property[]) => {
+  const prices = list
+    .filter((property) => property.purpose === "sale")
+    .map((property) => property.price)
+    .filter((price) => Number.isFinite(price) && price > 0);
+
+  if (!prices.length) return PRICE_CEILING;
+  return Math.ceil(Math.max(...prices) / PRICE_STEP) * PRICE_STEP;
+};
 
 /**
  * The property calculator on the hero.
@@ -91,10 +107,23 @@ export function PropertyCalculator({
   dict,
   locale,
   className,
+  areas = fallbackAreas,
+  properties = fallbackProperties,
+  types = fallbackTypes,
 }: {
   dict: PropertyCalculatorDict;
   locale: Locale;
   className?: string;
+  /**
+   * The live catalogue, handed down by the hero.
+   *
+   * The built-in copies are the defaults rather than the source, so the box
+   * still searches something if the API cannot be reached — a hero with a
+   * dead search field is worse than one searching a slightly old list.
+   */
+  areas?: Area[];
+  properties?: Property[];
+  types?: { value: string; label: string; count: number }[];
 }) {
   const router = useRouter();
   const blurTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -104,8 +133,20 @@ export function PropertyCalculator({
   const [open, setOpen] = useState(false);
   const [highlighted, setHighlighted] = useState(0);
   const [type, setType] = useState<string>(ANY_TYPE);
+
+  const priceMax = useMemo(() => ceilingFor(properties), [properties]);
   const [min, setMin] = useState(PRICE_MIN);
-  const [max, setMax] = useState(PRICE_MAX);
+  const [maxChosen, setMax] = useState(priceMax);
+
+  /**
+   * The upper handle, clamped as it is read rather than corrected afterwards.
+   *
+   * The catalogue can change under a cached page, and a handle left at
+   * yesterday's ceiling would quietly exclude anything dearer than it. Doing
+   * it here rather than in an effect means the slider is never painted once at
+   * the stale value and then again at the right one.
+   */
+  const max = Math.min(maxChosen, priceMax);
 
   const isBn = locale === "bn";
 
@@ -114,7 +155,7 @@ export function PropertyCalculator({
     const matches = (haystack: string) =>
       !term || haystack.toLowerCase().includes(term);
 
-    const types: Suggestion[] = propertyTypes
+    const typeRows: Suggestion[] = types
       .filter((option) => matches(option.label))
       .map((option) => ({
         kind: "type" as const,
@@ -152,8 +193,8 @@ export function PropertyCalculator({
           }))
       : [];
 
-    return { types, areaRows, listings };
-  }, [query, isBn]);
+    return { types: typeRows, areaRows, listings };
+  }, [query, isBn, areas, properties, types]);
 
   const suggestions = useMemo(
     () => [...sections.types, ...sections.areaRows, ...sections.listings],
@@ -210,7 +251,7 @@ export function PropertyCalculator({
   const setHigh = (value: number) => setMax(Math.max(value, min + PRICE_STEP));
 
   const percent = (value: number) =>
-    ((value - PRICE_MIN) / (PRICE_MAX - PRICE_MIN)) * 100;
+    ((value - PRICE_MIN) / (priceMax - PRICE_MIN)) * 100;
 
   const submit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -220,7 +261,7 @@ export function PropertyCalculator({
     else if (query.trim()) params.set("q", query.trim());
     if (type !== ANY_TYPE) params.set("type", type);
     if (min > PRICE_MIN) params.set("min", String(min));
-    if (max < PRICE_MAX) params.set("max", String(max));
+    if (max < priceMax) params.set("max", String(max));
 
     router.push(`${localeHref(locale, "/properties")}?${params.toString()}`);
   };
@@ -354,7 +395,7 @@ export function PropertyCalculator({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={ANY_TYPE}>{dict.anyType}</SelectItem>
-            {propertyTypes.map((option) => (
+            {types.map((option) => (
               <SelectItem key={option.value} value={option.value}>
                 {option.label}
               </SelectItem>
@@ -387,12 +428,14 @@ export function PropertyCalculator({
             <RangeInput
               value={min}
               onChange={setLow}
+              max={priceMax}
               label={dict.minimum}
               formatted={formatBdt(min)}
             />
             <RangeInput
               value={max}
               onChange={setHigh}
+              max={priceMax}
               label={dict.maximum}
               formatted={formatBdt(max)}
             />
@@ -403,6 +446,7 @@ export function PropertyCalculator({
               label={dict.minimum}
               value={min}
               onChange={setLow}
+              max={priceMax}
               hint={formatBdt(min)}
             />
 
@@ -414,6 +458,7 @@ export function PropertyCalculator({
               label={dict.maximum}
               value={max}
               onChange={setHigh}
+              max={priceMax}
               hint={formatBdt(max)}
             />
           </div>
@@ -515,9 +560,12 @@ function RangeInput({
   onChange,
   label,
   formatted,
+  max: ceiling,
 }: {
   value: number;
   onChange: (value: number) => void;
+  /** The dearest listing, so the track covers the whole catalogue. */
+  max: number;
   label: string;
   formatted: string;
 }) {
@@ -525,7 +573,7 @@ function RangeInput({
     <input
       type="range"
       min={PRICE_MIN}
-      max={PRICE_MAX}
+      max={ceiling}
       step={PRICE_STEP}
       value={value}
       onChange={(event) => onChange(Number(event.target.value))}
@@ -550,11 +598,14 @@ function PriceField({
   value,
   onChange,
   hint,
+  max: ceiling,
 }: {
   label: string;
   value: number;
   onChange: (value: number) => void;
   hint: string;
+  /** Typing a number above the dearest listing is clamped to it. */
+  max: number;
 }) {
   return (
     <label className="flex min-w-0 flex-1 flex-col gap-1.5">
@@ -571,7 +622,7 @@ function PriceField({
           value={value}
           onChange={(event) => {
             const digits = event.target.value.replace(/\D/g, "");
-            onChange(Math.min(Number(digits || 0), PRICE_MAX));
+            onChange(Math.min(Number(digits || 0), ceiling));
           }}
           className="w-full min-w-0 bg-transparent text-sm text-foreground tabular-nums focus:outline-none"
         />

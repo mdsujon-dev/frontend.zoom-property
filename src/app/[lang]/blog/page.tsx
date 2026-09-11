@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { Section } from "@/components/common/section";
+import { ContactCta } from "@/components/common/contact-cta";
 import { PageHeader } from "@/components/layout/page-header";
 import { BlogFeed } from "@/components/pages/blog/blog-feed";
 import { getInsights } from "@/server/features/insights";
@@ -41,6 +42,9 @@ export default async function BlogPage() {
           t={t}
         />
       </Section>
+      <div className="mb-8 md:mb-12 lg:mb-20">
+        <ContactCta  tone="surface"/>
+      </div>
     </>
   );
 }

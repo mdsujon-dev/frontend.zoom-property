@@ -18,6 +18,8 @@ import {
   whatsappHref,
 } from "@/lib/contact";
 
+const DHAKA_OFFICE_MAP_URL = "https://www.google.com/maps/place/ZOOM+IT+Work+Station/@23.7453343,90.3469321,17z/data=!4m14!1m7!3m6!1s0x3755bf7ff7d6eb17:0x938638b4d434946!2sZOOM+IT+Work+Station!8m2!3d23.7453294!4d90.349507!16s%2Fg%2F11shnysnzk!3m5!1s0x3755bf7ff7d6eb17:0x938638b4d434946!8m2!3d23.7453294!4d90.349507!16s%2Fg%2F11shnysnzk?entry=ttu&g_ep=EgoyMDI2MDkwOC4wIKXMDSoASAFQAw%3D%3D";
+
 export async function generateMetadata(): Promise<Metadata> {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
   return {
@@ -118,7 +120,14 @@ export default async function ContactPage() {
                 <div className="flex flex-col gap-3 text-sm text-muted-foreground">
                   <div className="flex flex-col">
                     <span className="font-medium text-foreground">{dict.contact.dhaka}</span>
-                    <span>{d.dhakaAddress}</span>
+                    <a
+                      href={DHAKA_OFFICE_MAP_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="underline decoration-primary/30 underline-offset-4 transition-colors hover:text-primary"
+                    >
+                      {d.dhakaAddress}
+                    </a>
                   </div>
                   <div className="flex flex-col">
                     <span className="font-medium text-foreground">

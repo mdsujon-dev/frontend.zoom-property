@@ -163,7 +163,7 @@ export function InteractiveListings({
     }
 
     return chips;
-  }, [filters, areas, isBn]);
+  }, [filters, areas, isBn, types]);
 
   const totalPages = Math.max(1, Math.ceil(searched.length / perPage));
   const currentPage = Math.min(page, totalPages);

@@ -5,10 +5,10 @@ import { ContactCta } from "@/components/common/contact-cta";
 import { localeAlternates } from "@/i18n/alternates";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { getReviewPage } from "@/server/features/reviews";
-import { getHomeVideos } from "@/server/features/videos";
+import { getVideos } from "@/server/features/videos";
 
 /** Quotes per page. Two columns, so an even number keeps the grid square. */
-const PER_PAGE = 12;
+const PER_PAGE = 4;
 
 export async function generateMetadata(): Promise<Metadata> {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
@@ -33,13 +33,15 @@ export default async function ReviewsRoute({
     getDictionary(),
     getLocale(),
     getReviewPage(Number.isFinite(requested) ? requested : 1, PER_PAGE),
-    getHomeVideos(3),
+    getVideos(60),
   ]);
 
   return (
     <>
       <ReviewsPage locale={locale} t={dict.reviews} page={page} videos={videos} />
-      <ContactCta />
+      <div className="mb-8 md:mb-12 lg:mb-20">
+        <ContactCta  tone="surface"/>
+      </div>
     </>
   );
 }

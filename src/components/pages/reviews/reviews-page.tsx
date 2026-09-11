@@ -6,6 +6,7 @@ import { Icon } from "@/components/common/icon";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Text } from "@/components/common/text";
 import { PageHeader } from "@/components/layout/page-header";
+import { ShowcaseVideoGrid } from "@/components/pages/home/showcase-video-grid";
 import { Reveal } from "@/components/motion/reveal";
 import { pageBanners } from "@/data/page-banners";
 import type { VideoItem } from "@/data/videos";
@@ -183,33 +184,17 @@ export function ReviewsPage({
         </AppContainer>
       </section>
 
-      <section className="border-y border-border bg-muted/30 py-16 sm:py-24">
-        <AppContainer>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {videos.slice(0, 3).map((video, index) => (
-              <Reveal key={video.id} delay={index * 0.05}>
-                <Link href={video.youtubeUrl} target="_blank" rel="noreferrer" className="group block overflow-hidden rounded-xl border border-border bg-card">
-                  <div className="relative aspect-video overflow-hidden bg-muted">
-                    <Image src={video.poster} alt={video.title} fill priority={index === 0} sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-black/20 transition-colors group-hover:bg-black/35" />
-                    <span className="absolute left-4 top-4 flex size-10 items-center justify-center rounded-full bg-white text-foreground shadow-lg">
-                      <Icon name="play" size="sm" aria-hidden />
-                    </span>
-                    <span className="absolute bottom-3 right-3 rounded bg-black/70 px-2 py-1 text-xs font-medium text-white">{video.duration}</span>
-                  </div>
-                  <div className="flex items-start justify-between gap-3 p-5">
-                    <span className="flex flex-col gap-1">
-                      <span className="text-xs uppercase tracking-wide text-muted-foreground">{video.category}</span>
-                      <span className="font-heading text-lg leading-tight text-foreground">{video.title}</span>
-                    </span>
-                    <Icon name="arrowUpRight" size="sm" className="mt-1 shrink-0 text-muted-foreground transition-colors group-hover:text-brand" aria-hidden />
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-        </AppContainer>
-      </section>
+      <ShowcaseVideoGrid
+        videos={videos}
+        locale={locale}
+        page={1}
+        totalPage={1}
+        basePath="/reviews"
+        title={t.videoTitle}
+        description={t.videoDescription}
+        playLabel={t.playVideo}
+        closeLabel={t.closeVideo}
+      />
     </>
   );
 }

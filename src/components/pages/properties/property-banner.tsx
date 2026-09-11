@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, type ReactNode } from "react";
 import Lightbox, { type SlideImage } from "yet-another-react-lightbox";
 import Counter from "yet-another-react-lightbox/plugins/counter";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
@@ -57,8 +57,8 @@ export function PropertyBanner({
   alt: string;
   title: React.ReactNode;
   subtitle: string;
-  price: string;
-  priceNote?: string;
+  price: ReactNode;
+  priceNote?: ReactNode;
   badges?: React.ReactNode;
   labels: PropertyBannerLabels;
   /** Call button, rendered next to the price. */

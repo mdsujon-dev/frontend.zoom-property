@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/layout/page-header";
 import { ContactCta } from "@/components/common/contact-cta";
 import { pageBanners } from "@/data/page-banners";
 import { ListingsSection } from "@/components/pages/properties/listings-section";
+import { ShowcaseVideoGrid } from "@/components/pages/home/showcase-video-grid";
 import type { Purpose } from "@/data/properties";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
@@ -14,6 +15,7 @@ import {
   type ApiPropertyType,
 } from "@/server/features/properties";
 import { getAreas } from "@/server/features/areas";
+import { getVideosPage } from "@/server/features/videos";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
@@ -49,10 +51,11 @@ export default async function PropertiesPage({
     type?: string;
     min?: string;
     max?: string;
+    videoPage?: string;
   }>;
 }) {
   const query = await searchParams;
-  const [dict, locale, allProperties, allAreas, propertyTypes] = await Promise.all([
+  const [dict, locale, allProperties, allAreas, propertyTypes, showcaseVideos] = await Promise.all([
     getDictionary(),
     getLocale(),
     getProperties({
@@ -66,6 +69,7 @@ export default async function PropertiesPage({
     }),
     getAreas(60),
     getPropertyTypes(),
+    getVideosPage(Number.parseInt(query.videoPage ?? "1", 10) || 1, 6),
   ]);
 
   const filters = {
@@ -107,6 +111,17 @@ export default async function PropertiesPage({
         clearHref={localeHref(locale, "/properties")}
       />
       <ContactCta />
+      <ShowcaseVideoGrid
+        videos={showcaseVideos.videos}
+        locale={locale}
+        page={showcaseVideos.meta.page}
+        totalPage={showcaseVideos.meta.totalPage}
+        basePath="/properties"
+        title={dict.videoSection.title}
+        description={dict.videoSection.description}
+        playLabel={dict.videoSection.play}
+        closeLabel={dict.videoSection.close}
+      />
     </>
   );
 }

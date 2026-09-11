@@ -5,8 +5,10 @@ import { ContactCta } from "@/components/common/contact-cta";
 import { pageBanners } from "@/data/page-banners";
 import { ConstructionStagesSection } from "@/components/pages/projects/construction-stages-section";
 import { ProjectsSection } from "@/components/pages/projects/projects-section";
+import { ShowcaseVideoGrid } from "@/components/pages/home/showcase-video-grid";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeAlternates } from "@/i18n/alternates";
+import { getVideosPage } from "@/server/features/videos";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
@@ -24,11 +26,14 @@ export default async function ProjectsPage({
     stage?: string;
     q?: string;
     page?: string;
+    videoPage?: string;
   }>;
 }) {
-  const [dict, query] = await Promise.all([
+  const query = await searchParams;
+  const [dict, locale, showcaseVideos] = await Promise.all([
     getDictionary(),
-    searchParams,
+    getLocale(),
+    getVideosPage(Number.parseInt(query.videoPage ?? "1", 10) || 1, 6),
   ]);
 
   return (
@@ -49,6 +54,17 @@ export default async function ProjectsPage({
 
       <ConstructionStagesSection />
       <ContactCta />
+      <ShowcaseVideoGrid
+        videos={showcaseVideos.videos}
+        locale={locale}
+        page={showcaseVideos.meta.page}
+        totalPage={showcaseVideos.meta.totalPage}
+        basePath="/projects"
+        title={dict.videoSection.title}
+        description={dict.videoSection.description}
+        playLabel={dict.videoSection.play}
+        closeLabel={dict.videoSection.close}
+      />
     </>
   );
 }

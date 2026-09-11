@@ -365,7 +365,8 @@
         "nrb": "প্রবাস থেকে কেনা (এনআরবি)"
       }
     },
-    "dock": []
+    "dock": [],
+    "mapUrl": "https://www.google.com/maps?q=ZOOM+IT+Work+Station&output=embed"
   },
   "calculator": {
     "title": "প্রপার্টি ক্যালকুলেটর",

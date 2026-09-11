@@ -90,7 +90,7 @@ export async function get<T>(
  */
 export async function post<T>(
   path: string,
-  body: any,
+  body: unknown,
 ): Promise<ApiEnvelope<T> | null> {
   const url = buildUrl(path);
 

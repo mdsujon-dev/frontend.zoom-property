@@ -458,3 +458,5 @@ html.lenis body {
 .lenis.lenis-smooth [data-slot="dialog-content"] iframe {
   pointer-events: auto;
 }
+
+@import './text-editor.css';

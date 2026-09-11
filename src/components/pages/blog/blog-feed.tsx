@@ -12,6 +12,7 @@ import { BlogPagination } from "./blog-pagination";
 
 interface BlogFeedProps {
   insights: Insight[];
+  backendCategories: string[];
   locale: Locale;
   t: {
     all: string;
@@ -48,7 +49,7 @@ const PER_PAGE = 9;
  * already in the bundle, so filtering is client-side and there is nothing to
  * fetch that a "load more" would be hiding.
  */
-export function BlogFeed({ insights, locale, t }: BlogFeedProps) {
+export function BlogFeed({ insights, backendCategories, locale, t }: BlogFeedProps) {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [page, setPage] = useState(1);
@@ -72,18 +73,13 @@ export function BlogFeed({ insights, locale, t }: BlogFeedProps) {
     }
   };
 
-  const categories = useMemo(
-    () => [
+  const categories = useMemo(() => {
+    // We could receive backendCategories from props. For now, let's assume it's passed in.
+    return [
       { id: "All", label: t.all },
-      { id: "Architecture", label: t.categories["Architecture"] ?? "Architecture" },
-      { id: "Lifestyle", label: t.categories["Lifestyle"] ?? "Lifestyle" },
-      { id: "Legal", label: t.categories["Legal"] ?? "Advisory" },
-      { id: "Economy", label: t.categories["Economy"] ?? "Economy" },
-      { id: "Real Estate", label: t.categories["Real Estate"] ?? "Real Estate" },
-      { id: "Technology", label: t.categories["Technology"] ?? "Technology" },
-    ],
-    [t],
-  );
+      ...(backendCategories?.map(c => ({ id: c, label: t.categories[c] ?? c })) || [])
+    ];
+  }, [t, backendCategories]);
 
   const filtered = useMemo(() => {
     const q = searchQuery.toLowerCase().trim();
@@ -93,9 +89,7 @@ export function BlogFeed({ insights, locale, t }: BlogFeedProps) {
       // in everything but name, and Market pieces are real estate.
       const matchesCategory =
         activeCategory === "All" ||
-        post.category === activeCategory ||
-        (activeCategory === "Legal" && post.category === "NRB") ||
-        (activeCategory === "Real Estate" && post.category === "Market");
+        post.category === activeCategory;
 
       if (!matchesCategory) return false;
       if (!q) return true;

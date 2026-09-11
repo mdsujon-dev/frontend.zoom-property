@@ -75,9 +75,11 @@ export function LegalPage({
                     </span>
                     {section.title}
                   </Heading>
-                  <Text className="leading-relaxed text-muted-foreground">
-                    {section.body}
-                  </Text>
+                  <Text
+                    as="div"
+                    className="text-editor leading-relaxed text-muted-foreground"
+                    dangerouslySetInnerHTML={{ __html: section.body }}
+                  />
                 </li>
               </Reveal>
             ))}

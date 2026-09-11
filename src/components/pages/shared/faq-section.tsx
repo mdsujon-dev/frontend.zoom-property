@@ -26,13 +26,16 @@ export async function FaqSection() {
           <Accordion type="single" collapsible className="w-full">
             {dict.content.faqs.map((faq) => (
               <AccordionItem key={faq.question} value={faq.question}>
-                <AccordionTrigger className="text-left font-semibold text-foreground hover:text-primary">
+                <AccordionTrigger className="text-left font-semibold text-foreground hover:text-primary cursor-pointer">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent>
-                  <Text size="sm" className="leading-relaxed text-muted-foreground">
-                    {faq.answer}
-                  </Text>
+                <AccordionContent className="">
+                  <Text 
+                    as="div" 
+                    size="sm" 
+                    className="text-editor leading-relaxed text-muted-foreground [&>p]:mb-2 last:[&>p]:mb-0"
+                    dangerouslySetInnerHTML={{ __html: faq.answer }}
+                  />
                 </AccordionContent>
               </AccordionItem>
             ))}

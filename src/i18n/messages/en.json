@@ -365,7 +365,8 @@
         "nrb": "Buying from abroad (NRB)"
       }
     },
-    "dock": []
+    "dock": [],
+    "mapUrl": "https://www.google.com/maps?q=ZOOM+IT+Work+Station&output=embed"
   },
   "calculator": {
     "title": "Property calculator",

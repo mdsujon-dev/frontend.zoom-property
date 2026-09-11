@@ -13,6 +13,7 @@ import { LOCALES, LOCALE_TAGS } from "@/i18n/config";
 import { localeAlternates } from "@/i18n/alternates";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { socialProfiles } from "@/lib/contact";
+import { navLinks } from "@/lib/nav-links";
 import { organizationSchema, websiteSchema } from "@/lib/seo";
 
 import "../globals.css";
@@ -95,6 +96,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
             locale={locale}
             dict={dict.nav}
             phone={dict.contact.details.phone}
+            menu={navLinks(dict.nav.menu)}
           />
           <main id="top" className="flex-1">
             {children}

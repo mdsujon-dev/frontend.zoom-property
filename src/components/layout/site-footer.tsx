@@ -80,18 +80,18 @@ export async function SiteFooter() {
                 href={telHref(d.phone)}
                 className="flex w-fit items-center gap-2 whitespace-nowrap text-sm text-footer-foreground/85 transition-colors hover:text-brand-green-light"
               >
-                <Icon name="phone" size="xs" className="text-footer-foreground/60" />
+                <Icon name={t.phoneIcon} size="xs" className="text-footer-foreground/60" />
                 {d.phone}
               </a>
               <a
                 href={mailHref(d.email)}
                 className="flex w-fit items-center gap-2 text-sm text-footer-foreground/85 transition-colors hover:text-brand-green-light"
               >
-                <Icon name="mail" size="xs" className="text-footer-foreground/60" />
+                <Icon name={t.emailIcon} size="xs" className="text-footer-foreground/60" />
                 {d.email}
               </a>
               <span className="flex items-start gap-2 text-sm text-footer-foreground/75">
-                <Icon name="location" size="xs" className="mt-1 shrink-0 text-footer-foreground/60" />
+                <Icon name={t.addressIcon} size="xs" className="mt-1 shrink-0 text-footer-foreground/60" />
                 {d.dhakaAddress}
               </span>
             </div>

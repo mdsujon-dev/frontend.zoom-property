@@ -18,14 +18,27 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { mainNav, siteConfig } from "@/data/site";
+import { siteConfig } from "@/data/site";
+import type { NavLink } from "@/lib/nav-links";
 import type { Locale } from "@/i18n/config";
 import { localeHref } from "@/i18n/href";
 import { useScrollDirection } from "@/hooks/use-scroll-direction";
 import { telHref } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
-type NavDict = Record<string, string>;
+/**
+ * Only the strings the bar itself prints.
+ *
+ * Named one by one rather than `Record<string, string>`: the menu is a list of
+ * its own now, and a loose index signature made the whole `nav` block
+ * unassignable the moment one of its entries stopped being a string.
+ */
+type NavDict = {
+  contact: string;
+  bookViewing: string;
+  openMenu: string;
+  language: string;
+};
 
 /**
  * Sticky header.
@@ -44,10 +57,13 @@ export function SiteHeader({
   locale,
   dict,
   phone,
+  menu,
 }: {
   locale: Locale;
   dict: NavDict;
   phone: string;
+  /** The menu itself, edited in the panel. Empty and no bar is drawn. */
+  menu: NavLink[];
 }) {
   const [open, setOpen] = useState(false);
   const { direction, scrolledPast } = useScrollDirection();
@@ -109,12 +125,12 @@ export function SiteHeader({
         </Link>
 
         <nav className="hidden items-center gap-1.5 lg:flex">
-          {mainNav.map((item) => {
+          {menu.map((item) => {
             const href = localeHref(locale, item.href);
             const active = pathname === href || pathname.startsWith(`${href}/`);
             return (
               <Link
-                key={item.key}
+                key={`${item.href}-${item.label}`}
                 href={href}
                 className={cn(
                   "relative flex items-center justify-center rounded-lg px-3.5 py-2 text-sm transition-all duration-200",
@@ -123,7 +139,7 @@ export function SiteHeader({
                     : "font-medium text-muted-foreground hover:bg-muted/60 hover:text-foreground",
                 )}
               >
-                <span>{dict[item.key]}</span>
+                <span>{item.label}</span>
                 {active && (
                   <motion.span
                     layoutId="activeNavIndicator"
@@ -175,12 +191,12 @@ export function SiteHeader({
               </SheetHeader>
 
               <nav className="flex flex-col gap-1 py-4">
-                {mainNav.map((item) => {
+                {menu.map((item) => {
                   const href = localeHref(locale, item.href);
                   const active = pathname === href || pathname.startsWith(`${href}/`);
                   return (
                     <Link
-                      key={item.key}
+                      key={`${item.href}-${item.label}`}
                       href={href}
                       onClick={() => setOpen(false)}
                       className={cn(
@@ -190,7 +206,7 @@ export function SiteHeader({
                           : "text-muted-foreground hover:bg-muted hover:text-foreground font-medium",
                       )}
                     >
-                      <span>{dict[item.key]}</span>
+                      <span>{item.label}</span>
                       {active && (
                         <span className="size-1.5 rounded-full bg-primary" />
                       )}

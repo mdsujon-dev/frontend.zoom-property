@@ -4,6 +4,7 @@
     "description": "ঢাকা ও চট্টগ্রামে ফ্ল্যাট কিনুন, ভাড়া নিন বা বিনিয়োগ করুন। প্রতিটি লিস্টিং রাজউক-যাচাই করা, দাম যা লেখা তাই, আর পরামর্শদাতারা মিনিটেই উত্তর দেন।"
   },
   "nav": {
+    "menu": [],
     "properties": "সম্পত্তি",
     "projects": "প্রকল্প",
     "areas": "এলাকা",
@@ -363,7 +364,8 @@
         "landowner": "জমির মালিক — যৌথ উদ্যোগ",
         "nrb": "প্রবাস থেকে কেনা (এনআরবি)"
       }
-    }
+    },
+    "dock": []
   },
   "calculator": {
     "title": "প্রপার্টি ক্যালকুলেটর",
@@ -399,6 +401,9 @@
   },
   "footer": {
     "companyName": "জুম প্রপার্টি লিমিটেড",
+    "phoneIcon": "fa-solid fa-phone",
+    "emailIcon": "fa-solid fa-envelope",
+    "addressIcon": "fa-solid fa-location-dot",
     "explore": "ঘুরে দেখুন",
     "exploreLinks": [],
     "services": "সেবা",

@@ -1,7 +1,7 @@
 import { CallChime } from "@/components/layout/call-chime";
-import { Icon, type IconName } from "@/components/common/icon";
+import { Icon } from "@/components/common/icon";
 import { getDictionary } from "@/i18n/dictionaries";
-import { mailHref, telHref, whatsappHref } from "@/lib/contact";
+import { dockLinks } from "@/lib/nav-links";
 import { cn } from "@/lib/utils";
 
 /**
@@ -42,41 +42,15 @@ import { cn } from "@/lib/utils";
  */
 export async function ContactDock() {
   const dict = await getDictionary();
-  const channels = dict.contact.channels;
-  const d = dict.contact.details;
+  const links = dockLinks(dict.contact.dock);
 
-  const links: {
-    icon: IconName;
-    /** The channel name — read out, and shown as the browser's own tooltip. */
-    title: string;
-    href: string;
-    /** Resting colour. WhatsApp's is its own; the other two are the brand's. */
-    tone: string;
-    /** Only the call cell rings; two ringing icons would be noise. */
-    ring?: boolean;
-    external?: boolean;
-  }[] = [
-    {
-      icon: "phone",
-      title: channels.call,
-      href: telHref(d.phone),
-      tone: "text-primary",
-      ring: true,
-    },
-    {
-      icon: "whatsapp",
-      title: channels.whatsapp,
-      href: whatsappHref(d.whatsapp),
-      tone: "text-[#25d366]",
-      external: true,
-    },
-    {
-      icon: "mail",
-      title: channels.email,
-      href: mailHref(d.email),
-      tone: "text-brand",
-    },
-  ];
+  // Nothing to reach us on, nothing to draw. A tab with no cells in it is a
+  // white sliver stuck to the edge of every page.
+  if (!links.length) return null;
+
+  // Only the first cell rings, and only when it is a telephone. Two ringing
+  // icons is noise, and a ringing envelope is nonsense.
+  const ringAt = links.findIndex((link) => link.href.startsWith("tel:"));
 
   return (
     <nav
@@ -89,41 +63,42 @@ export async function ContactDock() {
     >
       <CallChime />
 
-      {links.map((link) => (
-        <a
-          key={link.icon}
-          href={link.href}
-          aria-label={link.title}
-          title={link.title}
-          {...(link.external
-            ? { target: "_blank", rel: "noreferrer" }
-            : undefined)}
-          className={cn(
-            "group relative flex size-12 items-center justify-center transition-colors",
-            link.tone,
-            "hover:bg-primary hover:text-primary-foreground focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-primary",
-          )}
-        >
-          {link.ring ? (
-            // The halo. Behind the icon, clipped to nothing on hover so the
-            // cell is a plain button the moment someone reaches for it.
-            <span
-              aria-hidden
-              className="pointer-events-none absolute inset-2 animate-(--animate-call-halo) rounded-full bg-primary/35 group-hover:hidden motion-reduce:hidden"
-            />
-          ) : null}
+      {links.map((link, index) => {
+        const ring = index === ringAt;
+        // Anything that leaves the site opens in its own tab; `tel:` and
+        // `mailto:` hand off to an app and must not.
+        const external = /^https?:/i.test(link.href);
 
-          <span
-            className={cn(
-              "relative",
-              link.ring &&
-                "animate-(--animate-phone-ring) group-hover:animate-none motion-reduce:animate-none",
-            )}
+        return (
+          <a
+            key={link.href}
+            href={link.href}
+            aria-label={link.label || undefined}
+            title={link.label || undefined}
+            {...(external ? { target: "_blank", rel: "noreferrer" } : undefined)}
+            className="group relative flex size-12 items-center justify-center text-primary transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-primary"
           >
-            <Icon name={link.icon} size="md" />
-          </span>
-        </a>
-      ))}
+            {ring ? (
+              // The halo. Behind the icon, clipped to nothing on hover so the
+              // cell is a plain button the moment someone reaches for it.
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-2 animate-(--animate-call-halo) rounded-full bg-primary/35 group-hover:hidden motion-reduce:hidden"
+              />
+            ) : null}
+
+            <span
+              className={cn(
+                "relative",
+                ring &&
+                  "animate-(--animate-phone-ring) group-hover:animate-none motion-reduce:animate-none",
+              )}
+            >
+              <Icon name={link.icon} size="md" />
+            </span>
+          </a>
+        );
+      })}
     </nav>
   );
 }

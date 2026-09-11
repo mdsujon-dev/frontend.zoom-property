@@ -75,7 +75,7 @@ export async function HeroSection() {
     : HERO_IMAGES;
 
   return (
-    <section className="relative isolate flex min-h-[92svh] items-end overflow-hidden">
+    <section className="relative isolate flex min-h-[92svh] items-end overflow-visible">
       <Parallax speed={0.18} zoom className="absolute inset-0 -z-10">
         <HeroBackdrop images={images} />
       </Parallax>

@@ -270,7 +270,7 @@ export function PropertyCalculator({
     <div className={cn("w-full", className)}>
       <form
         onSubmit={submit}
-        className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5 shadow-2xl sm:p-6"
+        className="relative z-20 flex flex-col gap-4 rounded-2xl border border-border bg-card p-5 shadow-2xl sm:p-6"
       >
         <span className="font-heading text-xs font-bold tracking-wider text-muted-foreground uppercase">
           {dict.title}
@@ -315,7 +315,7 @@ export function PropertyCalculator({
               id="calculator-suggestions"
               role="listbox"
               aria-label={dict.searchPlaceholder}
-              className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary/35 hover:scrollbar-thumb-primary/60 absolute top-full right-0 left-0 z-30 mt-2 max-h-96 overflow-y-auto rounded-xl border border-border bg-card py-2 shadow-xl"
+              className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary/35 hover:scrollbar-thumb-primary/60 absolute top-full right-0 left-0 z-50 mt-2 max-h-96 overflow-y-auto rounded-xl border border-border bg-card py-2 shadow-xl"
             >
               {sections.types.length > 0 ? (
                 <>

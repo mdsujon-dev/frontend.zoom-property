@@ -22,8 +22,10 @@ export interface Property {
   id: string;
   slug: string;
   title: string;
+  titleBn?: string;
   /** Neighbourhood, e.g. "Gulshan 2". */
   area: string;
+  areaBn?: string;
   city: string;
   purpose: Purpose;
   status?: PropertyStatus;
@@ -55,6 +57,7 @@ export interface Property {
    * it can be translated, excerpted and searched without parsing markup.
    */
   description?: string[];
+  descriptionBn?: string[];
 }
 
 const photo = (id: string, w = 1200) =>

@@ -21,6 +21,7 @@ import {
 import type { Locale } from "@/i18n/config";
 import { localeHref } from "@/i18n/href";
 import { formatBdt } from "@/lib/format";
+import { FormatBdt, TakaIcon } from "@/components/ui/format-bdt";
 import { cn } from "@/lib/utils";
 
 export interface PropertyCalculatorDict {
@@ -447,7 +448,7 @@ export function PropertyCalculator({
               value={min}
               onChange={setLow}
               max={priceMax}
-              hint={formatBdt(min)}
+              hint={<FormatBdt value={min} />}
             />
 
             <span aria-hidden className="pb-3 text-muted-foreground">
@@ -459,7 +460,7 @@ export function PropertyCalculator({
               value={max}
               onChange={setHigh}
               max={priceMax}
-              hint={formatBdt(max)}
+              hint={<FormatBdt value={max} />}
             />
           </div>
         </fieldset>
@@ -603,7 +604,7 @@ function PriceField({
   label: string;
   value: number;
   onChange: (value: number) => void;
-  hint: string;
+  hint: React.ReactNode;
   /** Typing a number above the dearest listing is clamped to it. */
   max: number;
 }) {
@@ -613,7 +614,7 @@ function PriceField({
 
       <span className="flex h-11 items-center gap-2 rounded-lg border border-border bg-background px-3 focus-within:border-primary">
         <span aria-hidden className="text-sm text-muted-foreground">
-          ৳
+          <TakaIcon />
         </span>
         <span aria-hidden className="h-5 w-px bg-border" />
 

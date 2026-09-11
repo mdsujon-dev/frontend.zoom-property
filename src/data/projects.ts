@@ -15,6 +15,7 @@ export interface Project {
   /** URL segment for `/projects/[slug]`. */
   slug: string;
   name: string;
+  nameBn?: string;
   area: string;
   city: string;
   /** Completion, 0–100. */
@@ -34,6 +35,7 @@ export interface Project {
   images: string[];
   /** The long write-up on the project page, one string per paragraph. */
   description: string[];
+  descriptionBn?: string[];
   /**
    * The site walkthrough. Filmed on the visit that produced `lastInspected`,
    * so the footage and the percentages above it describe the same day.

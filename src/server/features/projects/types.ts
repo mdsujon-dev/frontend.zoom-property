@@ -21,6 +21,7 @@ export interface ApiProject {
   coverImage?: ApiMedia;
   images?: ApiMedia[];
   description?: string[];
+  descriptionBn?: string[];
   video?: {
     title?: string;
     titleBn?: string;

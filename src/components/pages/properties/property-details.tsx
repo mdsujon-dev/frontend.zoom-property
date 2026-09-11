@@ -34,13 +34,19 @@ export interface PropertyDetailsDict {
 export function PropertyDetails({
   property,
   dict,
+  locale = "en",
 }: {
   property: Property;
   dict: PropertyDetailsDict;
+  locale?: "en" | "bn";
 }) {
+  const description =
+    locale === "bn" && property.descriptionBn?.length
+      ? property.descriptionBn
+      : property.description;
   return (
     <div className="flex flex-col gap-10">
-      {property.description && property.description.length > 0 ? (
+      {description && description.length > 0 ? (
         <section className="flex flex-col gap-4">
           <Heading as="h2" size="h4">
             {dict.about}
@@ -50,7 +56,7 @@ export function PropertyDetails({
               left column — long-form copy set to the full grid width is the
               fastest way to make people stop reading it. */}
           <div className="flex max-w-2xl flex-col gap-4">
-            {property.description.map((paragraph) => (
+            {description.map((paragraph) => (
               <Text key={paragraph.slice(0, 40)} className="leading-relaxed">
                 {paragraph}
               </Text>

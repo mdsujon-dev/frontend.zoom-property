@@ -44,22 +44,26 @@ const CRORE = 10_000_000;
  * so that is how it is shown. Pass `exact` for a detail page where the full
  * figure matters.
  */
-export function formatBdt(value: number, options?: { exact?: boolean }) {
+export function formatBdtValue(value: number, options?: { exact?: boolean }) {
   if (options?.exact) {
-    return `৳${new Intl.NumberFormat("en-IN", {
+    return new Intl.NumberFormat("en-IN", {
       maximumFractionDigits: 0,
-    }).format(value)}`;
+    }).format(value);
   }
 
   if (value >= CRORE) {
-    return `৳${trimZeros(value / CRORE)} Cr`;
+    return `${trimZeros(value / CRORE)} Cr`;
   }
 
   if (value >= LAKH) {
-    return `৳${trimZeros(value / LAKH)} Lakh`;
+    return `${trimZeros(value / LAKH)} Lakh`;
   }
 
-  return `৳${new Intl.NumberFormat("en-IN").format(value)}`;
+  return new Intl.NumberFormat("en-IN").format(value);
+}
+
+export function formatBdt(value: number, options?: { exact?: boolean }) {
+  return `৳${formatBdtValue(value, options)}`;
 }
 
 /** Monthly rent reads differently from a sale price — keep the unit attached. */

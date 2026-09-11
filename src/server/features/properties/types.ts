@@ -9,7 +9,7 @@ export interface ApiProperty {
   referenceNo?: string;
   title: string;
   titleBn?: string;
-  area?: { name?: string } | null;
+  area?: { name?: string; nameBn?: string } | null;
   city?: string;
   purpose?: string;
   status?: string;
@@ -30,4 +30,5 @@ export interface ApiProperty {
   agent?: { _id?: string } | null;
   amenities?: { name?: string }[];
   description?: string[];
+  descriptionBn?: string[];
 }

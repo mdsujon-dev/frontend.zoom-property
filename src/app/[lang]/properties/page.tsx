@@ -51,11 +51,19 @@ export default async function PropertiesPage({
     max?: string;
   }>;
 }) {
-  const [dict, locale, query, allProperties, allAreas, propertyTypes] = await Promise.all([
+  const query = await searchParams;
+  const [dict, locale, allProperties, allAreas, propertyTypes] = await Promise.all([
     getDictionary(),
     getLocale(),
-    searchParams,
-    getProperties(100),
+    getProperties({
+      limit: 100,
+      purpose: query.purpose,
+      area: query.area,
+      type: query.type,
+      q: query.q,
+      min: toNumber(query.min),
+      max: toNumber(query.max),
+    }),
     getAreas(60),
     getPropertyTypes(),
   ]);

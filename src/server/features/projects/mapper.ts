@@ -16,6 +16,7 @@ export const toProject = (p: ApiProject): Project => ({
   id: p._id,
   slug: p.slug,
   name: p.name,
+  nameBn: p.nameBn,
   area: p.area?.name || "",
   city: p.city || "Dhaka",
   progress: p.progress ?? 0,
@@ -27,6 +28,7 @@ export const toProject = (p: ApiProject): Project => ({
   image: mediaUrl(p.coverImage),
   images: gallery(p.coverImage, p.images),
   description: paragraphs(p.description),
+  descriptionBn: paragraphs(p.descriptionBn),
   video: {
     title: p.video?.title || "",
     titleBn: p.video?.titleBn || "",

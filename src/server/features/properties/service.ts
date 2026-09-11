@@ -2,7 +2,7 @@ import "server-only";
 
 import { properties as fallback, type Property } from "@/data/properties";
 
-import { CACHE_TAGS, createResource } from "../../base-api";
+import { CACHE_TAGS, createResource, type QueryParams } from "../../base-api";
 import { toProperty } from "./mapper";
 import type { ApiProperty } from "./types";
 
@@ -26,8 +26,9 @@ export async function getHomeProperties(limit = 6): Promise<Property[]> {
   return properties.list({ limit });
 }
 
-/** Every listing on the market, for `/properties`. */
-export const getProperties = (limit = 60) => properties.list({ limit });
+/** Every listing on the market, with URL filters passed to the API. */
+export const getProperties = (params: number | QueryParams = 60) =>
+  properties.list(typeof params === "number" ? { limit: params } : params);
 
 /**
  * One listing by its slug, or `null` when there is none.

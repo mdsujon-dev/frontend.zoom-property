@@ -6,10 +6,10 @@ import { Text } from "@/components/common/text";
 import { ImageFrame } from "@/components/media/image-frame";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { FormatBdt } from "@/components/ui/format-bdt";
 import type { Project } from "@/data/projects";
 import type { Locale } from "@/i18n/config";
 import { localeHref } from "@/i18n/href";
-import { formatBdt } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 export function ProjectCard({
@@ -22,13 +22,14 @@ export function ProjectCard({
   locale?: Locale;
   className?: string;
 }) {
+  const displayName = locale === "bn" && project.nameBn ? project.nameBn : project.name;
   const sold = project.units - project.unitsLeft;
   const soldPercent = Math.round((sold / project.units) * 100);
 
   return (
     <Link
       href={localeHref(locale, `/projects/${project.slug}`)}
-      aria-label={`${project.name}, ${project.area}`}
+      aria-label={`${displayName}, ${project.area}`}
       className="block h-full"
     >
       <Card
@@ -43,7 +44,7 @@ export function ProjectCard({
       >
         <ImageFrame
           src={project.image}
-          alt={`${project.name}, ${project.area}`}
+          alt={`${displayName}, ${project.area}`}
           ratio="3/2"
           rounded="none"
           sizes="third"
@@ -93,7 +94,7 @@ export function ProjectCard({
                 size="h5"
                 className="text-foreground group-hover:text-primary transition-colors"
               >
-                {project.name}
+                {displayName}
               </Heading>
             </div>
             <Text
@@ -155,7 +156,7 @@ export function ProjectCard({
           <dl className="grid grid-cols-2 gap-x-4 gap-y-3 border-t border-border pt-3">
             <Stat
               label="Starting From"
-              value={formatBdt(project.startingPrice)}
+              value={<FormatBdt value={project.startingPrice} />}
               isHighlight
             />
             <Stat label="Floor Sizes" value={project.sizeRange} />
@@ -177,7 +178,7 @@ function Stat({
   isHighlight = false,
 }: {
   label: string;
-  value: string;
+  value: React.ReactNode;
   isHighlight?: boolean;
 }) {
   return (

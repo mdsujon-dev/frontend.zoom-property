@@ -10,7 +10,9 @@ export const toProperty = (p: ApiProperty): Property => ({
   id: p._id,
   slug: p.slug,
   title: p.title,
+  titleBn: p.titleBn,
   area: p.area?.name || "",
+  areaBn: p.area?.nameBn,
   city: p.city || "Dhaka",
   purpose: (p.purpose as Property["purpose"]) || "sale",
   // The site knows two states. Everything not on the market reads as sold,
@@ -32,4 +34,5 @@ export const toProperty = (p: ApiProperty): Property => ({
   agentId: p.agent?._id || "",
   amenities: (p.amenities ?? []).map((a) => a.name || "").filter(Boolean),
   description: paragraphs(p.description),
+  descriptionBn: paragraphs(p.descriptionBn),
 });

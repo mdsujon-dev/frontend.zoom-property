@@ -10,6 +10,7 @@ import type { Property } from "@/data/properties";
 import type { Locale } from "@/i18n/config";
 import { localeHref } from "@/i18n/href";
 import { formatArea, formatBdt, formatKatha, formatRent } from "@/lib/format";
+import { FormatBdt } from "@/components/ui/format-bdt";
 import { cn } from "@/lib/utils";
 
 export interface PropertyCardProps {
@@ -33,8 +34,10 @@ export function PropertyCard({
   featured = false,
 }: PropertyCardProps) {
   const {
-    title,
+    title: englishTitle,
+    titleBn,
     area,
+    areaBn,
     city,
     price,
     purpose,
@@ -51,6 +54,8 @@ export function PropertyCard({
     handover,
   } = property;
   const isSold = status === "sold";
+  const title = locale === "bn" && titleBn ? titleBn : englishTitle;
+  const displayArea = locale === "bn" && areaBn ? areaBn : area;
 
   const specs: { icon: IconName; label: string }[] = [
     ...(beds > 0 ? [{ icon: "bed" as const, label: `${beds} Beds` }] : []),
@@ -64,7 +69,7 @@ export function PropertyCard({
   return (
     <Link
       href={localeHref(locale, `/properties/${property.slug}`)}
-      aria-label={`${title}, ${area}`}
+      aria-label={`${title}, ${displayArea}`}
       className="block h-full"
     >
       <Card
@@ -76,7 +81,7 @@ export function PropertyCard({
       >
         <ImageFrame
           src={images[0]}
-          alt={`${title}, ${area}`}
+          alt={`${title}, ${displayArea}`}
           ratio={featured ? "3/2" : "4/3"}
           rounded="none"
           hover="zoom"
@@ -115,8 +120,8 @@ export function PropertyCard({
               {isSold
                 ? "Sold"
                 : purpose === "rent"
-                  ? formatRent(price)
-                  : formatBdt(price)}
+                  ? <><FormatBdt value={price} />/mo</>
+                  : <FormatBdt value={price} />}
             </span>
             <span
               className={cn(
@@ -144,7 +149,7 @@ export function PropertyCard({
               className="flex items-center gap-1.5 text-muted-foreground"
             >
               <Icon name="location" size="xs" className="text-primary/70" />
-              {area}, {city}
+              {displayArea}, {city}
             </Text>
           </div>
 

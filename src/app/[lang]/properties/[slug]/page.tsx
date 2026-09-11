@@ -24,6 +24,7 @@ import { localeAlternates } from "@/i18n/alternates";
 import { LOCALES, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
+import { getPropertyBySlug } from "@/server/features/properties";
 import { telHref } from "@/lib/contact";
 import { formatArea, formatBdt, formatKatha, formatRent } from "@/lib/format";
 import { absoluteUrl, breadcrumbSchema, propertySchema } from "@/lib/seo";
@@ -52,7 +53,7 @@ export async function generateMetadata({
   params: Promise<{ lang: Locale; slug: string }>;
 }): Promise<Metadata> {
   const { lang, slug } = await params;
-  const property = propertyBySlug(slug);
+  const property = (await getPropertyBySlug(slug)) ?? propertyBySlug(slug);
 
   if (!property) return {};
 
@@ -79,12 +80,14 @@ export default async function PropertyDetailPage({
   params: Promise<{ lang: Locale; slug: string }>;
 }) {
   const { lang, slug } = await params;
-  const property = propertyBySlug(slug);
+  const property = (await getPropertyBySlug(slug)) ?? propertyBySlug(slug);
 
   if (!property) notFound();
 
   const dict = await getDictionary();
   const t = dict.property;
+  const displayTitle = lang === "bn" && property.titleBn ? property.titleBn : property.title;
+  const displayArea = lang === "bn" && property.areaBn ? property.areaBn : property.area;
 
   const agent = agents.find((person) => person.id === property.agentId);
   const similar = similarProperties(property);
@@ -145,7 +148,7 @@ export default async function PropertyDetailPage({
                 </li>
               ))}
               <li className="truncate font-medium text-foreground">
-                {property.title}
+                {displayTitle}
               </li>
             </ol>
           </nav>
@@ -154,13 +157,13 @@ export default async function PropertyDetailPage({
         <Reveal delay={0.08} className="mt-6">
           <PropertyBanner
             images={property.images}
-            alt={`${property.title}, ${property.area}`}
+            alt={`${displayTitle}, ${displayArea}`}
             title={
               <Heading as="h1" size="h3" className="text-white">
-                {property.title}
+                {displayTitle}
               </Heading>
             }
-            subtitle={`${property.area}, ${property.city}`}
+            subtitle={`${displayArea}, ${property.city}`}
             price={
               isSold
                 ? t.sold
@@ -263,6 +266,7 @@ export default async function PropertyDetailPage({
 
             <PropertyDetails
               property={property}
+              locale={lang}
               dict={{
                 about: t.about,
                 neighbourhood: t.neighbourhood,

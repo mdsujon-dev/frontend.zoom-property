@@ -51,7 +51,7 @@ export function ShowcaseVideoGrid({
         </div>
 
         {videos.length ? (
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {videos.map((video) => {
               const titleText = locale === "bn" ? video.titleBn : video.title;
               const descriptionText = locale === "bn" ? video.descriptionBn : video.description;

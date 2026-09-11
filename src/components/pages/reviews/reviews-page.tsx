@@ -6,14 +6,14 @@ import { Icon } from "@/components/common/icon";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Text } from "@/components/common/text";
 import { PageHeader } from "@/components/layout/page-header";
-import { ShowcaseVideoGrid } from "@/components/pages/home/showcase-video-grid";
+import { ReviewVideoCarousel } from "@/components/pages/home/review-video-carousel";
 import { Reveal } from "@/components/motion/reveal";
 import { pageBanners } from "@/data/page-banners";
-import type { VideoItem } from "@/data/videos";
 import { localeHref } from "@/i18n/href";
 import { LOCALE_TAGS, type Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import type { ReviewPage } from "@/server/features/reviews";
+import type { VideoReviewPage } from "@/server/features/reviews";
 import { cn } from "@/lib/utils";
 
 /**
@@ -34,12 +34,12 @@ export function ReviewsPage({
   locale,
   t,
   page,
-  videos,
+  videoPage,
 }: {
   locale: Locale;
   t: Dictionary["reviews"];
   page: ReviewPage;
-  videos: VideoItem[];
+  videoPage: VideoReviewPage;
 }) {
   const { reviews, total, totalPages, page: current, from, average } = page;
   const number = new Intl.NumberFormat(LOCALE_TAGS[locale], {
@@ -184,17 +184,34 @@ export function ReviewsPage({
         </AppContainer>
       </section>
 
-      <ShowcaseVideoGrid
-        videos={videos}
-        locale={locale}
-        page={1}
-        totalPage={1}
-        basePath="/reviews"
-        title={t.videoTitle}
-        description={t.videoDescription}
-        playLabel={t.playVideo}
-        closeLabel={t.closeVideo}
-      />
+      {videoPage.reviews.length > 0 ? (
+        <section className="border-y border-border bg-muted/30 py-16 sm:py-24">
+          <AppContainer>
+            <SectionHeading title={t.videoTitle} description={t.videoDescription} />
+            <div className="mt-10">
+              <ReviewVideoCarousel
+                reviews={videoPage.reviews}
+                labels={{ play: t.playVideo, close: t.closeVideo }}
+              />
+            </div>
+            {videoPage.totalPages > 1 ? (
+              <nav className="mt-8 flex items-center justify-center gap-3" aria-label="Video review pagination">
+                {videoPage.page > 1 ? (
+                  <Link href={`${base}?page=${current}&videoPage=${videoPage.page - 1}`} className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-semibold hover:border-primary hover:text-primary">
+                    <Icon name="chevronLeft" size="xs" />
+                  </Link>
+                ) : null}
+                <span className="text-sm text-muted-foreground">{videoPage.page} / {videoPage.totalPages}</span>
+                {videoPage.page < videoPage.totalPages ? (
+                  <Link href={`${base}?page=${current}&videoPage=${videoPage.page + 1}`} className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-semibold hover:border-primary hover:text-primary">
+                    <Icon name="chevronRight" size="xs" />
+                  </Link>
+                ) : null}
+              </nav>
+            ) : null}
+          </AppContainer>
+        </section>
+      ) : null}
     </>
   );
 }

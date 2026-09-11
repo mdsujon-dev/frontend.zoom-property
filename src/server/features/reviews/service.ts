@@ -14,6 +14,8 @@ const reviews = createResource<ApiReview, Review>({
   sort: "order",
 });
 
+const PATH = "reviews/public";
+
 /**
  * The reviews the home page shows.
  *
@@ -61,7 +63,45 @@ export async function getVideoReviews(limit = 12): Promise<Review[]> {
   return filmed.slice(0, limit);
 }
 
-const PATH = "reviews/public";
+export interface VideoReviewPage {
+  reviews: Review[];
+  total: number;
+  totalPages: number;
+  page: number;
+}
+
+export async function getVideoReviewPage(
+  page = 1,
+  perPage = 4,
+): Promise<VideoReviewPage> {
+  const safePage = Math.max(1, page);
+  const result = await baseApi.list<ApiReview>(
+    PATH,
+    { page: safePage, limit: perPage, sort: "order", videoOnly: true },
+    { tags: [CACHE_TAGS.reviews] },
+  );
+
+  if (result) {
+    const total = result.meta?.total ?? result.rows.length;
+    const totalPages = Math.max(1, result.meta?.totalPage ?? 1);
+    return {
+      reviews: result.rows.map(toReview),
+      total,
+      totalPages,
+      page: Math.min(safePage, totalPages),
+    };
+  }
+
+  const filmed = fallback.filter((review) => review.video?.youtubeUrl);
+  const totalPages = Math.max(1, Math.ceil(filmed.length / perPage));
+  const current = Math.min(safePage, totalPages);
+  return {
+    reviews: filmed.slice((current - 1) * perPage, current * perPage),
+    total: filmed.length,
+    totalPages,
+    page: current,
+  };
+}
 
 export interface ReviewPage {
   reviews: Review[];

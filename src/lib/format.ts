@@ -9,6 +9,15 @@
 export const toLatinDigits = (value: string) =>
   value.replace(/[\u09e6-\u09ef]/g, (d) => String(d.charCodeAt(0) - 0x09e6));
 
+/**
+ * Converts English digits (0-9) to Bengali digits (০-৯).
+ * Useful when displaying numeric stats in the Bengali layout.
+ */
+export const toBengaliDigits = (value: string | number) =>
+  String(value).replace(/\d/g, (d) =>
+    String.fromCharCode(d.charCodeAt(0) + (0x09e6 - 0x30))
+  );
+
 const numberFormatter = new Intl.NumberFormat("en-US");
 
 export function formatNumber(value: number, fractionDigits = 0) {

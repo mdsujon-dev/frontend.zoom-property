@@ -4,8 +4,8 @@ import { Icon } from "@/components/common/icon";
 import { AppContainer } from "@/components/common/app-container";
 import { Logo } from "@/components/layout/logo";
 import { Text } from "@/components/common/text";
-import { projects } from "@/data/projects";
 import { footerNav, siteConfig } from "@/data/site";
+import { getProjects } from "@/server/features/projects";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
 import { mailHref, socialProfiles, telHref } from "@/lib/contact";
@@ -28,7 +28,14 @@ import { mailHref, socialProfiles, telHref } from "@/lib/contact";
  * contact details into a cramped column.
  */
 export async function SiteFooter() {
-  const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
+  // The project column is whatever is published, not a list typed in here:
+  // a footer that still advertises a delivered project is worse than one with
+  // a shorter column. Four, because that is what the column has room for.
+  const [dict, locale, footerProjects] = await Promise.all([
+    getDictionary(),
+    getLocale(),
+    getProjects(4),
+  ]);
   const labels: Record<string, string> = { ...dict.nav, ...dict.footer };
   // Same source as the contact page: one edit in the panel moves the
   // number in both places, which is the only way a phone number on two
@@ -114,7 +121,7 @@ export async function SiteFooter() {
             <h3 className="font-heading text-h6 text-footer-foreground font-semibold">
               {dict.nav.projects}
             </h3>
-            {projects.map((project) => (
+            {footerProjects.map((project) => (
               <Link
                 key={project.id}
                 href={localeHref(locale, `/projects#${project.id}`)}
@@ -134,9 +141,22 @@ export async function SiteFooter() {
           <Text size="xs" tone="inverse" className="text-footer-foreground/60">
             © {new Date().getFullYear()} {siteConfig.name} {dict.footer.rights}
           </Text>
-          <Text size="xs" tone="inverse" className="text-footer-foreground/60">
-            {dict.footer.demo}
-          </Text>
+          {/* The legal pages sit in the bottom bar rather than a nav column:
+              they are read once, on purpose, by someone looking for them. */}
+          <div className="flex items-center gap-4">
+            <Link
+              href={localeHref(locale, "/terms")}
+              className="text-xs text-footer-foreground/60 transition-colors hover:text-brand-green-light"
+            >
+              {dict.footer.terms}
+            </Link>
+            <Link
+              href={localeHref(locale, "/privacy")}
+              className="text-xs text-footer-foreground/60 transition-colors hover:text-brand-green-light"
+            >
+              {dict.footer.privacy}
+            </Link>
+          </div>
         </AppContainer>
       </div>
     </footer>

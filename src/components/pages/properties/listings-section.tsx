@@ -39,12 +39,16 @@ export async function ListingsSection({
 
     return (
       <Section id="listings" className="bg-background">
+        {/* `limit` is the page size here, not a cap on what is fetched:
+            the whole list is filtered and searched in the browser, and this
+            is how many of the results a page shows at a time. */}
         <InteractiveListings
           locale={locale}
           filters={filters}
           clearHref={clearHref}
           properties={propList}
           areas={areaList}
+          pageSize={limit}
         />
       </Section>
     );

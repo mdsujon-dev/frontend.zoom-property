@@ -38,6 +38,7 @@ const GROUPS = [
   "reviews",
   "agents",
   "contact",
+  "legal",
   "common",
 ] as const;
 

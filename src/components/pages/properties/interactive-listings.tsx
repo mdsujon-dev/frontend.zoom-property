@@ -12,7 +12,8 @@ import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { cn } from "@/lib/utils";
 
 type CategoryTab = "all" | "sale" | "rent" | "penthouse" | "ready" | "commercial";
-const PAGE_SIZE = 12;
+/** Cards per page when the caller does not say. */
+const DEFAULT_PAGE_SIZE = 12;
 
 export interface ListingFilters {
   purpose?: Purpose;
@@ -33,13 +34,19 @@ export function InteractiveListings({
   clearHref,
   properties = fallbackProperties,
   areas = fallbackAreas,
+  pageSize = DEFAULT_PAGE_SIZE,
 }: {
   locale?: Locale;
   filters?: ListingFilters;
   clearHref?: string;
   properties?: Property[];
   areas?: Area[];
+  /** How many cards a page holds. The page that owns the list decides. */
+  pageSize?: number;
 } = {}) {
+  // Guarded rather than trusted: a zero or a negative would divide the list
+  // into an infinite number of pages and hang the render.
+  const perPage = Math.max(1, Math.floor(pageSize) || DEFAULT_PAGE_SIZE);
   const [selectedArea, setSelectedArea] = useState<string>(filters?.area || "all");
   const [activeCategory, setActiveCategory] = useState<CategoryTab>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -156,14 +163,14 @@ export function InteractiveListings({
     return chips;
   }, [filters, areas, isBn]);
 
-  const totalPages = Math.max(1, Math.ceil(searched.length / PAGE_SIZE));
+  const totalPages = Math.max(1, Math.ceil(searched.length / perPage));
   const currentPage = Math.min(page, totalPages);
   const paginatedProperties = useMemo(
-    () => searched.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE),
-    [currentPage, searched],
+    () => searched.slice((currentPage - 1) * perPage, currentPage * perPage),
+    [currentPage, perPage, searched],
   );
-  const pageStart = searched.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
-  const pageEnd = Math.min(currentPage * PAGE_SIZE, searched.length);
+  const pageStart = searched.length === 0 ? 0 : (currentPage - 1) * perPage + 1;
+  const pageEnd = Math.min(currentPage * perPage, searched.length);
 
   const handleAreaChange = (areaId: string) => {
     setSelectedArea(areaId);
@@ -341,7 +348,9 @@ export function InteractiveListings({
             ? `${searched.length}টির মধ্যে ${pageStart}-${pageEnd} দেখানো হচ্ছে`
             : `Showing ${pageStart}-${pageEnd} of ${searched.length} properties`}
         </span>
-        <span className="hidden sm:inline">12 per page</span>
+        <span className="hidden sm:inline">
+          {isBn ? `প্রতি পাতায় ${perPage}টি` : `${perPage} per page`}
+        </span>
       </div>
 
       {/* Property Cards Grid */}

@@ -29,6 +29,9 @@ export interface Review {
   property: string;
   rating: number;
   image: string;
+  /** Picked for the home strip in the panel. */
+  isHome?: boolean;
+  featured?: boolean;
   /**
    * Present when the client said it on camera. The quote still has to be
    * written out: it is what the card shows before anyone presses play, and it

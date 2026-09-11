@@ -1,3 +1,7 @@
-export { getHomeReviews, getReviews, getVideoReviews } from "./service";
-export { toReview } from "./mapper";
-export type { ApiReview } from "./types";
+export {
+  getHomeReviews,
+  getVideoReviews,
+  getReviewPage,
+  getReviews,
+} from "./service";
+export type { ReviewPage } from "./service";

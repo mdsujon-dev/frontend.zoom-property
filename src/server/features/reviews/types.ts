@@ -16,4 +16,6 @@ export interface ApiReview {
   property?: { title?: string } | null;
   propertyLabel?: string;
   video?: { youtubeUrl?: string; poster?: ApiMedia; duration?: string } | null;
+  featured?: boolean;
+  isHome?: boolean;
 }

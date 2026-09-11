@@ -23,6 +23,9 @@ const ROUTES = [
   "/blog",
   "/about",
   "/contact",
+  "/reviews",
+  "/terms",
+  "/privacy",
 ] as const;
 
 const url = (locale: string, route: string) =>

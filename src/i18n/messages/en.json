@@ -195,7 +195,11 @@
     "statLabel": "Buyers who came back or referred us",
     "reviewCount": "verified reviews",
     "playVideo": "Play video review",
-    "closeVideo": "Close player"
+    "closeVideo": "Close player",
+    "showing": "Showing {from}–{to} of {total}",
+    "page": "Page {page}",
+    "prev": "Previous",
+    "next": "Next"
   },
   "agentsSection": {
     "eyebrow": "Certified advisors",
@@ -209,7 +213,39 @@
   "gallery": {
     "eyebrow": "Architectural photography",
     "title": "Our photographs, not CGI renders",
-    "description": "Click any photograph for the full-screen pinch-and-zoom viewer."
+    "description": "Click any photograph for the full-screen pinch-and-zoom viewer.",
+    "images": [
+      {
+        "src": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=80",
+        "alt": "Grand double-height living salon with lake view",
+        "caption": "The Grand Living Salon — Lake View Residence, Gulshan 2"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=80",
+        "alt": "Master suite with warm nocturnal ambient lighting",
+        "caption": "Master Suite with Custom Walk-in Wardrobe — Sky Duplex, Banani"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=80",
+        "alt": "Italian marble kitchen island",
+        "caption": "Culinary Suite with Imported Quartz Countertops — Dhanmondi 27"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=1600&q=80",
+        "alt": "Spa-grade travertine bathroom",
+        "caption": "Ensuite Spa with Freestanding Soaking Tub — Baridhara Diplomatic"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1600&q=80",
+        "alt": "Private villa facade at dusk",
+        "caption": "Courtyard Villa Estate at Dusk — Bashundhara Block I"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1600&q=80",
+        "alt": "Skyline penthouse terrace garden",
+        "caption": "Sky Lounge & Terrace Garden — The Quay, Gulshan 2"
+      }
+    ]
   },
   "faq": {
     "eyebrow": "FAQ",
@@ -365,7 +401,9 @@
     "explore": "Explore",
     "services": "Services",
     "rights": "Limited · REHAB member",
-    "demo": "Demo data — not a live listing service."
+    "demo": "Demo data — not a live listing service.",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy"
   },
   "content": {
     "stats": [
@@ -852,43 +890,6 @@
     "prev": "Previous video",
     "next": "Next video"
   },
-  "gallery": {
-    "eyebrow": "Architectural photography",
-    "title": "Our photographs, not CGI renders",
-    "description": "Click any photograph for the full-screen pinch-and-zoom viewer.",
-    "images": [
-      {
-        "src": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=80",
-        "alt": "Grand double-height living salon with lake view",
-        "caption": "The Grand Living Salon — Lake View Residence, Gulshan 2"
-      },
-      {
-        "src": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=80",
-        "alt": "Master suite with warm nocturnal ambient lighting",
-        "caption": "Master Suite with Custom Walk-in Wardrobe — Sky Duplex, Banani"
-      },
-      {
-        "src": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=80",
-        "alt": "Italian marble kitchen island",
-        "caption": "Culinary Suite with Imported Quartz Countertops — Dhanmondi 27"
-      },
-      {
-        "src": "https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=1600&q=80",
-        "alt": "Spa-grade travertine bathroom",
-        "caption": "Ensuite Spa with Freestanding Soaking Tub — Baridhara Diplomatic"
-      },
-      {
-        "src": "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1600&q=80",
-        "alt": "Private villa facade at dusk",
-        "caption": "Courtyard Villa Estate at Dusk — Bashundhara Block I"
-      },
-      {
-        "src": "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1600&q=80",
-        "alt": "Skyline penthouse terrace garden",
-        "caption": "Sky Lounge & Terrace Garden — The Quay, Gulshan 2"
-      }
-    ]
-  },
   "notFound": {
     "code": "404",
     "eyebrow": "Page not found",
@@ -907,5 +908,107 @@
       "blog": "Market notes from the people doing the deals.",
       "contact": "Talk to an advisor about what you need."
     }
+  },
+  "terms": {
+    "backgroundImage": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=2000&q=80",
+    "eyebrow": "Legal",
+    "title": "Terms & Conditions",
+    "description": "What you agree to when you use this site, make an enquiry, or view a property with us.",
+    "metaTitle": "Terms & Conditions",
+    "metaDescription": "The terms that govern the use of Zoom Property's website, enquiries and viewings.",
+    "updated": "Last updated 11 September 2026",
+    "sections": [
+      {
+        "title": "Who we are",
+        "body": "Zoom Property is a licensed real estate agency operating in Dhaka and Chattogram. “We” and “us” in this document mean Zoom Property; “you” means anyone using this website or dealing with us through it."
+      },
+      {
+        "title": "What this website is",
+        "body": "This site advertises property we have been instructed to sell or let. Every listing has been inspected by our survey team and its title documents read before publication. A listing is an invitation to enquire, not an offer capable of acceptance — nothing on this site forms a contract of sale."
+      },
+      {
+        "title": "Accuracy of listings",
+        "body": "Measurements, prices, completion dates and construction percentages are given in good faith and were correct on the date of inspection shown on the listing. Availability and price can change without notice. Before you commit money, verify everything independently through your own lawyer and surveyor — we will hand over every document we hold to help you do so."
+      },
+      {
+        "title": "Enquiries and viewings",
+        "body": "An enquiry places you under no obligation and costs nothing. We do not charge buyers or tenants a search fee. Viewings are arranged with the owner’s consent and at their convenience; we ask that you give reasonable notice if you cannot attend."
+      },
+      {
+        "title": "Fees",
+        "body": "Our commission is payable by the party who instructed us, on the terms set out in their agency agreement. Any fee payable by you will be stated in writing before you are asked to commit to anything. We do not take a markup on the price shown."
+      },
+      {
+        "title": "Your responsibilities",
+        "body": "You agree not to scrape, republish or resell the content of this site, not to submit enquiries on behalf of someone who has not asked you to, and not to use our contact details to send unsolicited marketing."
+      },
+      {
+        "title": "Our liability",
+        "body": "We are responsible for the accuracy of what we tell you and for the care we take in inspecting a property. We are not liable for the acts of a developer, an owner, a bank or a government office, nor for loss arising from a decision you took without the independent advice we recommended."
+      },
+      {
+        "title": "Changes to these terms",
+        "body": "We may revise these terms. The date at the top of this page shows when they last changed. Continuing to use the site after a change means you accept the revised version."
+      },
+      {
+        "title": "Governing law",
+        "body": "These terms are governed by the law of Bangladesh, and the courts of Bangladesh have exclusive jurisdiction over any dispute arising from them."
+      },
+      {
+        "title": "Contact",
+        "body": "Questions about these terms go to the desk — the phone number and email address on our contact page reach a person, not a queue."
+      }
+    ]
+  },
+  "privacy": {
+    "backgroundImage": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=2000&q=80",
+    "eyebrow": "Legal",
+    "title": "Privacy Policy",
+    "description": "What we collect when you enquire, why we hold it, and what we will never do with it.",
+    "metaTitle": "Privacy Policy",
+    "metaDescription": "How Zoom Property collects, uses and protects the personal information you give us.",
+    "updated": "Last updated 11 September 2026",
+    "sections": [
+      {
+        "title": "What we collect",
+        "body": "Only what an enquiry needs: your name, your phone number, your email address if you give one, and what you told us you are looking for. We do not ask for your national ID, your bank details or your income to answer an enquiry."
+      },
+      {
+        "title": "Why we hold it",
+        "body": "To reply to you, to shortlist properties that fit what you asked for, and to arrange viewings. That is the whole of it. If you stop replying, the record stops being used."
+      },
+      {
+        "title": "What we never do",
+        "body": "We do not sell your details. We do not pass them to developers, banks or third-party agents so they can market to you. A developer learns your name when you ask us to arrange a viewing with them, and not before."
+      },
+      {
+        "title": "Cookies",
+        "body": "This site sets a cookie to remember your language choice, and nothing else that identifies you. There is no advertising tracker and no cross-site profiling on these pages."
+      },
+      {
+        "title": "How long we keep it",
+        "body": "An enquiry record is kept for as long as it is useful to you — through the search, and for the period afterwards in which a buyer typically comes back. Ask us to delete it and we delete it."
+      },
+      {
+        "title": "Who can see it",
+        "body": "The advisors working on your enquiry, and the staff who administer our systems. Access is logged. Nobody outside the company sees your details without your say-so."
+      },
+      {
+        "title": "Where it is stored",
+        "body": "On managed servers with encrypted storage and encrypted transfer. Documents you send us — papers, photographs — are held in the same place under the same controls."
+      },
+      {
+        "title": "Your rights",
+        "body": "You can ask what we hold about you, ask us to correct it, and ask us to delete it. Write to the address on our contact page and we will answer within a working week."
+      },
+      {
+        "title": "Children",
+        "body": "This site is for adults transacting in property. We do not knowingly collect information from anyone under eighteen."
+      },
+      {
+        "title": "Changes to this policy",
+        "body": "The date at the top of this page shows when this policy last changed. A change that materially affects what we do with your information will be told to you directly, not just posted here."
+      }
+    ]
   }
 }

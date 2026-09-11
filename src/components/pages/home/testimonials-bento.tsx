@@ -2,8 +2,8 @@ import { AppContainer } from "@/components/common/app-container";
 import { OrnamentDivider } from "@/components/common/ornament-divider";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Reveal } from "@/components/motion/reveal";
-import { reviews } from "@/data/people";
 import { getDictionary } from "@/i18n/dictionaries";
+import { getVideoReviews } from "@/server/features/reviews";
 
 import { ReviewVideoCarousel } from "./review-video-carousel";
 
@@ -26,13 +26,19 @@ const CARD_SHADOW = "shadow-[0_26px_60px_-28px] shadow-primary/45";
  * A face saying it outweighs the same sentence set in type, so the home page
  * shows nothing but video and slides through the set. Written reviews still
  * exist and still have a home on `/reviews`; the filter is what keeps a review
- * without a recording from silently rendering as a black card here.
+ * without a film from rendering as a black card here.
+ *
+ * Which ones, and in what order, is the desk’s decision — see
+ * `getVideoReviews`. The section removes itself when there are none rather
+ * than printing a heading over an empty rail.
  */
 export async function TestimonialsBento() {
-  const dict = await getDictionary();
+  const [dict, videoReviews] = await Promise.all([
+    getDictionary(),
+    getVideoReviews(12),
+  ]);
   const t = dict.reviews;
 
-  const videoReviews = reviews.filter((review) => review.video);
   if (videoReviews.length === 0) return null;
 
   return (

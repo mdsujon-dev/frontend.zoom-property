@@ -13,12 +13,20 @@ import type { ApiReview } from "./types";
  * version a crawler or a muted visitor ever reads.
  */
 export const toReview = (r: ApiReview): Review => {
-  const image = mediaUrl(r.photo);
   const youtubeUrl = r.video?.youtubeUrl || "";
+
+  // A filmed review is not asked for a portrait — the still it already has is
+  // a picture of the person talking. Falling back here is what lets the
+  // written grid on /reviews show a filmed one without an empty frame.
+  const image = mediaUrl(r.photo) || mediaUrl(r.video?.poster);
 
   return {
     id: r._id,
     quote: r.quote,
+    // Carried through so the home strip can prefer what the desk ticked
+    // *after* it has narrowed the set to films — see `getVideoReviews`.
+    isHome: r.isHome === true,
+    featured: r.featured === true,
     name: r.clientName,
     role: r.role || "",
     // The label the desk typed wins over the linked listing's own title: it is

@@ -315,7 +315,7 @@ export function PropertyCalculator({
               id="calculator-suggestions"
               role="listbox"
               aria-label={dict.searchPlaceholder}
-              className="absolute top-full right-0 left-0 z-30 mt-2 max-h-96 overflow-y-auto rounded-xl border border-border bg-card py-2 shadow-xl"
+              className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary/35 hover:scrollbar-thumb-primary/60 absolute top-full right-0 left-0 z-30 mt-2 max-h-96 overflow-y-auto rounded-xl border border-border bg-card py-2 shadow-xl"
             >
               {sections.types.length > 0 ? (
                 <>

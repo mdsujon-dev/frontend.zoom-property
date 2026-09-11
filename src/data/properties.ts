@@ -11,7 +11,12 @@ export type PropertyType =
   | "duplex"
   | "house"
   | "commercial"
-  | "land";
+  | "land"
+  | "studio"
+  | "warehouse"
+  | "shop"
+  | "sublet"
+  | "garage";
 
 export interface Property {
   id: string;
@@ -370,6 +375,11 @@ export const propertyTypes: { value: PropertyType; label: string; count: number 
   { value: "house", label: "Independent Houses", count: 1180 },
   { value: "commercial", label: "Commercial Floors", count: 2340 },
   { value: "land", label: "Residential Plots", count: 760 },
+  { value: "studio", label: "Studio Apartments", count: 420 },
+  { value: "warehouse", label: "Warehouses & Godowns", count: 310 },
+  { value: "shop", label: "Shops & Showrooms", count: 950 },
+  { value: "sublet", label: "Rooms & Sublets", count: 530 },
+  { value: "garage", label: "Parking & Garages", count: 280 },
 ];
 
 /** One listing by its slug — the URL segment, not the id. */

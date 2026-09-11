@@ -7,7 +7,11 @@ import type { Purpose } from "@/data/properties";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
 import { localeAlternates } from "@/i18n/alternates";
-import { getProperties, getPropertyTypes } from "@/server/features/properties";
+import {
+  getProperties,
+  getPropertyTypes,
+  type ApiPropertyType,
+} from "@/server/features/properties";
 import { getAreas } from "@/server/features/areas";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -87,7 +91,7 @@ export default async function PropertiesPage({
         filters={filters}
         properties={allProperties}
         areas={allAreas}
-        types={propertyTypes.map((t: any) => ({
+        types={propertyTypes.map((t: ApiPropertyType) => ({
           value: t.name,
           label: locale === "bn" && t.nameBn ? t.nameBn : t.description || t.name,
         }))}

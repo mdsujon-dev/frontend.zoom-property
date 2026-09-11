@@ -37,12 +37,19 @@ export const getProperties = (limit = 60) => properties.list({ limit });
  */
 export const getPropertyBySlug = (slug: string) => properties.bySlug(slug);
 
+export interface ApiPropertyType {
+  name: string;
+  nameBn?: string;
+  description?: string;
+  icon?: string;
+}
+
 export async function getPropertyTypes() {
   const { baseApi } = await import("../../base-api");
-  const res = await baseApi("properties/options/types?activeOnly=true", {
-    next: { tags: [CACHE_TAGS.properties] },
-  });
-  if (!res.ok) return [];
-  const body = await res.json();
-  return body.data || [];
+  const res = await baseApi.list<ApiPropertyType>(
+    "properties/options/types",
+    { activeOnly: true },
+    { tags: [CACHE_TAGS.properties] },
+  );
+  return res?.rows ?? [];
 }

@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 /**
  * Renders a structured-data block.
  *
@@ -8,11 +10,10 @@
  */
 export function JsonLd({ schema }: { schema: Record<string, unknown> }) {
   return (
-    <script
+    <Script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
-      }}
+      id={`json-ld-${String(schema["@type"] || "schema")}`}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }}
     />
   );
 }

@@ -7,9 +7,14 @@ import { Reveal } from "@/components/motion/reveal";
 import { HeroBackdrop } from "@/components/pages/home/hero-backdrop";
 import { PropertyCalculator } from "@/components/pages/home/property-calculator";
 import { Badge } from "@/components/ui/badge";
+import { propertyTypes as fallbackTypes } from "@/data/properties";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { getAreas } from "@/server/features/areas";
-import { getProperties, getPropertyTypes } from "@/server/features/properties";
+import {
+  getProperties,
+  getPropertyTypes,
+  type ApiPropertyType,
+} from "@/server/features/properties";
 
 const photo = (id: string) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=2000&q=80`;
@@ -43,10 +48,26 @@ export async function HeroSection() {
 
   const isBn = locale === "bn";
 
-  const types = rawTypes.map((t: any) => ({
-    value: t.name,
-    label: isBn && t.nameBn ? t.nameBn : t.description || t.name,
-    count: properties.filter((property) => property.type === t.name).length,
+  type BannerTypeSource = {
+    name?: string;
+    value?: string;
+    nameBn?: string;
+    description?: string;
+    label?: string;
+  };
+  const sourceTypes: BannerTypeSource[] = rawTypes.length
+    ? rawTypes.map((type: ApiPropertyType) => type)
+    : fallbackTypes.map((type) => type);
+
+  const types = sourceTypes.map((t) => ({
+    value: t.name ?? t.value ?? "",
+    label:
+      isBn && t.nameBn
+        ? t.nameBn
+        : t.description || t.label || t.name || t.value || "",
+    count: properties.filter(
+      (property) => property.type === (t.name ?? t.value),
+    ).length,
   }));
 
   const images = dict.hero.backgroundImages?.length

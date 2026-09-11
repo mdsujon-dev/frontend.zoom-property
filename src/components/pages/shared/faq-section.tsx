@@ -15,10 +15,11 @@ export async function FaqSection() {
 
   return (
     <Section id="faq" className="border-t border-border bg-background">
-      <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-10">
         <SectionHeading
           title={dict.faq.title}
-          className="lg:flex-col lg:items-start"
+          description={dict.faq.description}
+          className="text-center"
         />
 
         <Reveal delay={0.1}>

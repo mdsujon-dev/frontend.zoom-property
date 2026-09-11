@@ -8,6 +8,7 @@ import { PageHeader } from "@/components/layout/page-header";
 import { pageBanners } from "@/data/page-banners";
 import { Reveal } from "@/components/motion/reveal";
 import { ContactForm } from "@/components/pages/contact/contact-form";
+import { FaqSection } from "@/components/pages/shared/faq-section";
 import { areas } from "@/data/areas";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeAlternates } from "@/i18n/alternates";
@@ -167,6 +168,22 @@ export default async function ContactPage() {
         </div>
       </Section>
 
+      <Reveal>
+        <section className="h-[450px] w-full border-t border-border bg-muted">
+          <iframe
+            src="https://www.google.com/maps?q=ZOOM+IT+Work+Station&output=embed"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Location Map"
+          />
+        </section>
+      </Reveal>
+
+      <FaqSection />
     </>
   );
 }

@@ -145,7 +145,7 @@ export async function SiteFooter() {
                 href={localeHref(locale, `/projects#${project.id}`)}
                 className="text-sm text-footer-foreground/75 transition-colors hover:text-brand-green-light"
               >
-                {project.name}
+                {locale === "bn" && project.nameBn ? project.nameBn : project.name}
               </Link>
             ))}
           </nav>

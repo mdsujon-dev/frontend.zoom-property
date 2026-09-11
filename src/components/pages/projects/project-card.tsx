@@ -81,9 +81,6 @@ export function ProjectCard({
             ) : null}
           </div>
 
-          <span className="absolute bottom-3 right-3 rounded-full bg-black/70 px-2.5 py-1 text-[11px] font-medium text-white/85 border border-white/15 backdrop-blur-md">
-            Inspected: {project.lastInspected}
-          </span>
         </ImageFrame>
 
         <CardContent className="flex flex-col gap-4 px-5 pt-5 pb-5">

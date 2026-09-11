@@ -39,6 +39,7 @@ const GROUPS = [
   "agents",
   "contact",
   "legal",
+  "headerFooter",
   "common",
 ] as const;
 

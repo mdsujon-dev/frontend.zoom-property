@@ -18,11 +18,11 @@ import { AreaFacts } from "@/components/pages/properties/area-facts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { agents } from "@/data/people";
-import { projectBySlug, projects, otherProjects } from "@/data/projects";
 import { localeAlternates } from "@/i18n/alternates";
-import { LOCALES, type Locale } from "@/i18n/config";
+import type { Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
+import { getProjectBySlug, getProjects } from "@/server/features/projects";
 import { telHref } from "@/lib/contact";
 import { formatBdt } from "@/lib/format";
 import { absoluteUrl, breadcrumbSchema, projectSchema } from "@/lib/seo";
@@ -40,10 +40,16 @@ import { absoluteUrl, breadcrumbSchema, projectSchema } from "@/lib/seo";
  * property pages. Same decision at a different stage — the parts that answer
  * "where is it and who do I call" should not be two implementations that drift.
  */
+/**
+ * No pre-built params.
+ *
+ * The set of developments lives in the database and changes whenever the desk
+ * adds or retires one, so it is not knowable at build time. Each page renders
+ * on its first request and is cached from then on; a save drops that cache
+ * through the `projects` tag.
+ */
 export function generateStaticParams() {
-  return LOCALES.flatMap((lang) =>
-    projects.map((project) => ({ lang, slug: project.slug })),
-  );
+  return [] as { lang: Locale; slug: string }[];
 }
 
 export async function generateMetadata({
@@ -52,9 +58,10 @@ export async function generateMetadata({
   params: Promise<{ lang: Locale; slug: string }>;
 }): Promise<Metadata> {
   const { lang, slug } = await params;
-  const project = projectBySlug(slug);
+  const found = await getProjectBySlug(slug);
 
-  if (!project) return {};
+  if (!found) return {};
+  const { project } = found;
 
   return {
     title: `${project.name}, ${project.area}`,
@@ -74,17 +81,21 @@ export default async function ProjectDetailPage({
   params: Promise<{ lang: Locale; slug: string }>;
 }) {
   const { lang, slug } = await params;
-  const project = projectBySlug(slug);
+  const found = await getProjectBySlug(slug);
 
-  if (!project) notFound();
+  if (!found) notFound();
 
+  const { project } = found;
   const dict = await getDictionary();
   const t = dict.projectDetail;
 
   // The desk lead handles the development pipeline; the same face every time is
   // the point of naming one at all.
   const agent = agents[0];
-  const others = otherProjects(project);
+  // The rest of the pipeline, minus this one. Three is what the row holds.
+  const others = (await getProjects(12))
+    .filter((item) => item.slug !== project.slug)
+    .slice(0, 3);
   const path = `/${lang}/projects/${slug}`;
 
   const sold = project.units - project.unitsLeft;

@@ -75,15 +75,17 @@ export async function HeroSection() {
     : HERO_IMAGES;
 
   return (
-    <section className="relative isolate flex min-h-[92svh] items-end overflow-visible">
-      <Parallax speed={0.18} zoom className="absolute inset-0 -z-10">
-        <HeroBackdrop images={images} />
-      </Parallax>
+    <section className="relative z-10 isolate flex min-h-[92svh] items-end overflow-x-clip overflow-y-visible">
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <Parallax speed={0.18} zoom className="absolute inset-0">
+          <HeroBackdrop images={images} />
+        </Parallax>
 
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-linear-to-t from-black via-black/70 to-black/40"
-      />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-linear-to-t from-black via-black/70 to-black/40"
+        />
+      </div>
 
       <AppContainer className="pb-16 pt-36">
         {/* Copy left, calculator right. They stack under `lg`, where two

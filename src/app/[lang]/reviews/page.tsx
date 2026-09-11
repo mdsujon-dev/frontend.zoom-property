@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { ReviewsPage } from "@/components/pages/reviews/reviews-page";
+import { ContactCta } from "@/components/common/contact-cta";
 import { localeAlternates } from "@/i18n/alternates";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { getReviewPage } from "@/server/features/reviews";
@@ -36,6 +37,9 @@ export default async function ReviewsRoute({
   ]);
 
   return (
-    <ReviewsPage locale={locale} t={dict.reviews} page={page} videos={videos} />
+    <>
+      <ReviewsPage locale={locale} t={dict.reviews} page={page} videos={videos} />
+      <ContactCta />
+    </>
   );
 }

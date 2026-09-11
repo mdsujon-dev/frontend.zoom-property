@@ -1,4 +1,5 @@
 import { JsonLd } from "@/components/common/json-ld";
+import { ContactCta } from "@/components/common/contact-cta";
 import { CinematicShowcase } from "@/components/pages/home/cinematic-showcase";
 import { HeroSection } from "@/components/pages/home/hero-section";
 import { TestimonialsBento } from "@/components/pages/home/testimonials-bento";
@@ -29,6 +30,8 @@ export default async function Home() {
       <HeroSection />
 
       <ListingsSection variant="preview" limit={6} />
+
+      <ContactCta />
 
       <CinematicShowcase
         poster={dict.showcase.poster || showcase.poster}

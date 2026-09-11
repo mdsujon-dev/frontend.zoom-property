@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { PageHeader } from "@/components/layout/page-header";
+import { ContactCta } from "@/components/common/contact-cta";
 import { pageBanners } from "@/data/page-banners";
 import { ListingsSection } from "@/components/pages/properties/listings-section";
 import type { Purpose } from "@/data/properties";
@@ -97,6 +98,7 @@ export default async function PropertiesPage({
         }))}
         clearHref={localeHref(locale, "/properties")}
       />
+      <ContactCta />
     </>
   );
 }

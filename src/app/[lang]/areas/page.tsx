@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { PageHeader } from "@/components/layout/page-header";
+import { ContactCta } from "@/components/common/contact-cta";
 import { pageBanners } from "@/data/page-banners";
 import { AreaComparisonSection } from "@/components/pages/areas/area-comparison";
 import { AreasPaginated } from "@/components/pages/areas/areas-paginated";
@@ -56,6 +57,7 @@ export default async function AreasPage({
       />
 
       <AreaComparisonSection areas={allAreas} />
+      <ContactCta />
     </>
   );
 }

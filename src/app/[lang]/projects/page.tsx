@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { PageHeader } from "@/components/layout/page-header";
+import { ContactCta } from "@/components/common/contact-cta";
 import { pageBanners } from "@/data/page-banners";
 import { ConstructionStagesSection } from "@/components/pages/projects/construction-stages-section";
 import { ProjectsSection } from "@/components/pages/projects/projects-section";
@@ -47,6 +48,7 @@ export default async function ProjectsPage({
       />
 
       <ConstructionStagesSection />
+      <ContactCta />
     </>
   );
 }

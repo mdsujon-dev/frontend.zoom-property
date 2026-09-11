@@ -398,8 +398,11 @@
     "contact": "Contact the team"
   },
   "footer": {
+    "companyName": "Zoom Property Limited",
     "explore": "Explore",
+    "exploreLinks": [],
     "services": "Services",
+    "serviceLinks": [],
     "rights": "Limited · REHAB member",
     "terms": "Terms & Conditions",
     "privacy": "Privacy Policy"

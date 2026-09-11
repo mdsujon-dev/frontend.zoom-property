@@ -398,8 +398,11 @@
     "contact": "আমাদের সঙ্গে যোগাযোগ"
   },
   "footer": {
+    "companyName": "জুম প্রপার্টি লিমিটেড",
     "explore": "ঘুরে দেখুন",
+    "exploreLinks": [],
     "services": "সেবা",
+    "serviceLinks": [],
     "rights": "লিমিটেড · রিহ্যাব সদস্য",
     "terms": "শর্তাবলী",
     "privacy": "গোপনীয়তা নীতি"

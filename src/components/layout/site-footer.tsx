@@ -4,10 +4,10 @@ import { Icon } from "@/components/common/icon";
 import { AppContainer } from "@/components/common/app-container";
 import { Logo } from "@/components/layout/logo";
 import { Text } from "@/components/common/text";
-import { footerNav, siteConfig } from "@/data/site";
 import { getProjects } from "@/server/features/projects";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
+import { footerLinks } from "@/lib/footer-links";
 import { mailHref, socialProfiles, telHref } from "@/lib/contact";
 
 /**
@@ -36,7 +36,22 @@ export async function SiteFooter() {
     getLocale(),
     getProjects(4),
   ]);
-  const labels: Record<string, string> = { ...dict.nav, ...dict.footer };
+  const t = dict.footer;
+  /**
+   * The two link columns.
+   *
+   * The list lives in the database rather than in the site's dictionary, and
+   * that is deliberate: an empty box in the panel means "unchanged", so a
+   * built-in default can be renamed but never removed. Owning the list makes
+   * the remove button in the panel do what it says.
+   *
+   * `footerLinks` drops half-filled rows and the gap a removed row leaves, so
+   * a column is whatever survives. A column with nothing in it is not drawn.
+   */
+  const columns = [
+    { heading: t.explore, links: footerLinks(t.exploreLinks) },
+    { heading: t.services, links: footerLinks(t.serviceLinks) },
+  ].filter((column) => column.links.length);
   // Same source as the contact page: one edit in the panel moves the
   // number in both places, which is the only way a phone number on two
   // pages stays the same phone number.
@@ -48,7 +63,7 @@ export async function SiteFooter() {
       <AppContainer className="py-14">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="flex flex-col gap-4">
-            <Link href={localeHref(locale, "/")} aria-label={siteConfig.name}>
+            <Link href={localeHref(locale, "/")} aria-label={t.companyName}>
               {/* White lockup — the navy one would vanish into the background. */}
               <Logo variant="onDark" className="h-9 w-auto" />
             </Link>
@@ -97,18 +112,18 @@ export async function SiteFooter() {
             </div>
           </div>
 
-          {footerNav.map((group) => (
-            <nav key={group.key} className="flex flex-col gap-3">
+          {columns.map((column) => (
+            <nav key={column.heading} className="flex flex-col gap-3">
               <h3 className="font-heading text-h6 text-footer-foreground font-semibold">
-                {labels[group.key]}
+                {column.heading}
               </h3>
-              {group.links.map((link) => (
+              {column.links.map((link) => (
                 <Link
-                  key={link.href}
+                  key={`${link.href}-${link.label}`}
                   href={localeHref(locale, link.href)}
                   className="text-sm text-footer-foreground/75 transition-colors hover:text-brand-green-light"
                 >
-                  {labels[link.key]}
+                  {link.label}
                 </Link>
               ))}
             </nav>
@@ -139,7 +154,7 @@ export async function SiteFooter() {
       <div className="border-t border-footer-foreground/10">
         <AppContainer className="flex flex-col items-center justify-between gap-1 py-3 text-footer-foreground/60 sm:flex-row">
           <Text size="xs" tone="inverse" className="text-footer-foreground/60">
-            © {new Date().getFullYear()} {siteConfig.name} {dict.footer.rights}
+            © {new Date().getFullYear()} {t.companyName} {t.rights}
           </Text>
           {/* The legal pages sit in the bottom bar rather than a nav column:
               they are read once, on purpose, by someone looking for them. */}
@@ -148,13 +163,13 @@ export async function SiteFooter() {
               href={localeHref(locale, "/terms")}
               className="text-xs text-footer-foreground/60 transition-colors hover:text-brand-green-light"
             >
-              {dict.footer.terms}
+              {t.terms}
             </Link>
             <Link
               href={localeHref(locale, "/privacy")}
               className="text-xs text-footer-foreground/60 transition-colors hover:text-brand-green-light"
             >
-              {dict.footer.privacy}
+              {t.privacy}
             </Link>
           </div>
         </AppContainer>

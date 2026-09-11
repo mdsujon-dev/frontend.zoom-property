@@ -29,27 +29,11 @@ export const mainNav = [
   { key: "contact", href: "/contact" },
 ] as const;
 
-/** Secondary links — footer only. */
-export const footerNav = [
-  {
-    key: "explore",
-    links: [
-      { key: "properties", href: "/properties" },
-      { key: "projects", href: "/projects" },
-      { key: "areas", href: "/areas" },
-      { key: "agents", href: "/agents" },
-    ],
-  },
-  {
-    key: "services",
-    links: [
-      { key: "landowners", href: "/landowners" },
-      { key: "reviews", href: "/reviews" },
-      { key: "blog", href: "/blog" },
-      { key: "about", href: "/about" },
-    ],
-  },
-] as const;
+/**
+ * The footer's link columns are content now, not a list here —
+ * `dict.footer.exploreLinks` and `dict.footer.serviceLinks`, each row a label
+ * and a path the desk types in the panel.
+ */
 
 /**
  * The social profiles live in the CMS as well — `dict.contact.social`, a list

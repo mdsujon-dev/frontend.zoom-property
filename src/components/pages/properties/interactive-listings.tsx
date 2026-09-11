@@ -6,7 +6,7 @@ import { Icon } from "@/components/common/icon";
 import { PropertyCard } from "./property-card";
 import { areas as fallbackAreas, type Area } from "@/data/areas";
 import type { Locale } from "@/i18n/config";
-import { properties as fallbackProperties, propertyTypes, type Property, type Purpose } from "@/data/properties";
+import { properties as fallbackProperties, type Property, type Purpose } from "@/data/properties";
 import { formatBdt } from "@/lib/format";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { cn } from "@/lib/utils";
@@ -34,6 +34,7 @@ export function InteractiveListings({
   clearHref,
   properties = fallbackProperties,
   areas = fallbackAreas,
+  types,
   pageSize = DEFAULT_PAGE_SIZE,
 }: {
   locale?: Locale;
@@ -41,6 +42,7 @@ export function InteractiveListings({
   clearHref?: string;
   properties?: Property[];
   areas?: Area[];
+  types?: { value: string; label: string }[];
   /** How many cards a page holds. The page that owns the list decides. */
   pageSize?: number;
 } = {}) {
@@ -147,7 +149,7 @@ export function InteractiveListings({
     if (filters.q) chips.push(`“${filters.q}”`);
     if (filters.type) {
       chips.push(
-        propertyTypes.find((type) => type.value === filters.type)?.label ??
+        types?.find((type) => type.value === filters.type)?.label ??
           filters.type,
       );
     }

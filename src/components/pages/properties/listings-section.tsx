@@ -20,6 +20,7 @@ export async function ListingsSection({
   clearHref,
   properties: initialProperties,
   areas: initialAreas,
+  types,
 }: {
   variant?: "preview" | "full";
   limit?: number;
@@ -28,6 +29,7 @@ export async function ListingsSection({
   clearHref?: string;
   properties?: Property[];
   areas?: Area[];
+  types?: { value: string; label: string }[];
 }) {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
 
@@ -48,6 +50,7 @@ export async function ListingsSection({
           clearHref={clearHref}
           properties={propList}
           areas={areaList}
+          types={types}
           pageSize={limit}
         />
       </Section>

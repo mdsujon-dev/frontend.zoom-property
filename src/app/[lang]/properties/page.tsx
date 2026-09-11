@@ -7,7 +7,7 @@ import type { Purpose } from "@/data/properties";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
 import { localeAlternates } from "@/i18n/alternates";
-import { getProperties } from "@/server/features/properties";
+import { getProperties, getPropertyTypes } from "@/server/features/properties";
 import { getAreas } from "@/server/features/areas";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -46,12 +46,13 @@ export default async function PropertiesPage({
     max?: string;
   }>;
 }) {
-  const [dict, locale, query, allProperties, allAreas] = await Promise.all([
+  const [dict, locale, query, allProperties, allAreas, propertyTypes] = await Promise.all([
     getDictionary(),
     getLocale(),
     searchParams,
     getProperties(100),
     getAreas(60),
+    getPropertyTypes(),
   ]);
 
   const filters = {
@@ -86,6 +87,10 @@ export default async function PropertiesPage({
         filters={filters}
         properties={allProperties}
         areas={allAreas}
+        types={propertyTypes.map((t: any) => ({
+          value: t.name,
+          label: locale === "bn" && t.nameBn ? t.nameBn : t.description || t.name,
+        }))}
         clearHref={localeHref(locale, "/properties")}
       />
     </>

@@ -30,6 +30,7 @@ export interface ApiProject {
   } | null;
   lastInspected?: string;
   cctvStreamActive?: boolean;
+  isFooter?: boolean;
   rajukPermitNo?: string;
   milestones?: { label: string; percent: number; completed: boolean }[];
 }

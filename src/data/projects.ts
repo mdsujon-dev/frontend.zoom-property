@@ -47,6 +47,7 @@ export interface Project {
   };
   /** Build stage, as the panel names it. */
   status: "Planning" | "Processing" | "Completed";
+  isFooter?: boolean;
   lastInspected: string;
   cctvStreamActive: boolean;
   rajukPermitNo: string;

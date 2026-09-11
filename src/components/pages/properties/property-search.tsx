@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { areas } from "@/data/areas";
-import { propertyTypes } from "@/data/properties";
+import { propertyTypes as fallbackTypes } from "@/data/properties";
 import { cn } from "@/lib/utils";
 
 const PURPOSES = ["buy", "rent", "projects", "commercial"] as const;
@@ -68,9 +68,11 @@ const BUDGETS: Record<Purpose, { value: string; label: string }[]> = {
 export function PropertySearch({
   dict,
   className,
+  types = fallbackTypes,
 }: {
   dict: SearchDict;
   className?: string;
+  types?: { value: string; label: string }[];
 }) {
   const purposeLabel: Record<Purpose, string> = {
     buy: dict.buy,
@@ -151,7 +153,7 @@ export function PropertySearch({
               <SelectValue placeholder={dict.anyType} />
             </SelectTrigger>
             <SelectContent className="border-primary/20 bg-muted text-foreground">
-              {propertyTypes.map((type) => (
+              {types.map((type) => (
                 <SelectItem key={type.value} value={type.value} className="focus:bg-primary/20 focus:text-foreground">
                   {type.label}
                 </SelectItem>

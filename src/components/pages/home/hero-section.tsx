@@ -9,7 +9,7 @@ import { PropertyCalculator } from "@/components/pages/home/property-calculator"
 import { Badge } from "@/components/ui/badge";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { getAreas } from "@/server/features/areas";
-import { getProperties } from "@/server/features/properties";
+import { getProperties, getPropertyTypes } from "@/server/features/properties";
 
 const photo = (id: string) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=2000&q=80`;
@@ -33,32 +33,21 @@ const HERO_IMAGES = [
 ];
 
 export async function HeroSection() {
-  const [dict, locale, areas, properties] = await Promise.all([
+  const [dict, locale, areas, properties, rawTypes] = await Promise.all([
     getDictionary(),
     getLocale(),
     getAreas(60),
     getProperties(100),
+    getPropertyTypes(),
   ]);
 
-  /**
-   * The categories the search box offers.
-   *
-   * The five values are the vocabulary a listing is stored under, so they are
-   * fixed in the model — but the words beside them are content, and the
-   * number beside each is counted from the catalogue rather than typed in. A
-   * hand-written count is a claim that goes stale the first time anybody adds
-   * a listing, and a category nobody has listed anything under is not offered
-   * at all rather than leading to an empty results page.
-   */
-  const types = (
-    Object.entries(dict.calculator.types) as [string, string][]
-  )
-    .map(([value, label]) => ({
-      value,
-      label,
-      count: properties.filter((property) => property.type === value).length,
-    }))
-    .filter((option) => option.count > 0);
+  const isBn = locale === "bn";
+
+  const types = rawTypes.map((t: any) => ({
+    value: t.name,
+    label: isBn && t.nameBn ? t.nameBn : t.description || t.name,
+    count: properties.filter((property) => property.type === t.name).length,
+  }));
 
   const images = dict.hero.backgroundImages?.length
     ? dict.hero.backgroundImages

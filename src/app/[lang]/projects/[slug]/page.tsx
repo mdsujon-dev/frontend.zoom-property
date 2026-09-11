@@ -25,6 +25,7 @@ import { localeHref } from "@/i18n/href";
 import { getProjectBySlug, getProjects } from "@/server/features/projects";
 import { telHref } from "@/lib/contact";
 import { formatBdt } from "@/lib/format";
+import { FormatBdt } from "@/components/ui/format-bdt";
 import { absoluteUrl, breadcrumbSchema, projectSchema } from "@/lib/seo";
 
 /**
@@ -101,8 +102,8 @@ export default async function ProjectDetailPage({
   const sold = project.units - project.unitsLeft;
   const bookedPercent = Math.round((sold / project.units) * 100);
 
-  const facts: { icon: IconName; label: string; value: string }[] = [
-    { icon: "trend", label: t.startingFrom, value: formatBdt(project.startingPrice) },
+  const facts: { icon: IconName; label: string; value: React.ReactNode }[] = [
+    { icon: "trend", label: t.startingFrom, value: <FormatBdt value={project.startingPrice} /> },
     { icon: "area", label: t.sizes, value: project.sizeRange },
     {
       icon: "building",
@@ -167,7 +168,7 @@ export default async function ProjectDetailPage({
               </Heading>
             }
             subtitle={`${project.area}, ${project.city}`}
-            price={formatBdt(project.startingPrice)}
+            price={<FormatBdt value={project.startingPrice} />}
             priceNote={`${project.progress}% ${t.complete} · ${t.handover} ${project.handover}`}
             badges={
               <>

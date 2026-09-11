@@ -5,6 +5,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { areas as fallbackAreas, type Area } from "@/data/areas";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { formatBdt, numberFormatter } from "@/lib/format";
+import { FormatBdt, TakaIcon } from "@/components/ui/format-bdt";
 
 export async function AreaComparisonSection({
   areas: areasProp,
@@ -67,12 +68,12 @@ export async function AreaComparisonSection({
                     {numberFormatter.format(area.listings || 0)}
                   </td>
                   <td className="px-5 py-4 text-right font-medium tabular-nums text-foreground whitespace-nowrap">
-                    {area.medianPrice ? formatBdt(area.medianPrice) : "—"}
+                    {area.medianPrice ? <FormatBdt value={area.medianPrice} /> : "—"}
                   </td>
                   <td className="px-5 py-4 whitespace-nowrap">
                     <div className="flex items-center gap-3">
-                      <span className="w-20 shrink-0 tabular-nums text-foreground whitespace-nowrap">
-                        {area.pricePerSqft ? `৳${numberFormatter.format(area.pricePerSqft)}` : "—"}
+                      <span className="w-20 shrink-0 tabular-nums text-foreground whitespace-nowrap inline-flex items-center gap-0.5">
+                        {area.pricePerSqft ? <><TakaIcon />{numberFormatter.format(area.pricePerSqft)}</> : "—"}
                       </span>
                       <span
                         aria-hidden

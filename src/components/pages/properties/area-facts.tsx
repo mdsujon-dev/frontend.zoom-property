@@ -3,6 +3,7 @@ import { Icon, type IconName } from "@/components/common/icon";
 import { Text } from "@/components/common/text";
 import { areas } from "@/data/areas";
 import { formatBdt } from "@/lib/format";
+import { FormatBdt } from "@/components/ui/format-bdt";
 
 export interface AreaFactsDict {
   heading: string;
@@ -50,11 +51,11 @@ export function AreaFacts({
   const area = matchArea(areaName);
   if (!area) return null;
 
-  const facts: { icon: IconName; label: string; value: string }[] = [
+  const facts: { icon: IconName; label: string; value: React.ReactNode }[] = [
     {
       icon: "trend",
       label: dict.pricePerSqft,
-      value: `${formatBdt(area.pricePerSqft, { exact: true })} / sq ft`,
+      value: <><FormatBdt value={area.pricePerSqft} exact /> / sq ft</>,
     },
     {
       icon: "building",

@@ -27,6 +27,7 @@ import { localeHref } from "@/i18n/href";
 import { getPropertyBySlug } from "@/server/features/properties";
 import { telHref } from "@/lib/contact";
 import { formatArea, formatBdt, formatKatha, formatRent } from "@/lib/format";
+import { FormatBdt } from "@/components/ui/format-bdt";
 import { absoluteUrl, breadcrumbSchema, propertySchema } from "@/lib/seo";
 
 /**
@@ -168,13 +169,13 @@ export default async function PropertyDetailPage({
               isSold
                 ? t.sold
                 : isRent
-                  ? formatRent(property.price)
-                  : formatBdt(property.price)
+                  ? <><FormatBdt value={property.price} />/mo</>
+                  : <FormatBdt value={property.price} />
             }
             priceNote={
               isSold
                 ? undefined
-                : `${formatBdt(property.price, { exact: true })}${isRent ? ` · ${t.perMonth}` : ""}`
+                : <><FormatBdt value={property.price} exact />{isRent ? ` · ${t.perMonth}` : ""}</>
             }
             badges={
               <>

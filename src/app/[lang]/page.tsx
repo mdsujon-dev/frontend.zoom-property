@@ -31,7 +31,7 @@ export default async function Home() {
 
       <ListingsSection variant="preview" limit={6} />
 
-      <ContactCta />
+      <ContactCta tone="surface" />
 
       <CinematicShowcase
         poster={dict.showcase.poster || showcase.poster}

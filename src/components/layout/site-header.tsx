@@ -115,8 +115,21 @@ export function SiteHeader({
       className="fixed inset-x-0 top-0 z-40 border-b border-border/80 bg-background shadow-xs"
     >
 
-      <AppContainer className="relative flex h-16 items-center justify-between gap-4 sm:h-20">
-        <Link href={home} aria-label={siteConfig.name} className="shrink-0">
+      {/* 54 / 70 rather than the 64 / 80 it used to be: ten pixels off both,
+          which the logo and the controls had to spare. Nothing offsets against
+          these numbers — the hero and the page banners clear the bar with
+          their own generous top padding — so this is a safe trim. */}
+      <AppContainer className="relative flex h-[54px] items-center justify-between gap-4 sm:h-[70px]">
+        {/* `flex items-center`, not just `shrink-0`: the lockup is an
+            inline-flex box, so in a plain anchor it sat on the text baseline
+            and the line box reserved descender space under it — which pushed
+            the logo a couple of pixels above the true centre of the bar.
+            Making the link a flex box takes it off the baseline entirely. */}
+        <Link
+          href={home}
+          aria-label={siteConfig.name}
+          className="flex shrink-0 items-center"
+        >
           <Logo
             priority
             variant="auto"

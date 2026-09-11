@@ -28,7 +28,10 @@ export function Logo({
   return (
     <div
       className={cn(
-        "relative inline-flex shrink-0 items-center aspect-[900/303]",
+        // `flex`, not `inline-flex`: an inline-level box aligns to the text
+        // baseline of whatever contains it, which left a few pixels of
+        // descender space below the lockup and made it sit high in the header.
+        "relative flex shrink-0 items-center aspect-[900/303]",
         className,
       )}
     >

@@ -10,7 +10,7 @@ import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { cn } from "@/lib/utils";
 
 export type ProjectStageFilter = "all" | "Completed" | "Planning" | "Processing";
-const PAGE_SIZE = 9;
+const PAGE_SIZE = 6;
 
 export function InteractiveProjects({
   projects = [],

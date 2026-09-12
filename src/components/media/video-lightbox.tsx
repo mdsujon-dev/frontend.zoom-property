@@ -61,7 +61,7 @@ export function VideoLightbox({
         // `w-screen`: `inset-0` stops at the reserved scrollbar gutter, which
         // would leave an unpainted strip down the right of the scrim.
         overlayClassName="w-screen bg-black/85 supports-backdrop-filter:backdrop-blur-sm"
-        className="max-w-[calc(100%-1.5rem)] gap-0 border-0 bg-transparent p-0 text-white shadow-none ring-0 sm:max-w-3xl lg:max-w-5xl"
+        className="max-w-[calc(100%-1.5rem)] gap-0 border-0 bg-transparent p-0 text-white shadow-none ring-0 sm:max-w-2xl lg:max-w-4xl"
       >
         <DialogTitle className="sr-only">{title}</DialogTitle>
 

@@ -47,7 +47,7 @@ function pickLocale(request: NextRequest) {
   return DEFAULT_LOCALE;
 }
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const hasLocale = LOCALES.some(

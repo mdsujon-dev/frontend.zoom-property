@@ -86,7 +86,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
           referrerPolicy="no-referrer"
         />
       </head>
-      <body className="flex min-h-dvh flex-col bg-background text-foreground">
+      <body suppressHydrationWarning className="flex min-h-dvh flex-col bg-background text-foreground">
         {/* Site-wide entities. Page-level schemas reference these by @id. */}
         <JsonLd schema={organizationSchema(socialProfiles(dict.contact.social))} />
         <JsonLd schema={websiteSchema()} />

@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { Icon } from "@/components/common/icon";
 import { PropertyCard } from "./property-card";
 import { areas as fallbackAreas, type Area } from "@/data/areas";
@@ -49,6 +50,8 @@ export function InteractiveListings({
   // Guarded rather than trusted: a zero or a negative would divide the list
   // into an infinite number of pages and hang the render.
   const perPage = Math.max(1, Math.floor(pageSize) || DEFAULT_PAGE_SIZE);
+  const router = useRouter();
+  const pathname = usePathname();
   const [selectedArea, setSelectedArea] = useState<string>(filters?.area || "all");
   const [activeCategory, setActiveCategory] = useState<CategoryTab>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -165,6 +168,15 @@ export function InteractiveListings({
     return chips;
   }, [filters, areas, isBn, types]);
 
+  useEffect(() => {
+    if (activeChips.length === 0) {
+      setSelectedArea("all");
+      setActiveCategory("all");
+      setSearchQuery("");
+      setPage(1);
+    }
+  }, [activeChips.length]);
+
   const totalPages = Math.max(1, Math.ceil(searched.length / perPage));
   const currentPage = Math.min(page, totalPages);
   const paginatedProperties = useMemo(
@@ -218,6 +230,12 @@ export function InteractiveListings({
           {clearHref ? (
             <Link
               href={clearHref}
+              onClick={() => {
+                setSelectedArea("all");
+                setActiveCategory("all");
+                setSearchQuery("");
+                setPage(1);
+              }}
               className="ml-auto text-xs font-semibold uppercase tracking-wider text-primary hover:underline"
             >
               {isBn ? "ক্লিয়ার করুন" : "Clear"}
@@ -331,13 +349,13 @@ export function InteractiveListings({
             />
             <Icon name="search" size="xs" className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
             {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery("")}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground hover:text-foreground"
-              >
-                ✕
-              </button>
+               <button
+                 type="button"
+                 onClick={() => setSearchQuery("")}
+                 className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-muted-foreground hover:text-foreground"
+               >
+                 ✕
+               </button>
             )}
           </div>
         </div>
@@ -356,7 +374,7 @@ export function InteractiveListings({
       </div>
 
       {/* Property Cards Grid */}
-      <Stagger key={`${selectedArea}-${activeCategory}-${currentPage}-${searchQuery}`} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <Stagger key={`${selectedArea}-${activeCategory}-${currentPage}-${searchQuery}-${activeChips.length}`} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {paginatedProperties.map((property) => (
           <StaggerItem key={property.id}>
             <PropertyCard property={property} locale={locale} />
@@ -384,6 +402,12 @@ export function InteractiveListings({
               setSelectedArea("all");
               setActiveCategory("all");
               setSearchQuery("");
+              setPage(1);
+              if (clearHref) {
+                router.push(clearHref);
+              } else if (pathname) {
+                router.push(pathname);
+              }
             }}
             className="mt-4 rounded-full bg-primary px-5 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
           >

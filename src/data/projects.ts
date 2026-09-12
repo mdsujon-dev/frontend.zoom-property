@@ -10,6 +10,20 @@ export interface ConstructionMilestone {
   completed: boolean;
 }
 
+export interface Agent {
+  id: string;
+  name: string;
+  nameBn?: string;
+  role: string;
+  roleBn?: string;
+  phone: string;
+  image?: string;
+  rating?: number;
+  deals?: number;
+  respondsIn?: number;
+  languages?: string[];
+}
+
 export interface Project {
   id: string;
   /** URL segment for `/projects/[slug]`. */
@@ -54,6 +68,7 @@ export interface Project {
   cctvStreamActive: boolean;
   rajukPermitNo: string;
   milestones: ConstructionMilestone[];
+  agent?: Agent;
 }
 
 const photo = (id: string, w = 1000) =>

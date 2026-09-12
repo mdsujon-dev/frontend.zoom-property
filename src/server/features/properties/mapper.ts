@@ -2,7 +2,7 @@ import "server-only";
 
 import type { Property } from "@/data/properties";
 
-import { gallery, paragraphs } from "../../base-api";
+import { gallery, paragraphs, mediaUrl } from "../../base-api";
 import type { ApiProperty } from "./types";
 
 /** An API listing to the `Property` the cards consume. */
@@ -35,4 +35,19 @@ export const toProperty = (p: ApiProperty): Property => ({
   amenities: (p.amenities ?? []).map((a) => a.name || "").filter(Boolean),
   description: paragraphs(p.description),
   descriptionBn: paragraphs(p.descriptionBn),
+  agent: p.agent
+    ? {
+        id: p.agent._id,
+        name: p.agent.name,
+        nameBn: p.agent.nameBn,
+        role: p.agent.role,
+        roleBn: p.agent.roleBn,
+        phone: p.agent.phone,
+        image: mediaUrl(p.agent.image),
+        rating: p.agent.rating,
+        deals: p.agent.deals,
+        respondsIn: p.agent.respondsIn,
+        languages: p.agent.languages,
+      }
+    : undefined,
 });

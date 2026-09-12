@@ -48,4 +48,19 @@ export const toProject = (p: ApiProject): Project => ({
     percent: m.percent,
     completed: m.completed,
   })),
+  agent: p.agent
+    ? {
+        id: p.agent._id,
+        name: p.agent.name,
+        nameBn: p.agent.nameBn,
+        role: p.agent.role,
+        roleBn: p.agent.roleBn,
+        phone: p.agent.phone,
+        image: mediaUrl(p.agent.image),
+        rating: p.agent.rating,
+        deals: p.agent.deals,
+        respondsIn: p.agent.respondsIn,
+        languages: p.agent.languages,
+      }
+    : undefined,
 });

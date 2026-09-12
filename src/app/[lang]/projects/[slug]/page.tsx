@@ -13,11 +13,12 @@ import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { ProjectCard } from "@/components/pages/projects/project-card";
 import { ProjectProgress } from "@/components/pages/projects/project-progress";
 import { ProjectShowcase } from "@/components/pages/projects/project-showcase";
-import { AdvisorCard } from "@/components/pages/properties/advisor-card";
+import { ConsultantCard } from "@/components/pages/properties/consultant-card";
 import { AreaFacts } from "@/components/pages/properties/area-facts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { agents } from "@/data/people";
+import { ContactCta } from "@/components/common/contact-cta";
+
 import { localeAlternates } from "@/i18n/alternates";
 import type { Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -90,9 +91,7 @@ export default async function ProjectDetailPage({
   const dict = await getDictionary();
   const t = dict.projectDetail;
 
-  // The desk lead handles the development pipeline; the same face every time is
-  // the point of naming one at all.
-  const agent = agents[0];
+  const agent = project.agent;
   // The rest of the pipeline, minus this one. Three is what the row holds.
   const others = (await getProjects(12))
     .filter((item) => item.slug !== project.slug)
@@ -205,7 +204,7 @@ export default async function ProjectDetailPage({
           />
         </Reveal>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1.6fr_1fr]">
+        <div className={`mt-12 grid gap-10 ${agent ? "lg:grid-cols-[1.6fr_1fr]" : "lg:grid-cols-1"}`}>
           <div className="flex flex-col gap-10">
             <section className="flex flex-col gap-4">
               <Heading as="h2" size="h4">
@@ -273,21 +272,11 @@ export default async function ProjectDetailPage({
             />
           </div>
 
-          <aside className="lg:sticky lg:top-28 lg:self-start">
-            <AdvisorCard
-              agent={agent}
-              dict={{
-                heading: t.advisor,
-                note: t.advisorNote,
-                call: t.call,
-                whatsapp: t.whatsapp,
-                respondsIn: t.respondsIn,
-                deals: t.deals,
-              }}
-              phone={dict.contact.details.phone}
-              whatsapp={dict.contact.details.whatsapp}
-            />
-          </aside>
+          {agent && (
+            <aside className="lg:sticky lg:top-28 lg:self-start">
+              <ConsultantCard agent={agent} locale={lang} />
+            </aside>
+          )}
         </div>
       </Section>
 
@@ -333,6 +322,8 @@ export default async function ProjectDetailPage({
           </Stagger>
         </Section>
       ) : null}
+
+      <ContactCta tone="surface" />
     </>
   );
 }

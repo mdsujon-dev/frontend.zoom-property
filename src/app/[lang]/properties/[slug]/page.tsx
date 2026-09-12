@@ -8,13 +8,13 @@ import { JsonLd } from "@/components/common/json-ld";
 import { Section } from "@/components/common/section";
 import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
-import { AdvisorCard } from "@/components/pages/properties/advisor-card";
+import { ConsultantCard } from "@/components/pages/properties/consultant-card";
 import { PropertyBanner } from "@/components/pages/properties/property-banner";
 import { PropertyCard } from "@/components/pages/properties/property-card";
 import { PropertyDetails } from "@/components/pages/properties/property-details";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { agents } from "@/data/people";
+
 import {
   properties,
   propertyBySlug,
@@ -90,7 +90,7 @@ export default async function PropertyDetailPage({
   const displayTitle = lang === "bn" && property.titleBn ? property.titleBn : property.title;
   const displayArea = lang === "bn" && property.areaBn ? property.areaBn : property.area;
 
-  const agent = agents.find((person) => person.id === property.agentId);
+  const agent = property.agent;
   const similar = similarProperties(property);
   const isSold = property.status === "sold";
   const isRent = property.purpose === "rent";
@@ -220,7 +220,7 @@ export default async function PropertyDetailPage({
           />
         </Reveal>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1.6fr_1fr]">
+        <div className={`mt-12 grid gap-10 ${agent ? "lg:grid-cols-[1.6fr_1fr]" : "lg:grid-cols-1"}`}>
           <div className="flex flex-col gap-10">
             <section className="flex flex-col gap-4">
               <Heading as="h2" size="h4">
@@ -287,19 +287,7 @@ export default async function PropertyDetailPage({
 
           {agent ? (
             <aside className="lg:sticky lg:top-28 lg:self-start">
-              <AdvisorCard
-                agent={agent}
-                dict={{
-                  heading: t.advisor,
-                  note: t.advisorNote,
-                  call: t.call,
-                  whatsapp: t.whatsapp,
-                  respondsIn: t.respondsIn,
-                  deals: t.deals,
-                }}
-                phone={dict.contact.details.phone}
-                whatsapp={dict.contact.details.whatsapp}
-              />
+              <ConsultantCard agent={agent} locale={lang} />
             </aside>
           ) : null}
         </div>

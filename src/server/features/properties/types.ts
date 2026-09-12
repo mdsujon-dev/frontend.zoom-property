@@ -1,6 +1,7 @@
 import "server-only";
 
 import type { ApiMedia } from "../../base-api";
+import type { ApiAgent } from "../projects/types";
 
 /** A listing as `/properties/public` returns it. */
 export interface ApiProperty {
@@ -27,7 +28,7 @@ export interface ApiProperty {
   hasVirtualTour?: boolean;
   furnishing?: string;
   handover?: string;
-  agent?: { _id?: string } | null;
+  agent?: ApiAgent | null;
   amenities?: { name?: string }[];
   description?: string[];
   descriptionBn?: string[];

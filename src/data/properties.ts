@@ -3,6 +3,8 @@
  * renders exists here, nothing is computed in a component.
  */
 
+import type { Agent } from "./projects";
+
 export type Purpose = "sale" | "rent";
 export type PropertyStatus = "available" | "sold";
 
@@ -47,7 +49,8 @@ export interface Property {
   hasVirtualTour?: boolean;
   furnishing: "Unfurnished" | "Semi-furnished" | "Fully furnished";
   handover: string;
-  agentId: string;
+  agentId?: string;
+  agent?: Agent;
   amenities: string[];
   /**
    * The long write-up on the listing page, one string per paragraph.

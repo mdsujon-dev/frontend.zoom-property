@@ -2,6 +2,20 @@ import "server-only";
 
 import type { ApiMedia } from "../../base-api";
 
+export interface ApiAgent {
+  _id: string;
+  name: string;
+  nameBn?: string;
+  role: string;
+  roleBn?: string;
+  phone: string;
+  image?: ApiMedia;
+  rating?: number;
+  deals?: number;
+  respondsIn?: number;
+  languages?: string[];
+}
+
 /** A project as `/projects/public` returns it. */
 export interface ApiProject {
   _id: string;
@@ -34,6 +48,7 @@ export interface ApiProject {
   isFooter?: boolean;
   rajukPermitNo?: string;
   milestones?: { label: string; percent: number; completed: boolean }[];
+  agent?: ApiAgent;
 }
 
 /** What `/projects/public/:slug` answers with: the project and its units. */

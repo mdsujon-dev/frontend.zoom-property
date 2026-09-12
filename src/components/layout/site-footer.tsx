@@ -142,7 +142,7 @@ export async function SiteFooter() {
             {footerProjects.map((project) => (
               <Link
                 key={project.id}
-                href={localeHref(locale, `/projects#${project.id}`)}
+                href={localeHref(locale, `/projects/${project.slug}`)}
                 className="text-sm text-footer-foreground/75 transition-colors hover:text-brand-green-light"
               >
                 {locale === "bn" && project.nameBn ? project.nameBn : project.name}

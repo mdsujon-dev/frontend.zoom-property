@@ -29,6 +29,7 @@ export const toProperty = (p: ApiProperty): Property => ({
   badge: p.badge as Property["badge"],
   rajukApproved: Boolean(p.rajukApproved),
   hasVirtualTour: p.hasVirtualTour,
+  mapUrl: p.mapUrl || "",
   furnishing: (p.furnishing as Property["furnishing"]) || "Unfurnished",
   handover: p.handover || "",
   agentId: p.agent?._id || "",

@@ -307,6 +307,25 @@ export default async function ProjectDetailPage({
         </div>
       </Section>
 
+      {project.mapUrl ? (
+        <Section className="border-t border-border">
+          <Heading as="h2" size="h3" className="mb-8">
+            {t.neighbourhood}
+          </Heading>
+          <div className="aspect-video w-full overflow-hidden rounded-2xl bg-muted/30">
+            <iframe
+              src={project.mapUrl}
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen={true}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </Section>
+      ) : null}
+
       {others.length > 0 ? (
         <Section className="border-t border-border bg-muted/30">
           <Heading as="h2" size="h3">

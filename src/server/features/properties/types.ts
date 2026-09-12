@@ -26,6 +26,7 @@ export interface ApiProperty {
   badge?: string;
   rajukApproved?: boolean;
   hasVirtualTour?: boolean;
+  mapUrl?: string;
   furnishing?: string;
   handover?: string;
   agent?: ApiAgent | null;

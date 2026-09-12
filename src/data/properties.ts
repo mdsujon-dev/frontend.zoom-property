@@ -47,6 +47,7 @@ export interface Property {
   /** RAJUK approval is the first thing a buyer here asks about. */
   rajukApproved: boolean;
   hasVirtualTour?: boolean;
+  mapUrl?: string;
   furnishing: "Unfurnished" | "Semi-furnished" | "Fully furnished";
   handover: string;
   agentId?: string;

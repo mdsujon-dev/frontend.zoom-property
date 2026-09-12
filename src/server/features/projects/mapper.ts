@@ -41,6 +41,7 @@ export const toProject = (p: ApiProject): Project => ({
   status: (p.stage as Project["status"]) || "Planning",
   lastInspected: isoDate(p.lastInspected),
   cctvStreamActive: Boolean(p.cctvStreamActive),
+  mapUrl: p.mapUrl || "",
   isFooter: Boolean(p.isFooter),
   rajukPermitNo: p.rajukPermitNo || "",
   milestones: (p.milestones ?? []).map((m) => ({

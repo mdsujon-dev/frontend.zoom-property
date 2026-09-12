@@ -123,7 +123,6 @@ export function InteractiveProjects({
     setSearchQuery(val);
     updateUrl(selectedStage, val, 1);
   };
-
   const handlePageChange = (newPage: number) => {
     updateUrl(selectedStage, searchQuery, newPage);
     window.scrollTo({ top: 380, behavior: "smooth" });

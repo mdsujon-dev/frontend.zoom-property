@@ -94,6 +94,7 @@ export const properties: Property[] = [
     furnishing: "Fully furnished",
     handover: "Ready",
     agentId: "nusrat-jahan",
+    mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.5983460988937!2d90.41285091536341!3d23.79731309289659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c70b80fcbf27%3A0xc3466f28bbaefda!2sBaridhara%20Diplomatic%20Zone%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1689253456789!5m2!1sen!2sbd",
     amenities: ["Private infinity pool", "Direct lift key", "360° lake view", "4 parking", "Butler quarters"],
     description: [
       "Two floors at the top of a Baridhara Diplomatic tower, taken as one home. The 14th holds the living, dining and kitchen line along the lake elevation, with the terrace and the private infinity pool opening off it; the 15th is bedrooms only, so the entertaining half of the house and the sleeping half never share a corridor.",

@@ -250,13 +250,17 @@ export default async function ProjectDetailPage({
                 {t.about}
               </Heading>
 
-              <div className="flex max-w-2xl flex-col gap-4">
-                {project.description.map((paragraph) => (
-                  <Text key={paragraph.slice(0, 40)} className="leading-relaxed">
-                    {paragraph}
-                  </Text>
-                ))}
-              </div>
+              {project.description && project.description.length > 0 && (
+                <div
+                  className="text-editor max-w-2xl"
+                  dangerouslySetInnerHTML={{
+                    __html: (lang === "bn" && project.descriptionBn?.length
+                      ? project.descriptionBn
+                      : project.description
+                    ).join(""),
+                  }}
+                />
+              )}
             </section>
 
             <AreaFacts
@@ -314,7 +318,13 @@ export default async function ProjectDetailPage({
           </Heading>
           <div className="aspect-video w-full overflow-hidden rounded-2xl bg-muted/30">
             <iframe
-              src={project.mapUrl}
+              src={project.mapUrl.includes("/embed") ? project.mapUrl : (
+                project.mapUrl.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/) 
+                  ? `https://maps.google.com/maps?q=${project.mapUrl.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/)?.[1]},${project.mapUrl.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/)?.[2]}&hl=${lang}&z=14&output=embed`
+                  : project.mapUrl.match(/\/place\/([^/]+)/)
+                    ? `https://maps.google.com/maps?q=${project.mapUrl.match(/\/place\/([^/]+)/)?.[1]}&hl=${lang}&z=14&output=embed`
+                    : project.mapUrl
+              )}
               width="100%"
               height="100%"
               style={{ border: 0 }}

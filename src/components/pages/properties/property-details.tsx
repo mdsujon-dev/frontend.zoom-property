@@ -55,13 +55,11 @@ export function PropertyDetails({
           {/* One paragraph per entry, at a measure that stays readable in the
               left column — long-form copy set to the full grid width is the
               fastest way to make people stop reading it. */}
-          <div className="flex max-w-2xl flex-col gap-4">
-            {description.map((paragraph) => (
-              <Text key={paragraph.slice(0, 40)} className="leading-relaxed">
-                {paragraph}
-              </Text>
-            ))}
-          </div>
+          {/* Render the rich text description using the text-editor styles. */}
+          <div
+            className="text-editor max-w-2xl"
+            dangerouslySetInnerHTML={{ __html: description.join("") }}
+          />
         </section>
       ) : null}
 

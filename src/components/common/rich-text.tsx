@@ -25,7 +25,7 @@ export function RichText({
   return (
     <div
       className={cn(
-        "max-w-[68ch] text-sm leading-relaxed text-muted-foreground",
+        "text-editor max-w-[68ch] text-sm leading-relaxed text-muted-foreground",
         "[&_p]:mb-4 [&_p:last-child]:mb-0",
         "[&_strong]:font-semibold [&_strong]:text-foreground",
         "[&_a]:font-medium [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2",

@@ -96,6 +96,7 @@ export const projects: Project[] = [
       photo("photo-1512917774080-9991f1c4c750"),
       photo("photo-1523217582562-09d0def993a6"),
     ],
+    mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.5983460988937!2d90.41285091536341!3d23.79731309289659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c70b80fcbf27%3A0xc3466f28bbaefda!2sBaridhara%20Diplomatic%20Zone%2C%20Dhaka!5e0!3m2!1sen!2sbd!4v1689253456789!5m2!1sen!2sbd",
     description: [
       "Twenty-four apartments on the Gulshan 2 lakefront, of which four are still unsold. Every floor plate is a single residence between 3,200 and 4,400 square feet, so there is one front door per level and no shared landing — the arrangement buyers at this end of the market ask for first and the one most towers on this lake cannot offer.",
       "The building is in finishing. The piling went 110 feet and is signed off, the structure and the basement are complete, MEP and fire systems are at 85 per cent, and the interior marble and glazing is a little over half done. That is the honest position as of the September 2026 inspection, not a projection: the percentages here move when a surveyor has been on site, not when a sales target slips.",

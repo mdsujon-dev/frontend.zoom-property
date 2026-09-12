@@ -15,14 +15,7 @@ export function ConsultantCard({ agent, locale = "en" }: ConsultantCardProps) {
   const name = isBn && agent.nameBn ? agent.nameBn : agent.name;
   const role = isBn && agent.roleBn ? agent.roleBn : agent.role;
 
-  const handleCall = () => {
-    window.location.href = `tel:${agent.phone}`;
-  };
 
-  const handleWhatsApp = () => {
-    const formattedPhone = agent.phone.replace(/[^0-9+]/g, "");
-    window.location.href = `https://wa.me/${formattedPhone}`;
-  };
 
   return (
     <div className="rounded-xl border border-border bg-card p-6 shadow-xs">
@@ -67,19 +60,23 @@ export function ConsultantCard({ agent, locale = "en" }: ConsultantCardProps) {
 
       <div className="flex flex-col gap-2.5">
         <Button
-          onClick={handleCall}
+          asChild
           className="w-full bg-[#497A32] hover:bg-[#3D662A] text-white font-medium h-11"
         >
-          <Icon name="phone" size="sm" className="mr-2" />
-          {isBn ? "কল" : "Call"}
+          <a href={`tel:${agent.phone}`}>
+            <Icon name="phone" size="sm" className="mr-2" />
+            {isBn ? "কল" : "Call"}
+          </a>
         </Button>
         <Button
           variant="outline"
-          onClick={handleWhatsApp}
+          asChild
           className="w-full font-medium h-11 hover:bg-slate-50 border-gray-300"
         >
-          <Icon name="whatsapp" size="sm" className="mr-2 text-green-600" />
-          {isBn ? "হোয়াটসঅ্যাপ" : "WhatsApp"}
+          <a href={`https://wa.me/${agent.phone.replace(/[^0-9+]/g, "")}`}>
+            <Icon name="whatsapp" size="sm" className="mr-2 text-green-600" />
+            {isBn ? "হোয়াটসঅ্যাপ" : "WhatsApp"}
+          </a>
         </Button>
       </div>
     </div>

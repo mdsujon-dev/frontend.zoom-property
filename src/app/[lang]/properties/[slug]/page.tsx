@@ -301,7 +301,13 @@ export default async function PropertyDetailPage({
           </Heading>
           <div className="aspect-video w-full overflow-hidden rounded-2xl bg-muted/30">
             <iframe
-              src={property.mapUrl}
+              src={property.mapUrl.includes("/embed") ? property.mapUrl : (
+                property.mapUrl.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/) 
+                  ? `https://maps.google.com/maps?q=${property.mapUrl.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/)?.[1]},${property.mapUrl.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/)?.[2]}&hl=${lang}&z=14&output=embed`
+                  : property.mapUrl.match(/\/place\/([^/]+)/)
+                    ? `https://maps.google.com/maps?q=${property.mapUrl.match(/\/place\/([^/]+)/)?.[1]}&hl=${lang}&z=14&output=embed`
+                    : property.mapUrl
+              )}
               width="100%"
               height="100%"
               style={{ border: 0 }}

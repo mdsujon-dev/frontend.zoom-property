@@ -22,16 +22,20 @@ export function AgentCard({
   className?: string;
 }) {
   return (
-    <Card className={cn("h-full p-0", className)}>
-      <CardContent className="flex flex-col items-center gap-4 p-6 text-center">
-        <ImageFrame
-          src={agent.image}
-          alt={agent.name}
-          ratio="square"
-          rounded="full"
-          sizes="quarter"
-          className="w-24"
-        />
+    <Card className={cn("h-full p-0 overflow-hidden border border-border/50 shadow-sm hover:shadow-md transition-all duration-300 group hover:-translate-y-1", className)}>
+      <CardContent className="flex flex-col items-center gap-4 p-6 text-center relative z-10">
+        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-primary/5 to-transparent -z-10" />
+        
+        <div className="relative mb-1 mt-2">
+          <ImageFrame
+            src={agent.image}
+            alt={agent.name}
+            ratio="square"
+            rounded="full"
+            sizes="quarter"
+            className="w-24 ring-4 ring-background shadow-md group-hover:scale-105 transition-transform duration-500"
+          />
+        </div>
 
         <div className="flex flex-col gap-1">
           <Heading as="h3" size="h6">
@@ -57,10 +61,14 @@ export function AgentCard({
           <Metric label="Replies" value={`${agent.respondsIn}m`} />
         </dl>
 
-        <Button variant="outline" size="sm" className="w-full gap-2" asChild>
+        <Button 
+          variant="default" 
+          className="w-full gap-2 shadow-sm group-hover:shadow-md transition-all duration-300 bg-primary/90 hover:bg-primary" 
+          asChild
+        >
           <a href={`tel:${agent.phone}`}>
             <Icon name="phone" size="xs" />
-            Contact {agent.name.split(" ")[0]}
+            {agent.phone || `Contact ${agent.name.split(" ")[0]}`}
           </a>
         </Button>
       </CardContent>

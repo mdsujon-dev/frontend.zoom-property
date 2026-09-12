@@ -7,6 +7,7 @@ export interface ApiAgent {
   nameBn?: string;
   role: string;
   roleBn?: string;
+  phone: string;
   patch: string[];
   deals: number;
   rating: number;

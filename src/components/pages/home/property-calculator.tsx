@@ -156,14 +156,6 @@ export function PropertyCalculator({
     const matches = (haystack: string) =>
       !term || haystack.toLowerCase().includes(term);
 
-    const typeRows: Suggestion[] = types
-      .filter((option) => matches(option.label))
-      .map((option) => ({
-        kind: "type" as const,
-        id: option.value,
-        label: option.label,
-      }));
-
     // With nothing typed the data's own order stands in for relevance: it is
     // the editorial order, which is the list of addresses people ask for most.
     const areaRows: Suggestion[] = areas
@@ -194,11 +186,11 @@ export function PropertyCalculator({
           }))
       : [];
 
-    return { types: typeRows, areaRows, listings };
-  }, [query, isBn, areas, properties, types]);
+    return { areaRows, listings };
+  }, [query, isBn, areas, properties]);
 
   const suggestions = useMemo(
-    () => [...sections.types, ...sections.areaRows, ...sections.listings],
+    () => [...sections.areaRows, ...sections.listings],
     [sections],
   );
 
@@ -209,11 +201,6 @@ export function PropertyCalculator({
 
   const choose = (suggestion: Suggestion) => {
     setOpen(false);
-
-    if (suggestion.kind === "type") {
-      setType(suggestion.id);
-      return;
-    }
 
     if (suggestion.kind === "area") {
       setQuery(suggestion.label);
@@ -318,30 +305,6 @@ export function PropertyCalculator({
               aria-label={dict.searchPlaceholder}
               className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary/35 hover:scrollbar-thumb-primary/60 absolute top-full right-0 left-0 z-50 mt-2 max-h-96 overflow-y-auto rounded-xl border border-border bg-card py-2 shadow-xl"
             >
-              {sections.types.length > 0 ? (
-                <>
-                  <SectionLabel>{dict.categoriesLabel}</SectionLabel>
-
-                  {/* Categories read as chips rather than rows: they are a
-                      handful of short words, and a chip says "narrows the
-                      search" where a row says "goes somewhere". */}
-                  <div className="flex flex-wrap gap-2 px-4 pb-3">
-                    {sections.types.map((option) => (
-                      <Chip
-                        key={option.id}
-                        suggestion={option}
-                        active={type === option.id}
-                        index={suggestions.indexOf(option)}
-                        highlighted={highlighted}
-                        onHighlight={setHighlighted}
-                        onPick={choose}
-                        onGuardBlur={cancelBlur}
-                      />
-                    ))}
-                  </div>
-                </>
-              ) : null}
-
               {sections.areaRows.length > 0 ? (
                 <>
                   <SectionLabel>{dict.areasLabel}</SectionLabel>
@@ -490,33 +453,6 @@ interface OptionProps {
   onHighlight: (index: number) => void;
   onPick: (suggestion: Suggestion) => void;
   onGuardBlur: () => void;
-}
-
-/** A category. Sets the type select and leaves the panel's text alone. */
-function Chip({ active, ...props }: OptionProps & { active: boolean }) {
-  const { suggestion, index, highlighted, onHighlight, onPick, onGuardBlur } =
-    props;
-
-  return (
-    <button
-      type="button"
-      role="option"
-      aria-selected={index === highlighted}
-      onMouseEnter={() => onHighlight(index)}
-      onMouseDown={onGuardBlur}
-      onClick={() => onPick(suggestion)}
-      className={cn(
-        "cursor-pointer rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors",
-        active
-          ? "border-primary bg-primary text-primary-foreground"
-          : index === highlighted
-            ? "border-primary/40 bg-primary/10 text-foreground"
-            : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground",
-      )}
-    >
-      {suggestion.label}
-    </button>
-  );
 }
 
 /** An area or a listing — one line, with what disambiguates it on the right. */

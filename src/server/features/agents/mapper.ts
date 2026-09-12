@@ -9,6 +9,7 @@ export function toAgent(api: ApiAgent): Agent {
     id: api._id,
     name: api.name,
     role: api.role,
+    phone: api.phone || "",
     patch: api.patch || [],
     deals: api.deals || 0,
     rating: api.rating || 5,

@@ -53,6 +53,7 @@ export {
 } from "./features/reviews";
 export { getHomeVideos, getVideos } from "./features/videos";
 export { getLandownerBlocks } from "./features/landowners";
+export { getAgents } from "./features/agents";
 
 export {
   ALL_CACHE_TAGS,

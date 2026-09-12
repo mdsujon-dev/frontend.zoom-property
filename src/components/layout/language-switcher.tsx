@@ -50,7 +50,7 @@ export function LanguageSwitcher({
       <DropdownMenuTrigger
         aria-label={label}
         className={cn(
-          "flex h-9 items-center gap-1.5 rounded-lg px-2.5 text-sm font-medium transition-colors",
+          "flex h-9 cursor-pointer items-center gap-1.5 rounded-lg px-2.5 text-sm font-medium transition-colors",
           onDark
             ? "text-white/85 hover:bg-white/10 hover:text-white"
             : "text-foreground hover:bg-muted",

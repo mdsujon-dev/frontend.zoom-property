@@ -12,6 +12,7 @@ import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { pageBanners } from "@/data/page-banners";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeAlternates } from "@/i18n/alternates";
+import { ContactCta } from "@/components/common/contact-cta";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
@@ -71,6 +72,9 @@ export default async function LandownersPage({
           ))}
         </Stagger>
       </Section>
+        <div >
+          <ContactCta tone="surface" />
+        </div>
 
 
     </>

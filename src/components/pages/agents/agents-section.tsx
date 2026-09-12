@@ -2,11 +2,11 @@ import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { AgentCard } from "./agent-card";
-import { agents } from "@/data/people";
+import { getAgents } from "@/server";
 import { getDictionary } from "@/i18n/dictionaries";
 
 export async function AgentsSection() {
-  const dict = await getDictionary();
+  const [dict, agents] = await Promise.all([getDictionary(), getAgents()]);
 
   return (
     <Section id="agents" className="border-t border-border bg-background">

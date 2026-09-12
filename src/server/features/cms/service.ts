@@ -54,7 +54,7 @@ const GROUPS = [
 const setPath = (
   target: Record<string, unknown>,
   path: string[],
-  value: string | string[],
+  value: string | string[] | Record<string, unknown>[],
 ) => {
   let node = target as Record<string, unknown>;
   for (let i = 0; i < path.length - 1; i++) {
@@ -107,17 +107,27 @@ export async function applyCmsOverrides<T extends object>(
     // one string. Both come back on `value`, so the shape is what tells them
     // apart — and an empty list means the desk cleared the field, which falls
     // through to the built-in exactly as an empty string does.
+    //
+    // Object arrays (e.g. pages.match.steps = [{title, body}]) are passed
+    // through as-is so repeatable sections can be overridden from the CMS.
     const rawVal = Array.isArray(row.value)
-      ? row.value.filter(
-          (item): item is string => typeof item === "string" && !!item.trim(),
-        )
+      ? row.value.every((item) => typeof item === "object" && item !== null)
+        ? (row.value as Record<string, unknown>[])
+        : row.value.filter(
+            (item): item is string => typeof item === "string" && !!item.trim(),
+          )
       : typeof row.value === "string"
       ? row.value
       : typeof row.imageUrl === "string"
       ? row.imageUrl
       : "";
 
-    if (Array.isArray(rawVal) ? !rawVal.length : !rawVal.trim()) continue;
+    if (
+      Array.isArray(rawVal)
+        ? !rawVal.length
+        : typeof rawVal === "string" && !rawVal.trim()
+    )
+      continue;
 
     const path = row.key.slice(0, -suffix.length).split(".");
     if (!path.length) continue;

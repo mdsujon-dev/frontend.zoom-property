@@ -171,7 +171,7 @@ export default async function ContactPage() {
       <Reveal>
         <section className="h-[450px] w-full border-t border-border bg-muted">
           <iframe
-            src={(dict.contact as Record<string, string>).mapUrl || "https://www.google.com/maps?q=ZOOM+IT+Work+Station&output=embed"}
+            src={(dict.contact as Record<string, any>).mapUrl || "https://www.google.com/maps?q=ZOOM+IT+Work+Station&output=embed"}
             width="100%"
             height="100%"
             style={{ border: 0 }}

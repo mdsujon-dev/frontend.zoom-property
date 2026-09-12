@@ -9,7 +9,10 @@
 export interface Agent {
   id: string;
   name: string;
+  nameBn?: string;
   role: string;
+  roleBn?: string;
+  phone: string;
   /** Neighbourhoods this agent actually covers. */
   patch: string[];
   deals: number;
@@ -64,6 +67,7 @@ export const agents: Agent[] = [
     id: "nusrat-jahan",
     name: "Nusrat Jahan",
     role: "Senior Consultant",
+    phone: "+8801711000001",
     patch: ["Gulshan", "Baridhara"],
     deals: 214,
     rating: 4.9,
@@ -75,6 +79,7 @@ export const agents: Agent[] = [
     id: "tanvir-ahmed",
     name: "Tanvir Ahmed",
     role: "Head of Luxury",
+    phone: "+8801711000002",
     patch: ["Banani", "Bashundhara"],
     deals: 178,
     rating: 4.8,
@@ -86,6 +91,7 @@ export const agents: Agent[] = [
     id: "farhana-rahman",
     name: "Farhana Rahman",
     role: "Residential Specialist",
+    phone: "+8801711000003",
     patch: ["Dhanmondi", "Uttara"],
     deals: 236,
     rating: 4.9,
@@ -97,6 +103,7 @@ export const agents: Agent[] = [
     id: "imran-hossain",
     name: "Imran Hossain",
     role: "Commercial Lead",
+    phone: "+8801711000004",
     patch: ["Gulshan", "Tejgaon", "Mirpur"],
     deals: 141,
     rating: 4.7,

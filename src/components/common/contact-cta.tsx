@@ -23,8 +23,8 @@ export async function ContactCta({
         <div
           className={
             isSurface
-              ? "flex flex-col gap-6 rounded-2xl border border-primary/20 bg-card px-6 py-8 text-foreground shadow-xl sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:py-10"
-              : "flex flex-col gap-6 rounded-2xl border border-white/20 bg-primary px-6 py-8 text-primary-foreground shadow-xl sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:py-10"
+              ? "flex flex-col gap-6 rounded-2xl border border-primary/20 bg-card px-6 py-8 text-foreground sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:py-10"
+              : "flex flex-col gap-6 rounded-2xl border border-white/20 bg-primary px-6 py-8 text-primary-foreground sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:py-10"
           }
         >
           <div className="max-w-2xl">

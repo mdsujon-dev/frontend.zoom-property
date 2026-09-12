@@ -10,6 +10,10 @@ import { pageBanners } from "@/data/page-banners";
 import { localeAlternates } from "@/i18n/alternates";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 
+import { Reveal } from "@/components/motion/reveal";
+import { ContactCta } from "@/components/common/contact-cta";
+import AppContainer from "@/components/common/app-container";
+
 export async function generateMetadata(): Promise<Metadata> {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
   return {
@@ -53,6 +57,26 @@ export default async function AboutPage() {
       <VettingSection />
       <MilestonesSection />
       <GallerySection />
+      
+      <AppContainer>
+        <Reveal>
+        <section className="h-[450px] rounded-2xl overflow-hidden w-full border-t border-border bg-muted">
+          <iframe
+            src={(dict.contact as Record<string, any>).mapUrl || "https://www.google.com/maps?q=ZOOM+IT+Work+Station&output=embed"}
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Location Map"
+          />
+        </section>
+      </Reveal>
+      </AppContainer>
+       <div className="mt-8 md:mt-12 lg:mt-20">
+              <ContactCta  tone="surface"/>
+            </div>
     </>
   );
 }

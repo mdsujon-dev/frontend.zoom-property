@@ -57,9 +57,11 @@ export function AgentCard({
           <Metric label="Replies" value={`${agent.respondsIn}m`} />
         </dl>
 
-        <Button variant="outline" size="sm" className="w-full gap-2">
-          <Icon name="phone" size="xs" />
-          Contact {agent.name.split(" ")[0]}
+        <Button variant="outline" size="sm" className="w-full gap-2" asChild>
+          <a href={`tel:${agent.phone}`}>
+            <Icon name="phone" size="xs" />
+            Contact {agent.name.split(" ")[0]}
+          </a>
         </Button>
       </CardContent>
     </Card>

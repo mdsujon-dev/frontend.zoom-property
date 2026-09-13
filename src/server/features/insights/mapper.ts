@@ -27,8 +27,8 @@ export const toInsight = (p: ApiPost): Insight => {
   titleBn: p.titleBn || p.title,
   excerpt: p.excerpt || "",
   excerptBn: p.excerptBn || p.excerpt || "",
-  category: primaryCat,
-  categories: allCats,
+  category: primaryCat as BlogCategory,
+  categories: allCats as BlogCategory[],
   readMinutes: p.readMinutes ?? 1,
   date: isoDate(p.publishedAt),
   // The card wants the close crop; it falls back to the banner when the

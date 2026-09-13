@@ -233,7 +233,7 @@ export function SiteHeader({
                     href={telHref(phone)}
                     className="flex items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-border py-2.5 text-sm font-medium text-foreground"
                   >
-                    <Icon name="phone" size="xs" className="text-primary" />
+                    <Icon name="phone" size="xs" />
                     {phone}
                   </a>
                 <Button size="lg" className="w-full" style={{ height: "42px" }} asChild>

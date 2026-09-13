@@ -20,15 +20,16 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 interface BlogPageProps {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
-  const pageParam = searchParams?.page;
+  const resolvedSearchParams = await searchParams;
+  const pageParam = resolvedSearchParams?.page;
   const page = typeof pageParam === "string" ? Number(pageParam) : 1;
-  const categoryParam = searchParams?.category;
+  const categoryParam = resolvedSearchParams?.category;
   const category = typeof categoryParam === "string" ? categoryParam : "All";
-  const searchParam = searchParams?.search;
+  const searchParam = resolvedSearchParams?.search;
   const search = typeof searchParam === "string" ? searchParam : "";
 
   const [dict, locale, { insights, meta }, categories] = await Promise.all([

@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { Icon } from "@/components/common/icon";
 import Image from "@/components/common/image";
+import { AppContainer } from "@/components/common/app-container";
 import { VideoLightbox } from "@/components/media/video-lightbox";
 import { Badge } from "@/components/ui/badge";
 import type { VideoItem } from "@/data/videos";
@@ -42,7 +43,7 @@ export function ShowcaseVideoGrid({
 
   return (
     <section id="videos" className="border-t border-border bg-muted/30 py-16 sm:py-20">
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+      <AppContainer>
         <div className="max-w-2xl">
           <p className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-primary">
             {title}
@@ -66,9 +67,9 @@ export function ShowcaseVideoGrid({
                   type="button"
                   onClick={() => setActiveId(video.id)}
                   aria-label={`${playLabel}: ${locale === "bn" ? video.titleBn : video.title}`}
-                  className="group cursor-pointer overflow-hidden rounded-xl border border-border bg-card text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-primary transform-gpu"
+                  className="group flex flex-col h-full cursor-pointer overflow-hidden rounded-xl border border-border bg-card text-left shadow-sm transition-all duration-500 ease-out hover:border-primary/50 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-primary transform-gpu"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden bg-black">
+                  <div className="relative aspect-[3/2] overflow-hidden bg-black">
                     <Image
                       src={video.poster}
                       alt={titleText}
@@ -91,7 +92,7 @@ export function ShowcaseVideoGrid({
                       {video.duration}
                     </span>
                   </div>
-                  <div className="flex flex-col gap-2 p-5">
+                  <div className="flex flex-1 flex-col gap-2 p-5">
                     <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
                       <Icon name="location" size="xs" className="text-primary" />
                       {location}
@@ -126,14 +127,14 @@ export function ShowcaseVideoGrid({
             ) : null}
           </nav>
         ) : null}
-      </div>
 
-      <VideoLightbox
-        url={activeVideo?.youtubeUrl ?? null}
-        title={activeVideo ? (locale === "bn" ? activeVideo.titleBn : activeVideo.title) : ""}
-        closeLabel={closeLabel}
-        onClose={() => setActiveId(null)}
-      />
+        <VideoLightbox
+          url={activeVideo?.youtubeUrl ?? null}
+          title={activeVideo ? (locale === "bn" ? activeVideo.titleBn : activeVideo.title) : ""}
+          closeLabel={closeLabel}
+          onClose={() => setActiveId(null)}
+        />
+      </AppContainer>
     </section>
   );
 }

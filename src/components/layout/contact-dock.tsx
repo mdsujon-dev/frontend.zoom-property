@@ -17,17 +17,14 @@ import { cn } from "@/lib/utils";
  * each turned a quiet edge tab into a panel. Screen readers still hear the full
  * name, and a mouse held still gets it as a tooltip.
  *
- * Each one carries its own colour standing still rather than waiting for a
- * hover — WhatsApp's green is half of what makes that glyph readable at 20px,
- * and three grey icons on a white strip look disabled. Hover then fills the
- * whole cell and the icon goes white, so the colour is the resting state and
- * the fill is the response.
+ * Every cell is primary with a white icon — one brand strip, not three muted
+ * glyphs. Hover darkens the cell slightly so the press still has a response.
  *
  * The call cell rings. Three cells that all sit still make the most valuable
- * one no easier to find than the other two, so the handset rocks and a halo
- * pushes out of the button — for about a second in every four, on one shared
- * cycle, and never while a pointer is on it. Continuous movement would read as
- * an advert; a beat of it every few seconds reads as a phone.
+ * one no easier to find than the other two, so the handset rocks — for about
+ * a second in every four, on one shared cycle, and never while a pointer is
+ * on it. Continuous movement would read as an advert; a beat of it every few
+ * seconds reads as a phone.
  *
  * `CallChime` gives that first minute a sound as well, once per tab. It is the
  * only client code in here.
@@ -56,10 +53,9 @@ export async function ContactDock() {
     <nav
       aria-label={dict.nav.contact}
       // Flush to the edge, so the border runs top, left and bottom — there is
-      // no right edge to draw, it is off the screen. `--input` rather than
-      // `--border`: a white panel on a photograph needs the darker hairline to
-      // register at all.
-      className="fixed top-1/2 right-0 z-40 flex -translate-y-1/2 flex-col divide-y divide-border rounded-l-lg border border-r-0 border-input bg-card shadow-[-8px_0_28px_-14px] shadow-foreground/40 [&>a:first-child]:rounded-tl-lg [&>a:last-child]:rounded-bl-lg"
+      // no right edge to draw, it is off the screen. Primary fill on the strip
+      // itself so rounded corners never flash the page behind.
+      className="fixed top-1/2 right-0 z-40 flex -translate-y-1/2 flex-col divide-y divide-white/25 overflow-hidden rounded-l-lg border border-r-0 border-primary bg-primary shadow-[-8px_0_28px_-14px] shadow-foreground/40"
     >
       <CallChime />
 
@@ -68,12 +64,6 @@ export async function ContactDock() {
         // Anything that leaves the site opens in its own tab; `tel:` and
         // `mailto:` hand off to an app and must not.
         const external = /^https?:/i.test(link.href);
-        // Top cell is the call CTA: primary fill + white icon at rest.
-        // WhatsApp keeps its brand green on the white strip; mail uses primary ink.
-        const isTop = index === 0;
-        const iconColor = /wa\.me|whatsapp/i.test(link.href)
-          ? "text-[#25D366]"
-          : "text-primary";
 
         return (
           <a
@@ -82,37 +72,16 @@ export async function ContactDock() {
             aria-label={link.label || undefined}
             title={link.label || undefined}
             {...(external ? { target: "_blank", rel: "noreferrer" } : undefined)}
-            className={cn(
-              "group relative flex size-12 items-center justify-center transition-colors focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-primary",
-              isTop
-                ? "bg-primary text-white hover:bg-primary/90"
-                : cn(
-                    "hover:bg-primary hover:text-primary-foreground",
-                    iconColor,
-                  ),
-            )}
+            className="group relative flex size-12 items-center justify-center bg-primary text-white transition-colors hover:bg-primary/90 focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-white"
           >
-            {ring ? (
-              // Light halo on the filled top cell — primary-on-primary would
-              // disappear. Hidden on hover so the cell stays a plain button.
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-2 animate-(--animate-call-halo) rounded-full bg-white/35 group-hover:hidden motion-reduce:hidden"
-              />
-            ) : null}
-
             <span
               className={cn(
-                "relative",
+                "relative z-10",
                 ring &&
                   "animate-(--animate-phone-ring) group-hover:animate-none motion-reduce:animate-none",
               )}
             >
-              <Icon
-                name={link.icon}
-                size="md"
-                className={isTop ? "text-white" : iconColor}
-              />
+              <Icon name={link.icon} size="md" className="text-white" />
             </span>
           </a>
         );

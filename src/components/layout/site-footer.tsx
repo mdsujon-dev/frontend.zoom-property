@@ -86,8 +86,8 @@ export async function SiteFooter() {
                 href={telHref(d.phone)}
                 className="group flex w-fit items-center gap-3 whitespace-nowrap text-sm text-footer-foreground transition-colors hover:text-brand-green-light"
               >
-                <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-white transition-colors group-hover:bg-brand-green">
-                  <Icon name={t.phoneIcon} size="xs" />
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-white shadow-[0_4px_10px_-4px_rgba(75,128,45,0.6)] transition-colors group-hover:bg-brand-green">
+                  <Icon name={t.phoneIcon} size="sm" />
                 </span>
                 {d.phone}
               </a>
@@ -95,20 +95,24 @@ export async function SiteFooter() {
                 href={mailHref(d.email)}
                 className="group flex w-fit items-center gap-3 text-sm text-footer-foreground transition-colors hover:text-brand-green-light"
               >
-                <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-white transition-colors group-hover:bg-brand-green">
-                  <Icon name={t.emailIcon} size="xs" />
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-white shadow-[0_4px_10px_-4px_rgba(75,128,45,0.6)] transition-colors group-hover:bg-brand-green">
+                  <Icon name={t.emailIcon} size="sm" />
                 </span>
                 {d.email}
               </a>
               <span className="flex items-start gap-3 text-sm text-footer-foreground/90">
-                <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-white">
-                  <Icon name={t.addressIcon} size="xs" />
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-white shadow-[0_4px_10px_-4px_rgba(75,128,45,0.6)]">
+                  <Icon name={t.addressIcon} size="sm" />
                 </span>
-                <span className="pt-1.5">{d.dhakaAddress}</span>
+                <span className="pt-2">{d.dhakaAddress}</span>
               </span>
             </div>
 
-            <div className="flex flex-wrap gap-2 pt-2">
+            {/* Social row. Same tile language as the contact icons above —
+                filled, rounded, white glyph — so the whole block reads as
+                one set. Resting tile is a quiet white wash on the charcoal;
+                hover fills it primary and lifts it a touch. */}
+            <div className="flex flex-wrap gap-2.5 pt-3">
               {socials.map((social) => (
                 <a
                   key={social.label}
@@ -116,9 +120,10 @@ export async function SiteFooter() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={social.label}
-                  className="flex size-9 items-center justify-center rounded-lg border border-footer-foreground/20 text-footer-foreground/75 transition-colors hover:border-brand-green-light hover:bg-footer-foreground/10 hover:text-brand-green-light"
+                  title={social.label}
+                  className="flex size-10 items-center justify-center rounded-lg bg-footer-foreground/10 text-footer-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary hover:text-white hover:shadow-[0_6px_14px_-6px_rgba(75,128,45,0.6)]"
                 >
-                  <Icon name={social.icon} size="xs" />
+                  <Icon name={social.icon} size="sm" />
                 </a>
               ))}
             </div>

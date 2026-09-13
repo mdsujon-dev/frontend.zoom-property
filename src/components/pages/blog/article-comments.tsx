@@ -72,7 +72,9 @@ export function ArticleComments({
 
         <div className="grid gap-5 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="comment-name">{dict.name}</Label>
+            <Label htmlFor="comment-name">
+              {dict.name} <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="comment-name"
               name="name"
@@ -83,7 +85,9 @@ export function ArticleComments({
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="comment-email">{dict.email}</Label>
+            <Label htmlFor="comment-email">
+              {dict.email} <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="comment-email"
               name="email"
@@ -100,7 +104,9 @@ export function ArticleComments({
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <Label htmlFor="comment-body">{dict.comment}</Label>
+          <Label htmlFor="comment-body">
+            {dict.comment} <span className="text-destructive">*</span>
+          </Label>
           <Textarea
             id="comment-body"
             name="comment"

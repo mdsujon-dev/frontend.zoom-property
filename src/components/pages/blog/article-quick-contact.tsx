@@ -75,7 +75,7 @@ export function ArticleQuickContact({
         </Text>
       </div>
 
-      <Field id="qc-name" label={dict.name}>
+      <Field id="qc-name" label={dict.name} required>
         <Input
           id="qc-name"
           name="name"
@@ -85,7 +85,7 @@ export function ArticleQuickContact({
         />
       </Field>
 
-      <Field id="qc-phone" label={dict.phone}>
+      <Field id="qc-phone" label={dict.phone} required>
         <Input
           id="qc-phone"
           name="phone"
@@ -97,7 +97,7 @@ export function ArticleQuickContact({
         />
       </Field>
 
-      <Field id="qc-email" label={dict.email}>
+      <Field id="qc-email" label={dict.email} required>
         <Input
           id="qc-email"
           name="email"
@@ -132,16 +132,19 @@ export function ArticleQuickContact({
 function Field({
   id,
   label,
+  required,
   children,
 }: {
   id: string;
   label: string;
+  required?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <div className="flex flex-col gap-1.5">
       <Label htmlFor={id} className="text-xs font-medium text-muted-foreground">
         {label}
+        {required && <span className="ml-1 text-destructive">*</span>}
       </Label>
       {children}
     </div>

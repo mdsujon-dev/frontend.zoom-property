@@ -5,23 +5,9 @@ import type { BlogCategory, Insight } from "@/data/insights";
 import { isoDate, mediaUrl } from "../../base-api";
 import type { ApiPost } from "./types";
 
-/** The categories the site's filters know. Anything else reads as "All". */
-const KNOWN: BlogCategory[] = [
-  "Real Estate",
-  "Architecture",
-  "Economy",
-  "Legal",
-  "Technology",
-  "Lifestyle",
-  "Market",
-  "Guide",
-  "NRB",
-];
-
 const categoryOf = (value: ApiPost["category"]): BlogCategory => {
   const name = typeof value === "string" ? value : value?.name;
-  const match = KNOWN.find((c) => c.toLowerCase() === (name ?? "").toLowerCase());
-  return match ?? "All";
+  return (name as BlogCategory) || "All";
 };
 
 /** An API post to the `Insight` the cards consume. */

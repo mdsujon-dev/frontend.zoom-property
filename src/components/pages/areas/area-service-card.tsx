@@ -39,17 +39,27 @@ export function AreaServiceCard({
   const listingsText = isBn
     ? toBengaliDigits(formatNumber(area.listings))
     : formatNumber(area.listings);
+  const listingsLabel = isBn
+    ? `${listingsText} টি লিস্টিং`
+    : `${listingsText} homes`;
 
   return (
     <Link
       href={localeHref(locale, `/properties?area=${area.id}`)}
       className={cn(
-        "group relative isolate flex h-full flex-col overflow-hidden rounded-lg border border-border/60 bg-card/95 backdrop-blur-sm transition-all duration-300 ease-out",
+        "group relative isolate flex h-full flex-col overflow-hidden rounded-lg border border-border/60",
+        "bg-linear-to-br from-primary/3 via-card/95 to-card backdrop-blur-sm transition-all duration-300 ease-out",
         "shadow-[0_1px_2px_rgba(27,35,24,0.04),0_10px_30px_-18px_rgba(27,35,24,0.55)]",
         "hover:-translate-y-1.5 hover:border-primary/40 hover:shadow-[0_2px_4px_rgba(27,35,24,0.06),0_22px_46px_-20px_rgba(75,128,45,0.45)]",
         className,
       )}
     >
+      {/* Hover glow — only appears on lift so the base stays calm. */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -top-16 -right-24 -z-10 size-40 rounded-full bg-primary/10 opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-100"
+      />
+
       <div className="flex items-stretch gap-3 px-4 pt-3.5 pb-3">
         {/* Thumbnail + listings */}
         <div className="relative shrink-0">
@@ -67,7 +77,7 @@ export function AreaServiceCard({
 
           <span className="absolute -top-2 -right-1 z-10 inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[11px] font-semibold text-primary shadow-[0_4px_10px_rgba(27,35,24,0.18)]">
             <Icon name="building" size="xs" className="size-3" />
-            {listingsText}
+            <span className="truncate max-w-32">{listingsLabel}</span>
           </span>
         </div>
 
@@ -97,21 +107,30 @@ export function AreaServiceCard({
       </div>
 
       {/* Meta strip (no pricing / no button) */}
-      <div className="mt-auto flex items-center justify-start gap-3 border-t border-border/70 bg-muted/40 px-4 py-2.5 text-[11px] text-muted-foreground">
-        <div className="flex items-center gap-3">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-background/80 px-2 py-0.5">
+      <div className="mt-auto flex items-center justify-between gap-3 border-t border-border/70 bg-muted/40/90 px-4 py-2.5 text-[11px] text-muted-foreground">
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-background/90 px-2 py-0.5">
             <Icon name="shieldCheck" size="xs" className="text-brand-green-light" />
             <span className="truncate max-w-30">
               {area.securityTier}
             </span>
           </span>
-          {area.rentalYield && (
-            <span className="hidden items-center gap-1 rounded-full bg-background/70 px-2 py-0.5 font-medium text-foreground/80 sm:inline-flex">
-              <Icon name="chartUp" size="xs" />
-              {isBn ? area.rentalYield.replace("%", "% লাভ") : `${area.rentalYield} yield`}
+          {area.metroConnectivity && (
+            <span className="hidden items-center gap-1 rounded-full bg-background/80 px-2 py-0.5 sm:inline-flex">
+              <Icon name="train" size="xs" />
+              <span className="truncate max-w-40">
+                {area.metroConnectivity}
+              </span>
             </span>
           )}
         </div>
+
+        {area.rentalYield && (
+          <span className="hidden items-center gap-1.5 rounded-full bg-background/90 px-2 py-0.5 font-medium text-foreground/85 sm:inline-flex">
+            <Icon name="chartUp" size="xs" />
+            {isBn ? area.rentalYield.replace("%", "% লাভ") : `${area.rentalYield} yield`}
+          </span>
+        )}
       </div>
     </Link>
   );

@@ -44,6 +44,7 @@ const headingVariants = cva("font-heading text-balance", {
   defaultVariants: {
     tone: "default",
     align: "left",
+    weight: "bold",
   },
 });
 

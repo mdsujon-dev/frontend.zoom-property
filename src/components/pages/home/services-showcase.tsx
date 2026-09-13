@@ -85,44 +85,50 @@ function ServiceShowcaseCard({
     <Link
       href={localeHref(locale, `/services/${service.id}`)}
       className={cn(
-        "group relative isolate flex h-full flex-col gap-4 overflow-hidden rounded-2xl border border-border bg-card p-4",
-        "transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg",
+        "group relative isolate flex h-full flex-col overflow-hidden rounded-lg border border-border/60 bg-card/95 backdrop-blur-sm",
+        "shadow-[0_1px_2px_rgba(27,35,24,0.04),0_10px_30px_-18px_rgba(27,35,24,0.55)]",
+        "transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-primary/40 hover:shadow-[0_2px_4px_rgba(27,35,24,0.06),0_22px_46px_-20px_rgba(75,128,45,0.45)]",
       )}
     >
-      {/* Corner wash — the one flourish, and it only appears on hover. */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute -top-16 -right-16 -z-10 size-40 rounded-full bg-primary/10 opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100"
-      />
+      <div className="flex items-stretch gap-3 px-4 pt-3.5 pb-3">
+        {/* Thumbnail */}
+        <div className="relative shrink-0">
+          <div className="h-16 w-20 overflow-hidden rounded-md border border-border/70 bg-primary/5">
+            <Image
+              src={service.image}
+              alt=""
+              fill
+              sizes="120px"
+              placeholder="blur"
+              blurDataURL={shimmerDataUrl()}
+              className="object-cover"
+            />
+          </div>
 
-      <div className="relative h-36 w-full overflow-hidden rounded-xl bg-primary/5">
-        <Image
-          src={service.image}
-          alt=""
-          fill
-          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-          placeholder="blur"
-          blurDataURL={shimmerDataUrl()}
-          className="object-cover"
-        />
+          <span className="absolute -top-2 -right-1 inline-flex size-7 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-semibold shadow-[0_4px_10px_rgba(27,35,24,0.18)]">
+            <Icon name={service.icon} size="xs" />
+          </span>
+        </div>
+
+        {/* Copy */}
+        <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+          <span className="line-clamp-2 font-heading text-[15px] font-semibold leading-snug text-foreground">
+            {title}
+          </span>
+          <span className="line-clamp-2 text-[11px] leading-relaxed text-muted-foreground">
+            {description}
+          </span>
+        </div>
       </div>
 
-      <div className="flex items-center gap-2">
-        <Icon name={service.icon} size="sm" className="shrink-0 text-primary" />
-        <span className="truncate font-heading text-base font-bold text-foreground">
-          {title}
-        </span>
-      </div>
-
-      <div className="mt-auto flex items-end justify-between gap-3">
-        <span className="line-clamp-2 min-w-0 text-xs leading-relaxed text-muted-foreground">
-          {description}
-        </span>
+      <div className="mt-auto flex items-center justify-between gap-3 border-t border-border/70 bg-muted/40 px-4 py-2.5 text-[11px] text-muted-foreground">
+        <span>{locale === "bn" ? "জুম প্রোপার্টি ইন-হাউজ টিম" : "Zoom Property in‑house unit"}</span>
 
         <span
           aria-hidden
-          className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground"
+          className="flex shrink-0 items-center gap-2 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground"
         >
+          {locale === "bn" ? "বিস্তারিত দেখুন" : "Explore service"}
           <Icon
             name="arrowRight"
             size="xs"

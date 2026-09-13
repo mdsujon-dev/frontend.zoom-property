@@ -45,11 +45,20 @@ export function CinematicShowcase({
           blurDataURL={shimmerDataUrl()}
           className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
         />
+        {/* Two shades: a foot fade so the copy block always sits on dark, and a
+            left-to-right wash so the text column reads over a bright photo
+            while the right half of the frame stays visible. */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-black/20"
+          className="absolute inset-0 bg-linear-to-t from-black/95 via-black/55 to-black/15"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-linear-to-r from-black/75 via-black/35 to-transparent"
         />
 
+        {/* Play control sits in the upper half on phones and in the right half
+            from `lg`, so it never lands on top of the title. */}
         <button
           type="button"
           onClick={(e) => {
@@ -57,7 +66,7 @@ export function CinematicShowcase({
             setOpenModal(true);
           }}
           aria-label={`${dict.play}: ${dict.title}`}
-          className="absolute inset-0 z-10 flex cursor-pointer items-center justify-center focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-white"
+          className="absolute inset-0 z-10 flex cursor-pointer items-center justify-center pb-48 sm:pb-40 lg:justify-end lg:pr-[18%] lg:pb-0 focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-white"
         >
           <span className="relative flex size-20 items-center justify-center rounded-full bg-white/15 backdrop-blur-md transition-transform duration-500 ease-out-expo group-hover:scale-110 sm:size-24">
             <span
@@ -69,15 +78,29 @@ export function CinematicShowcase({
         </button>
 
         <AppContainer className="pointer-events-none absolute inset-x-0 bottom-0 z-10 pb-12 sm:pb-16">
-          <div className="flex max-w-2xl flex-col gap-3">
-            <Eyebrow className="text-white/70">{dict.eyebrow}</Eyebrow>
-            <Heading as="h2" size="h2" className="text-white">
+          <div className="flex max-w-2xl flex-col gap-4">
+            <Eyebrow className="flex items-center gap-2 font-semibold text-brand-green-light">
+              <span aria-hidden className="size-1.5 rounded-full bg-brand-green-light" />
+              {dict.eyebrow}
+            </Eyebrow>
+            <Heading
+              as="h2"
+              size="h2"
+              weight="bold"
+              className="text-white lg:line-clamp-2 [text-shadow:0_2px_12px_rgba(0,0,0,0.45)]"
+            >
               {dict.title}
             </Heading>
-            <Text size="lead" className="text-white/75">
+            <Text
+              size="lead"
+              className="max-w-xl leading-relaxed text-white/90 [text-shadow:0_1px_6px_rgba(0,0,0,0.5)]"
+            >
               {dict.description}
             </Text>
-            <span className="flex items-center gap-2 pt-1 text-sm text-white/60">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-sm font-medium text-white backdrop-blur-md">
+              <Icon name="play" size="xs" className="fill-white text-white" />
+              {dict.play}
+              <span aria-hidden className="size-1 rounded-full bg-white/50" />
               <Icon name="clock" size="xs" />
               {dict.duration}
             </span>

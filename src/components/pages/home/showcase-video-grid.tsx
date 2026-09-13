@@ -77,7 +77,7 @@ export function ShowcaseVideoGrid({
                       sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                       placeholder="blur"
                       blurDataURL={shimmerDataUrl()}
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="object-cover"
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/10 to-black/20" />
                     <Badge className="absolute left-3 top-3 border-0 bg-primary text-primary-foreground">

@@ -54,7 +54,7 @@ export function BlogFeaturedOverlayCard({
         fill
         priority={priority}
         sizes="(min-width: 1024px) 50vw, 100vw"
-        className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+        className="object-cover object-center"
       />
       {/* Multi-layer gradient scrim ensuring high contrast readability */}
       <div
@@ -157,7 +157,6 @@ export function BlogStandardCard({
           src={insight.image}
           alt=""
           ratio="3/2"
-          hover="zoom"
           rounded="none"
           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
         >
@@ -263,7 +262,7 @@ export function BlogHorizontalCard({
           alt=""
           fill
           sizes="96px"
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          className="object-cover"
         />
       </Link>
 

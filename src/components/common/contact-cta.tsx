@@ -39,7 +39,7 @@ export async function ContactCta({
             >
               {cta.eyebrow}
             </p>
-            <h2 className="font-heading text-3xl font-semibold leading-tight sm:text-4xl">
+            <h2 className="font-heading text-3xl font-bold leading-tight sm:text-4xl">
               {cta.title}
             </h2>
             <p

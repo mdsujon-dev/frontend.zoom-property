@@ -48,37 +48,36 @@ export function InsightCard({
       <ImageFrame
         src={insight.image}
         alt=""
-        ratio="3/2"
+        ratio="4/3"
         rounded="none"
-        hover="zoom"
         sizes="third"
       >
-        <div className="pointer-events-none absolute inset-x-4 bottom-4 flex items-center justify-between gap-4 rounded-md bg-black/40 px-5 py-3 text-[15px] text-white backdrop-blur-md">
+        <div className="pointer-events-none absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 rounded-md bg-black/40 px-3.5 py-2 text-xs text-white backdrop-blur-md">
           <span className="truncate">{category}</span>
           <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-white/45" />
           <span className="shrink-0 whitespace-nowrap">{date}</span>
         </div>
       </ImageFrame>
 
-      <div className="flex flex-1 flex-col gap-4 p-6">
+      <div className="flex flex-1 flex-col gap-3 p-5">
         <Heading
           as="h3"
-          size="h4"
+          size="h6"
           weight="bold"
-          className="line-clamp-2 text-balance transition-colors duration-300 group-hover:text-primary"
+          className="line-clamp-2 text-base leading-snug text-balance transition-colors duration-300 group-hover:text-primary"
         >
           {insight.title}
         </Heading>
 
-        <Text size="base" className="line-clamp-2 flex-1 leading-relaxed text-muted-foreground">
+        <Text size="sm" className="line-clamp-2 flex-1 leading-relaxed text-muted-foreground">
           {insight.excerpt}
         </Text>
 
-        <span className="mt-auto flex items-center gap-2.5 border-t border-border pt-4 text-[15px] font-bold text-foreground">
+        <span className="mt-auto flex items-center gap-2 border-t border-border pt-3.5 text-sm font-bold text-foreground">
           {readMore}
           <Icon
             name="arrowRight"
-            size="sm"
+            size="xs"
             className="transition-transform duration-300 group-hover:translate-x-1"
           />
         </span>

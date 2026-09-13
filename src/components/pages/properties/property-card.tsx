@@ -87,7 +87,6 @@ export function PropertyCard({
           alt={`${title}, ${displayArea}`}
           ratio={featured ? "3/2" : "4/3"}
           rounded="none"
-          hover="zoom"
           sizes="card"
           className={cn(isSold && "grayscale-[0.4]")}
         >

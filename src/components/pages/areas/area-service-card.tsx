@@ -60,7 +60,7 @@ export function AreaServiceCard({
           sizes="(min-width: 1280px) 20vw, (min-width: 640px) 33vw, 50vw"
           placeholder="blur"
           blurDataURL={shimmerDataUrl()}
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          className="object-cover"
         />
         <div
           aria-hidden

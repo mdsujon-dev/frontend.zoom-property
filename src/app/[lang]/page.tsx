@@ -31,8 +31,8 @@ export default async function Home() {
 
       <ListingsSection variant="preview" limit={6} />
 
-      <div className="mb-8 md:mb-16 lg:mb-24">
-        <ContactCta tone="surface" />
+      <div className="relative z-10 !-mt-8 md:!-mt-16 lg:!-mt-24">
+        <ContactCta tone="surface" noBackground />
       </div>
 
       <CinematicShowcase

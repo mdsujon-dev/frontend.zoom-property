@@ -66,7 +66,6 @@ export function ProjectCard({
           alt={`${displayName}, ${project.area}`}
           ratio="3/2"
           rounded="none"
-          hover="zoom"
           sizes="third"
         >
           {/* Deep foot gradient: the title sits on it. */}

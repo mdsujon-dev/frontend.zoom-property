@@ -56,7 +56,6 @@ export function BlogGridCard({
           alt=""
           ratio="4/3"
           rounded="lg"
-          hover="zoom"
           sizes="third"
         />
 

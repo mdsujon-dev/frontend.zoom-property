@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { AppContainer } from "@/components/common/app-container";
+import { ContactCta } from "@/components/common/contact-cta";
 import { Heading } from "@/components/common/heading";
 import { Icon } from "@/components/common/icon";
 import { JsonLd } from "@/components/common/json-ld";
@@ -253,6 +254,10 @@ export default async function BlogPostPage({
           </Stagger>
         </AppContainer>
       </section>
+
+      <div className="">
+        <ContactCta tone="surface" noBackground />
+      </div>
     </>
   );
 }

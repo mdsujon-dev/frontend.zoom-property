@@ -22,7 +22,7 @@ export * from "./projects/project-card";
 // Areas
 export * from "./areas/areas-section";
 export * from "./areas/area-comparison";
-export * from "./areas/area-card";
+export * from "./areas/area-service-card";
 
 // Landowners
 export * from "./landowners/landowner-story";

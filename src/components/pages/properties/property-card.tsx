@@ -2,10 +2,7 @@ import Link from "next/link";
 
 import { Heading } from "@/components/common/heading";
 import { Icon, type IconName } from "@/components/common/icon";
-import { Text } from "@/components/common/text";
 import { ImageFrame } from "@/components/media/image-frame";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import type { Property } from "@/data/properties";
 import type { Locale } from "@/i18n/config";
 import { localeHref } from "@/i18n/href";
@@ -26,6 +23,11 @@ export interface PropertyCardProps {
  * of that link, and everything else on the card is inside it. One link per
  * card rather than three, because a keyboard walking a grid of twelve should
  * pass twelve stops, not thirty-six.
+ *
+ * Reading order is what a buyer actually scans: purpose and trust marks on
+ * the photo, then price, then what and where, then the numbers. The footer
+ * carries the one legal fact that decides a viewing — RAJUK — and an arrow
+ * that says the whole card is the button.
  */
 export function PropertyCard({
   property,
@@ -57,14 +59,12 @@ export function PropertyCard({
   const title = locale === "bn" && titleBn ? titleBn : englishTitle;
   const displayArea = locale === "bn" && areaBn ? areaBn : area;
 
-  const specs: { icon: IconName; label: string }[] = [
-    ...(beds > 0 ? [{ icon: "bed" as const, label: `${beds} Beds` }] : []),
-    { icon: "bath", label: `${baths} Baths` },
-    { icon: "area", label: formatArea(size) },
-    ...(katha
-      ? [{ icon: "location" as const, label: formatKatha(katha) }]
-      : []),
-  ];
+  const specs: { icon: IconName; value: string; label: string }[] = [
+    ...(beds > 0 ? [{ icon: "bed" as const, value: String(beds), label: "Beds" }] : []),
+    { icon: "bath", value: String(baths), label: "Baths" },
+    { icon: "area", value: formatArea(size), label: "Area" },
+    ...(katha ? [{ icon: "layers" as const, value: formatKatha(katha), label: "Land" }] : []),
+  ].slice(0, 4);
 
   return (
     <Link
@@ -72,13 +72,16 @@ export function PropertyCard({
       aria-label={`${title}, ${displayArea}`}
       className="block h-full"
     >
-      <Card
+      <article
         className={cn(
-          "group h-full overflow-hidden p-0 border border-border transition-all duration-500 ease-out-expo hover:border-primary/60 hover:shadow-xl hover:-translate-y-1",
-          isSold ? "bg-muted/70" : "bg-card",
+          "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 transition-all duration-300 ease-out",
+          "shadow-[0_1px_2px_rgba(27,35,24,0.04),0_8px_24px_-8px_rgba(75,128,45,0.16)]",
+          "hover:-translate-y-1.5 hover:border-primary/40 hover:shadow-[0_2px_4px_rgba(27,35,24,0.06),0_20px_40px_-12px_rgba(75,128,45,0.3)]",
+          isSold ? "bg-muted/60" : "bg-card",
           className,
         )}
       >
+        {/* ── Photo ─────────────────────────────────────────────────── */}
         <ImageFrame
           src={images[0]}
           alt={`${title}, ${displayArea}`}
@@ -86,109 +89,134 @@ export function PropertyCard({
           rounded="none"
           hover="zoom"
           sizes="card"
+          className={cn(isSold && "grayscale-[0.4]")}
         >
-          <div className="absolute left-3 top-3 flex flex-wrap gap-1.5 z-10">
-            {badge ? (
-              <Badge className="bg-primary text-primary-foreground font-semibold px-2.5 py-1 text-xs shadow-md border-0">
+          {/* Soft foot shade so the pills read on any photo. */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-black/45 to-transparent"
+          />
+
+          {/* Top-left: purpose + editorial badge. */}
+          <div className="absolute left-3 top-3 z-10 flex flex-wrap gap-1.5">
+            <span
+              className={cn(
+                "rounded-md px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider shadow-sm",
+                isSold
+                  ? "bg-foreground/85 text-background"
+                  : purpose === "rent"
+                    ? "bg-white text-primary"
+                    : "bg-primary text-white",
+              )}
+            >
+              {isSold ? "Sold" : `For ${purpose}`}
+            </span>
+            {badge && !isSold ? (
+              <span className="rounded-md bg-brand-green-light px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-[#1b2318] shadow-sm">
                 {badge}
-              </Badge>
-            ) : null}
-
-            {isSold ? (
-              <Badge className="border-0 bg-foreground/85 px-2.5 py-1 text-xs font-semibold text-background shadow-md">
-                Sold
-              </Badge>
-            ) : null}
-
-            {hasVirtualTour ? (
-              <span className="flex items-center gap-1 rounded-full bg-black/70 px-2.5 py-1 text-[11px] font-medium text-white border border-white/20 backdrop-blur-md">
-                <span className="size-1.5 rounded-full bg-primary animate-pulse" />
-                360° Tour
               </span>
             ) : null}
           </div>
 
-          <span className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-black/70 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-md border border-white/15">
-            <Icon name="gallery" size="xs" />
-            {images.length}
-          </span>
-        </ImageFrame>
-
-        <CardContent className="flex flex-col gap-3 px-5 pt-5 pb-2">
-          <div className="flex items-baseline justify-between gap-3">
-            <span className="font-heading text-h4 font-bold text-primary tracking-tight">
-              {isSold
-                ? "Sold"
-                : purpose === "rent"
-                  ? <><FormatBdt value={price} />/mo</>
-                  : <FormatBdt value={price} />}
-            </span>
-            <span
-              className={cn(
-                "rounded-md px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider border",
-                isSold
-                  ? "border-border bg-background/60 text-muted-foreground"
-                  : "border-primary/25 bg-primary/15 text-primary",
-              )}
-            >
-              For {purpose}
+          {/* Bottom-left: 360 tour. Bottom-right: photo count. */}
+          <div className="absolute inset-x-3 bottom-3 z-10 flex items-end justify-between gap-2">
+            {hasVirtualTour ? (
+              <span className="flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-semibold text-foreground shadow-sm">
+                <span className="size-1.5 rounded-full bg-primary animate-pulse" />
+                360° Tour
+              </span>
+            ) : (
+              <span />
+            )}
+            <span className="flex items-center gap-1.5 rounded-full bg-black/60 px-2.5 py-1 text-xs font-medium text-white backdrop-blur-sm">
+              <Icon name="gallery" size="xs" />
+              {images.length}
             </span>
           </div>
+        </ImageFrame>
 
+        {/* ── Body ──────────────────────────────────────────────────── */}
+        <div className="flex flex-1 flex-col gap-3 px-5 pt-4 pb-4">
+          {/* Price */}
+          <div className="flex items-baseline gap-1.5">
+            <span
+              className={cn(
+                "font-heading text-h4 font-bold tracking-tight",
+                isSold ? "text-muted-foreground line-through decoration-2" : "text-primary",
+              )}
+            >
+              <FormatBdt value={price} />
+            </span>
+            {purpose === "rent" && !isSold ? (
+              <span className="text-sm font-medium text-muted-foreground">/ month</span>
+            ) : null}
+          </div>
+
+          {/* What and where */}
           <div className="flex flex-col gap-1">
             <Heading
               as="h3"
               size="h6"
-              weight="medium"
-              className="text-foreground group-hover:text-primary transition-colors"
+              weight="semibold"
+              className="line-clamp-2 text-foreground transition-colors group-hover:text-primary"
             >
               {title}
             </Heading>
-            <Text
-              size="sm"
-              className="flex items-center gap-1.5 text-muted-foreground"
-            >
-              <Icon name="location" size="xs" className="text-primary/70" />
-              {displayArea}, {city}
-            </Text>
+            <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+              <Icon name="location" size="xs" className="shrink-0 text-primary" />
+              <span className="truncate">
+                {displayArea}, {city}
+              </span>
+            </span>
           </div>
 
-          <ul className="flex flex-wrap gap-x-4 gap-y-2 pt-2 border-t border-primary/10">
+          {/* Numbers */}
+          <ul className="mt-auto grid grid-cols-4 gap-1.5 pt-1">
             {specs.map((spec) => (
               <li
                 key={spec.label}
-                className="flex items-center gap-1.5 text-xs text-foreground/80 font-medium"
+                className="flex flex-col items-center gap-0.5 rounded-lg bg-muted/70 px-1 py-2 text-center"
               >
                 <Icon name={spec.icon} size="xs" className="text-primary" />
-                {spec.label}
+                <span className="text-xs font-bold leading-tight text-foreground">
+                  {spec.value}
+                </span>
+                <span className="text-[10px] leading-none text-muted-foreground">
+                  {spec.label}
+                </span>
               </li>
             ))}
           </ul>
-        </CardContent>
+        </div>
 
-        <CardFooter className="mt-auto flex flex-wrap items-center justify-between gap-2 border-t border-border px-5 py-3.5 bg-muted/40">
-          {rajukApproved ? (
-            <span className="flex items-center gap-1.5 text-xs font-semibold text-primary">
-              <Icon name="approved" size="xs" />
-              RAJUK Approved
-            </span>
-          ) : (
-            <span className="text-xs text-muted-foreground">
-              Title in review
-            </span>
-          )}
-          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-            <span className="flex items-center gap-1">
-              <Icon name="furnishing" size="xs" />
-              {furnishing}
-            </span>
-            <span className="flex items-center gap-1">
-              <Icon name="handover" size="xs" />
-              {handover}
+        {/* ── Footer ────────────────────────────────────────────────── */}
+        <div className="flex items-center justify-between gap-2 border-t border-border/70 px-5 py-3">
+          <div className="flex min-w-0 items-center gap-2.5">
+            {rajukApproved ? (
+              <span className="flex shrink-0 items-center gap-1 rounded-full bg-secondary px-2 py-0.5 text-[11px] font-semibold text-secondary-foreground">
+                <Icon name="approved" size="xs" className="size-3" />
+                RAJUK
+              </span>
+            ) : (
+              <span className="shrink-0 rounded-full bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+                Title in review
+              </span>
+            )}
+            <span className="truncate text-[11px] text-muted-foreground">
+              {furnishing} · {handover}
             </span>
           </div>
-        </CardFooter>
-      </Card>
+
+          <span className="flex shrink-0 items-center gap-1 text-xs font-semibold text-primary">
+            <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-300 group-hover:max-w-24 group-hover:opacity-100">
+              View details
+            </span>
+            <span className="flex size-7 items-center justify-center rounded-full bg-primary/10 transition-colors group-hover:bg-primary group-hover:text-white">
+              <Icon name="arrowRight" size="xs" />
+            </span>
+          </span>
+        </div>
+      </article>
     </Link>
   );
 }

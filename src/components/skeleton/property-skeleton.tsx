@@ -1,36 +1,39 @@
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
+/** Mirrors `PropertyCard` block for block so the grid does not jump on load. */
 export function PropertyCardSkeleton({ className }: { className?: string }) {
   return (
-    <Card className={cn("h-full overflow-hidden p-0 border border-border bg-card", className)}>
-      {/* Image Frame */}
-      <Skeleton className="aspect-[4/3] w-full rounded-none" />
+    <div
+      className={cn(
+        "flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-card shadow-[0_1px_2px_rgba(27,35,24,0.04),0_8px_24px_-8px_rgba(75,128,45,0.12)]",
+        className,
+      )}
+    >
+      {/* Photo */}
+      <Skeleton className="aspect-4/3 w-full rounded-none" />
 
-      {/* Content */}
-      <CardContent className="flex flex-col gap-3 px-5 pt-5 pb-2">
-        {/* Price and Purpose */}
-        <div className="flex items-baseline justify-between gap-3">
-          <Skeleton className="h-7 w-28" />
-          <Skeleton className="h-5 w-16 rounded-md" />
+      {/* Body */}
+      <div className="flex flex-1 flex-col gap-3 px-5 pt-4 pb-4">
+        <Skeleton className="h-7 w-32" />
+        <div className="flex flex-col gap-2">
+          <Skeleton className="h-5 w-full" />
+          <Skeleton className="h-5 w-2/3" />
+          <Skeleton className="mt-1 h-4 w-1/2" />
         </div>
-
-        {/* Title and Location */}
-        <div className="flex flex-col gap-2 mt-1">
-          <Skeleton className="h-6 w-full" />
-          <Skeleton className="h-6 w-3/4" />
-          <Skeleton className="h-4 w-4/5 mt-1" />
+        <div className="mt-auto grid grid-cols-4 gap-1.5 pt-1">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Skeleton key={i} className="h-14 rounded-lg" />
+          ))}
         </div>
-      </CardContent>
+      </div>
 
-      {/* Footer / Specs */}
-      <CardFooter className="mt-auto flex flex-wrap gap-x-4 gap-y-2 border-t border-border bg-muted/30 px-5 py-4">
-        <Skeleton className="h-4 w-16" />
-        <Skeleton className="h-4 w-16" />
-        <Skeleton className="h-4 w-20" />
-      </CardFooter>
-    </Card>
+      {/* Footer */}
+      <div className="flex items-center justify-between border-t border-border/70 px-5 py-3">
+        <Skeleton className="h-5 w-24 rounded-full" />
+        <Skeleton className="size-7 rounded-full" />
+      </div>
+    </div>
   );
 }
 

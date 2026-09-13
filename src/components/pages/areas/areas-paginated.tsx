@@ -45,7 +45,10 @@ export function AreasPaginated({
 
   const areaList = areasProp && areasProp.length > 0 ? areasProp : fallbackAreas;
   const totalPages = Math.max(1, Math.ceil(areaList.length / PER_PAGE));
-  const current = Math.min(Math.max(1, page), totalPages);
+  
+  const clientPageStr = searchParams.get("page");
+  const clientPage = clientPageStr ? Number.parseInt(clientPageStr, 10) : page;
+  const current = Math.min(Math.max(1, clientPage), totalPages);
 
   const start = (current - 1) * PER_PAGE;
   const shown = areaList.slice(start, start + PER_PAGE);
@@ -73,7 +76,7 @@ export function AreasPaginated({
     <Section id="areas" className="border-t border-border bg-background">
       <AreasHeading t={t} />
 
-      <Stagger className={cn("mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 transition-opacity duration-200", isPending && "opacity-50 pointer-events-none")}>
+      <Stagger key={current} className={cn("mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 transition-opacity duration-200", isPending && "opacity-50 pointer-events-none")}>
         {shown.map((area) => (
           <StaggerItem key={area.id}>
             <AreaServiceCard

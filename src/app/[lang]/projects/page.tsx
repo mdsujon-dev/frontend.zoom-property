@@ -60,6 +60,7 @@ export default async function ProjectsPage({
         page={showcaseVideos.meta.page}
         totalPage={showcaseVideos.meta.totalPage}
         basePath="/projects"
+        pageParam="videoPage"
         title={dict.videoSection.title}
         description={dict.videoSection.description}
         playLabel={dict.videoSection.play}

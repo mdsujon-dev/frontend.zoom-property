@@ -22,6 +22,7 @@ export function ShowcaseVideoGrid({
   description,
   playLabel,
   closeLabel,
+  pageParam = "page",
 }: {
   videos: VideoItem[];
   locale: Locale;
@@ -32,14 +33,15 @@ export function ShowcaseVideoGrid({
   description: string;
   playLabel: string;
   closeLabel: string;
+  pageParam?: string;
 }) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const activeVideo = videos.find((video) => video.id === activeId);
   const pageHref = (nextPage: number) =>
-    localeHref(locale, `${basePath}?page=${nextPage}`);
+    localeHref(locale, `${basePath}?${pageParam}=${nextPage}#videos`);
 
   return (
-    <section className="border-t border-border bg-muted/30 py-16 sm:py-20">
+    <section id="videos" className="border-t border-border bg-muted/30 py-16 sm:py-20">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <p className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-primary">

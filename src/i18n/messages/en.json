@@ -209,7 +209,13 @@
     "pageTitle": "Advisors, not a call centre",
     "pageDescription": "Each one covers a handful of enclaves and nothing else. The reply time on every card is measured from real first responses, not promised.",
     "metaTitle": "Our advisors",
-    "metaDescription": "Four neighbourhood specialists covering Gulshan, Banani, Dhanmondi, Uttara, Bashundhara and Chattogram. Measured reply times on every profile."
+    "metaDescription": "Four neighbourhood specialists covering Gulshan, Banani, Dhanmondi, Uttara, Bashundhara and Chattogram. Measured reply times on every profile.",
+    "card": {
+      "call": "Call",
+      "whatsapp": "WhatsApp",
+      "dealsLabel": "Deals closed",
+      "repliesLabel": "Avg. reply"
+    }
   },
   "gallery": {
     "eyebrow": "Architectural photography",

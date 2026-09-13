@@ -10,16 +10,20 @@ import { ReactNode } from "react";
 /**
  * The banner every inner page opens with.
  *
- * A photograph, not a tinted band — each page gets its own so the site does not
- * feel like one template with the heading swapped. Sized at roughly 45svh: tall
- * enough to register as a hero, short enough that the actual content is on
- * screen without scrolling, which a full-height hero on an inner page is not.
+ * The page photograph fills the banner edge to edge (`object-cover`, centred)
+ * so it is never letterboxed or stretched. A primary-green gradient runs in
+ * from the left where the type sits and fades out to the right, so the copy
+ * always lands on a calm brand ground while the photograph itself stays
+ * clear and visible on the other half.
+ *
+ * Kept short (~42svh): tall enough to register as a header, short enough that
+ * the actual content is on screen without scrolling.
  *
  * The home page does not use this; it has its own full-height hero with the
  * search built in.
  *
- * Text is hard-coded white over a scrim. It always sits on a photograph, so it
- * must not follow the theme tokens — `text-foreground` is near-black here.
+ * Text is hard-coded white. It always sits on the gradient, so it must not
+ * follow the theme tokens — `text-foreground` is near-black here.
  */
 export function PageHeader({
   eyebrow,
@@ -36,7 +40,9 @@ export function PageHeader({
   children?: ReactNode;
 }) {
   return (
-    <section className="relative isolate flex min-h-[45svh] items-end overflow-hidden pb-12 pt-32 sm:min-h-[52svh] sm:pb-16 sm:pt-36">
+    <section className="relative isolate flex min-h-[42svh] items-end overflow-hidden bg-primary pb-12 pt-28 sm:min-h-[46svh] sm:pb-16 sm:pt-32">
+      {/* Full-bleed photo. `object-cover` fills without distortion; centred
+          crop keeps the subject in frame at every viewport. */}
       <Image
         src={image}
         alt=""
@@ -47,30 +53,43 @@ export function PageHeader({
         blurDataURL={shimmerDataUrl()}
         className="-z-10 object-cover object-center"
       />
-      {/* Darkest at the foot where the type sits, so the picture still reads. */}
+
+      {/* Primary ground behind the type: solid on the left, clear on the right
+          so the photograph shows. */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-linear-to-t from-black/85 via-black/55 to-black/35"
+        className="absolute inset-0 -z-10 bg-linear-to-r from-primary via-primary/80 to-primary/20"
+      />
+      {/* Light foot shade so the last line of copy never sits on a bright
+          patch of photo on small screens, where the copy spans the width. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-linear-to-t from-primary/60 via-transparent to-transparent"
       />
 
       <AppContainer>
         <Reveal>
-          <div className="flex max-w-3xl flex-col gap-4">
+          <div className="flex max-w-2xl flex-col gap-4">
             {eyebrow ? (
-              // Dot + label, matching the eyebrow treatment used site-wide but
-              // recoloured for a dark ground.
-              <span className="flex items-center gap-2.5 font-heading text-eyebrow uppercase text-white/80">
-                <span aria-hidden className="size-1.5 rounded-full bg-brand" />
+              <span className="flex items-center gap-2 font-heading text-eyebrow font-semibold uppercase text-brand-green-light">
+                <span aria-hidden className="size-1.5 rounded-full bg-brand-green-light" />
                 {eyebrow}
               </span>
             ) : null}
 
-            <Heading as="h1" size="h1" className="text-white">
+            <Heading
+              as="h1"
+              size="h1"
+              weight="bold"
+              // Two lines at most on large screens so a long title from the
+              // panel cannot push the banner taller than its design.
+              className="text-white lg:line-clamp-2"
+            >
               {title}
             </Heading>
 
             {description ? (
-              <Text size="lead" className="text-white/75">
+              <Text size="lead" className="max-w-xl text-white/95 leading-relaxed">
                 {description}
               </Text>
             ) : null}

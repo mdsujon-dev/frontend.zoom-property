@@ -78,24 +78,33 @@ export async function SiteFooter() {
               {dict.meta.description}
             </Text>
 
-            <div className="flex flex-col gap-2 pt-1">
+            {/* Contact rows. Each icon sits in a small brand-green tile so
+                the three ways to reach the desk read as one clear block —
+                the icons are the anchor, not a faded decoration. */}
+            <div className="flex flex-col gap-2.5 pt-1">
               <a
                 href={telHref(d.phone)}
-                className="flex w-fit items-center gap-2 whitespace-nowrap text-sm text-footer-foreground/85 transition-colors hover:text-brand-green-light"
+                className="group flex w-fit items-center gap-3 whitespace-nowrap text-sm text-footer-foreground transition-colors hover:text-brand-green-light"
               >
-                <Icon name={t.phoneIcon} size="xs" className="text-footer-foreground/60" />
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-white transition-colors group-hover:bg-brand-green">
+                  <Icon name={t.phoneIcon} size="xs" />
+                </span>
                 {d.phone}
               </a>
               <a
                 href={mailHref(d.email)}
-                className="flex w-fit items-center gap-2 text-sm text-footer-foreground/85 transition-colors hover:text-brand-green-light"
+                className="group flex w-fit items-center gap-3 text-sm text-footer-foreground transition-colors hover:text-brand-green-light"
               >
-                <Icon name={t.emailIcon} size="xs" className="text-footer-foreground/60" />
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-white transition-colors group-hover:bg-brand-green">
+                  <Icon name={t.emailIcon} size="xs" />
+                </span>
                 {d.email}
               </a>
-              <span className="flex items-start gap-2 text-sm text-footer-foreground/75">
-                <Icon name={t.addressIcon} size="xs" className="mt-1 shrink-0 text-footer-foreground/60" />
-                {d.dhakaAddress}
+              <span className="flex items-start gap-3 text-sm text-footer-foreground/90">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-white">
+                  <Icon name={t.addressIcon} size="xs" />
+                </span>
+                <span className="pt-1.5">{d.dhakaAddress}</span>
               </span>
             </div>
 

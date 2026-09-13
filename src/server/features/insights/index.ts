@@ -2,6 +2,7 @@ export {
   getHomeInsights,
   getInsightBySlug,
   getInsights,
+  getPaginatedInsights,
   getInsightsByCategory,
 } from "./service";
 export { toInsight } from "./mapper";

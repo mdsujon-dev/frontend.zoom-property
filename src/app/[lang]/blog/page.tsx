@@ -4,7 +4,7 @@ import { Section } from "@/components/common/section";
 import { ContactCta } from "@/components/common/contact-cta";
 import { PageHeader } from "@/components/layout/page-header";
 import { BlogFeed } from "@/components/pages/blog/blog-feed";
-import { getInsights } from "@/server/features/insights";
+import { getPaginatedInsights } from "@/server/features/insights";
 import { getBlogCategories } from "@/server/features/insights/service";
 import { pageBanners } from "@/data/page-banners";
 import { localeAlternates } from "@/i18n/alternates";
@@ -19,14 +19,26 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function BlogPage() {
-  const [dict, locale, insights, categories] = await Promise.all([
+interface BlogPageProps {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
+
+export default async function BlogPage({ searchParams }: BlogPageProps) {
+  const pageParam = searchParams?.page;
+  const page = typeof pageParam === "string" ? Number(pageParam) : 1;
+  const categoryParam = searchParams?.category;
+  const category = typeof categoryParam === "string" ? categoryParam : "All";
+  const searchParam = searchParams?.search;
+  const search = typeof searchParam === "string" ? searchParam : "";
+
+  const [dict, locale, { insights, meta }, categories] = await Promise.all([
     getDictionary(),
     getLocale(),
-    getInsights(60),
+    getPaginatedInsights({ category, search, page, limit: 9 }),
     getBlogCategories(),
   ]);
   const t = dict.blog;
+  const totalPages = meta?.totalPage || 1;
 
   return (
     <>
@@ -41,6 +53,7 @@ export default async function BlogPage() {
         <BlogFeed
           insights={insights}
           backendCategories={categories}
+          totalPages={totalPages}
           locale={locale}
           t={t}
         />

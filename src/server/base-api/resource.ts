@@ -1,7 +1,7 @@
 import "server-only";
 
 import { baseApi, type RequestOptions } from "./client";
-import type { QueryParams } from "./types";
+import type { ApiEnvelope, ApiMeta, QueryParams } from "./types";
 
 /**
  * Builds a feature's reads from its endpoint, its mapper and its fallback.
@@ -43,12 +43,18 @@ export interface Resource<TApi, TOut> {
   /** One row by slug, falling back to the built-in data. */
   bySlug(slug: string): Promise<TOut | null>;
 
+  /** 
+   * Mapped rows and their pagination metadata, or `null` if the API failed.
+   * Unlike `list` or `query`, this does not strip out the `meta` object.
+   */
+  paginate(params?: QueryParams): Promise<{ rows: TOut[]; meta?: ApiMeta } | null>;
+
   /**
    * For an endpoint whose response is not a plain row — a project that comes
    * back with its listings, a post that comes back with its body. Still
    * tagged, so it is invalidated with everything else in the feature.
    */
-  raw<T>(path: string, params?: QueryParams): Promise<{ data: T } | null>;
+  raw<T>(path: string, params?: QueryParams): Promise<ApiEnvelope<T> | null>;
 
   /** The mapper, for a caller unwrapping an unusual envelope itself. */
   map: (raw: TApi) => TOut;
@@ -76,6 +82,14 @@ export function createResource<TApi, TOut>(
     return limit > 0 ? fallback.slice(0, limit) : fallback;
   };
 
+  const paginate = async (
+    params?: QueryParams,
+  ): Promise<{ rows: TOut[]; meta?: ApiMeta } | null> => {
+    const res = await baseApi.list<TApi>(path, { sort, ...params }, options);
+    if (!res) return null;
+    return { rows: res.rows.map(map), meta: res.meta };
+  };
+
   const bySlug = async (slug: string): Promise<TOut | null> => {
     const res = await baseApi.get<TApi>(
       `${path}/${encodeURIComponent(slug)}`,
@@ -90,5 +104,5 @@ export function createResource<TApi, TOut>(
   const raw = <T,>(rawPath: string, params?: QueryParams) =>
     baseApi.get<T>(rawPath, params, options);
 
-  return { query, list, bySlug, raw, map, tag };
+  return { query, list, bySlug, raw, paginate, map, tag };
 }

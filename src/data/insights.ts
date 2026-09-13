@@ -31,7 +31,8 @@ export interface Insight {
   titleBn: string;
   excerpt: string;
   excerptBn: string;
-  category: BlogCategory;
+  category: string;
+  categories?: string[];
   readMinutes: number;
   date: string;
   /** The card image on the index. */

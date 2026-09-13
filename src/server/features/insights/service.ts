@@ -5,6 +5,7 @@ import {
   type BlogCategory,
   type Insight,
 } from "@/data/insights";
+import type { ApiMeta } from "../../base-api/types";
 
 import { CACHE_TAGS, createResource } from "../../base-api";
 import { toInsight } from "./mapper";
@@ -37,6 +38,30 @@ export const getBlogCategories = async (): Promise<BlogCategory[]> => {
 
 /** Published posts, newest first, for the blog index and the home strip. */
 export const getInsights = (limit = 24) => posts.list({ limit });
+
+/**
+ * Paginated posts, filtered by category and search term.
+ * Returns both the mapped insights and the pagination metadata.
+ */
+export async function getPaginatedInsights(params: {
+  category?: string;
+  searchTerm?: string;
+  search?: string; // Some APIs use search instead of searchTerm
+  page?: number;
+  limit?: number;
+}): Promise<{ insights: Insight[]; meta?: ApiMeta }> {
+  const queryParams = { ...params };
+  if (queryParams.category === "All") delete queryParams.category;
+
+  const res = await posts.raw<ApiPost[]>("blog/public", queryParams);
+  if (!res?.data || !Array.isArray(res.data)) {
+    return { insights: [] };
+  }
+  return {
+    insights: res.data.map(toInsight),
+    meta: res.meta,
+  };
+}
 
 /**
  * The few the home page shows.

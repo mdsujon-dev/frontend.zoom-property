@@ -13,6 +13,7 @@ export interface ApiPost {
   content?: string;
   contentBn?: string;
   category?: { name?: string } | string | null;
+  categories?: Array<{ name?: string } | string>;
   tags?: string[];
   coverImage?: ApiMedia;
   thumbnail?: ApiMedia;

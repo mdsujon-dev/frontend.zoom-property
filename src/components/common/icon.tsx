@@ -191,8 +191,7 @@ export function Icon({ name, icon, size, className, label }: IconProps) {
         const faIcon = (
           <i
             className={cn(
-              "flex items-center justify-center shrink-0",
-              iconVariants({ size }),
+              "shrink-0 leading-none",
               fontSizeClass,
               faClasses,
               className

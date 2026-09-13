@@ -19,7 +19,7 @@ export async function HomeBlogSection() {
     day: "numeric",
   });
 
-  const latestInsights = await getHomeInsights(3);
+  const latestInsights = await getHomeInsights(4);
 
   return (
     <section className="bg-background py-16 sm:py-24">
@@ -31,7 +31,7 @@ export async function HomeBlogSection() {
 
         <OrnamentDivider className="mt-7" />
 
-        <Stagger className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <Stagger className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {latestInsights.map((insight) => (
             <StaggerItem key={insight.id}>
               <Link href={localeHref(locale, `/blog/${insight.id}`)} className="group h-full block">

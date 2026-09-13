@@ -140,63 +140,92 @@ export function BlogStandardCard({
   const excerpt = (isBn && insight.excerptBn) ? insight.excerptBn : insight.excerpt;
   const href = localeHref(locale, `/blog/${insight.id}`);
 
+  const authorName = (isBn && insight.author.nameBn) ? insight.author.nameBn : insight.author.name;
+
   return (
     <article
       className={cn(
-        "group flex h-full flex-col overflow-hidden rounded-2xl border border-border/80 bg-card p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-lg",
+        "group relative flex h-full flex-col overflow-hidden rounded-lg border border-border/60 bg-card transition-all duration-300 ease-out",
+        "shadow-[0_1px_2px_rgba(27,35,24,0.04),0_8px_24px_-8px_rgba(75,128,45,0.16)]",
+        "hover:-translate-y-1.5 hover:border-primary/40 hover:shadow-[0_2px_4px_rgba(27,35,24,0.06),0_20px_40px_-12px_rgba(75,128,45,0.3)]",
         className,
       )}
     >
-      <Link href={href} className="block overflow-hidden rounded-xl">
+      {/* ── Photo ─────────────────────────────────────────────────── */}
+      <Link href={href} tabIndex={-1} aria-hidden className="block">
         <ImageFrame
           src={insight.image}
           alt=""
           ratio="3/2"
           hover="zoom"
-          rounded="xl"
+          rounded="none"
           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
         >
-          <div className="pointer-events-none absolute left-3 top-3">
-            <span className="inline-flex rounded-md bg-black/60 px-2.5 py-1 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-md">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-black/40 to-transparent"
+          />
+          <div className="pointer-events-none absolute left-3 top-3 flex gap-1.5">
+            <span className="inline-flex rounded-md bg-primary px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-sm">
               {categoryLabel}
             </span>
+            {insight.trending ? (
+              <span className="inline-flex items-center gap-1 rounded-md bg-white px-2 py-1 text-[11px] font-bold uppercase tracking-wider text-primary shadow-sm">
+                <span className="size-1.5 rounded-full bg-primary animate-pulse" />
+                Hot
+              </span>
+            ) : null}
           </div>
+          <span className="pointer-events-none absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-sm">
+            <Icon name="clock" size="xs" className="size-3" />
+            {insight.readMinutes} {minReadLabel}
+          </span>
         </ImageFrame>
       </Link>
 
-      <div className="flex flex-1 flex-col justify-between pt-4">
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <time dateTime={insight.date}>{formattedDate}</time>
-            <span>{insight.readMinutes} {minReadLabel}</span>
-          </div>
+      {/* ── Body ──────────────────────────────────────────────────── */}
+      <div className="flex flex-1 flex-col gap-2.5 px-5 pt-4 pb-4">
+        <time dateTime={insight.date} className="text-xs font-medium text-muted-foreground">
+          {formattedDate}
+        </time>
 
-          <Heading
-            as="h3"
-            size="h6"
-            className="line-clamp-2 font-bold text-foreground transition-colors duration-200 group-hover:text-primary"
-          >
-            <Link href={href}>{title}</Link>
-          </Heading>
+        <Heading
+          as="h3"
+          size="h6"
+          weight="bold"
+          className="line-clamp-2 text-foreground transition-colors duration-200 group-hover:text-primary"
+        >
+          <Link href={href}>{title}</Link>
+        </Heading>
 
-          <Text size="sm" className="line-clamp-2 leading-relaxed text-muted-foreground">
-            {excerpt}
-          </Text>
+        <Text size="sm" className="line-clamp-2 leading-relaxed text-muted-foreground">
+          {excerpt}
+        </Text>
+      </div>
+
+      {/* ── Footer ────────────────────────────────────────────────── */}
+      <div className="flex items-center justify-between gap-2 border-t border-border/70 px-5 py-3">
+        <div className="flex min-w-0 items-center gap-2">
+          {insight.author.avatar ? (
+            <span className="relative size-6 shrink-0 overflow-hidden rounded-full ring-2 ring-card">
+              <Image src={insight.author.avatar} alt="" fill sizes="24px" className="object-cover" />
+            </span>
+          ) : null}
+          <span className="truncate text-xs font-medium text-foreground">{authorName}</span>
         </div>
 
-        <div className="mt-4 pt-3 border-t border-border/60">
-          <Link
-            href={href}
-            className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-primary hover:text-brand-green-dark"
-          >
-            <span>{readMoreLabel}</span>
-            <Icon
-              name="arrowRight"
-              size="xs"
-              className="transition-transform duration-200 group-hover:translate-x-1"
-            />
-          </Link>
-        </div>
+        <Link
+          href={href}
+          aria-label={readMoreLabel}
+          className="flex shrink-0 items-center gap-1 text-xs font-semibold text-primary"
+        >
+          <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-300 group-hover:max-w-24 group-hover:opacity-100">
+            {readMoreLabel}
+          </span>
+          <span className="flex size-7 items-center justify-center rounded-full bg-primary/10 transition-colors group-hover:bg-primary group-hover:text-white">
+            <Icon name="arrowRight" size="xs" />
+          </span>
+        </Link>
       </div>
     </article>
   );
@@ -221,13 +250,13 @@ export function BlogHorizontalCard({
   return (
     <article
       className={cn(
-        "group flex items-center gap-3.5 rounded-xl border border-border/50 bg-card p-2.5 transition-colors duration-200 hover:border-primary/30 hover:bg-muted/40",
+        "group flex items-center gap-3.5 rounded-lg border border-border/60 bg-card p-2.5 transition-colors duration-200 hover:border-primary/40 hover:bg-muted/40",
         className,
       )}
     >
       <Link
         href={href}
-        className="relative size-20 sm:size-24 shrink-0 overflow-hidden rounded-lg bg-muted"
+        className="relative size-20 sm:size-24 shrink-0 overflow-hidden rounded-md bg-muted"
       >
         <Image
           src={insight.image}

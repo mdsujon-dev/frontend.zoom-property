@@ -1,34 +1,39 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
+/** Mirrors `BlogStandardCard` block for block so the grid does not jump on load. */
 export function BlogGridSkeleton({ className }: { className?: string }) {
   return (
-    <div className={cn("flex h-full flex-col gap-4", className)}>
-      <div className="relative">
-        <Skeleton className="aspect-[4/3] w-full rounded-2xl" />
-        
-        {/* Byline bar skeleton */}
-        <div className="absolute inset-x-3 bottom-3 flex items-center gap-2 rounded-xl border border-white/15 bg-black/20 px-3 py-2 backdrop-blur-md">
-          <Skeleton className="h-3 w-20 bg-white/40" />
-          <span aria-hidden className="size-1 shrink-0 rounded-full bg-white/50" />
-          <Skeleton className="ml-auto h-3 w-16 bg-white/40" />
+    <div
+      className={cn(
+        "flex h-full flex-col overflow-hidden rounded-lg border border-border/60 bg-card shadow-[0_1px_2px_rgba(27,35,24,0.04),0_8px_24px_-8px_rgba(75,128,45,0.12)]",
+        className,
+      )}
+    >
+      {/* Photo */}
+      <Skeleton className="aspect-3/2 w-full rounded-none" />
+
+      {/* Body */}
+      <div className="flex flex-1 flex-col gap-2.5 px-5 pt-4 pb-4">
+        <Skeleton className="h-3 w-24" />
+        <div className="flex flex-col gap-2">
+          <Skeleton className="h-5 w-[90%]" />
+          <Skeleton className="h-5 w-[65%]" />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-[85%]" />
         </div>
       </div>
-      
-      {/* Title skeleton */}
-      <div className="flex flex-col gap-2 pt-1">
-        <Skeleton className="h-6 w-[85%]" />
-        <Skeleton className="h-6 w-[60%]" />
-      </div>
 
-      {/* Excerpt skeleton */}
-      <div className="flex flex-col gap-1.5 mt-1">
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-[90%]" />
+      {/* Footer */}
+      <div className="flex items-center justify-between border-t border-border/70 px-5 py-3">
+        <div className="flex items-center gap-2">
+          <Skeleton className="size-6 rounded-full" />
+          <Skeleton className="h-3 w-20" />
+        </div>
+        <Skeleton className="size-7 rounded-full" />
       </div>
-
-      {/* Read more skeleton */}
-      <Skeleton className="h-4 w-24 mt-auto" />
     </div>
   );
 }

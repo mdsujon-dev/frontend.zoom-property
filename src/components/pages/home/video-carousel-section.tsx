@@ -67,7 +67,7 @@ export function VideoCarouselSection() {
                   key={index}
                   className="pl-4 md:basis-1/2 lg:basis-1/3"
                 >
-                  <div className="group relative aspect-video overflow-hidden rounded-2xl bg-black/40 ring-1 ring-white/10 shadow-2xl transition-transform duration-300 hover:-translate-y-1">
+                  <div className="group relative aspect-video overflow-hidden rounded-lg bg-black/40 ring-1 ring-white/10 shadow-2xl transition-transform duration-300 hover:-translate-y-1">
                     <iframe
                       className="absolute top-0 left-0 h-full w-full border-0"
                       src={`https://www.youtube.com/embed/${video.id}?rel=0&modestbranding=1`}

@@ -62,7 +62,7 @@ export function ReviewsPage({
       <section className="border-b border-border bg-muted/30 py-10 sm:py-14">
         <AppContainer>
           <Reveal>
-            <div className="flex max-w-xl items-center gap-5 rounded-xl border border-border bg-card p-5 sm:p-6">
+            <div className="flex max-w-xl items-center gap-5 rounded-lg border border-border bg-card p-5 sm:p-6">
                 <div>
                   <div className="flex items-baseline gap-2">
                     <span className="font-heading text-h1 leading-none text-foreground">
@@ -91,7 +91,7 @@ export function ReviewsPage({
           <div className="mt-10 grid gap-4 md:grid-cols-2">
             {reviews.map((review, index) => (
               <Reveal key={review.id} delay={index * 0.05}>
-                <figure className="flex h-full flex-col gap-6 rounded-xl border border-border bg-card p-6 sm:p-8">
+                <figure className="flex h-full flex-col gap-6 rounded-lg border border-border/60 bg-card p-6 sm:p-8 shadow-[0_1px_2px_rgba(27,35,24,0.04),0_8px_24px_-8px_rgba(75,128,45,0.16)] transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/40 hover:shadow-[0_2px_4px_rgba(27,35,24,0.06),0_20px_40px_-12px_rgba(75,128,45,0.3)]">
                   <div className="flex items-center justify-between">
                     <div className="flex gap-0.5" aria-label={`${review.rating} / 5`}>
                       {Array.from({ length: 5 }, (_, starIndex) => (

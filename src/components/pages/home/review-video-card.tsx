@@ -80,7 +80,7 @@ export function ReviewVideoCard({
           // Just short of Shorts' 9:16 — about 20px off the tile at the width
           // the shelf runs at on a desktop, kept as a ratio rather than a fixed
           // height so it still scales with the column.
-          "group relative isolate aspect-[9/15.35] w-full overflow-hidden rounded-xl bg-black",
+          "group relative isolate aspect-[9/15.35] w-full overflow-hidden rounded-lg bg-black",
           className,
         )}
       >
@@ -118,7 +118,7 @@ export function ReviewVideoCard({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="absolute inset-0 cursor-pointer rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          className="absolute inset-0 cursor-pointer rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           <span className="sr-only">{`${playLabel}: ${review.name}, ${review.property}`}</span>
         </button>

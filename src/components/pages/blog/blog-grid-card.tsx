@@ -55,14 +55,14 @@ export function BlogGridCard({
           src={insight.image}
           alt=""
           ratio="4/3"
-          rounded="2xl"
+          rounded="lg"
           hover="zoom"
           sizes="third"
         />
 
         {/* Byline bar. Sits inside the frame with a blur behind it so it stays
             readable over a bright photograph as well as a dark one. */}
-        <span className="absolute inset-x-3 bottom-3 flex items-center gap-2 rounded-xl border border-white/15 bg-black/45 px-3 py-2 text-xs font-medium text-white/90 backdrop-blur-md">
+        <span className="absolute inset-x-3 bottom-3 flex items-center gap-2 rounded-md border border-white/15 bg-black/45 px-3 py-2 text-xs font-medium text-white/90 backdrop-blur-md">
           <span className="truncate">
             {byLabel} {author}
           </span>

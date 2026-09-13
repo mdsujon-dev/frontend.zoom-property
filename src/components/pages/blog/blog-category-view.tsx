@@ -211,7 +211,7 @@ export function BlogCategoryView({
                 {/* Left Thumbnail (Wide Aspect Ratio) */}
                 <Link
                   href={href}
-                  className="w-full md:w-80 lg:w-[380px] xl:w-[420px] shrink-0 overflow-hidden rounded-2xl block"
+                  className="w-full md:w-80 lg:w-[380px] xl:w-[420px] shrink-0 overflow-hidden rounded-lg block"
                 >
                   <ImageFrame
                     src={post.image}

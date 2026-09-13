@@ -1,3 +1,7 @@
+"use client";
+
+import { useTransition } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 import { Section } from "@/components/common/section";
@@ -12,7 +16,7 @@ import { localeHref } from "@/i18n/href";
 import { cn } from "@/lib/utils";
 
 import { AreaServiceCard } from "./area-service-card";
-import { AreasHeading } from "./areas-section";
+import { AreasHeading } from "./areas-heading";
 
 const PER_PAGE = 10;
 
@@ -34,9 +38,13 @@ export function AreasPaginated({
   t: Dictionary["areas"]["service"];
   areas?: Area[];
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
+
   const areaList = areasProp && areasProp.length > 0 ? areasProp : fallbackAreas;
   const totalPages = Math.max(1, Math.ceil(areaList.length / PER_PAGE));
-  // Clamp rather than 404: `?page=99` is a URL someone edited, not a broken link.
   const current = Math.min(Math.max(1, page), totalPages);
 
   const start = (current - 1) * PER_PAGE;
@@ -44,14 +52,28 @@ export function AreasPaginated({
 
   const href = (target: number) =>
     target <= 1
-      ? localeHref(locale, "/areas")
-      : `${localeHref(locale, "/areas")}?page=${target}`;
+      ? `${localeHref(locale, "/areas")}#areas`
+      : `${localeHref(locale, "/areas")}?page=${target}#areas`;
+
+  const goToPage = (e: React.MouseEvent<HTMLAnchorElement>, target: number) => {
+    e.preventDefault();
+    const nextParams = new URLSearchParams(searchParams.toString());
+    if (target <= 1) {
+      nextParams.delete("page");
+    } else {
+      nextParams.set("page", String(target));
+    }
+
+    startTransition(() => {
+      router.push(`${pathname}?${nextParams.toString()}#areas`, { scroll: true });
+    });
+  };
 
   return (
     <Section id="areas" className="border-t border-border bg-background">
       <AreasHeading t={t} />
 
-      <Stagger className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <Stagger className={cn("mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 transition-opacity duration-200", isPending && "opacity-50 pointer-events-none")}>
         {shown.map((area) => (
           <StaggerItem key={area.id}>
             <AreaServiceCard
@@ -82,13 +104,15 @@ export function AreasPaginated({
             href={href(current - 1)}
             label={t.prev}
             icon="chevronLeft"
-            disabled={current === 1}
+            disabled={current === 1 || isPending}
+            onClick={(e) => goToPage(e, current - 1)}
           />
 
           {Array.from({ length: totalPages }, (_, index) => index + 1).map((number) => (
-            <Link
+            <a
               key={number}
               href={href(number)}
+              onClick={(e) => goToPage(e, number)}
               aria-current={number === current ? "page" : undefined}
               aria-label={t.page.replace("{page}", String(number))}
               className={cn(
@@ -96,17 +120,19 @@ export function AreasPaginated({
                 number === current
                   ? "border-primary bg-primary text-primary-foreground"
                   : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary",
+                isPending && "opacity-50 pointer-events-none"
               )}
             >
               {number}
-            </Link>
+            </a>
           ))}
 
           <Step
             href={href(current + 1)}
             label={t.next}
             icon="chevronRight"
-            disabled={current === totalPages}
+            disabled={current === totalPages || isPending}
+            onClick={(e) => goToPage(e, current + 1)}
           />
         </nav>
       </Reveal>
@@ -123,11 +149,13 @@ function Step({
   label,
   icon,
   disabled,
+  onClick,
 }: {
   href: string;
   label: string;
   icon: "chevronLeft" | "chevronRight";
   disabled: boolean;
+  onClick: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) {
   const className = cn(
     "flex h-9 items-center gap-1.5 rounded-lg border px-3 text-sm font-semibold transition-colors",
@@ -153,8 +181,8 @@ function Step({
   }
 
   return (
-    <Link href={href} rel={icon === "chevronLeft" ? "prev" : "next"} className={className}>
+    <a href={href} onClick={onClick} rel={icon === "chevronLeft" ? "prev" : "next"} className={className}>
       {content}
-    </Link>
+    </a>
   );
 }

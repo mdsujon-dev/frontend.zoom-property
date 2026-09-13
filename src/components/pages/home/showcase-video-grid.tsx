@@ -66,9 +66,9 @@ export function ShowcaseVideoGrid({
                   type="button"
                   onClick={() => setActiveId(video.id)}
                   aria-label={`${playLabel}: ${locale === "bn" ? video.titleBn : video.title}`}
-                  className="group cursor-pointer overflow-hidden rounded-2xl border border-border bg-card text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-primary"
+                  className="group cursor-pointer overflow-hidden rounded-xl border border-border bg-card text-left shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-primary transform-gpu"
                 >
-                  <div className="relative aspect-video overflow-hidden bg-black">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-black">
                     <Image
                       src={video.poster}
                       alt={titleText}

@@ -11,6 +11,7 @@ import { properties as fallbackProperties, type Property, type Purpose } from "@
 import { formatBdt } from "@/lib/format";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { cn } from "@/lib/utils";
+import { useDebounce } from "@/hooks/use-debounce";
 
 type CategoryTab = "all" | "sale" | "rent" | "penthouse" | "ready" | "commercial";
 /** Cards per page when the caller does not say. */
@@ -55,6 +56,7 @@ export function InteractiveListings({
   const [selectedArea, setSelectedArea] = useState<string>(filters?.area || "all");
   const [activeCategory, setActiveCategory] = useState<CategoryTab>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const debouncedSearchQuery = useDebounce(searchQuery, 400);
   const [page, setPage] = useState(1);
 
   const isBn = locale === "bn";
@@ -103,8 +105,8 @@ export function InteractiveListings({
       }
 
       // Inline search box
-      if (searchQuery.trim()) {
-        const search = searchQuery.toLowerCase().trim();
+      if (debouncedSearchQuery.trim()) {
+        const search = debouncedSearchQuery.toLowerCase().trim();
         const haystack = `${property.title} ${property.area} ${property.city} ${property.type}`.toLowerCase();
         if (!haystack.includes(search)) return false;
       }
@@ -374,7 +376,7 @@ export function InteractiveListings({
       </div>
 
       {/* Property Cards Grid */}
-      <Stagger key={`${selectedArea}-${activeCategory}-${currentPage}-${searchQuery}-${activeChips.length}`} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <Stagger key={`${selectedArea}-${activeCategory}-${currentPage}-${debouncedSearchQuery}-${activeChips.length}`} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {paginatedProperties.map((property) => (
           <StaggerItem key={property.id}>
             <PropertyCard property={property} locale={locale} />

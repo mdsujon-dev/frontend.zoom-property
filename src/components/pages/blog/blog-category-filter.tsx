@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Icon } from "@/components/common/icon";
 import { cn } from "@/lib/utils";
+import { useDebounce } from "@/hooks/use-debounce";
 
 interface CategoryFilterProps {
   categories: { id: string; label: string }[];
@@ -48,6 +49,19 @@ export function BlogCategoryFilter({
   const [isFocused, setIsFocused] = useState(false);
   const scroller = useRef<HTMLDivElement>(null);
   const [edges, setEdges] = useState({ start: false, end: false });
+
+  const [localQuery, setLocalQuery] = useState(searchQuery);
+  const debouncedQuery = useDebounce(localQuery, 500);
+
+  useEffect(() => {
+    setLocalQuery(searchQuery);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (debouncedQuery !== searchQuery && onSearchChange) {
+      onSearchChange(debouncedQuery);
+    }
+  }, [debouncedQuery, searchQuery, onSearchChange]);
 
   const measure = useCallback(() => {
     const el = scroller.current;
@@ -157,17 +171,17 @@ export function BlogCategoryFilter({
             <Icon name="trend" size="xs" className="mr-2 text-muted-foreground" />
             <input
               type="text"
-              value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
+              value={localQuery}
+              onChange={(e) => setLocalQuery(e.target.value)}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               placeholder={searchPlaceholder}
               className="w-full bg-transparent text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
             />
-            {searchQuery && (
+            {localQuery && (
               <button
                 type="button"
-                onClick={() => onSearchChange("")}
+                onClick={() => setLocalQuery("")}
                 className="text-xs text-muted-foreground hover:text-foreground"
               >
                 ✕

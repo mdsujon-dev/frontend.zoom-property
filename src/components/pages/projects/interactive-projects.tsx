@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useTransition, useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Icon, type IconName } from "@/components/common/icon";
 import { ProjectCard } from "./project-card";
@@ -8,6 +8,8 @@ import type { Project } from "@/data/projects";
 import type { Locale } from "@/i18n/config";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { cn } from "@/lib/utils";
+import { useDebounce } from "@/hooks/use-debounce";
+import { ProjectGridSkeleton } from "@/components/skeleton/project-skeleton";
 
 export type ProjectStageFilter = "all" | "Completed" | "Planning" | "Processing";
 const PAGE_SIZE = 6;
@@ -42,7 +44,15 @@ export function InteractiveProjects({
   const selectedStage = getStageFromParam(searchParams.get("stage") ?? initialStage);
   const urlQ = searchParams.get("q") ?? initialSearch ?? "";
   const [searchQuery, setSearchQuery] = useState<string>(urlQ);
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : (initialPage ?? 1);
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    if (debouncedSearchQuery !== (searchParams.get("q") ?? "")) {
+      updateUrl(selectedStage, debouncedSearchQuery, 1);
+    }
+  }, [debouncedSearchQuery]);
 
   const isBn = locale === "bn";
 
@@ -111,7 +121,10 @@ export function InteractiveProjects({
 
     const qs = params.toString();
     const targetUrl = qs ? `${pathname}?${qs}` : pathname;
-    router.replace(targetUrl, { scroll: false });
+    
+    startTransition(() => {
+      router.replace(targetUrl, { scroll: false });
+    });
   };
 
   // Reset page when filter changes
@@ -121,7 +134,6 @@ export function InteractiveProjects({
 
   const handleSearchChange = (val: string) => {
     setSearchQuery(val);
-    updateUrl(selectedStage, val, 1);
   };
   const handlePageChange = (newPage: number) => {
     updateUrl(selectedStage, searchQuery, newPage);
@@ -263,11 +275,15 @@ export function InteractiveProjects({
       {/* 3. Projects Grid */}
       {paginated.length > 0 ? (
         <Stagger key={`${selectedStage}-${page}-${searchQuery}`} className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {paginated.map((project) => (
-            <StaggerItem key={project.id}>
-              <ProjectCard project={project} locale={locale} />
-            </StaggerItem>
-          ))}
+          {isPending ? (
+            <ProjectGridSkeleton count={Math.min(paginated.length || 6, 6)} />
+          ) : (
+            paginated.map((project) => (
+              <StaggerItem key={project.id}>
+                <ProjectCard project={project} locale={locale} />
+              </StaggerItem>
+            ))
+          )}
         </Stagger>
       ) : (
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border py-16 text-center">
@@ -309,7 +325,7 @@ export function InteractiveProjects({
               type="button"
               disabled={page <= 1}
               onClick={() => handlePageChange(Math.max(1, page - 1))}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-foreground shadow-xs transition hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-md border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-foreground shadow-xs transition hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
             >
               <Icon name="arrowLeft" size="xs" />
               <span>{isBn ? "আগের" : "Previous"}</span>
@@ -321,7 +337,7 @@ export function InteractiveProjects({
                 type="button"
                 onClick={() => handlePageChange(p)}
                 className={cn(
-                  "flex size-8 items-center justify-center rounded-xl text-xs font-bold transition shadow-xs cursor-pointer",
+                  "flex size-8 items-center justify-center rounded-md text-xs font-bold transition shadow-xs cursor-pointer",
                   p === page
                     ? "bg-primary text-primary-foreground"
                     : "border border-border bg-card text-foreground hover:border-primary",
@@ -335,7 +351,7 @@ export function InteractiveProjects({
               type="button"
               disabled={page >= totalPages}
               onClick={() => handlePageChange(Math.min(totalPages, page + 1))}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-foreground shadow-xs transition hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-md border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-foreground shadow-xs transition hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
             >
               <span>{isBn ? "পরের" : "Next"}</span>
               <Icon name="arrowRight" size="xs" />

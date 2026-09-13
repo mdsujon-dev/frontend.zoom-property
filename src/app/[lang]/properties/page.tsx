@@ -69,7 +69,7 @@ export default async function PropertiesPage({
     }),
     getAreas(60),
     getPropertyTypes(),
-    getVideosPage(Number.parseInt(query.videoPage ?? "1", 10) || 1, 6),
+    getVideosPage(Number.parseInt(query.videoPage ?? "1", 10) || 1, 8),
   ]);
 
   const filters = {
@@ -117,6 +117,7 @@ export default async function PropertiesPage({
         page={showcaseVideos.meta.page}
         totalPage={showcaseVideos.meta.totalPage}
         basePath="/properties"
+        pageParam="videoPage"
         title={dict.videoSection.title}
         description={dict.videoSection.description}
         playLabel={dict.videoSection.play}

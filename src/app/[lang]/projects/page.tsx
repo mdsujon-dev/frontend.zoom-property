@@ -33,7 +33,7 @@ export default async function ProjectsPage({
   const [dict, locale, showcaseVideos] = await Promise.all([
     getDictionary(),
     getLocale(),
-    getVideosPage(Number.parseInt(query.videoPage ?? "1", 10) || 1, 6),
+    getVideosPage(Number.parseInt(query.videoPage ?? "1", 10) || 1, 8),
   ]);
 
   return (

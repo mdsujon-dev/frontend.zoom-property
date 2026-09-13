@@ -74,7 +74,7 @@ export function PropertyCard({
     >
       <article
         className={cn(
-          "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 transition-all duration-300 ease-out",
+          "group relative flex h-full flex-col overflow-hidden rounded-lg border border-border/60 transition-all duration-300 ease-out",
           "shadow-[0_1px_2px_rgba(27,35,24,0.04),0_8px_24px_-8px_rgba(75,128,45,0.16)]",
           "hover:-translate-y-1.5 hover:border-primary/40 hover:shadow-[0_2px_4px_rgba(27,35,24,0.06),0_20px_40px_-12px_rgba(75,128,45,0.3)]",
           isSold ? "bg-muted/60" : "bg-card",

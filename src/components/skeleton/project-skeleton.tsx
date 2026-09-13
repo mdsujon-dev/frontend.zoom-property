@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 /** Mirrors `ProjectCard` block for block so the grid does not jump on load. */
 export function ProjectCardSkeleton() {
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-card shadow-[0_1px_2px_rgba(27,35,24,0.04),0_8px_24px_-8px_rgba(75,128,45,0.12)]">
+    <div className="flex h-full flex-col overflow-hidden rounded-lg border border-border/60 bg-card shadow-[0_1px_2px_rgba(27,35,24,0.04),0_8px_24px_-8px_rgba(75,128,45,0.12)]">
       {/* Photo with title overlay */}
       <Skeleton className="aspect-3/2 w-full rounded-none" />
 
@@ -19,7 +19,7 @@ export function ProjectCardSkeleton() {
             <Skeleton className="h-4 w-20" />
           </div>
         </div>
-        <Skeleton className="h-24 w-full rounded-xl" />
+        <Skeleton className="h-24 w-full rounded-md" />
         <Skeleton className="mt-auto h-4 w-1/2" />
       </div>
 

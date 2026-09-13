@@ -6,7 +6,7 @@ export function PropertyCardSkeleton({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-card shadow-[0_1px_2px_rgba(27,35,24,0.04),0_8px_24px_-8px_rgba(75,128,45,0.12)]",
+        "flex h-full flex-col overflow-hidden rounded-lg border border-border/60 bg-card shadow-[0_1px_2px_rgba(27,35,24,0.04),0_8px_24px_-8px_rgba(75,128,45,0.12)]",
         className,
       )}
     >

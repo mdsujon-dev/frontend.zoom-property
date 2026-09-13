@@ -44,7 +44,7 @@ export function AgentCard({
         // Soft brand-tinted shadow: two layers, a tight one for the edge and
         // a wide diffuse one underneath, so the card lifts off the page
         // without a hard grey drop. Hover deepens both and lifts the card.
-        "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-card transition-all duration-300 ease-out",
+        "group relative flex h-full flex-col overflow-hidden rounded-lg border border-border/60 bg-card transition-all duration-300 ease-out",
         "shadow-[0_1px_2px_rgba(27,35,24,0.04),0_8px_24px_-8px_rgba(75,128,45,0.18)]",
         "hover:-translate-y-1.5 hover:border-primary/40 hover:shadow-[0_2px_4px_rgba(27,35,24,0.06),0_20px_40px_-12px_rgba(75,128,45,0.32)]",
         className,
@@ -137,7 +137,7 @@ function Metric({
   label: string;
 }) {
   return (
-    <div className="flex flex-col items-center rounded-xl bg-muted/70 px-2 py-2.5">
+    <div className="flex flex-col items-center rounded-md bg-muted/70 px-2 py-2.5">
       <dd className="flex items-center gap-1 font-heading text-base font-bold text-foreground">
         <Icon name={icon} size="xs" className="text-primary" />
         {value}

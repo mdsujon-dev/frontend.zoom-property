@@ -42,7 +42,9 @@ export function BlogFeaturedOverlayCard({
   return (
     <article
       className={cn(
-        "group relative isolate flex flex-col justify-end overflow-hidden rounded-3xl border border-border/60 bg-brand-charcoal shadow-md transition-all duration-300 hover:shadow-xl",
+        "group relative isolate flex flex-col justify-end overflow-hidden rounded-lg border border-border/60 bg-brand-charcoal transition-all duration-300 ease-out",
+        "shadow-[0_1px_2px_rgba(27,35,24,0.04),0_8px_24px_-8px_rgba(75,128,45,0.16)]",
+        "hover:-translate-y-1.5 hover:border-primary/40 hover:shadow-[0_2px_4px_rgba(27,35,24,0.06),0_20px_40px_-12px_rgba(75,128,45,0.3)]",
         className,
       )}
     >

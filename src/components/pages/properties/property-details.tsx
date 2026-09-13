@@ -1,6 +1,5 @@
 import { Heading } from "@/components/common/heading";
 import { Icon } from "@/components/common/icon";
-import { Text } from "@/components/common/text";
 import type { Property } from "@/data/properties";
 
 import { AreaFacts } from "./area-facts";

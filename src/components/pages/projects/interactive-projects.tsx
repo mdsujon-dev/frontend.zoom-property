@@ -48,10 +48,25 @@ export function InteractiveProjects({
   const page = searchParams.get("page") ? Number(searchParams.get("page")) : (initialPage ?? 1);
   const [isPending, startTransition] = useTransition();
 
+  const updateUrl = (newStage: ProjectStageFilter, newSearch: string, newPage: number) => {
+    const params = new URLSearchParams();
+    if (newStage !== "all") params.set("stage", newStage.toLowerCase());
+    if (newSearch.trim()) params.set("q", newSearch.trim());
+    if (newPage > 1) params.set("page", String(newPage));
+
+    const qs = params.toString();
+    const targetUrl = qs ? `${pathname}?${qs}` : pathname;
+    
+    startTransition(() => {
+      router.replace(targetUrl, { scroll: false });
+    });
+  };
+
   useEffect(() => {
     if (debouncedSearchQuery !== (searchParams.get("q") ?? "")) {
       updateUrl(selectedStage, debouncedSearchQuery, 1);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearchQuery]);
 
   const isBn = locale === "bn";
@@ -111,21 +126,6 @@ export function InteractiveProjects({
       return true;
     });
   }, [projects, selectedStage, searchQuery]);
-
-  // Update URL search params
-  const updateUrl = (newStage: ProjectStageFilter, newSearch: string, newPage: number) => {
-    const params = new URLSearchParams();
-    if (newStage !== "all") params.set("stage", newStage.toLowerCase());
-    if (newSearch.trim()) params.set("q", newSearch.trim());
-    if (newPage > 1) params.set("page", String(newPage));
-
-    const qs = params.toString();
-    const targetUrl = qs ? `${pathname}?${qs}` : pathname;
-    
-    startTransition(() => {
-      router.replace(targetUrl, { scroll: false });
-    });
-  };
 
   // Reset page when filter changes
   const handleStageChange = (stage: ProjectStageFilter) => {

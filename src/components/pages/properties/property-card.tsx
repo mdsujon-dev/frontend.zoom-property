@@ -9,7 +9,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import type { Property } from "@/data/properties";
 import type { Locale } from "@/i18n/config";
 import { localeHref } from "@/i18n/href";
-import { formatArea, formatBdt, formatKatha, formatRent } from "@/lib/format";
+import { formatArea, formatKatha } from "@/lib/format";
 import { FormatBdt } from "@/components/ui/format-bdt";
 import { cn } from "@/lib/utils";
 

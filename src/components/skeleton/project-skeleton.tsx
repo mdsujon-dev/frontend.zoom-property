@@ -1,5 +1,3 @@
-import { cn } from "@/lib/utils";
-
 export function ProjectCardSkeleton() {
   return (
     <div className="flex flex-col gap-4 overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-sm animate-pulse">

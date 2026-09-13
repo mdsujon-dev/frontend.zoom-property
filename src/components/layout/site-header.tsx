@@ -229,13 +229,13 @@ export function SiteHeader({
               </nav>
 
               <div className="flex flex-col gap-3 border-t border-border pt-4">
-                <a
-                  href={telHref(phone)}
-                  className="flex items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-border py-2.5 text-sm font-medium text-foreground"
-                >
-                  <Icon name="phone" size="xs" />
-                  {phone}
-                </a>
+                  <a
+                    href={telHref(phone)}
+                    className="flex items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-border py-2.5 text-sm font-medium text-foreground"
+                  >
+                    <Icon name="phone" size="xs" className="text-primary" />
+                    {phone}
+                  </a>
                 <Button size="lg" className="w-full" style={{ height: "42px" }} asChild>
                   <Link href={localeHref(locale, "/contact")} onClick={() => setOpen(false)}>
                     {dict.bookViewing}

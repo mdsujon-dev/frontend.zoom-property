@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useMemo, useState, useTransition } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Icon } from "@/components/common/icon";
 import { PropertyCard } from "./property-card";
 import { areas as fallbackAreas, type Area } from "@/data/areas";
@@ -12,6 +12,7 @@ import { formatBdt } from "@/lib/format";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { cn } from "@/lib/utils";
 import { useDebounce } from "@/hooks/use-debounce";
+import { PropertyGridSkeleton } from "@/components/skeleton/property-skeleton";
 
 type CategoryTab = "all" | "sale" | "rent" | "penthouse" | "ready" | "commercial";
 /** Cards per page when the caller does not say. */
@@ -53,11 +54,45 @@ export function InteractiveListings({
   const perPage = Math.max(1, Math.floor(pageSize) || DEFAULT_PAGE_SIZE);
   const router = useRouter();
   const pathname = usePathname();
-  const [selectedArea, setSelectedArea] = useState<string>(filters?.area || "all");
-  const [activeCategory, setActiveCategory] = useState<CategoryTab>("all");
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
+
+  const selectedArea = searchParams.get("listArea") ?? filters?.area ?? "all";
+  const activeCategory = (searchParams.get("listCat") as CategoryTab) ?? "all";
+  
+  const initialSearch = searchParams.get("listQ") ?? "";
+  const [searchQuery, setSearchQuery] = useState<string>(initialSearch);
   const debouncedSearchQuery = useDebounce(searchQuery, 400);
-  const [page, setPage] = useState(1);
+  
+  const page = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
+
+  const updateUrl = (area: string, cat: string, q: string, p: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    
+    if (area !== "all" && area !== filters?.area) params.set("listArea", area);
+    else params.delete("listArea");
+
+    if (cat !== "all") params.set("listCat", cat);
+    else params.delete("listCat");
+
+    if (q.trim()) params.set("listQ", q.trim());
+    else params.delete("listQ");
+
+    if (p > 1) params.set("page", String(p));
+    else params.delete("page");
+
+    startTransition(() => {
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    });
+  };
+
+  // Sync debounce to URL
+  useEffect(() => {
+    if (debouncedSearchQuery !== (searchParams.get("listQ") ?? "")) {
+      updateUrl(selectedArea, activeCategory, debouncedSearchQuery, 1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearchQuery]);
 
   const isBn = locale === "bn";
 
@@ -140,7 +175,7 @@ export function InteractiveListings({
 
       return true;
     });
-  }, [properties, filters, searchQuery, selectedArea, activeCategory, areas]);
+  }, [properties, filters, searchQuery, debouncedSearchQuery, selectedArea, activeCategory, areas]);
 
   const activeChips = useMemo(() => {
     if (!filters) return [];
@@ -172,11 +207,13 @@ export function InteractiveListings({
 
   useEffect(() => {
     if (activeChips.length === 0) {
-      setSelectedArea("all");
-      setActiveCategory("all");
-      setSearchQuery("");
-      setPage(1);
+      if (selectedArea !== "all" || activeCategory !== "all" || searchQuery !== "" || page !== 1) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setSearchQuery("");
+        updateUrl("all", "all", "", 1);
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeChips.length]);
 
   const totalPages = Math.max(1, Math.ceil(searched.length / perPage));
@@ -189,17 +226,17 @@ export function InteractiveListings({
   const pageEnd = Math.min(currentPage * perPage, searched.length);
 
   const handleAreaChange = (areaId: string) => {
-    setSelectedArea(areaId);
-    setPage(1);
+    updateUrl(areaId, activeCategory, searchQuery, 1);
   };
 
   const handleCategoryChange = (cat: CategoryTab) => {
-    setActiveCategory(cat);
-    setPage(1);
+    updateUrl(selectedArea, cat, searchQuery, 1);
   };
 
   const goToPage = (nextPage: number) => {
-    setPage(Math.max(1, Math.min(nextPage, totalPages)));
+    const p = Math.max(1, Math.min(nextPage, totalPages));
+    updateUrl(selectedArea, activeCategory, searchQuery, p);
+    window.scrollTo({ top: 400, behavior: "smooth" });
   };
 
   const CATEGORY_TABS: { id: CategoryTab; labelEn: string; labelBn: string }[] = [
@@ -233,10 +270,8 @@ export function InteractiveListings({
             <Link
               href={clearHref}
               onClick={() => {
-                setSelectedArea("all");
-                setActiveCategory("all");
                 setSearchQuery("");
-                setPage(1);
+                updateUrl("all", "all", "", 1);
               }}
               className="ml-auto text-xs font-semibold uppercase tracking-wider text-primary hover:underline"
             >
@@ -343,10 +378,7 @@ export function InteractiveListings({
               type="text"
               placeholder={isBn ? "প্রপার্টি বা কিওয়ার্ড খুঁজুন..." : "Search properties..."}
               value={searchQuery}
-              onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setPage(1);
-              }}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full rounded-lg border border-border bg-background px-3 py-1.5 pl-8 text-xs text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
             />
             <Icon name="search" size="xs" className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
@@ -375,48 +407,42 @@ export function InteractiveListings({
         </span>
       </div>
 
-      {/* Property Cards Grid */}
-      <Stagger key={`${selectedArea}-${activeCategory}-${currentPage}-${debouncedSearchQuery}-${activeChips.length}`} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {paginatedProperties.map((property) => (
-          <StaggerItem key={property.id}>
-            <PropertyCard property={property} locale={locale} />
-          </StaggerItem>
-        ))}
-      </Stagger>
-
-      {/* Empty State */}
-      {searched.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-primary/30 p-12 text-center text-muted-foreground bg-muted/10">
-          <div className="mb-3 flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary">
-            <Icon name="location" size="md" />
+      {isPending ? (
+        <PropertyGridSkeleton count={perPage} />
+      ) : searched.length === 0 ? (
+        <div className="flex min-h-[300px] flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-card/50 text-center">
+          <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-muted">
+            <Icon name="search" size="sm" className="text-muted-foreground" />
           </div>
-          <h3 className="font-heading text-lg font-semibold text-foreground">
-            {isBn ? "কোনো প্রপার্টি পাওয়া যায়নি" : "No listings matched this criteria"}
+          <h3 className="mb-1 font-heading text-lg font-semibold text-foreground">
+            {isBn ? "কোনো প্রপার্টি পাওয়া যায়নি" : "No properties found"}
           </h3>
-          <p className="mt-1 max-w-md text-xs sm:text-sm text-muted-foreground">
+          <p className="max-w-sm text-sm text-muted-foreground">
             {isBn
-              ? "আপনার ফিল্টার পরিবর্তন করে দেখুন অথবা আমাদের কনসিয়ার্জ টিমের সাথে যোগাযোগ করুন।"
-              : "Try adjusting your area or category filters, or contact our concierge for off-market inventory."}
+              ? "আপনার সার্চের সাথে মিলে এমন কোনো প্রপার্টি পাওয়া যায়নি। দয়া করে ফিল্টারগুলো পরিবর্তন করে আবার চেষ্টা করুন।"
+              : "We couldn't find any properties matching your criteria. Try adjusting your filters or search term."}
           </p>
           <button
             type="button"
             onClick={() => {
-              setSelectedArea("all");
-              setActiveCategory("all");
               setSearchQuery("");
-              setPage(1);
-              if (clearHref) {
-                router.push(clearHref);
-              } else if (pathname) {
-                router.push(pathname);
-              }
+              updateUrl("all", "all", "", 1);
+              if (clearHref) router.push(clearHref);
             }}
             className="mt-4 rounded-full bg-primary px-5 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
           >
             {isBn ? "সব ফিল্টার রিসেট করুন" : "Reset all filters"}
           </button>
         </div>
-      ) : null}
+      ) : (
+        <Stagger key={`${selectedArea}-${activeCategory}-${currentPage}-${debouncedSearchQuery}-${activeChips.length}`} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {paginatedProperties.map((property) => (
+            <StaggerItem key={property.id}>
+              <PropertyCard property={property} locale={locale} />
+            </StaggerItem>
+          ))}
+        </Stagger>
+      )}
 
       {/* Pagination Controls */}
       {totalPages > 1 && (

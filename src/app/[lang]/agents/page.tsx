@@ -28,7 +28,7 @@ export default async function AgentsPage() {
         eyebrow={dict.agentsSection.eyebrow}
         title={dict.agentsSection.pageTitle}
         description={dict.agentsSection.pageDescription}
-        image={(dict.agentsSection as any).backgroundImage || pageBanners.agents}
+        image={(dict.agentsSection as Record<string, unknown>).backgroundImage as string || pageBanners.agents}
       />
 
       <AgentsSection />
@@ -38,7 +38,7 @@ export default async function AgentsPage() {
         <Reveal>
         <section className="h-[450px] rounded-2xl overflow-hidden w-full border-t border-border bg-muted">
           <iframe
-            src={(dict.contact as any).mapUrl || "https://www.google.com/maps?q=ZOOM+IT+Work+Station&output=embed"}
+            src={(dict.contact as Record<string, unknown>).mapUrl as string || "https://www.google.com/maps?q=ZOOM+IT+Work+Station&output=embed"}
             width="100%"
             height="100%"
             style={{ border: 0 }}

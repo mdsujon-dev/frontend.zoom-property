@@ -68,6 +68,13 @@ export async function ContactDock() {
         // Anything that leaves the site opens in its own tab; `tel:` and
         // `mailto:` hand off to an app and must not.
         const external = /^https?:/i.test(link.href);
+        // Call is filled primary at rest so the handset is the one cell that
+        // reads as a button before anyone hovers. WhatsApp keeps its own green
+        // on the white strip; everything else uses primary ink.
+        const isCall = link.href.startsWith("tel:");
+        const iconColor = /wa\.me|whatsapp/i.test(link.href)
+          ? "text-[#25D366]"
+          : "text-primary";
 
         return (
           <a
@@ -76,14 +83,22 @@ export async function ContactDock() {
             aria-label={link.label || undefined}
             title={link.label || undefined}
             {...(external ? { target: "_blank", rel: "noreferrer" } : undefined)}
-            className="group relative flex size-12 items-center justify-center text-primary transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-primary"
+            className={cn(
+              "group relative flex size-12 items-center justify-center transition-colors focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-primary",
+              isCall
+                ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                : cn(
+                    "hover:bg-primary hover:text-primary-foreground",
+                    iconColor,
+                  ),
+            )}
           >
             {ring ? (
-              // The halo. Behind the icon, clipped to nothing on hover so the
-              // cell is a plain button the moment someone reaches for it.
+              // Light halo on the filled call cell — primary-on-primary would
+              // disappear. Hidden on hover so the cell stays a plain button.
               <span
                 aria-hidden
-                className="pointer-events-none absolute inset-2 animate-(--animate-call-halo) rounded-full bg-primary/35 group-hover:hidden motion-reduce:hidden"
+                className="pointer-events-none absolute inset-2 animate-(--animate-call-halo) rounded-full bg-primary-foreground/35 group-hover:hidden motion-reduce:hidden"
               />
             ) : null}
 
@@ -94,7 +109,11 @@ export async function ContactDock() {
                   "animate-(--animate-phone-ring) group-hover:animate-none motion-reduce:animate-none",
               )}
             >
-              <Icon name={link.icon} size="md" />
+              <Icon
+                name={link.icon}
+                size="md"
+                className={isCall ? "text-primary-foreground" : iconColor}
+              />
             </span>
           </a>
         );

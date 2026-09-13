@@ -54,6 +54,7 @@ export function BlogCategoryFilter({
   const debouncedQuery = useDebounce(localQuery, 500);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLocalQuery(searchQuery);
   }, [searchQuery]);
 

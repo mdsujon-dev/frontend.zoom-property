@@ -1,8 +1,13 @@
+import type { Metadata } from "next";
 import { headers } from "next/headers";
 
 import { NotFoundView } from "@/components/pages/not-found/not-found-view";
 import { getDictionaryFor } from "@/i18n/dictionaries";
 import { PATHNAME_HEADER, resolveNotFound } from "@/lib/not-found";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 /**
  * The 404 for `notFound()` thrown inside a matched route — an unknown service

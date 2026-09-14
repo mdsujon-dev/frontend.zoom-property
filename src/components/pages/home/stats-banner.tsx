@@ -1,4 +1,3 @@
-import Image from "@/components/common/image";
 import { AppContainer } from "@/components/common/app-container";
 import { Counter } from "@/components/motion/counter";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
@@ -19,6 +18,20 @@ export interface StatItem {
 const DEFAULT_BG =
   "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85";
 
+function resolveBackgroundImage(src: string) {
+  if (/^(https?:)?\/\//i.test(src) || src.startsWith("data:") || src.startsWith("/")) {
+    return src;
+  }
+
+  const serverUrl = (
+    process.env.NEXT_PUBLIC_IMAGE_ACCESS_URL ??
+    process.env.NEXT_PUBLIC_SERVER_URL ??
+    "http://localhost:5008"
+  ).replace(/\/+$/, "");
+
+  return `${serverUrl}/${src.replace(/^\/+/, "")}`;
+}
+
 export async function StatsBanner({
   backgroundImage,
   className = "",
@@ -27,6 +40,7 @@ export async function StatsBanner({
   const banner = dict.statsBanner;
 
   const bgImage = banner?.backgroundImage || backgroundImage || DEFAULT_BG;
+  const resolvedBgImage = resolveBackgroundImage(bgImage);
 
   /**
    * One stat, read from the panel.
@@ -78,24 +92,13 @@ export async function StatsBanner({
 
   return (
     <section
-      className={`relative w-full overflow-hidden py-10 sm:py-16 lg:py-20 ${className}`}
+      className={`relative w-full overflow-hidden bg-cover bg-center py-10 sm:py-16 lg:py-20 ${className}`}
+      style={{ backgroundImage: `url("${resolvedBgImage}")` }}
     >
-      {/* Background Image Layer (z-0) - clearly visible with semi-dark overlay */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src={bgImage}
-          fallbackSrc={DEFAULT_BG}
-          alt="Luxury property exterior"
-          fill
-          priority={false}
-          className="object-cover object-center"
-        />
-        {/* Keep the property image visible on a small screen; the stronger
-            desktop wash can afford more contrast because it has more image
-            area behind each stat. */}
-        <div className="absolute inset-0 bg-black/40 sm:bg-black/55" />
-        <div className="absolute inset-0 hidden bg-linear-to-b from-black/80 via-transparent to-black/80 sm:block" />
-      </div>
+      {/* Mobile has one light contrast layer only, so the image fills and
+          remains visible edge-to-edge. */}
+      <div aria-hidden className="absolute inset-0 bg-black/40 sm:bg-black/55" />
+      <div aria-hidden className="absolute inset-0 hidden bg-linear-to-b from-black/80 via-transparent to-black/80 sm:block" />
 
       {/* Foreground Stats Content Layer (z-20) */}
       <AppContainer size="lg" className="relative z-20">

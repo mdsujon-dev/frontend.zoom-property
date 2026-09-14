@@ -11,7 +11,7 @@ const sectionVariants = cva("relative w-full", {
     spacing: {
       none: "",
       sm: "py-12 sm:py-16",
-      md: "py-16 sm:py-20 lg:py-24",
+      md: "py-12 sm:py-20 lg:py-24",
       lg: "py-24 sm:py-28 lg:py-36",
     },
     tone: {

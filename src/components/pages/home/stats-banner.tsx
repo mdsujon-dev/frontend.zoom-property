@@ -90,10 +90,11 @@ export async function StatsBanner({
           priority={false}
           className="object-cover object-center"
         />
-        {/* Balanced dark overlay to preserve house/lawn details while maintaining text contrast */}
-        <div className="absolute inset-0 bg-black/60 sm:bg-black/55" />
-        {/* Top and bottom gradient vignette for smooth transition */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80" />
+        {/* Keep the property image visible on a small screen; the stronger
+            desktop wash can afford more contrast because it has more image
+            area behind each stat. */}
+        <div className="absolute inset-0 bg-black/40 sm:bg-black/55" />
+        <div className="absolute inset-0 hidden bg-linear-to-b from-black/80 via-transparent to-black/80 sm:block" />
       </div>
 
       {/* Foreground Stats Content Layer (z-20) */}

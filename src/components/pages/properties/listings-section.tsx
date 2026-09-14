@@ -66,7 +66,7 @@ export async function ListingsSection({
         action={
           <Link
             href={localeHref(locale, "/properties")}
-            className="group inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 font-heading text-xs sm:text-sm font-semibold uppercase tracking-wider text-foreground shadow-xs transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground"
+            className="group hidden items-center justify-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 font-heading text-sm font-semibold uppercase tracking-wider text-foreground shadow-xs transition-all hover:border-primary hover:bg-primary hover:text-primary-foreground sm:inline-flex"
           >
             <span>
               {locale === "bn" ? "সবগুলো প্রপার্টি" : "All Properties"}
@@ -80,13 +80,21 @@ export async function ListingsSection({
         }
       />
 
-      <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <Stagger className="mt-8 grid gap-4 sm:mt-12 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {propList.map((property) => (
           <StaggerItem key={property.id}>
             <PropertyCard property={property} locale={locale} />
           </StaggerItem>
         ))}
       </Stagger>
+
+      <Link
+        href={localeHref(locale, "/properties")}
+        className="group mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full border border-primary bg-primary px-5 py-3 font-heading text-sm font-semibold uppercase tracking-wider text-primary-foreground shadow-xs transition-colors hover:bg-primary/90 sm:hidden"
+      >
+        <span>{locale === "bn" ? "সবগুলো প্রপার্টি" : "All Properties"}</span>
+        <Icon name="arrowRight" size="xs" className="transition-transform duration-300 group-hover:translate-x-1" />
+      </Link>
     </Section>
   );
 }

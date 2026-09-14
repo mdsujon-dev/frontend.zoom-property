@@ -37,7 +37,7 @@ export async function AreasSection({ className }: { className?: string } = {}) {
 
       <AreasHeading t={t} />
 
-      <Stagger className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <Stagger className="mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {shown.map((area) => (
           <StaggerItem key={area.id}>
             <AreaServiceCard

@@ -19,14 +19,14 @@ export async function ContactCta({
 
   return (
     <section
-      className={`${noBackground ? "" : isSurface ? "bg-primary/5 " : "bg-primary "}py-16 sm:py-20`}
+      className={`${noBackground ? "" : isSurface ? "bg-primary/5 " : "bg-primary "}py-12 sm:py-20`}
     >
       <AppContainer>
         <div
           className={
             isSurface
-              ? `flex flex-col gap-6 rounded-2xl border border-primary/20 ${noBackground ? "bg-primary/5" : "bg-card"} px-6 py-8 text-foreground sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:py-10`
-              : "flex flex-col gap-6 rounded-2xl border border-white/20 bg-primary px-6 py-8 text-primary-foreground sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:py-10"
+              ? `flex flex-col gap-6 rounded-lg border border-primary/20 ${noBackground ? "bg-primary/5" : "bg-card"} px-5 py-7 text-foreground sm:rounded-2xl sm:px-10 sm:py-10 sm:flex-row sm:items-center sm:justify-between`
+              : "flex flex-col gap-6 rounded-lg border border-white/20 bg-primary px-5 py-7 text-primary-foreground sm:rounded-2xl sm:px-10 sm:py-10 sm:flex-row sm:items-center sm:justify-between"
           }
         >
           <div className="max-w-2xl">
@@ -56,8 +56,8 @@ export async function ContactCta({
             href={localeHref(locale, "/contact")}
             className={
               isSurface
-                ? "inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 font-heading text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
-                : "inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-primary-foreground px-5 py-3 font-heading text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5"
+                ? "inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 font-heading text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 sm:w-auto"
+                : "inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-primary-foreground px-5 py-3 font-heading text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5 sm:w-auto"
             }
           >
             <Icon name="phone" size="xs" />

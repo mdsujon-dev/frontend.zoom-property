@@ -17,7 +17,7 @@ export async function VideoSection() {
   const t = dict.videoSection;
   return (
     <section
-      className="relative isolate overflow-hidden bg-cover bg-center bg-fixed py-20 max-md:bg-scroll sm:py-28"
+      className="relative isolate overflow-hidden bg-cover bg-center bg-fixed py-14 max-md:bg-scroll sm:py-28"
       style={{ backgroundImage: `url(${videoSectionBackdrop})` }}
     >
       <div
@@ -36,7 +36,7 @@ export async function VideoSection() {
       <AppContainer>
         <SectionHeading title={t.title} align="center" tone="inverse" />
         <OrnamentDivider tone="inverse" className="mt-7" />
-        <div className="mt-12">
+        <div className="mt-8 sm:mt-12">
           <VideoCarousel videos={await getHomeVideos()} locale={locale} dict={t} />
         </div>
       </AppContainer>

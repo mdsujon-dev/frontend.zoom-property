@@ -117,7 +117,7 @@ export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
         }}
         className="w-full"
       >
-        <CarouselContent className="-ml-4">
+        <CarouselContent className="-ml-3">
           {videos.map((video) => {
             const title = locale === "bn" ? video.titleBn : video.title;
             const description = locale === "bn" ? video.descriptionBn : video.description;
@@ -127,12 +127,12 @@ export function VideoCarousel({ videos, locale, dict }: VideoCarouselProps) {
             return (
               <CarouselItem
                 key={video.id}
-                className="basis-full pl-4 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
+                className="basis-full pl-3 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
               >
-                <div className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-white/15 bg-white/[0.06] backdrop-blur-xl shadow-xl transition-all duration-500 hover:border-brand-green-light/50 hover:bg-white/[0.09] hover:shadow-2xl hover:shadow-primary/10">
+                <div className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-white/15 bg-white/6 backdrop-blur-xl shadow-xl transition-all duration-500 hover:border-brand-green-light/50 hover:bg-white/9 hover:shadow-2xl hover:shadow-primary/10">
                   {/* Top: poster only. Playback moved to the dialog — a quarter-width
                       card is too small to actually watch a walkthrough in. */}
-                  <div className="relative h-[225px] w-full overflow-hidden bg-black sm:h-[240px]">
+                  <div className="relative h-56.25 w-full overflow-hidden bg-black sm:h-60">
                     <Image
                       src={video.poster}
                       alt={title}

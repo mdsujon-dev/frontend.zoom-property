@@ -5,6 +5,7 @@ import { JsonLd } from "@/components/common/json-ld";
 import { ContactDock } from "@/components/layout/contact-dock";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { MobileBottomNav } from "@/components/layout/mobile-bottom-nav";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { ScrollToTop } from "@/components/motion/scroll-to-top";
 import { Providers } from "@/components/providers";
@@ -98,10 +99,11 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
             phone={dict.contact.details.phone}
             menu={navLinks(dict.nav.menu)}
           />
-          <main id="top" className="flex-1 pt-13.5 sm:pt-17.5">
+          <main id="top" className="flex-1 pt-13.5 pb-18 sm:pt-17.5 lg:pb-0">
             {children}
           </main>
           <SiteFooter />
+          <MobileBottomNav locale={locale} />
           <ContactDock />
           <ScrollToTop />
         </Providers>

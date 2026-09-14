@@ -170,7 +170,7 @@ export function PropertyCard({
           </div>
 
           {/* Numbers */}
-          <ul className="mt-auto grid grid-cols-4 gap-1.5 pt-1">
+          <ul className="mt-auto grid grid-cols-2 gap-1.5 pt-1 sm:grid-cols-4">
             {specs.map((spec) => (
               <li
                 key={spec.label}
@@ -180,7 +180,7 @@ export function PropertyCard({
                 <span className="text-xs font-bold leading-tight text-foreground">
                   {spec.value}
                 </span>
-                <span className="text-[10px] leading-none text-muted-foreground">
+                <span className="text-xs leading-none text-muted-foreground">
                   {spec.label}
                 </span>
               </li>

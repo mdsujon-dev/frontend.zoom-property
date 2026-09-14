@@ -25,7 +25,7 @@ export function RichText({
   return (
     <div
       className={cn(
-        "text-editor max-w-[68ch] text-sm leading-relaxed text-muted-foreground",
+        "text-editor max-w-full overflow-x-auto text-sm leading-relaxed text-muted-foreground sm:max-w-[68ch]",
         "[&_p]:mb-4 [&_p:last-child]:mb-0",
         "[&_strong]:font-semibold [&_strong]:text-foreground",
         "[&_a]:font-medium [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2",
@@ -34,6 +34,7 @@ export function RichText({
         "[&_h2]:mt-6 [&_h2]:mb-3 [&_h2]:font-heading [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-foreground",
         "[&_h3]:mt-5 [&_h3]:mb-2 [&_h3]:font-heading [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-foreground",
         "[&_blockquote]:border-l-2 [&_blockquote]:border-primary/30 [&_blockquote]:pl-4 [&_blockquote]:italic",
+        "[&_img]:h-auto [&_img]:max-w-full [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto",
         className,
       )}
       dangerouslySetInnerHTML={{ __html: html }}

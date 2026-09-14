@@ -20,7 +20,7 @@ export async function AreaComparisonSection({
   const peak = Math.max(...areaList.map((area) => area.pricePerSqft || 0), 1);
 
   return (
-    <Section className="border-t border-border bg-muted/30">
+    <Section className="border-t border-border bg-muted/30 pt-8 pb-4 sm:py-20">
       <SectionHeading
         eyebrow={comparison.eyebrow}
         title={comparison.title}

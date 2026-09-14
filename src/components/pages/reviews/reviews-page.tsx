@@ -143,7 +143,7 @@ export function ReviewsPage({
               </Text>
 
               <nav
-                className="flex items-center gap-2"
+                className="flex max-w-full items-center gap-2 overflow-x-auto pb-2"
                 // The count is spelled out in the readout beside this nav, so
                 // the landmark only has to name where you are.
                 aria-label={t.page.replace("{page}", String(current))}
@@ -162,7 +162,7 @@ export function ReviewsPage({
                     aria-current={n === current ? "page" : undefined}
                     aria-label={t.page.replace("{page}", String(n))}
                     className={cn(
-                      "flex size-9 items-center justify-center rounded-lg border text-sm font-semibold transition-colors",
+                      "flex size-9 shrink-0 items-center justify-center rounded-lg border text-sm font-semibold transition-colors",
                       n === current
                         ? "border-primary bg-primary text-primary-foreground"
                         : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary",

@@ -104,8 +104,7 @@ export default async function ContactPage() {
                       <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                         {channel.label}
                       </span>
-                      {/* One line, always — a wrapped phone number is unreadable. */}
-                      <span className="whitespace-nowrap text-base font-semibold text-foreground group-hover:text-primary">
+                      <span className="break-all text-base font-semibold text-foreground group-hover:text-primary sm:whitespace-nowrap">
                         {channel.value}
                       </span>
                       <span className="text-xs text-muted-foreground">{channel.note}</span>
@@ -169,7 +168,7 @@ export default async function ContactPage() {
       </Section>
 
       <Reveal>
-        <section className="h-[450px] overflow-hidden w-full border-t border-border bg-muted">
+        <section className="h-60 w-full overflow-hidden border-t border-border bg-muted sm:h-80 md:h-100 lg:h-112.5">
           <iframe
             src={(dict.contact as Record<string, unknown>).mapUrl as string || "https://www.google.com/maps?q=ZOOM+IT+Work+Station&output=embed"}
             width="100%"

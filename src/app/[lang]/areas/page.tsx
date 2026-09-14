@@ -57,9 +57,7 @@ export default async function AreasPage({
       />
 
       <AreaComparisonSection areas={allAreas} />
-       <div className="">
-        <ContactCta  tone="surface" noBackground/>
-      </div>
+      <ContactCta tone="surface" noBackground />
     </>
   );
 }

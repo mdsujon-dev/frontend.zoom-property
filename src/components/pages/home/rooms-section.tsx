@@ -15,7 +15,6 @@ export async function RoomsSection() {
         <SectionHeading
           title={dict.rooms.title}
           description={dict.rooms.description}
-          titleClassName="whitespace-nowrap"
           descriptionClassName="max-w-3xl"
           align="center"
         />

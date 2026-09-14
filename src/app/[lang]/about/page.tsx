@@ -60,7 +60,7 @@ export default async function AboutPage() {
       
       <AppContainer>
         <Reveal>
-        <section className="h-[450px] rounded-2xl overflow-hidden w-full border-t border-border bg-muted">
+        <section className="h-60 w-full overflow-hidden rounded-2xl border-t border-border bg-muted sm:h-80 md:h-100 lg:h-112.5">
           <iframe
             src={(dict.contact as Record<string, unknown>).mapUrl as string || "https://www.google.com/maps?q=ZOOM+IT+Work+Station&output=embed"}
             width="100%"

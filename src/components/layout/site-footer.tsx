@@ -62,7 +62,7 @@ export async function SiteFooter() {
   const socials = socialProfiles(dict.contact.social);
 
   return (
-    <footer className="bg-footer text-footer-foreground">
+    <footer className="bg-footer pb-[calc(4.5rem+env(safe-area-inset-bottom))] text-footer-foreground lg:pb-0">
       <AppContainer className="py-14">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
           <div className="flex flex-col gap-4">

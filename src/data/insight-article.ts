@@ -693,10 +693,11 @@ const BN: Record<CategoryKey, Pack> = {
 /** Category packs, per locale. `All` is a filter value and never a post's category. */
 const PACKS: Record<Locale, Record<CategoryKey, Pack>> = { en: EN, bn: BN };
 
-function packFor(category: BlogCategory, locale: Locale): Pack {
+function packFor(category: string, locale: Locale): Pack {
   const packs = PACKS[locale] ?? EN;
   // "All" only ever appears in the filter UI, but the type allows it.
-  return packs[(category === "All" ? "Real Estate" : category) as CategoryKey];
+  const key = (category === "All" ? "Real Estate" : category) as CategoryKey;
+  return packs[key] ?? packs["Real Estate"] ?? EN["Real Estate"];
 }
 
 /**

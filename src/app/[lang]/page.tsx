@@ -31,7 +31,7 @@ export default async function Home() {
 
       <ListingsSection variant="preview" limit={6} />
 
-      <div className="relative z-10 !-mt-8 md:!-mt-16 lg:!-mt-24">
+      <div className="-my-8 md:-my-16 lg:-my-24">
         <ContactCta tone="surface" noBackground />
       </div>
 

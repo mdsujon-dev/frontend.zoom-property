@@ -8,9 +8,11 @@ import { localeHref } from "@/i18n/href";
 export async function ContactCta({
   tone = "primary",
   noBackground = false,
+  className = "",
 }: {
   tone?: "primary" | "surface";
   noBackground?: boolean;
+  className?: string;
 }) {
   const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
   const cta = dict.cta;
@@ -19,7 +21,7 @@ export async function ContactCta({
 
   return (
     <section
-      className={`${noBackground ? "" : isSurface ? "bg-primary/5 " : "bg-primary "}py-12 sm:py-20`}
+      className={`${noBackground ? "" : isSurface ? "bg-primary/5 " : "bg-primary "}py-6 sm:py-16 lg:py-20 ${className}`}
     >
       <AppContainer>
         <div

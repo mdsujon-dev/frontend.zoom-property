@@ -24,6 +24,7 @@ export function ShowcaseVideoGrid({
   playLabel,
   closeLabel,
   pageParam = "page",
+  className = "",
 }: {
   videos: VideoItem[];
   locale: Locale;
@@ -35,6 +36,7 @@ export function ShowcaseVideoGrid({
   playLabel: string;
   closeLabel: string;
   pageParam?: string;
+  className?: string;
 }) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const activeVideo = videos.find((video) => video.id === activeId);
@@ -42,7 +44,7 @@ export function ShowcaseVideoGrid({
     localeHref(locale, `${basePath}?${pageParam}=${nextPage}#videos`);
 
   return (
-    <section id="videos" className="border-t border-border bg-muted/30 py-16 sm:py-20">
+    <section id="videos" className={`border-t border-border bg-muted/30 pt-10 pb-4 sm:py-20 ${className}`}>
       <AppContainer>
         <div className="max-w-2xl">
           <p className="font-heading text-xs font-bold uppercase tracking-[0.18em] text-primary">
@@ -54,7 +56,7 @@ export function ShowcaseVideoGrid({
         </div>
 
         {videos.length ? (
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-6 sm:mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {videos.map((video) => {
               const titleText = locale === "bn" ? video.titleBn : video.title;
               const descriptionText = locale === "bn" ? video.descriptionBn : video.description;
@@ -113,7 +115,7 @@ export function ShowcaseVideoGrid({
         )}
 
         {totalPage > 1 ? (
-          <nav className="mt-10 flex items-center justify-center gap-3" aria-label="Video pagination">
+          <nav className="mt-6 sm:mt-10 flex items-center justify-center gap-3" aria-label="Video pagination">
             {page > 1 ? (
               <Link href={pageHref(page - 1)} className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-semibold text-foreground hover:border-primary hover:text-primary">
                 <Icon name="chevronLeft" size="xs" />

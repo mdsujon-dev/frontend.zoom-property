@@ -22,7 +22,7 @@ export async function HomeBlogSection() {
   const latestInsights = await getHomeInsights(4);
 
   return (
-    <section className="bg-background py-16 sm:py-24">
+    <section className="bg-background pt-16 pb-2 sm:py-24">
       <AppContainer>
         {/* `homeTitle`, not `title`: the same words open the /blog page,
             and one row that changes two unrelated headings is a trap for

@@ -3,6 +3,7 @@ import { Counter } from "@/components/motion/counter";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { getDictionary } from "@/i18n/dictionaries";
 import { toLatinDigits } from "@/lib/format";
+import Image from "next/image";
 
 export interface StatsBannerProps {
   backgroundImage?: string;
@@ -92,9 +93,16 @@ export async function StatsBanner({
 
   return (
     <section
-      className={`relative flex min-h-48 w-full items-center !overflow-hidden !bg-cover !bg-center py-10 sm:block sm:min-h-0 sm:py-16 lg:py-20 ${className}`}
-      style={{ backgroundImage: `url("${resolvedBgImage}")` }}
+      className={`relative flex min-h-48 w-full items-center overflow-hidden bg-stone-800 py-10 sm:block sm:min-h-0 sm:py-16 lg:py-20 ${className}`}
     >
+      <Image
+        aria-hidden
+        alt=""
+        src={resolvedBgImage}
+        fill
+        sizes="100vw"
+        className="absolute inset-0 h-full w-full scale-[1.7] object-cover object-center sm:scale-100"
+      />
       {/* Mobile has one light contrast layer only, so the image fills and
           remains visible edge-to-edge. */}
       <div aria-hidden className="absolute inset-0 bg-black/40 sm:bg-black/55" />

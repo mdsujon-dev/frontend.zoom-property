@@ -10,22 +10,22 @@ import { cn } from "@/lib/utils";
 
 const ACCENT_THEMES = [
   {
-    surface: "border-sky-100 bg-linear-to-br from-white via-white to-sky-50/80",
+    surface: "bg-linear-to-br from-white via-white to-sky-50/80",
     icon: "text-sky-500",
     arrow: "bg-sky-100 text-sky-600 group-hover:bg-sky-500",
   },
   {
-    surface: "border-emerald-100 bg-linear-to-br from-white via-white to-emerald-50/80",
+    surface: "bg-linear-to-br from-white via-white to-emerald-50/80",
     icon: "text-emerald-500",
     arrow: "bg-emerald-100 text-emerald-600 group-hover:bg-emerald-500",
   },
   {
-    surface: "border-violet-100 bg-linear-to-br from-white via-white to-violet-50/80",
+    surface: "bg-linear-to-br from-white via-white to-violet-50/80",
     icon: "text-violet-500",
     arrow: "bg-violet-100 text-violet-600 group-hover:bg-violet-500",
   },
   {
-    surface: "border-orange-100 bg-linear-to-br from-white via-white to-orange-50/80",
+    surface: "bg-linear-to-br from-white via-white to-orange-50/80",
     icon: "text-orange-500",
     arrow: "bg-orange-100 text-orange-600 group-hover:bg-orange-500",
   },
@@ -66,8 +66,8 @@ export function AreaServiceCard({
     <Link
       href={localeHref(locale, `/properties?area=${area.id}`)}
       className={cn(
-        "group relative isolate flex h-full min-h-36 flex-col overflow-hidden rounded-lg border p-3.5 transition-all duration-300 ease-out",
-        "shadow-[0_1px_2px_rgba(27,35,24,0.05),0_10px_28px_-8px_rgba(75,128,45,0.22)] hover:border-primary/40 hover:bg-primary/[0.03] hover:shadow-[0_2px_4px_rgba(27,35,24,0.07),0_22px_42px_-12px_rgba(75,128,45,0.34)]",
+        "group relative isolate flex h-full min-h-36 flex-col overflow-hidden rounded-lg border border-gray-200 p-3.5 transition-all duration-300 ease-out",
+        "shadow-[0_1px_2px_rgba(27,35,24,0.05),0_11px_30px_-8px_rgba(75,128,45,0.25)] hover:border-primary/40 hover:bg-primary/[0.03] hover:shadow-[0_2px_4px_rgba(27,35,24,0.07),0_24px_44px_-12px_rgba(75,128,45,0.36)]",
         "focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary",
         theme.surface,
         className,

@@ -2,13 +2,34 @@ import Link from "next/link";
 
 import { Icon } from "@/components/common/icon";
 import Image from "@/components/common/image";
-import { FormatBdt } from "@/components/ui/format-bdt";
 import type { Area } from "@/data/areas";
 import type { Locale } from "@/i18n/config";
 import { localeHref } from "@/i18n/href";
-import { formatNumber, toBengaliDigits } from "@/lib/format";
 import { shimmerDataUrl } from "@/lib/image";
 import { cn } from "@/lib/utils";
+
+const ACCENT_THEMES = [
+  {
+    surface: "border-sky-100 bg-linear-to-br from-white via-white to-sky-50/80",
+    icon: "text-sky-500",
+    arrow: "bg-sky-100 text-sky-600 group-hover:bg-sky-500",
+  },
+  {
+    surface: "border-emerald-100 bg-linear-to-br from-white via-white to-emerald-50/80",
+    icon: "text-emerald-500",
+    arrow: "bg-emerald-100 text-emerald-600 group-hover:bg-emerald-500",
+  },
+  {
+    surface: "border-violet-100 bg-linear-to-br from-white via-white to-violet-50/80",
+    icon: "text-violet-500",
+    arrow: "bg-violet-100 text-violet-600 group-hover:bg-violet-500",
+  },
+  {
+    surface: "border-orange-100 bg-linear-to-br from-white via-white to-orange-50/80",
+    icon: "text-orange-500",
+    arrow: "bg-orange-100 text-orange-600 group-hover:bg-orange-500",
+  },
+] as const;
 
 /**
  * The service-area card.
@@ -37,80 +58,58 @@ export function AreaServiceCard({
   const isBn = locale === "bn";
   const name = isBn && area.nameBn ? area.nameBn : area.name;
   const tagline = isBn && area.taglineBn ? area.taglineBn : area.tagline;
-  const listingsText = isBn
-    ? toBengaliDigits(formatNumber(area.listings))
-    : formatNumber(area.listings);
+  const themeIndex = Array.from(area.id).reduce((total, char) => total + char.charCodeAt(0), 0)
+    % ACCENT_THEMES.length;
+  const theme = ACCENT_THEMES[themeIndex];
 
   return (
     <Link
       href={localeHref(locale, `/properties?area=${area.id}`)}
       className={cn(
-        "group relative isolate flex h-full flex-col overflow-hidden rounded-lg border border-border/60 bg-card transition-all duration-300 ease-out",
-        "shadow-[0_1px_2px_rgba(27,35,24,0.04),0_8px_24px_-8px_rgba(75,128,45,0.16)]",
-        "hover:-translate-y-1.5 hover:border-primary/40 hover:shadow-[0_2px_4px_rgba(27,35,24,0.06),0_20px_40px_-12px_rgba(75,128,45,0.3)]",
+        "group relative isolate flex h-full min-h-36 flex-col overflow-hidden rounded-lg border p-3.5 transition-all duration-300 ease-out",
+        "shadow-[0_1px_2px_rgba(27,35,24,0.05),0_10px_28px_-8px_rgba(75,128,45,0.22)] hover:border-primary/40 hover:bg-primary/[0.03] hover:shadow-[0_2px_4px_rgba(27,35,24,0.07),0_22px_42px_-12px_rgba(75,128,45,0.34)]",
+        "focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary",
+        theme.surface,
         className,
       )}
     >
-      {/* ── Photo with name ───────────────────────────────────────── */}
-      <div className="relative aspect-4/3 w-full overflow-hidden">
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -top-10 -right-8 size-28 rounded-full bg-white/70 blur-xl transition-transform duration-500 group-hover:scale-125"
+      />
+
+      {/* Circular image makes each neighbourhood easy to recognise at a glance. */}
+      <div className="relative z-10 h-14 w-21 overflow-hidden rounded-full border-2 border-white bg-muted">
         <Image
           src={area.image}
           alt=""
           fill
-          sizes="(min-width: 1280px) 20vw, (min-width: 640px) 33vw, 50vw"
+          sizes="72px"
           placeholder="blur"
           blurDataURL={shimmerDataUrl()}
           className="object-cover"
         />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-black/5"
-        />
-
-        {/* Listings count, top-right. */}
-        <span className="absolute right-3 top-3 z-10 flex items-center gap-1 rounded-full bg-white/95 px-2 py-0.5 text-[11px] font-bold text-primary shadow-sm">
-          <Icon name="building" size="xs" className="size-3" />
-          {listingsText}
-        </span>
-
-        {/* Name on the foot. */}
-        <div className="absolute inset-x-4 bottom-3 z-10 flex items-center gap-1.5">
-          <Icon name="location" size="sm" className="shrink-0 text-brand-green-light" />
-          <span className="truncate font-heading text-lg font-bold leading-tight text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.3)]">
-            {name}
-          </span>
-        </div>
       </div>
 
-      {/* ── Body ──────────────────────────────────────────────────── */}
-      <div className="flex flex-1 flex-col gap-3 px-4 pt-3.5 pb-4">
-        <div className="flex items-center justify-between gap-2 text-xs">
-          <span className="text-muted-foreground">
-            {isBn ? "প্রতি বর্গফুট" : "Per sq ft"}
-          </span>
-          <span className="font-bold text-foreground">
-            <FormatBdt value={area.pricePerSqft} exact />
-          </span>
-        </div>
-
-        <div className="mt-auto flex items-end justify-between gap-3 border-t border-border/70 pt-3">
-          <span className="flex min-w-0 flex-col leading-snug">
-            <span className="truncate text-sm font-semibold text-primary">{tagline}</span>
-            <span className="truncate text-xs text-muted-foreground">{inAreaLabel}</span>
-          </span>
-
-          <span
-            aria-hidden
-            className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-white"
-          >
-            <Icon
-              name="arrowRight"
-              size="xs"
-              className="transition-transform duration-300 group-hover:translate-x-0.5"
-            />
-          </span>
-        </div>
+      <div className="relative z-10 mt-2.5 flex min-w-0 items-center gap-1.5">
+        <Icon name="location" size="sm" className={cn("shrink-0", theme.icon)} />
+        <span className="truncate font-heading text-[15px] font-bold text-foreground">{name}</span>
       </div>
+
+      <span className="relative z-10 mt-1.5 line-clamp-1 text-[11px] leading-relaxed text-muted-foreground">
+        {tagline || inAreaLabel}
+      </span>
+      <span className="relative z-10 line-clamp-1 text-[11px] text-muted-foreground/80">{inAreaLabel}</span>
+
+      <span
+        aria-hidden
+        className={cn(
+          "absolute right-3.5 bottom-3.5 z-10 flex size-8 items-center justify-center rounded-full transition-all duration-300 group-hover:scale-110 group-hover:text-white",
+          theme.arrow,
+        )}
+      >
+        <Icon name="arrowRight" size="xs" className="transition-transform duration-300 group-hover:translate-x-0.5" />
+      </span>
     </Link>
   );
 }

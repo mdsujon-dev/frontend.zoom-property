@@ -10,6 +10,7 @@ import { Icon } from "@/components/common/icon";
 import { Text } from "@/components/common/text";
 import { Button } from "@/components/ui/button";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { localeHref } from "@/i18n/href";
 import { DURATION, EASE_OUT_EXPO, STAGGER } from "@/lib/motion";
 import type { ResolvedNotFound } from "@/lib/not-found";
 import { cn } from "@/lib/utils";

@@ -58,7 +58,10 @@ export async function faqSchema() {
     mainEntity: dict.content.faqs.map((faq) => ({
       "@type": "Question",
       name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(),
+      },
     })),
   };
 }

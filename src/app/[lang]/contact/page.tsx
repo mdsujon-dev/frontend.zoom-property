@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Heading } from "@/components/common/heading";
 import { Icon, type IconName } from "@/components/common/icon";
+import { JsonLd } from "@/components/common/json-ld";
 import { Section } from "@/components/common/section";
 import { Text } from "@/components/common/text";
 import { PageHeader } from "@/components/layout/page-header";
@@ -18,6 +19,7 @@ import {
   telHref,
   whatsappHref,
 } from "@/lib/contact";
+import { faqSchema } from "@/lib/seo";
 
 const DHAKA_OFFICE_MAP_URL = "https://www.google.com/maps/place/ZOOM+IT+Work+Station/@23.7453343,90.3469321,17z/data=!4m14!1m7!3m6!1s0x3755bf7ff7d6eb17:0x938638b4d434946!2sZOOM+IT+Work+Station!8m2!3d23.7453294!4d90.349507!16s%2Fg%2F11shnysnzk!3m5!1s0x3755bf7ff7d6eb17:0x938638b4d434946!8m2!3d23.7453294!4d90.349507!16s%2Fg%2F11shnysnzk?entry=ttu&g_ep=EgoyMDI2MDkwOC4wIKXMDSoASAFQAw%3D%3D";
 
@@ -31,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactPage() {
-  const [dict, locale] = await Promise.all([getDictionary(), getLocale()]);
+  const [dict, locale, faq] = await Promise.all([getDictionary(), getLocale(), faqSchema()]);
   const c = dict.contact.channels;
   // The numbers, the addresses and the profile links all come from the
   // panel — the labels beside them always did. Nothing on this column is
@@ -79,6 +81,7 @@ export default async function ContactPage() {
 
   return (
     <>
+      <JsonLd schema={faq} />
       <PageHeader
         eyebrow={dict.contact.eyebrow}
         title={dict.contact.title}

@@ -30,6 +30,7 @@ export const metadata: Metadata = {
   // Set here as well as in the layout: this page renders outside it, and the
   // root `opengraph-image` still needs an origin to resolve against.
   metadataBase: new URL(siteConfig.url),
+  robots: { index: false, follow: false },
 };
 
 export default async function GlobalNotFound() {

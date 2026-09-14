@@ -36,12 +36,25 @@ export async function generateMetadata({
 
   if (serviceIndex === -1) return {};
 
+  const service = services[serviceIndex];
   const copy = dict.content.services[serviceIndex];
 
   return {
     title: `${copy.title} | Zoom Property Services`,
     description: copy.description,
     alternates: localeAlternates(locale, `/services/${id}`),
+    openGraph: {
+      type: "website",
+      title: copy.title,
+      description: copy.description,
+      images: [service.image],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: copy.title,
+      description: copy.description,
+      images: [service.image],
+    },
   };
 }
 

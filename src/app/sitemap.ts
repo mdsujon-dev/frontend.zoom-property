@@ -1,10 +1,11 @@
 import type { MetadataRoute } from "next";
 
-import { insights } from "@/data/insights";
-import { projects } from "@/data/projects";
-import { properties } from "@/data/properties";
 import { galleryImages, siteConfig } from "@/data/site";
+import { services } from "@/data/services";
 import { DEFAULT_LOCALE, LOCALES, LOCALE_TAGS } from "@/i18n/config";
+import { getInsights } from "@/server/features/insights";
+import { getProjects } from "@/server/features/projects";
+import { getProperties } from "@/server/features/properties";
 
 /**
  * Every route in every locale, each carrying the full hreflang alternate set —
@@ -36,7 +37,7 @@ const url = (locale: string, route: string) =>
  * rather than the build time — claiming every post changed on every deploy is
  * the fastest way to get a sitemap's dates ignored.
  */
-function articleEntries(): MetadataRoute.Sitemap {
+function articleEntries(insights: Awaited<ReturnType<typeof getInsights>>): MetadataRoute.Sitemap {
   return LOCALES.flatMap((locale) =>
     insights.map((insight) => {
       const route = `/blog/${insight.id}`;
@@ -62,7 +63,7 @@ function articleEntries(): MetadataRoute.Sitemap {
  * content date — the listings carry no updated-at, and a build timestamp on
  * every one of them is worth less than nothing.
  */
-function propertyEntries(): MetadataRoute.Sitemap {
+function propertyEntries(properties: Awaited<ReturnType<typeof getProperties>>): MetadataRoute.Sitemap {
   return LOCALES.flatMap((locale) =>
     properties.map((property) => {
       const route = `/properties/${property.slug}`;
@@ -83,7 +84,7 @@ function propertyEntries(): MetadataRoute.Sitemap {
 }
 
 /** One entry per development per locale. */
-function projectEntries(): MetadataRoute.Sitemap {
+function projectEntries(projects: Awaited<ReturnType<typeof getProjects>>): MetadataRoute.Sitemap {
   return LOCALES.flatMap((locale) =>
     projects.map((project) => {
       const route = `/projects/${project.slug}`;
@@ -103,7 +104,32 @@ function projectEntries(): MetadataRoute.Sitemap {
   );
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+function serviceEntries(): MetadataRoute.Sitemap {
+  return LOCALES.flatMap((locale) =>
+    services.map((service) => {
+      const route = `/services/${service.id}`;
+      return {
+        url: url(locale, route),
+        alternates: {
+          languages: {
+            ...Object.fromEntries(
+              LOCALES.map((l) => [LOCALE_TAGS[l], url(l, route)]),
+            ),
+            "x-default": url(DEFAULT_LOCALE, route),
+          },
+        },
+        images: [service.image],
+      };
+    }),
+  );
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [insights, properties, projects] = await Promise.all([
+    getInsights(1_000),
+    getProperties(1_000),
+    getProjects(1_000),
+  ]);
   const lastModified = new Date();
 
   const pages = LOCALES.flatMap((locale) =>
@@ -131,8 +157,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...pages,
-    ...propertyEntries(),
-    ...projectEntries(),
-    ...articleEntries(),
+    ...propertyEntries(properties),
+    ...projectEntries(projects),
+    ...articleEntries(insights),
+    ...serviceEntries(),
   ];
 }

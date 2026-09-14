@@ -80,7 +80,7 @@ export function PropertyBanner({
   return (
     <>
       <div className={cn("grid gap-4 lg:grid-cols-[1.75fr_1fr]", className)}>
-        <div className="relative isolate overflow-hidden rounded-2xl">
+        <div className="relative isolate overflow-hidden rounded-lg">
           <button
             type="button"
             onClick={() => setIndex(0)}
@@ -91,14 +91,14 @@ export function PropertyBanner({
               src={images[0]}
               alt={alt}
               ratio="3/2"
-              rounded="2xl"
+              rounded="lg"
               hover="zoom"
               sizes="(min-width: 1024px) 60vw, 100vw"
             />
 
             <span
               aria-hidden
-              className="absolute inset-0 rounded-2xl bg-linear-to-t from-black/85 via-black/25 to-black/40"
+              className="absolute inset-0 rounded-lg bg-linear-to-t from-black/85 via-black/25 to-black/40"
             />
           </button>
 
@@ -153,13 +153,13 @@ export function PropertyBanner({
                   type="button"
                   onClick={() => setIndex(position + 1)}
                   aria-label={`${alt} — ${position + 2}`}
-                  className="group/thumb cursor-pointer overflow-hidden rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                  className="group/thumb cursor-pointer overflow-hidden rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 >
                   <ImageFrame
                     src={src}
                     alt=""
                     ratio="4/3"
-                    rounded="xl"
+                    rounded="lg"
                     hover="zoom"
                     sizes="(min-width: 1024px) 20vw, 50vw"
                     className="h-full"
@@ -171,7 +171,7 @@ export function PropertyBanner({
             <button
               type="button"
               onClick={() => setIndex(0)}
-              className="flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-foreground px-4 py-3 font-heading text-xs font-bold tracking-wider text-background uppercase transition-colors hover:bg-primary"
+              className="flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-foreground px-4 py-3 font-heading text-xs font-bold tracking-wider text-background uppercase transition-colors hover:bg-primary"
             >
               <Icon name="expand" size="xs" />
               {labels.openGallery.replace("{count}", String(images.length))}

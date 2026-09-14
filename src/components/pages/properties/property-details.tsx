@@ -1,5 +1,6 @@
 import { Heading } from "@/components/common/heading";
 import { Icon } from "@/components/common/icon";
+import { RichText } from "@/components/common/rich-text";
 import type { Property } from "@/data/properties";
 
 import { AreaFacts } from "./area-facts";
@@ -51,14 +52,7 @@ export function PropertyDetails({
             {dict.about}
           </Heading>
 
-          {/* One paragraph per entry, at a measure that stays readable in the
-              left column — long-form copy set to the full grid width is the
-              fastest way to make people stop reading it. */}
-          {/* Render the rich text description using the text-editor styles. */}
-          <div
-            className="text-editor max-w-2xl"
-            dangerouslySetInnerHTML={{ __html: description.join("") }}
-          />
+          <RichText html={description.join("")} className="max-w-2xl [&_img]:rounded-lg" />
         </section>
       ) : null}
 

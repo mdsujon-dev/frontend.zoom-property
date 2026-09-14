@@ -57,7 +57,7 @@ export function ArticleComments({
   }
 
   return (
-    <section className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-6 sm:p-8">
+    <section className="flex flex-col gap-5 rounded-lg border border-border bg-card p-6 sm:p-8">
       <div className="flex flex-col gap-1.5">
         <Heading as="h2" size="h5">
           {dict.title}

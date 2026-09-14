@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Heading } from "@/components/common/heading";
 import { Icon, type IconName } from "@/components/common/icon";
 import { JsonLd } from "@/components/common/json-ld";
+import { RichText } from "@/components/common/rich-text";
 import { Section } from "@/components/common/section";
 import { Text } from "@/components/common/text";
 import { Reveal } from "@/components/motion/reveal";
@@ -251,14 +252,12 @@ export default async function ProjectDetailPage({
               </Heading>
 
               {project.description && project.description.length > 0 && (
-                <div
-                  className="text-editor max-w-2xl"
-                  dangerouslySetInnerHTML={{
-                    __html: (lang === "bn" && project.descriptionBn?.length
-                      ? project.descriptionBn
-                      : project.description
-                    ).join(""),
-                  }}
+                <RichText
+                  html={(lang === "bn" && project.descriptionBn?.length
+                    ? project.descriptionBn
+                    : project.description
+                  ).join("")}
+                  className="max-w-2xl [&_img]:rounded-lg"
                 />
               )}
             </section>
@@ -306,7 +305,7 @@ export default async function ProjectDetailPage({
             url={project.video.youtubeUrl}
             title={lang === "bn" ? project.video.titleBn : project.video.title}
             poster={project.video.poster}
-            className="overflow-hidden rounded-2xl"
+            className="overflow-hidden rounded-lg"
           />
         </div>
       </Section>
@@ -316,7 +315,7 @@ export default async function ProjectDetailPage({
           <Heading as="h2" size="h3" className="mb-8">
             {t.neighbourhood}
           </Heading>
-          <div className="aspect-video w-full overflow-hidden rounded-2xl bg-muted/30">
+          <div className="aspect-video w-full overflow-hidden rounded-lg bg-muted/30">
             <iframe
               src={project.mapUrl.includes("/embed") ? project.mapUrl : (
                 project.mapUrl.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/) 

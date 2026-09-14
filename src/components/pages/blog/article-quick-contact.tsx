@@ -61,7 +61,7 @@ export function ArticleQuickContact({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-6"
+      className="flex flex-col gap-4 rounded-lg border border-border bg-card p-6"
     >
       <input type="hidden" name="article" value={articleTitle} />
 

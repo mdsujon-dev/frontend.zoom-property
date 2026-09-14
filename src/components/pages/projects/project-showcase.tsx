@@ -69,7 +69,7 @@ export function ProjectShowcase({
   return (
     <>
       <div className={cn("flex flex-col gap-4", className)}>
-        <div className="relative isolate overflow-hidden rounded-2xl">
+        <div className="relative isolate overflow-hidden rounded-lg">
           <button
             type="button"
             onClick={() => setIndex(0)}
@@ -80,14 +80,14 @@ export function ProjectShowcase({
               src={images[0]}
               alt={alt}
               ratio="video"
-              rounded="2xl"
+              rounded="lg"
               hover="zoom"
               sizes="100vw"
             />
 
             <span
               aria-hidden
-              className="absolute inset-0 rounded-2xl bg-linear-to-t from-black/85 via-black/20 to-black/45"
+              className="absolute inset-0 rounded-lg bg-linear-to-t from-black/85 via-black/20 to-black/45"
             />
           </button>
 
@@ -144,13 +144,13 @@ export function ProjectShowcase({
               type="button"
               onClick={() => setIndex(position)}
               aria-label={`${alt} — ${position + 1}`}
-              className="cursor-pointer overflow-hidden rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="cursor-pointer overflow-hidden rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             >
               <ImageFrame
                 src={src}
                 alt=""
                 ratio="4/3"
-                rounded="xl"
+                rounded="lg"
                 hover="zoom"
                 sizes="(min-width: 640px) 18vw, 30vw"
               />

@@ -131,7 +131,7 @@ export default async function BlogPostPage({
       />
 
       {/* The header sits under the fixed site header, hence the top padding. */}
-      <section className="bg-background pt-28 pb-10 sm:pt-32">
+      <section className="bg-background pt-16 pb-10 sm:pt-20">
         <AppContainer size="lg">
           <Reveal>
             <div className="flex max-w-3xl flex-col gap-5">
@@ -183,10 +183,10 @@ export default async function BlogPostPage({
             src={insight.coverImage || insight.image}
             alt={title}
             ratio="auto"
-            rounded="2xl"
+            rounded="lg"
             sizes="full"
             priority
-            className="h-56 sm:h-72 lg:h-[26rem]"
+            className="h-56 sm:h-72 lg:h-104"
           />
         </Reveal>
       </AppContainer>
@@ -195,7 +195,7 @@ export default async function BlogPostPage({
         <AppContainer size="lg">
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-5">
             <div className="flex flex-col gap-10">
-              <RichText html={isBn ? contentBn : content} />
+              <RichText html={isBn ? contentBn : content} className="[&_img]:rounded-lg" />
 
               <ArticleShare
                 url={articleUrl}

@@ -76,7 +76,7 @@ export function ArticleShare({
   return (
     <div
       className={cn(
-        "flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-border bg-muted/40 px-5 py-4",
+        "flex flex-wrap items-center justify-between gap-4 rounded-lg border border-border bg-muted/40 px-5 py-4",
         className,
       )}
     >

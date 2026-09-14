@@ -55,7 +55,7 @@ export async function ContactDock() {
       // Flush to the edge, so the border runs top, left and bottom — there is
       // no right edge to draw, it is off the screen. Primary fill on the strip
       // itself so rounded corners never flash the page behind.
-      className="fixed top-1/2 right-0 z-40 flex -translate-y-1/2 flex-col divide-y divide-white/25 overflow-hidden rounded-l-lg border border-r-0 border-primary bg-primary shadow-[-8px_0_28px_-14px] shadow-foreground/40"
+      className="fixed top-1/2 right-0 z-40 hidden -translate-y-1/2 flex-col divide-y divide-white/25 overflow-hidden rounded-l-lg border border-r-0 border-primary bg-primary shadow-[-8px_0_28px_-14px] shadow-foreground/40 lg:flex"
     >
       <CallChime />
 

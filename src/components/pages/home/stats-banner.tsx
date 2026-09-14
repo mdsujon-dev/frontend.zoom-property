@@ -92,7 +92,7 @@ export async function StatsBanner({
 
   return (
     <section
-      className={`relative w-full overflow-hidden bg-cover bg-center py-10 sm:py-16 lg:py-20 ${className}`}
+      className={`relative flex min-h-48 w-full items-center !overflow-hidden !bg-cover !bg-center py-10 sm:block sm:min-h-0 sm:py-16 lg:py-20 ${className}`}
       style={{ backgroundImage: `url("${resolvedBgImage}")` }}
     >
       {/* Mobile has one light contrast layer only, so the image fills and

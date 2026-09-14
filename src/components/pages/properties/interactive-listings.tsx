@@ -13,6 +13,13 @@ import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { cn } from "@/lib/utils";
 import { useDebounce } from "@/hooks/use-debounce";
 import { PropertyGridSkeleton } from "@/components/skeleton/property-skeleton";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 
 type CategoryTab = "all" | "sale" | "rent" | "penthouse" | "ready" | "commercial";
 /** Cards per page when the caller does not say. */
@@ -56,6 +63,7 @@ export function InteractiveListings({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
   const selectedArea = searchParams.get("listArea") ?? filters?.area ?? "all";
   const activeCategory = (searchParams.get("listCat") as CategoryTab) ?? "all";
@@ -281,8 +289,44 @@ export function InteractiveListings({
         </div>
       ) : null}
 
-      {/* Filter Section: Area Filter & Category Filter */}
-      <div className="flex flex-col gap-5 rounded-2xl border border-border bg-card/60 p-4 sm:p-6 backdrop-blur-sm shadow-xs">
+      {/* Mobile: filters live in a bottom drawer so the listing grid stays clear. */}
+      <div className="md:hidden">
+        <button
+          type="button"
+          onClick={() => setIsMobileFiltersOpen(true)}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-primary shadow-xs transition-colors hover:border-primary/40 hover:bg-primary/5"
+          aria-label={isBn ? "ফিল্টার খুলুন" : "Open filters"}
+        >
+          <Icon name="filter" size="sm" />
+        </button>
+
+        <Sheet open={isMobileFiltersOpen} onOpenChange={setIsMobileFiltersOpen}>
+          <SheetContent side="bottom" className="max-h-[85dvh] overflow-y-auto rounded-t-2xl px-4 pb-6">
+            <SheetHeader className="px-0 pb-4">
+              <SheetTitle>{isBn ? "প্রপার্টি ফিল্টার" : "Filter properties"}</SheetTitle>
+              <SheetDescription>
+                {isBn ? "আপনার পছন্দ অনুযায়ী প্রপার্টি খুঁজুন" : "Find properties that match your needs"}
+              </SheetDescription>
+            </SheetHeader>
+            <MobileFilters
+              isBn={isBn}
+              areas={areaOptions}
+              propertiesCount={properties.length}
+              selectedArea={selectedArea}
+              activeCategory={activeCategory}
+              searchQuery={searchQuery}
+              categories={CATEGORY_TABS}
+              onAreaChange={handleAreaChange}
+              onCategoryChange={handleCategoryChange}
+              onSearchChange={setSearchQuery}
+              onClose={() => setIsMobileFiltersOpen(false)}
+            />
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      {/* Desktop: filters stay visible above the listings. */}
+      <div className="hidden flex-col gap-5 rounded-2xl border border-border bg-card/60 p-4 sm:p-6 backdrop-blur-sm shadow-xs md:flex">
         {/* Top: Area-wise Filter Bar */}
         <div className="flex flex-col gap-2.5">
           <div className="flex items-center justify-between">
@@ -362,7 +406,7 @@ export function InteractiveListings({
                   className={cn(
                     "rounded-lg border px-3 py-1.5 text-xs font-medium transition-all duration-200 cursor-pointer",
                     isActive
-                      ? "border-primary bg-primary/10 text-primary font-semibold border-primary/40"
+                      ? "border-primary bg-primary/10 text-primary font-semibold"
                       : "border-border/60 bg-card text-muted-foreground hover:border-border hover:text-foreground hover:bg-muted/40",
                   )}
                 >
@@ -373,7 +417,7 @@ export function InteractiveListings({
           </div>
 
           {/* Quick Search */}
-          <div className="relative min-w-[220px]">
+          <div className="relative min-w-55">
             <input
               type="text"
               placeholder={isBn ? "প্রপার্টি বা কিওয়ার্ড খুঁজুন..." : "Search properties..."}
@@ -410,7 +454,7 @@ export function InteractiveListings({
       {isPending ? (
         <PropertyGridSkeleton count={perPage} />
       ) : searched.length === 0 ? (
-        <div className="flex min-h-[300px] flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-card/50 text-center">
+        <div className="flex min-h-75 flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-card/50 text-center">
           <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-muted">
             <Icon name="search" size="sm" className="text-muted-foreground" />
           </div>
@@ -484,5 +528,89 @@ export function InteractiveListings({
         </nav>
       )}
     </div>
+  );
+}
+
+function MobileFilters({
+  isBn,
+  areas,
+  propertiesCount,
+  selectedArea,
+  activeCategory,
+  searchQuery,
+  categories,
+  onAreaChange,
+  onCategoryChange,
+  onSearchChange,
+  onClose,
+}: {
+  isBn: boolean;
+  areas: { id: string; name: string; nameBn?: string; count: number }[];
+  propertiesCount: number;
+  selectedArea: string;
+  activeCategory: CategoryTab;
+  searchQuery: string;
+  categories: { id: CategoryTab; labelEn: string; labelBn: string }[];
+  onAreaChange: (area: string) => void;
+  onCategoryChange: (category: CategoryTab) => void;
+  onSearchChange: (query: string) => void;
+  onClose: () => void;
+}) {
+  return (
+    <div className="flex flex-col gap-6">
+      <label className="relative block">
+        <span className="mb-2 block text-xs font-bold uppercase tracking-wider text-primary">{isBn ? "খুঁজুন" : "Search"}</span>
+        <Icon name="search" size="xs" className="pointer-events-none absolute bottom-3 left-3 text-muted-foreground" />
+        <input
+          type="search"
+          value={searchQuery}
+          onChange={(event) => onSearchChange(event.target.value)}
+          placeholder={isBn ? "প্রপার্টি বা কিওয়ার্ড খুঁজুন..." : "Search properties..."}
+          className="h-10 w-full rounded-lg border border-border bg-background py-2 pr-3 pl-9 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/15"
+        />
+      </label>
+
+      <MobileFilterGroup title={isBn ? "এলাকা অনুযায়ী" : "By area"} icon="location">
+        <MobileFilterChip active={selectedArea === "all"} onClick={() => onAreaChange("all")} label={isBn ? "সব এলাকা" : "All areas"} count={propertiesCount} />
+        {areas.map((area) => (
+          <MobileFilterChip key={area.id} active={selectedArea === area.id} onClick={() => onAreaChange(area.id)} label={isBn && area.nameBn ? area.nameBn : area.name} count={area.count} />
+        ))}
+      </MobileFilterGroup>
+
+      <MobileFilterGroup title={isBn ? "ক্যাটাগরি" : "Property type"} icon="layers">
+        {categories.map((category) => (
+          <MobileFilterChip key={category.id} active={activeCategory === category.id} onClick={() => onCategoryChange(category.id)} label={isBn ? category.labelBn : category.labelEn} />
+        ))}
+      </MobileFilterGroup>
+
+      <button type="button" onClick={onClose} className="h-11 rounded-lg bg-primary text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
+        {isBn ? "প্রপার্টি দেখুন" : "Show properties"}
+      </button>
+    </div>
+  );
+}
+
+function MobileFilterGroup({ title, icon, children }: { title: string; icon: "location" | "layers"; children: React.ReactNode }) {
+  return (
+    <div>
+      <p className="mb-3 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-primary">
+        <Icon name={icon} size="xs" />
+        {title}
+      </p>
+      <div className="flex flex-wrap gap-2">{children}</div>
+    </div>
+  );
+}
+
+function MobileFilterChip({ active, onClick, label, count }: { active: boolean; onClick: () => void; label: string; count?: number }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn("inline-flex items-center gap-1.5 rounded-full border px-3 py-2 text-xs font-medium transition-colors", active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground")}
+    >
+      {label}
+      {count !== undefined && count > 0 ? <span className={cn("rounded-full px-1.5 py-0.5 text-[10px]", active ? "bg-primary-foreground/20" : "bg-muted")}>{count}</span> : null}
+    </button>
   );
 }

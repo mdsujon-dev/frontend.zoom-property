@@ -75,7 +75,7 @@ export async function HeroSection() {
     : HERO_IMAGES;
 
   return (
-    <section className="relative z-10 isolate flex min-h-[86svh] items-end overflow-x-clip overflow-y-visible sm:min-h-[88svh]">
+    <section className="relative z-10 isolate flex min-h-[80svh] items-end overflow-x-clip overflow-y-visible sm:min-h-[84svh]">
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <Parallax speed={0.18} zoom className="absolute inset-0">
           <HeroBackdrop images={images} />
@@ -87,7 +87,7 @@ export async function HeroSection() {
         />
       </div>
 
-      <AppContainer className="pb-32 pt-24 sm:pb-36 sm:pt-28">
+      <AppContainer className="pb-20 pt-16 sm:pb-24 sm:pt-20">
         {/* Copy left, calculator right. They stack under `lg`, where two
             columns would leave the search box too narrow to type an area into. */}
         <div className="grid items-center gap-10 lg:grid-cols-[1fr_minmax(0,26rem)] lg:gap-14">

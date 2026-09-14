@@ -7,7 +7,9 @@ import { cn } from "@/lib/utils";
  * Standard container wrapper with flexible max-width presets (sm, md, lg, xl, 2xl, full).
  * Also attaches .app-container and .main-container classes for global styling & overrides.
  */
-const containerVariants = cva("app-container main-container mx-auto w-full px-5 sm:px-6 lg:px-10 xl:px-16", {
+const containerVariants = cva(
+  "app-container main-container mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-10 xl:max-w-[1440px] xl:px-16 2xl:max-w-[1600px]",
+  {
   variants: {
     size: {
       sm: "max-w-3xl",

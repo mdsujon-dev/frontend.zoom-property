@@ -77,7 +77,7 @@ export function CinematicShowcase({
           </span>
         </button>
 
-        <AppContainer className="pointer-events-none absolute inset-x-0 bottom-0 z-10 pb-12 sm:pb-16">
+        <AppContainer className="pointer-events-none absolute inset-x-0 bottom-0 z-10 pb-12 sm:pb-16 lg:top-0 lg:flex lg:items-center lg:pb-0">
           <div className="flex max-w-2xl flex-col gap-4">
             <Eyebrow className="flex items-center gap-2 font-semibold text-brand-green-light">
               <span aria-hidden className="size-1.5 rounded-full bg-brand-green-light" />

@@ -1,6 +1,6 @@
 import { Section } from "@/components/common/section";
 import { SectionHeading } from "@/components/common/section-heading";
-import { Text } from "@/components/common/text";
+import { RichText } from "@/components/common/rich-text";
 import { Reveal } from "@/components/motion/reveal";
 import {
   Accordion,
@@ -30,11 +30,9 @@ export async function FaqSection() {
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="">
-                  <Text 
-                    as="div" 
-                    size="sm" 
-                    className="text-editor leading-relaxed text-muted-foreground [&>p]:mb-2 last:[&>p]:mb-0"
-                    dangerouslySetInnerHTML={{ __html: faq.answer }}
+                  <RichText
+                    html={faq.answer}
+                    className="max-w-none text-sm sm:max-w-none [&_img]:w-full [&_img]:rounded-lg [&_img]:border [&_img]:border-border"
                   />
                 </AccordionContent>
               </AccordionItem>

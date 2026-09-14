@@ -87,7 +87,7 @@ export async function HeroSection() {
         />
       </div>
 
-      <AppContainer className="pb-16 pt-36">
+      <AppContainer className="pb-32 pt-24 sm:pb-36 sm:pt-28">
         {/* Copy left, calculator right. They stack under `lg`, where two
             columns would leave the search box too narrow to type an area into. */}
         <div className="grid items-center gap-10 lg:grid-cols-[1fr_minmax(0,26rem)] lg:gap-14">

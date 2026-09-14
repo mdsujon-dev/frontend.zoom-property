@@ -98,7 +98,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
             phone={dict.contact.details.phone}
             menu={navLinks(dict.nav.menu)}
           />
-          <main id="top" className="flex-1">
+          <main id="top" className="flex-1 pt-13.5 sm:pt-17.5">
             {children}
           </main>
           <SiteFooter />

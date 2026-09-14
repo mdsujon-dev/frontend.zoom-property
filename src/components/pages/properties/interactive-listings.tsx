@@ -183,7 +183,7 @@ export function InteractiveListings({
 
       return true;
     });
-  }, [properties, filters, searchQuery, debouncedSearchQuery, selectedArea, activeCategory, areas]);
+  }, [properties, filters, debouncedSearchQuery, selectedArea, activeCategory, areas]);
 
   const activeChips = useMemo(() => {
     if (!filters) return [];
@@ -332,6 +332,7 @@ export function InteractiveListings({
               </SheetDescription>
             </SheetHeader>
             <MobileFilters
+              key={`${selectedArea}-${activeCategory}-${searchQuery}`}
               isBn={isBn}
               areas={areaOptions}
               propertiesCount={properties.length}
@@ -573,12 +574,6 @@ function MobileFilters({
   const [draftArea, setDraftArea] = useState(selectedArea);
   const [draftCategory, setDraftCategory] = useState(activeCategory);
   const [draftQuery, setDraftQuery] = useState(searchQuery);
-
-  useEffect(() => {
-    setDraftArea(selectedArea);
-    setDraftCategory(activeCategory);
-    setDraftQuery(searchQuery);
-  }, [selectedArea, activeCategory, searchQuery]);
 
   return (
     <div className="flex flex-col gap-6">

@@ -1,7 +1,4 @@
-import { Heading } from "@/components/common/heading";
-import { OrnamentDivider } from "@/components/common/ornament-divider";
 import { Section } from "@/components/common/section";
-import { Reveal } from "@/components/motion/reveal";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 import { getHomeAreas } from "@/server/features/areas";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";

@@ -2,8 +2,6 @@
 
 import { useTransition } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import Link from "next/link";
-
 import { Section } from "@/components/common/section";
 import { Icon } from "@/components/common/icon";
 import { Text } from "@/components/common/text";

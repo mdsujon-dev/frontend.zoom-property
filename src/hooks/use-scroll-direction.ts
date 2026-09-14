@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useLenis } from "lenis/react";
 
 export interface ScrollState {
@@ -41,7 +41,7 @@ export function useScrollDirection({
   const lastYRef = useRef(0);
   const accumulatedRef = useRef(0);
 
-  const updateScroll = (rawY: number) => {
+  const updateScroll = useCallback((rawY: number) => {
     const currentY = Math.max(0, rawY);
     const delta = currentY - lastYRef.current;
     lastYRef.current = currentY;
@@ -93,7 +93,7 @@ export function useScrollDirection({
           : { ...prev, atTop, scrolledPast },
       );
     }
-  };
+  }, [hideAfter, threshold]);
 
   // Lenis hook fires every RAF with smooth scroll coordinates
   const lenis = useLenis((lenisInstance) => {
@@ -121,7 +121,7 @@ export function useScrollDirection({
       window.removeEventListener("scroll", onScroll);
       if (frame) cancelAnimationFrame(frame);
     };
-  }, [lenis, threshold, hideAfter]);
+  }, [lenis, updateScroll]);
 
   return state;
 }

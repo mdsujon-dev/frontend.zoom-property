@@ -47,7 +47,7 @@ export default async function GlobalNotFound() {
     >
       <body className="flex min-h-dvh flex-col bg-background text-foreground">
         <main className="flex flex-1 flex-col justify-center">
-          <NotFoundView {...resolved} t={dict.notFound} nav={dict.nav} />
+          <NotFoundView {...resolved} t={dict.notFound} />
         </main>
       </body>
     </html>

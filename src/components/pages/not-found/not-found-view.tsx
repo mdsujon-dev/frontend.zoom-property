@@ -6,30 +6,16 @@ import { motion, useReducedMotion } from "motion/react";
 
 import { AppContainer } from "@/components/common/app-container";
 import { Heading } from "@/components/common/heading";
-import { Icon, type IconName } from "@/components/common/icon";
+import { Icon } from "@/components/common/icon";
 import { Text } from "@/components/common/text";
 import { Button } from "@/components/ui/button";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { localeHref } from "@/i18n/href";
 import { DURATION, EASE_OUT_EXPO, STAGGER } from "@/lib/motion";
 import type { ResolvedNotFound } from "@/lib/not-found";
 import { cn } from "@/lib/utils";
 
-type QuickLinkKey = keyof Dictionary["notFound"]["links"];
-
-/** The six worth offering as a fresh start, with an icon each. */
-const QUICK_LINKS: { key: QuickLinkKey; icon: IconName }[] = [
-  { key: "properties", icon: "building" },
-  { key: "projects", icon: "construction" },
-  { key: "areas", icon: "location" },
-  { key: "landowners", icon: "handover" },
-  { key: "blog", icon: "quote" },
-  { key: "contact", icon: "phone" },
-];
-
 export interface NotFoundViewProps extends ResolvedNotFound {
   t: Dictionary["notFound"];
-  nav: Dictionary["nav"];
 }
 
 /**
@@ -42,7 +28,6 @@ export function NotFoundView({
   attempted,
   suggestion,
   t,
-  nav,
 }: NotFoundViewProps) {
   const router = useRouter();
   const prefersReducedMotion = useReducedMotion();
@@ -176,12 +161,12 @@ function Backdrop({ animated }: { animated: boolean }) {
       className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
     >
       <motion.span
-        className={cn(blob, "top-0 left-1/2 size-[28rem] -translate-x-1/2 bg-primary/10")}
+        className={cn(blob, "top-0 left-1/2 size-112 -translate-x-1/2 bg-primary/10")}
         animate={animated ? { y: [0, 30, 0], scale: [1, 1.08, 1] } : undefined}
         transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.span
-        className={cn(blob, "right-[10%] bottom-0 size-[22rem] bg-secondary/40")}
+        className={cn(blob, "right-[10%] bottom-0 size-88 bg-secondary/40")}
         animate={animated ? { y: [0, -26, 0], scale: [1, 1.12, 1] } : undefined}
         transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
       />

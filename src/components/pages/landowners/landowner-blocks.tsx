@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
 import { localeHref } from "@/i18n/href";
 import { getLandownerBlockPage } from "@/server/features/landowners";
@@ -7,9 +5,6 @@ import { LandownerFeed } from "./landowner-feed";
 
 /** How many blocks are on one page. */
 const PER_PAGE = 4;
-
-/** The anchor a page link lands on, so paging does not jump to the banner. */
-const ANCHOR = "landowner-blocks";
 
 /**
  * The landowner blocks: a photograph, a heading, a passage.
@@ -39,8 +34,6 @@ export async function LandownerBlocks({ page = 1 }: { page?: number }) {
   const isBn = locale === "bn";
   const t = dict.landowners;
   const base = localeHref(locale, "/landowners");
-  const href = (target: number) =>
-    target <= 1 ? `${base}#${ANCHOR}` : `${base}?page=${target}#${ANCHOR}`;
 
   const { blocks, total, totalPages, page: current, from } = result;
 

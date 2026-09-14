@@ -1,5 +1,3 @@
-import type { Locale } from "@/i18n/config";
-
 export interface BlogCategoryConfig {
   slug: string;
   category: string;

@@ -21,5 +21,5 @@ export default async function NotFound() {
   const resolved = resolveNotFound(headerList.get(PATHNAME_HEADER) ?? "/");
   const dict = await getDictionaryFor(resolved.locale);
 
-  return <NotFoundView {...resolved} t={dict.notFound} nav={dict.nav} />;
+  return <NotFoundView {...resolved} t={dict.notFound} />;
 }

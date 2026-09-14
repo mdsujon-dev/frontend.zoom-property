@@ -4,7 +4,7 @@ import { Text } from "@/components/common/text";
 import { Reveal } from "@/components/motion/reveal";
 import { areas as fallbackAreas, type Area } from "@/data/areas";
 import { getDictionary, getLocale } from "@/i18n/dictionaries";
-import { formatBdt, numberFormatter } from "@/lib/format";
+import { numberFormatter } from "@/lib/format";
 import { FormatBdt, TakaIcon } from "@/components/ui/format-bdt";
 
 export async function AreaComparisonSection({
@@ -29,7 +29,7 @@ export async function AreaComparisonSection({
 
       <Reveal delay={0.1} className="mt-10">
         <div className="overflow-x-auto rounded-xl border border-border bg-card">
-          <table className="w-full min-w-[880px] border-collapse text-sm">
+          <table className="w-full min-w-220 border-collapse text-sm">
             <thead>
               <tr className="border-b border-border text-left">
                 <th scope="col" className="px-5 py-4 font-medium text-muted-foreground whitespace-nowrap">

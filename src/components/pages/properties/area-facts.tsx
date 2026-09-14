@@ -2,7 +2,6 @@ import { Heading } from "@/components/common/heading";
 import { Icon, type IconName } from "@/components/common/icon";
 import { Text } from "@/components/common/text";
 import { areas } from "@/data/areas";
-import { formatBdt } from "@/lib/format";
 import { FormatBdt } from "@/components/ui/format-bdt";
 
 export interface AreaFactsDict {

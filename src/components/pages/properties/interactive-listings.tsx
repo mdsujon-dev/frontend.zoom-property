@@ -241,6 +241,15 @@ export function InteractiveListings({
     updateUrl(selectedArea, cat, searchQuery, 1);
   };
 
+  const handleMobileApply = (area: string, category: CategoryTab, query: string) => {
+    setSearchQuery(query);
+    updateUrl(area, category, query, 1);
+    setIsMobileFiltersOpen(false);
+  };
+
+  const hasMobileFilters =
+    selectedArea !== "all" || activeCategory !== "all" || searchQuery.trim().length > 0;
+
   const goToPage = (nextPage: number) => {
     const p = Math.max(1, Math.min(nextPage, totalPages));
     updateUrl(selectedArea, activeCategory, searchQuery, p);
@@ -290,15 +299,29 @@ export function InteractiveListings({
       ) : null}
 
       {/* Mobile: filters live in a bottom drawer so the listing grid stays clear. */}
-      <div className="md:hidden">
-        <button
-          type="button"
-          onClick={() => setIsMobileFiltersOpen(true)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card text-primary shadow-xs transition-colors hover:border-primary/40 hover:bg-primary/5"
-          aria-label={isBn ? "ফিল্টার খুলুন" : "Open filters"}
-        >
-          <Icon name="filter" size="sm" />
-        </button>
+      <div className="-mt-3 md:hidden">
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsMobileFiltersOpen(true)}
+            className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-border bg-card text-primary shadow-xs transition-colors hover:border-primary/40 hover:bg-primary/5"
+            aria-label={isBn ? "ফিল্টার খুলুন" : "Open filters"}
+          >
+            <Icon name="filter" size="sm" />
+          </button>
+          {hasMobileFilters ? (
+            <button
+              type="button"
+              onClick={() => {
+                setSearchQuery("");
+                updateUrl("all", "all", "", 1);
+              }}
+              className="h-10 rounded-lg border border-border bg-card px-3 text-xs font-semibold text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+            >
+              {isBn ? "ক্লিয়ার" : "Clear"}
+            </button>
+          ) : null}
+        </div>
 
         <Sheet open={isMobileFiltersOpen} onOpenChange={setIsMobileFiltersOpen}>
           <SheetContent side="bottom" className="max-h-[85dvh] overflow-y-auto rounded-t-2xl px-4 pb-6">
@@ -316,10 +339,7 @@ export function InteractiveListings({
               activeCategory={activeCategory}
               searchQuery={searchQuery}
               categories={CATEGORY_TABS}
-              onAreaChange={handleAreaChange}
-              onCategoryChange={handleCategoryChange}
-              onSearchChange={setSearchQuery}
-              onClose={() => setIsMobileFiltersOpen(false)}
+              onApply={handleMobileApply}
             />
           </SheetContent>
         </Sheet>
@@ -539,10 +559,7 @@ function MobileFilters({
   activeCategory,
   searchQuery,
   categories,
-  onAreaChange,
-  onCategoryChange,
-  onSearchChange,
-  onClose,
+  onApply,
 }: {
   isBn: boolean;
   areas: { id: string; name: string; nameBn?: string; count: number }[];
@@ -551,11 +568,18 @@ function MobileFilters({
   activeCategory: CategoryTab;
   searchQuery: string;
   categories: { id: CategoryTab; labelEn: string; labelBn: string }[];
-  onAreaChange: (area: string) => void;
-  onCategoryChange: (category: CategoryTab) => void;
-  onSearchChange: (query: string) => void;
-  onClose: () => void;
+  onApply: (area: string, category: CategoryTab, query: string) => void;
 }) {
+  const [draftArea, setDraftArea] = useState(selectedArea);
+  const [draftCategory, setDraftCategory] = useState(activeCategory);
+  const [draftQuery, setDraftQuery] = useState(searchQuery);
+
+  useEffect(() => {
+    setDraftArea(selectedArea);
+    setDraftCategory(activeCategory);
+    setDraftQuery(searchQuery);
+  }, [selectedArea, activeCategory, searchQuery]);
+
   return (
     <div className="flex flex-col gap-6">
       <label className="relative block">
@@ -563,28 +587,32 @@ function MobileFilters({
         <Icon name="search" size="xs" className="pointer-events-none absolute bottom-3 left-3 text-muted-foreground" />
         <input
           type="search"
-          value={searchQuery}
-          onChange={(event) => onSearchChange(event.target.value)}
+          value={draftQuery}
+          onChange={(event) => setDraftQuery(event.target.value)}
           placeholder={isBn ? "প্রপার্টি বা কিওয়ার্ড খুঁজুন..." : "Search properties..."}
           className="h-10 w-full rounded-lg border border-border bg-background py-2 pr-3 pl-9 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/15"
         />
       </label>
 
       <MobileFilterGroup title={isBn ? "এলাকা অনুযায়ী" : "By area"} icon="location">
-        <MobileFilterChip active={selectedArea === "all"} onClick={() => onAreaChange("all")} label={isBn ? "সব এলাকা" : "All areas"} count={propertiesCount} />
+        <MobileFilterChip active={draftArea === "all"} onClick={() => setDraftArea("all")} label={isBn ? "সব এলাকা" : "All areas"} count={propertiesCount} />
         {areas.map((area) => (
-          <MobileFilterChip key={area.id} active={selectedArea === area.id} onClick={() => onAreaChange(area.id)} label={isBn && area.nameBn ? area.nameBn : area.name} count={area.count} />
+          <MobileFilterChip key={area.id} active={draftArea === area.id} onClick={() => setDraftArea(area.id)} label={isBn && area.nameBn ? area.nameBn : area.name} count={area.count} />
         ))}
       </MobileFilterGroup>
 
       <MobileFilterGroup title={isBn ? "ক্যাটাগরি" : "Property type"} icon="layers">
         {categories.map((category) => (
-          <MobileFilterChip key={category.id} active={activeCategory === category.id} onClick={() => onCategoryChange(category.id)} label={isBn ? category.labelBn : category.labelEn} />
+          <MobileFilterChip key={category.id} active={draftCategory === category.id} onClick={() => setDraftCategory(category.id)} label={isBn ? category.labelBn : category.labelEn} />
         ))}
       </MobileFilterGroup>
 
-      <button type="button" onClick={onClose} className="h-11 rounded-lg bg-primary text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
-        {isBn ? "প্রপার্টি দেখুন" : "Show properties"}
+      <button
+        type="button"
+        onClick={() => onApply(draftArea, draftCategory, draftQuery)}
+        className="h-11 rounded-lg bg-primary text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+      >
+        {isBn ? "ফিল্টার প্রয়োগ করুন" : "Apply filters"}
       </button>
     </div>
   );

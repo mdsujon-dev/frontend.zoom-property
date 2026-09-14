@@ -31,9 +31,6 @@ export default async function Home() {
 
       <ListingsSection variant="preview" limit={6} />
 
-      <div className="-my-8 md:-my-16 lg:-my-24">
-        <ContactCta tone="surface" noBackground />
-      </div>
 
       <CinematicShowcase
         poster={dict.showcase.poster || showcase.poster}
@@ -42,6 +39,9 @@ export default async function Home() {
       />
 
       <AreasSection />
+      <div className="relative z-10 -my-8 md:-my-16 lg:-my-24">
+        <ContactCta tone="surface" noBackground />
+      </div>
       <ProjectsSection />
       {/* <div className="mb-8 md:mb-16 lg:mb-20"> */}
       <StatsBanner />
@@ -50,5 +50,5 @@ export default async function Home() {
       <VideoSection />
       <HomeBlogSection />
     </>
-  );
+  );  
 }

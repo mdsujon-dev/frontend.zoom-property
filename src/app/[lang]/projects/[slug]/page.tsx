@@ -139,7 +139,7 @@ export default async function ProjectDetailPage({
         ])}
       />
 
-      <Section className="bg-background pt-28 sm:pt-32">
+      <Section className="bg-background pt-16 sm:pt-20">
         <Reveal className="flex flex-col gap-6">
           <nav aria-label={t.all}>
             <ol className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">

@@ -75,7 +75,7 @@ export async function HeroSection() {
     : HERO_IMAGES;
 
   return (
-    <section className="relative z-10 isolate flex min-h-[92svh] items-end overflow-x-clip overflow-y-visible">
+    <section className="relative z-10 isolate flex min-h-[86svh] items-end overflow-x-clip overflow-y-visible sm:min-h-[88svh]">
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <Parallax speed={0.18} zoom className="absolute inset-0">
           <HeroBackdrop images={images} />

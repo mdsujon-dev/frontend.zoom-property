@@ -62,10 +62,10 @@ export async function SiteFooter() {
   const socials = socialProfiles(dict.contact.social);
 
   return (
-    <footer className="bg-footer pb-[calc(4.5rem+env(safe-area-inset-bottom))] text-footer-foreground lg:pb-0">
-      <AppContainer className="py-14">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
-          <div className="flex flex-col gap-4">
+    <footer className="border-t border-footer-foreground/10 bg-footer pb-[calc(4.5rem+env(safe-area-inset-bottom))] text-footer-foreground lg:pb-0">
+      <AppContainer className="py-12 sm:py-16">
+        <div className="grid gap-10 md:grid-cols-2 xl:grid-cols-[1.6fr_1fr_1fr_1fr]">
+          <div className="flex max-w-md flex-col gap-5">
             <Link href={localeHref(locale, "/")} aria-label={t.companyName}>
               {/* White lockup — the navy one would vanish into the background. */}
               <Logo variant="onDark" className="h-9 w-auto" />
@@ -81,7 +81,7 @@ export async function SiteFooter() {
             {/* Contact rows. Each icon sits in a small brand-green tile so
                 the three ways to reach the desk read as one clear block —
                 the icons are the anchor, not a faded decoration. */}
-            <div className="flex flex-col gap-2.5 pt-1">
+            <div className="flex flex-col gap-3 border-t border-footer-foreground/10 pt-5">
               <a
                 href={telHref(d.phone)}
                 className="group flex w-fit items-center gap-3 whitespace-nowrap text-sm text-footer-foreground transition-colors hover:text-brand-green-light"
@@ -93,7 +93,7 @@ export async function SiteFooter() {
               </a>
               <a
                 href={mailHref(d.email)}
-                className="group flex w-fit items-center gap-3 text-sm text-footer-foreground transition-colors hover:text-brand-green-light"
+                className="group flex w-fit items-center gap-3 break-all text-sm text-footer-foreground transition-colors hover:text-brand-green-light"
               >
                 <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-white shadow-[0_4px_10px_-4px_rgba(75,128,45,0.6)] transition-colors group-hover:bg-brand-green">
                   <Icon name={t.emailIcon} size="sm" />
@@ -112,7 +112,7 @@ export async function SiteFooter() {
                 filled, rounded, white glyph — so the whole block reads as
                 one set. Resting tile is a quiet white wash on the charcoal;
                 hover fills it primary and lifts it a touch. */}
-            <div className="flex flex-wrap gap-2.5 pt-3">
+            <div className="flex flex-wrap gap-2.5 pt-1">
               {socials.map((social) => (
                 <a
                   key={social.label}
@@ -130,38 +130,42 @@ export async function SiteFooter() {
           </div>
 
           {columns.map((column) => (
-            <nav key={column.heading} className="flex flex-col gap-3">
-              <h3 className="font-heading text-h6 text-footer-foreground font-semibold">
+            <nav key={column.heading} className="flex flex-col gap-4">
+              <h3 className="font-heading text-xs font-bold uppercase tracking-[0.16em] text-footer-foreground">
                 {column.heading}
               </h3>
-              {column.links.map((link) => (
-                <Link
-                  key={`${link.href}-${link.label}`}
-                  href={localeHref(locale, link.href)}
-                  className="text-sm text-footer-foreground/75 transition-colors hover:text-brand-green-light"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              <div className="flex flex-col gap-2.5">
+                {column.links.map((link) => (
+                  <Link
+                    key={`${link.href}-${link.label}`}
+                    href={localeHref(locale, link.href)}
+                    className="text-sm text-footer-foreground/75 transition-colors hover:text-brand-green-light"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
             </nav>
           ))}
 
           {/* Projects get their own column rather than a link to the index:
               there are three of them, they are what the company is actually
               building, and the fourth column was empty without them. */}
-          <nav className="flex flex-col gap-3">
-            <h3 className="font-heading text-h6 text-footer-foreground font-semibold">
+          <nav className="flex flex-col gap-4">
+            <h3 className="font-heading text-xs font-bold uppercase tracking-[0.16em] text-footer-foreground">
               {dict.nav.projects}
             </h3>
-            {footerProjects.map((project) => (
-              <Link
-                key={project.id}
-                href={localeHref(locale, `/projects/${project.slug}`)}
-                className="text-sm text-footer-foreground/75 transition-colors hover:text-brand-green-light"
-              >
-                {locale === "bn" && project.nameBn ? project.nameBn : project.name}
-              </Link>
-            ))}
+            <div className="flex flex-col gap-2.5">
+              {footerProjects.map((project) => (
+                <Link
+                  key={project.id}
+                  href={localeHref(locale, `/projects/${project.slug}`)}
+                  className="text-sm text-footer-foreground/75 transition-colors hover:text-brand-green-light"
+                >
+                  {locale === "bn" && project.nameBn ? project.nameBn : project.name}
+                </Link>
+              ))}
+            </div>
           </nav>
         </div>
       </AppContainer>
@@ -169,7 +173,7 @@ export async function SiteFooter() {
       {/* Slim bottom bar: one line of small print, so it gets a hairline rule
           and just enough padding to clear the text — not another section. */}
       <div className="border-t border-footer-foreground/10">
-        <AppContainer className="flex flex-col items-center justify-between gap-1 py-3 text-footer-foreground/60 sm:flex-row">
+        <AppContainer className="flex flex-col items-center justify-between gap-3 py-4 text-footer-foreground/60 sm:flex-row">
           <Text size="xs" tone="inverse" className="text-footer-foreground/60">
             © {new Date().getFullYear()} {t.companyName} {t.rights}
           </Text>
